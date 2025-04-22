@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="Banner">
+        <attr format="integer" name="banner_loop_time"/>
+        <attr format="boolean" name="banner_auto_loop"/>
+        <attr format="boolean" name="banner_infinite_loop"/>
+
+        <!--RoundLinesIndicator、RectangleIndicator-->
+        <attr format="dimension" name="banner_indicator_height"/>
+        <attr format="dimension" name="banner_indicator_radius"/>
+
+        <!-- 以下为公用属性 -->
+        <attr format="dimension" name="banner_indicator_selected_width"/>
+        <!--CircleIndicator-->
+        <attr format="dimension" name="banner_indicator_normal_width"/>
+        <attr format="dimension" name="banner_indicator_space"/>
+
+        <attr format="reference|color" name="banner_indicator_normal_color"/>
+        <attr format="reference|color" name="banner_indicator_selected_color"/>
+        <attr format="dimension" name="banner_indicator_margin"/>
+        <attr format="dimension" name="banner_indicator_marginLeft"/>
+        <attr format="dimension" name="banner_indicator_marginTop"/>
+        <attr format="dimension" name="banner_indicator_marginRight"/>
+        <attr format="dimension" name="banner_indicator_marginBottom"/>
+
+        <attr format="enum" name="banner_indicator_gravity">
+            <enum name="left" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+
+        <attr name="banner_orientation">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+        <attr format="dimension" name="banner_radius"/>
+
+    </declare-styleable>
+</resources>

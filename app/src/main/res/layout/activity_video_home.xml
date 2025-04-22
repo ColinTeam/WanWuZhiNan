@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl"
+        android:layout_width="match_parent"
+        android:background="@color/black"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/current_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ImageView
+            android:id="@+id/iv_big"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:visibility="gone"/>
+
+        <com.wanwuzhinan.mingchang.view.DefaultToolbar
+            android:id="@+id/tool_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        
+        <ImageView
+            android:layout_width="@dimen/dp_6"
+            android:layout_height="@dimen/dp_130"
+            android:visibility="gone"
+            android:src="@mipmap/ic_video_tips_line"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginBottom="@dimen/dp_70"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/ll_show_big"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginHorizontal="@dimen/dp_45"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintRight_toLeftOf="@+id/re_list"
+            app:layout_constraintTop_toTopOf="@id/re_list"
+            app:layout_constraintBottom_toBottomOf="@id/re_list">
+
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/text_white_36"
+                android:textSize="@dimen/sp_28"
+                android:textFontWeight="600"
+                android:fontFamily="sans-serif-light"
+                android:text=""/>
+
+            <TextView
+                android:id="@+id/tv_subtitle"
+                style="@style/text_white_20"
+                android:textFontWeight="600"
+                android:fontFamily="sans-serif-light"
+                android:text=""/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="@dimen/dp_200"
+            app:layout_constraintLeft_toLeftOf="@id/re_list"
+            app:layout_constraintTop_toTopOf="@id/re_list"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/re_list"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_200"
+            app:layout_constraintWidth_percent="0.58"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            tools:listitem="@layout/item_video_home"
+            app:layout_constraintVertical_bias="0.55"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/ll_tools"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:layout_height="@dimen/dp_42"
+            android:layout_marginBottom="@dimen/dp_25"
+            app:layout_constraintWidth_percent="0.58"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_pro"
+                android:layout_width="@dimen/dp_42"
+                android:layout_height="@dimen/dp_42"
+                android:src="@mipmap/ic_viddo_pro"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_next"
+                android:layout_marginStart="@dimen/dp_12"
+                android:layout_width="@dimen/dp_42"
+                android:layout_height="@dimen/dp_42"
+                android:src="@mipmap/ic_video_next"/>
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_marginStart="@dimen/dp_24"
+                android:progressDrawable="@drawable/video_pos_progress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:max="100"
+                android:progress="50"
+                android:layout_weight="1"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_23"
+                android:text="01"
+                android:textSize="@dimen/sp_20"
+                android:textColor="@color/white"
+                android:layout_marginEnd="@dimen/dp_12"/>
+
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

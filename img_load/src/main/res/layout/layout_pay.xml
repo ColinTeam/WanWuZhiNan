@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="8dp"
+            android:src="@mipmap/close"
+            app:tint="#808080" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/titleText"
+            android:text="支付"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divideLine"
+        android:layout_marginHorizontal="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        style="@style/textView"
+        android:visibility="gone"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/price_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:maxWidth="200dp"
+            android:text="0.00"/>
+        <ImageView
+            android:id="@+id/iv_price"
+            android:layout_width="27dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="5dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginVertical="30dp"
+        android:layout_marginHorizontal="16dp">
+
+        <com.ad.img_load.dialog.PwdView
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_pwd"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_left"
+            style="@style/clickableText"
+            android:visibility="gone"
+            android:layout_marginLeft="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_center"
+            style="@style/clickableText"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_right"
+            style="@style/clickableText"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"/>
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
+    <GridView
+        android:id="@+id/gv_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="1dp"
+        android:paddingTop="0.7dp"
+        android:background="@color/divideLine"/>
+
+</LinearLayout>

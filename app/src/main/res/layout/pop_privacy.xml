@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="@dimen/dp_0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:orientation="vertical"
+            android:layout_height="@dimen/dp_0"
+            android:gravity="center"
+            app:layout_constraintDimensionRatio="w,1:1"
+            android:background="@drawable/shape_ffffff_8">
+
+            <TextView
+                style="@style/text_black_18"
+                android:layout_marginTop="@dimen/dp_12"
+                android:text="平台使用规则"/>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    style="@style/text_333333_14"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/dp_20"
+                    android:text="\t\t\t\t平台所提供的各项服务的所有权和运作权归平台所有。除法律法规或者本平台另有规定/约定外，任何单位或者个人不得将本网站的任何知识产权对象进行任何目的的使用，任何单位或个人不得以任何方式以任何文字对本站资料作全部和局部复制、转载、引用和链接，任何单位或者个人不得以任何方式引诱、要求本网站注册用户或者第三方复制转载本网站内容或者同意该单位或者个人复制转载本网站内容，亦不得通过技术手段抓取本网站内容。任何注册用户将在本网站注册用户名和密码提供给任何第三方用于许可其复制本站内容的，将构成对注册协议的违反，并可能导致其账户被关闭或者处罚。
+会员保证不会将已发表于本站的信息资料，以任何形式发布或授权其它网站（及媒体）使用。任何违反本站知识产权声明的行为，本站保留追究其行为人法律责任的权利。" />
+            </androidx.core.widget.NestedScrollView>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dp_12"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_user_agreement"
+                    style="@style/text_black_12"
+                    android:textColor="#F17800"
+                    android:background="@drawable/login_text_agreement_bg"
+                    android:text="《用户协议》"/>
+
+                <TextView
+                    style="@style/text_999999_12"
+                    android:text="和"/>
+
+                <TextView
+                    android:id="@+id/tv_privacy_agreement"
+                    style="@style/text_black_12"
+                    android:textColor="#F17800"
+                    android:background="@drawable/login_text_agreement_bg"
+                    android:text="《隐私政策》"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_refuse"
+                    style="@style/default_button"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
+                    android:text="不同意"
+                    android:textStyle="normal"
+                    android:layout_height="@dimen/dp_44"
+                    android:layout_marginHorizontal="@dimen/dp_0"/>
+
+                <TextView
+                    android:layout_width="@dimen/dp_10"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tv_agree"
+                    style="@style/default_button"
+                    android:layout_weight="1"
+                    android:text="同意并继续"
+                    android:layout_height="@dimen/dp_44"
+                    android:layout_marginHorizontal="@dimen/dp_0"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation rootProject.ext.dependVersion.liteavSdk
+    implementation rootProject.ext.dependVersion.appcompat
+    implementation rootProject.ext.dependVersion.recyclerview
+    implementation rootProject.ext.dependVersion.constraintlayout
+
+    api 'com.github.bumptech.glide:glide:4.12.0'
+    api 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
+    implementation 'androidx.exifinterface:exifinterface:1.2.0'
+    implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
+}

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/bg_answer" />
+
+        <com.wanwuzhinan.mingchang.view.DefaultToolbar
+            android:id="@+id/tool_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/re_list"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintLeft_toRightOf="@+id/tool_bar"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_answer_practice" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_12"
+            android:background="@drawable/bg_answer"
+            android:padding="@dimen/dp_6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/re_list">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/text_black_18"
+                android:layout_width="@dimen/dp_0"
+                android:layout_marginHorizontal="@dimen/dp_50"
+                android:gravity="center"
+                android:text=""
+                android:layout_marginTop="@dimen/dp_16"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:layout_marginVertical="@dimen/dp_12"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintWidth_percent="0.85"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                app:layout_constraintBottom_toTopOf="@+id/lin_button"
+                android:layout_marginHorizontal="@dimen/dp_100">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/re_option"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:spanCount="4"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:listitem="@layout/item_answer_practice_option"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    tools:itemCount="4" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lin_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/dp_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_previous"
+                    style="@style/text_white_13"
+                    android:layout_width="@dimen/dp_122"
+                    android:layout_height="@dimen/dp_34"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:background="@drawable/bg_setting_save"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:text="上一题" />
+
+                <TextView
+                    android:id="@+id/tv_submit"
+                    style="@style/text_white_13"
+                    android:layout_width="@dimen/dp_122"
+                    android:layout_height="@dimen/dp_34"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:background="@drawable/bg_setting_save"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:text="提交答案" />
+
+                <TextView
+                    android:id="@+id/tv_next"
+                    style="@style/text_white_13"
+                    android:layout_width="@dimen/dp_122"
+                    android:layout_height="@dimen/dp_34"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:background="@drawable/bg_setting_save"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:text="下一题" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lin_explain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_30"
+                android:background="@drawable/line_4095f2_20_1"
+                android:gravity="center"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dp_12"
+                android:paddingVertical="@dimen/dp_6"
+                app:layout_constraintBottom_toBottomOf="@id/lin_button"
+                app:layout_constraintLeft_toRightOf="@+id/lin_button"
+                app:layout_constraintTop_toTopOf="@id/lin_button">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/dp_14"
+                    android:layout_height="@dimen/dp_14"
+                    app:srcCompat="@drawable/ic_explain" />
+
+                <TextView
+                    style="@style/text_white_10"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:text="解释说明"
+                    android:textColor="@color/color_4095F2" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/iv_person"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_116"
+            android:src="@mipmap/ic_answer_person"
+            app:layout_constraintBottom_toBottomOf="@id/cl_info"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="@dimen/dp_5"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dp_12"
+        android:paddingVertical="@dimen/dp_16"
+        android:background="@drawable/shape_ffffff_10"
+        android:layout_marginBottom="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_default"
+            style="@style/text_black_12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@drawable/shape_default_5"
+            app:layout_constraintTop_toTopOf="@id/tv_address"
+            app:layout_constraintBottom_toBottomOf="@id/tv_address"
+            android:paddingHorizontal="@dimen/dp_4"
+            android:text="默认"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            style="@style/text_666666_14"
+            app:layout_constraintLeft_toRightOf="@+id/tv_default"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:text="四川省成都市武侯区"/>
+
+        <TextView
+            android:id="@+id/tv_address_info"
+            app:layout_constraintTop_toBottomOf="@+id/tv_address"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/dp_5"
+            style="@style/text_black_16"
+            android:layout_width="@dimen/dp_0"
+            app:layout_constraintRight_toLeftOf="@+id/iv_edit"
+            android:text="美年广场A座350美年广场"/>
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/text_666666_14"
+            android:layout_marginTop="@dimen/dp_5"
+            app:layout_constraintTop_toBottomOf="@+id/tv_address_info"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="名字"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            style="@style/text_666666_14"
+            android:layout_marginLeft="@dimen/dp_20"
+            app:layout_constraintLeft_toRightOf="@+id/tv_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_name"
+            android:text="11111111111"/>
+
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="@dimen/dp_38"
+            android:layout_height="@dimen/dp_38"
+            android:padding="@dimen/dp_12"
+            android:src="@mipmap/ic_address_edit"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/tv_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_address"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

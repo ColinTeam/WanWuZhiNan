@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="@dimen/dp_145"
+            android:layout_height="@dimen/dp_194"
+            android:background="@drawable/shape_ffc285_16_line_1"
+            android:gravity="center">
+            <com.ad.img_load.img.RoundedImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/dp_131"
+                android:layout_height="@dimen/dp_182"
+                app:android_scaleType="6"
+                app:riv_corner_radius="@dimen/dp_12"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@mipmap/icon_honor_list"/>
+
+            <TextView
+                android:id="@+id/tv_no_have"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center"
+                style="@style/text_white_16"
+                android:background="@drawable/bg_card"
+                android:text="未获得"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_marginTop="@dimen/dp_6"
+            android:id="@+id/tv_name"
+            style="@style/text_333333_14"
+            android:lines="1"
+            android:text="博览群书"/>
+
+    </LinearLayout>
+
+</layout>

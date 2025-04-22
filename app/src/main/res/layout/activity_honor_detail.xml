@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+    
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_cl"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="290dp"
+            android:layout_height="387dp"
+            android:orientation="vertical"
+            android:background="#FF9424">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_18"
+                android:layout_marginEnd="@dimen/dp_18"
+                android:layout_marginTop="@dimen/dp_18"
+                android:layout_marginBottom="@dimen/dp_18"
+                android:background="@drawable/shape_fffef4_20"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_19"
+                    style="@style/text_333333_20"
+                    android:gravity="center"
+                    android:text="我在万物指南获得"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_share_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_2"
+                    style="@style/text_333333_20"
+                    android:gravity="center"
+                    android:text="--"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    style="@style/text_333333_20"
+                    android:gravity="center"
+                    android:text="快来一起看看吧～"
+                    android:textColor="#FF9424"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="@dimen/dp_224"
+                    android:layout_height="@dimen/dp_133"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:background="@mipmap/ic_share_short"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/iv_share_cover"
+                        android:layout_width="@dimen/dp_133"
+                        android:layout_height="@dimen/dp_133" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        style="@style/text_333333_14"
+                        android:textColor="#706344"
+                        android:lineSpacingExtra="@dimen/dp_4"
+                        android:text="物理十分通，知识很轻松！扫码获取更多资料！"/>
+
+                    <ImageView
+                        android:id="@+id/iv_code"
+                        android:layout_width="@dimen/dp_62"
+                        android:layout_height="@dimen/dp_62"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@mipmap/bg_login" />
+
+        <com.wanwuzhinan.mingchang.view.DefaultToolbar
+            android:id="@+id/tool_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_355"
+            android:layout_marginBottom="@dimen/dp_14"
+            android:layout_marginStart="@dimen/dp_67"
+            android:layout_marginEnd="@dimen/dp_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ll_tools"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_233"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/shape_ffffff_18"
+                android:gravity="bottom|center_horizontal"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:text=""
+                    android:layout_marginBottom="@dimen/dp_10"
+                    style="@style/text_333333_24"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="你太棒啦，获得勋章，继续加油"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    style="@style/text_333333_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_30"
+                    android:layout_marginHorizontal="@dimen/dp_100"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:max="100"
+                    android:progress="100"
+                    android:progressDrawable="@drawable/honor_progress" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_cover"
+                android:layout_marginTop="@dimen/dp_20"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="@dimen/dp_220"
+                android:layout_height="@dimen/dp_220"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.wanwuzhinan.mingchang.view.ClickView
+            android:id="@+id/lin_my"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/shape_ffda65_20"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_40"
+            android:paddingHorizontal="@dimen/dp_12"
+            android:paddingVertical="@dimen/dp_8"
+            app:layout_constraintRight_toRightOf="parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="21dp"
+                android:src="@mipmap/ic_share_top" />
+
+            <TextView
+                style="@style/text_333333_14"
+                android:text="我的勋章墙"
+                android:layout_marginLeft="@dimen/dp_4"/>
+        </com.wanwuzhinan.mingchang.view.ClickView>
+
+        <LinearLayout
+            android:id="@+id/ll_tools"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_40"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text_white_20"
+                android:textStyle="bold"
+                android:text="恭喜您获得："/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_num"
+                android:layout_width="@dimen/dp_180"
+                android:layout_height="@dimen/dp_63">
+
+
+                <TextView
+                    android:id="@+id/tv_num"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="@dimen/dp_180"
+                    android:layout_height="@dimen/dp_46"
+                    style="@style/text_white_16"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical|end"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:background="@drawable/shape_9f5200_20"
+                    android:text="0个指南针"/>
+
+                <ImageView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/dp_9"
+                    android:layout_width="@dimen/dp_46"
+                    android:layout_height="@dimen/dp_53"
+                    android:src="@mipmap/ic_compass"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            
+            <LinearLayout
+                android:id="@+id/ll_share"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_width="@dimen/dp_204"
+                android:layout_height="@dimen/dp_62"
+                android:background="@mipmap/ic_share_bottom"
+                android:gravity="center"
+                >
+                
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:src="@mipmap/ic_share_share"/>
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/text_white_16"
+                    android:layout_marginStart="@dimen/dp_18"
+                    android:textStyle="bold"
+                    android:text="去分享"/>
+                
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

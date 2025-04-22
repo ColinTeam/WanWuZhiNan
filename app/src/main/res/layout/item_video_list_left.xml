@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/cl_bg"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginBottom="9dp"
+        android:layout_marginStart="@dimen/dp_11"
+        android:background="@drawable/shape_fff1e3_line_2"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/text_333333_12"
+            android:text="第一季：林海雪原"
+            android:textColor="#FF9424"
+            android:textFontWeight="500"
+            android:maxLines="1"
+            android:maxLength="3"
+            android:ellipsize="end"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+    </LinearLayout>
+
+</layout>

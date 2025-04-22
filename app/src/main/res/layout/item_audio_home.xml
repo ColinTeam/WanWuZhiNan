@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_108"
+        android:layout_marginRight="@dimen/dp_12">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:minWidth="@dimen/dp_218"
+            android:layout_height="@dimen/dp_70"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/shape_black50_12"
+            >
+
+
+            <TextView
+                android:id="@+id/tv_first"
+                style="@style/text_white_16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginStart="@dimen/dp_94"
+                android:layout_marginEnd="@dimen/dp_12"
+                android:singleLine="true"
+                android:layout_width="@dimen/dp_0"
+                android:text="第一季"/>
+
+
+            <TextView
+                android:id="@+id/tv_number"
+                style="@style/text_white_12"
+                android:textFontWeight="400"
+                app:layout_constraintStart_toStartOf="@+id/tv_first"
+                app:layout_constraintEnd_toEndOf = "@+id/tv_first"
+                app:layout_constraintTop_toBottomOf="@+id/tv_first"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/dp_8"
+                android:fontFamily="sans-serif-light"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="No.11-18 共8节"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/riv_image"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_100"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="@dimen/dp_12"
+            android:src="@mipmap/bg_main_video"
+            app:shapeAppearanceOverlay="@style/CustomCornerShape"/>
+        
+
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            app:layout_constraintTop_toTopOf="@+id/riv_image"
+            app:layout_constraintEnd_toEndOf="@+id/riv_image"
+            android:src="@mipmap/ic_play_main_color"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

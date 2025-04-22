@@ -1,0 +1,9 @@
+rootProject.name = "WanWuZhiNan"
+include ':app'
+include ':net_work'
+include ':comm'
+include ':banner'
+include ':img_load'
+include ':library'
+include ':superplayerkit'
+

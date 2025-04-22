@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/shape_ffffff_top_15"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_gd_map"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:text="高德地图"
+                android:gravity="center"
+                style="@style/text_black_16"/>
+
+            <TextView
+                android:layout_marginHorizontal="@dimen/dp_16"
+                style="@style/line_dddddd"/>
+
+            <TextView
+                android:id="@+id/tv_bd_map"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:text="百度地图"
+                android:gravity="center"
+                style="@style/text_black_16"/>
+
+            <TextView
+                android:layout_marginHorizontal="@dimen/dp_16"
+                style="@style/line_dddddd"/>
+
+            <TextView
+                android:id="@+id/tv_tencent_map"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:text="腾讯地图"
+                android:gravity="center"
+                style="@style/text_black_16"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"
+                android:background="@color/color_F7F8F9"/>
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:text="取消"
+                android:gravity="center"
+                style="@style/text_black_16"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--自定义SiteImgRadioButton 设置图片大小-->
+    <declare-styleable name="SiteImgRadioButton">
+        <attr name="drawableSize" format="dimension" />
+        <attr name="drawableTop" format="reference" />
+        <attr name="drawableLeft" format="reference" />
+        <attr name="drawableRight" format="reference" />
+        <attr name="drawableBottom" format="reference" />
+    </declare-styleable>
+
+    <!--StateButton-->
+    <declare-styleable name="StateButton">
+        <!--text color-->
+        <!--设置正常显示的文字颜色-->
+        <attr name="normalTextColor" format="color|reference" />
+        <!--设置按下状态显示的文字颜色-->
+        <attr name="pressedTextColor" format="color|reference" />
+        <!--设置不可用时（enable = false）显示的文字颜色-->
+        <attr name="unableTextColor" format="color|reference" />
+
+        <!--StrokeWidth-->
+        <!--设置正常显示的边框宽度-->
+        <attr name="normalStrokeWidth" format="dimension|reference" />
+        <!--设置按下时显示的边框宽度-->
+        <attr name="pressedStrokeWidth" format="dimension|reference" />
+        <!--设置不可用时（enable = false）显示的边框宽度-->
+        <attr name="unableStrokeWidth" format="dimension|reference" />
+
+        <!--StrokeColor-->
+        <!--设置正常显示的边框颜色-->
+        <attr name="normalStrokeColor" format="color|reference" />
+        <!--设置按下时显示的边框颜色-->
+        <attr name="pressedStrokeColor" format="color|reference" />
+        <!--设置不可用时（enable = false）显示的边框颜色-->
+        <attr name="unableStrokeColor" format="color|reference" />
+
+        <!--background color-->
+        <!--设置正常显示的背景颜色-->
+        <attr name="normalBackgroundColor" format="color|reference" />
+        <!--设置按下状态显示的背景颜色-->
+        <attr name="pressedBackgroundColor" format="color|reference" />
+        <!--设置不可用时（enable = false）背景颜色-->
+        <attr name="unableBackgroundColor" format="color|reference" />
+
+        <!--渐变色-->
+        <!--background start color -->
+        <!--设置正常显示的背景开始颜色-->
+        <attr name="normalBackgroundStartColor" format="color|reference" />
+        <!--设置按下状态显示的背景开始颜色-->
+        <attr name="pressedBackgroundStartColor" format="color|reference" />
+        <!--设置不可用时（enable = false）背景开始颜色-->
+        <attr name="unableBackgroundStartColor" format="color|reference" />
+        <!--background center color -->
+        <!--设置正常显示的背景中间颜色-->
+        <attr name="normalBackgroundCenterColor" format="color|reference" />
+        <!--设置按下状态显示的背景中间颜色-->
+        <attr name="pressedBackgroundCenterColor" format="color|reference" />
+        <!--设置不可用时（enable = false）背景中间颜色-->
+        <attr name="unableBackgroundCenterColor" format="color|reference" />
+        <!--background end color -->
+        <!--设置正常显示的背景结束颜色-->
+        <attr name="normalBackgroundEndColor" format="color|reference" />
+        <!--设置按下状态显示的背景结束颜色-->
+        <attr name="pressedBackgroundEndColor" format="color|reference" />
+        <!--设置不可用时（enable = false）背景结束颜色-->
+        <attr name="unableBackgroundEndColor" format="color|reference" />
+
+        <!--渐变方向-->
+        <attr name="normalOrientation">
+            <enum name="BL_TR" value="0" />
+            <enum name="BOTTOM_TOP" value="1" />
+            <enum name="BR_TL" value="2" />
+            <enum name="LEFT_RIGHT" value="3" />
+            <enum name="RIGHT_LEFT" value="4" />
+            <enum name="TL_BR" value="5" />
+            <enum name="TOP_BOTTOM" value="6" />
+            <enum name="TR_BL" value="7" />
+        </attr>
+        <attr name="pressedOrientation">
+            <enum name="BL_TR" value="0" />
+            <enum name="BOTTOM_TOP" value="1" />
+            <enum name="BR_TL" value="2" />
+            <enum name="LEFT_RIGHT" value="3" />
+            <enum name="RIGHT_LEFT" value="4" />
+            <enum name="TL_BR" value="5" />
+            <enum name="TOP_BOTTOM" value="6" />
+            <enum name="TR_BL" value="7" />
+        </attr>
+        <attr name="unableOrientation">
+            <enum name="BL_TR" value="0" />
+            <enum name="BOTTOM_TOP" value="1" />
+            <enum name="BR_TL" value="2" />
+            <enum name="LEFT_RIGHT" value="3" />
+            <enum name="RIGHT_LEFT" value="4" />
+            <enum name="TL_BR" value="5" />
+            <enum name="TOP_BOTTOM" value="6" />
+            <enum name="TR_BL" value="7" />
+        </attr>
+        <!--类型-->
+        <attr name="normalShapeType">
+            <enum name="LINEAR_GRADIENT" value="0" />
+            <enum name="OVAL" value="1" />
+            <enum name="LINE" value="2" />
+            <enum name="RING" value="3" />
+        </attr>
+        <attr name="pressedShapeType">
+            <enum name="LINEAR_GRADIENT" value="0" />
+            <enum name="OVAL" value="1" />
+            <enum name="LINE" value="2" />
+            <enum name="RING" value="3" />
+        </attr>
+        <attr name="unableShapeType">
+            <enum name="LINEAR_GRADIENT" value="0" />
+            <enum name="OVAL" value="1" />
+            <enum name="LINE" value="2" />
+            <enum name="RING" value="3" />
+        </attr>
+
+        <!--Dash-->
+        <!--设置dash width-->
+        <attr name="strokeDashWidth" format="dimension|reference" />
+        <!--设置dash-->
+        <attr name="strokeDashGap" format="dimension|reference" />
+
+        <!--background radius-->
+        <attr name="radius" format="dimension|reference" />
+        <attr name="is_round" format="boolean|reference" />
+        <!--animation duration-->
+        <attr name="animationDuration" format="integer|reference" />
+    </declare-styleable>
+
+
+    <!--标题栏样式-->
+    <declare-styleable name="BaseToolBar">
+        <attr name="titleBarBackground" format="reference|color" />
+        <attr name="leftImage" format="reference" />
+        <attr name="leftImageColor" format="color|reference" />
+        <attr name="leftImageVisible" format="boolean" />
+        <attr name="leftImageSize" format="dimension" />
+        <attr name="midText" format="string|reference" />
+        <attr name="midTextVisible" format="boolean" />
+        <attr name="midTextFontSize" format="dimension|reference" />
+        <attr name="midTextFontColor" format="color|reference" />
+        <attr name="midTextAlpha" format="float" />
+        <attr name="rightText" format="string|reference" />
+        <attr name="rightTextVisible" format="boolean" />
+        <attr name="rightTextFontSize" format="dimension|reference" />
+        <attr name="rightTextColor" format="color|reference" />
+        <attr name="rightImage" format="reference" />
+        <attr name="rightImageColor" format="color|reference" />
+        <attr name="rightImageVisible" format="boolean" />
+        <attr name="rightImageSize" format="dimension" />
+    </declare-styleable>
+
+    <!--refresh View-->
+    <declare-styleable name="RefreshRecyclerView">
+        <attr name="is_enable_refresh" format="boolean" />
+        <attr name="is_enable_load_more" format="boolean" />
+    </declare-styleable>
+
+
+    <!--item View-->
+    <declare-styleable name="ItemView">
+        <attr name="item_title" format="string|reference" />
+        <attr name="item_content" format="string|reference" />
+        <attr name="item_img" format="reference" />
+        <attr name="item_right_icon_vis" format="boolean" />
+        <attr name="item_right_content_vis" format="boolean" />
+        <attr name="item_line_vis" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CollapsibleTextView">
+        <attr name="collapsedLines" format="integer"/> <!--最大显示行数，即超过该行数的部分折叠-->
+        <attr name="collapsedText" format="string"/><!--折叠时的后缀文字,eg.“展开”-->
+        <attr name="expandedText" format="string"/><!--展开时的后缀文字,eg.“收起”-->
+        <attr name="suffixColor" format="color"/><!--后缀文字颜色-->
+    </declare-styleable>
+
+    <declare-styleable name="SwitchItemView">
+        <attr name="switchItemTitle" format="string|reference"/>
+        <attr name="switchItemTitleColor" format="color|reference"/>
+        <attr name="switchItemTitleSize" format="dimension|reference"/>
+        <attr name="switchItemShowDivider" format="boolean"/>
+        <attr name="switchItemHint" format="string|reference"/>
+        <attr name="switchItemCheckEnable" format="boolean"/>
+        <attr name="switchItemClickable" format="boolean"/>
+    </declare-styleable>
+</resources>

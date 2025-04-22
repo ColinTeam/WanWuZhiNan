@@ -1,0 +1,209 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
+
+static def releaseTime() {
+    return new Date().format("yyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    defaultConfig {
+        applicationId "com.wanwuzhinan.mingchang"
+
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //开屏是否使用视频
+        buildConfigField "Boolean", "IS_SPLASH_VODEI", "false"
+        //Bugly
+        buildConfigField 'String', 'BUGLY_APP_ID', '"cccddf0a52"'
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+    dataBinding {
+        //noinspection DataBindingWithoutKapt
+        enabled = true
+    }
+
+    //自定义打包输出文件名
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            def fileName
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                if (variant.buildType.name == 'release') {//如果是release包
+                    fileName = "wwzn(release)_${defaultConfig.versionName}_${releaseTime()}.apk"
+                } else if (variant.buildType.name == 'debug') {//如果是debug包
+                    fileName = "wwzn(debug)_${defaultConfig.versionName}_${releaseTime()}.apk"
+                }
+                outputFileName = fileName
+            }
+        }
+    }
+
+    /**
+     * 修改 Android 12 因为 exported 的构建问题
+     */
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def processManifest = output.getProcessManifestProvider().get()
+            processManifest.doLast { task ->
+                def outputDir = task.multiApkManifestOutputDirectory
+                File outputDirectory
+                if (outputDir instanceof File) {
+                    outputDirectory = outputDir
+                } else {
+                    outputDirectory = outputDir.get().asFile
+                }
+                File manifestOutFile = file("$outputDirectory/AndroidManifest.xml")
+                println("----------- ${manifestOutFile} ----------- ")
+
+                if (manifestOutFile.exists() && manifestOutFile.canRead() && manifestOutFile.canWrite()) {
+                    def manifestFile = manifestOutFile
+                    ///这里第二个参数是 false ，所以 namespace 是展开的，所以下面不能用 androidSpace，而是用 nameTag
+                    def xml = new XmlParser(false, false).parse(manifestFile)
+                    def exportedTag = "android:exported"
+                    def nameTag = "android:name"
+                    ///指定 space
+                    //def androidSpace = new groovy.xml.Namespace('http://schemas.android.com/apk/res/android', 'android')
+
+                    def nodes = xml.application[0].'*'.findAll {
+                        //挑选要修改的节点，没有指定的 exported 的才需要增加
+                        //如果 exportedTag 拿不到可以尝试 it.attribute(androidSpace.exported)
+                        (it.name() == 'activity' || it.name() == 'receiver' || it.name() == 'service') && it.attribute(exportedTag) == null
+
+                    }
+                    ///添加 exported，默认 false
+                    nodes.each {
+                        def isMain = false
+                        it.each {
+                            if (it.name() == "intent-filter") {
+                                it.each {
+                                    if (it.name() == "action") {
+                                        //如果 nameTag 拿不到可以尝试 it.attribute(androidSpace.name)
+                                        if (it.attributes().get(nameTag) == "android.intent.action.MAIN") {
+                                            isMain = true
+                                            println("......................MAIN FOUND......................")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        it.attributes().put(exportedTag, "${isMain}")
+                    }
+                    PrintWriter pw = new PrintWriter(manifestFile)
+                    pw.write(groovy.xml.XmlUtil.serialize(xml))
+                    pw.close()
+                }
+            }
+        }
+    }
+
+    signingConfigs {
+        release {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file("local.properties").newDataInputStream())
+            storeFile file(properties.getProperty("keystore.path"))
+            storePassword properties.getProperty("keystore.password")
+            keyAlias = properties.getProperty("keystore.alias")
+            keyPassword properties.getProperty("keystore.alias_password")
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            //打包时间
+            resValue "string", "build_time", releaseTime()
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            //打包时间
+            resValue "string", "build_time", releaseTime()
+        }
+    }
+
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDirs = ['libs']
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    implementation project(path: ':banner')
+    implementation project(path: ':comm')
+    implementation project(path: ':img_load')
+    implementation project(path: ':library')
+    implementation project(path: ':superplayerkit')
+
+    implementation rootProject.ext.dependVersion.core_ktx
+    implementation rootProject.ext.dependVersion.material
+    implementation rootProject.ext.dependVersion.appcompat
+    implementation rootProject.ext.dependVersion.recyclerview
+    implementation rootProject.ext.dependVersion.constraintlayout
+    implementation rootProject.ext.dependVersion.liteavSdk
+    //https://github.com/LetMeOff/SimpleDownload 携程下载文件
+    implementation 'com.github.LetMeOff:SimpleDownload:v1.0.0'
+    implementation 'com.jakewharton:disklrucache:2.0.2'
+    //二维码
+    implementation 'com.github.yuzhiqiang1993:zxing:2.2.5'//扫一扫
+    //PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    //图文详情的textview
+    implementation 'org.sufficientlysecure:html-textview:4.0'
+    implementation "io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.1"
+
+    //阴影
+    implementation 'io.github.linwg1988:lcardview-kt:1.0.2'
+    implementation 'androidx.legacy:legacy-support-core-ui:1.0.0'
+
+    implementation 'com.github.yyued:SVGAPlayer-Android:2.6.1'
+
+    //骨架 skeleton
+//    implementation 'com.ethanhua:skeleton:1.1.2'
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.ext.dependVersion.lifecycle_version"
+    //视频播放
+    implementation 'com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer:v8.4.0-release-jitpack'
+
+    implementation 'com.github.getActivity:ShapeView:6.0'
+
+
+    testImplementation rootProject.ext.dependVersion.junit
+    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
+    androidTestImplementation rootProject.ext.dependVersion.espresso_core
+}

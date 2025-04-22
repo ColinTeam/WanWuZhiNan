@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/bg_practice_home" />
+
+
+        <ImageView
+            android:id="@+id/iv_ti"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/dp_13"
+            android:layout_marginBottom="@dimen/dp_27"
+            android:layout_marginStart="@dimen/dp_19"
+            android:layout_marginEnd="@dimen/dp_19"
+            android:src="@mipmap/practice_ti"
+            app:layout_constraintDimensionRatio="w,744:389"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@+id/iv_ti"
+            app:layout_constraintEnd_toEndOf="@+id/iv_ti"
+            app:layout_constraintTop_toTopOf="@id/iv_ti"
+            app:layout_constraintBottom_toBottomOf="@id/iv_ti">
+
+            <TextView
+                android:id="@+id/tv_number1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintWidth_percent="0.3"/>
+
+            <TextView
+                android:id="@+id/tv_number2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_number1"
+                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintWidth_percent="0.3"/>
+
+            <TextView
+                android:id="@+id/tv_number3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_number2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHeight_percent="0.5"/>
+
+            <TextView
+                android:id="@+id/tv_number6"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/tv_number3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.4"/>
+
+            <TextView
+                android:id="@+id/tv_number4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/tv_number2"
+                app:layout_constraintStart_toEndOf="@id/tv_number6"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.26"/>
+
+            <TextView
+                android:id="@+id/tv_number5"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/tv_number1"
+                app:layout_constraintStart_toEndOf="@id/tv_number4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.wanwuzhinan.mingchang.view.DefaultToolbar
+            android:id="@+id/tool_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:dt_back_color="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

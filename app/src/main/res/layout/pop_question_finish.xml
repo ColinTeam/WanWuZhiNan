@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_back"
+            android:layout_width="@dimen/dp_300"
+            android:layout_height="@dimen/dp_257"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/shape_ffffff_15">
+
+            <ImageView
+                android:id="@+id/iv_ai"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_110"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="@dimen/dp_12"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_sure"
+                android:src="@mipmap/ic_question_finish_alert_ai"/>
+
+            <ImageView
+                android:id="@+id/iv_star_1"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:src="@mipmap/ic_question_finish_alert_star_n"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_16"
+                app:layout_constraintTop_toTopOf="@+id/iv_star_2"
+                app:layout_constraintEnd_toStartOf="@+id/iv_star_2"/>
+
+            <ImageView
+                android:id="@+id/iv_star_2"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:src="@mipmap/ic_question_finish_alert_star_n"
+                android:layout_marginBottom="@dimen/dp_10"
+                app:layout_constraintBottom_toTopOf="@+id/iv_ai"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ImageView
+                android:id="@+id/iv_star_3"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:src="@mipmap/ic_question_finish_alert_star_n"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_16"
+                app:layout_constraintTop_toTopOf="@+id/iv_star_2"
+                app:layout_constraintStart_toEndOf="@+id/iv_star_2"/>
+
+
+            <TextView
+                android:id="@+id/tv_sure"
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginBottom="@dimen/dp_14"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/text_white_16"
+                android:text="继续学习"
+                android:gravity="center"
+                android:background="@drawable/shape_ff7e47_20"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:layout_width="@dimen/dp_276"
+            android:layout_height="@dimen/dp_119"
+            android:layout_marginTop="@dimen/dp_m_20"
+            android:src="@mipmap/ic_question_finish_alert_top"
+            app:layout_constraintTop_toTopOf="@+id/ll_back"
+            app:layout_constraintStart_toStartOf="@+id/ll_back"
+            app:layout_constraintEnd_toEndOf="@+id/ll_back"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

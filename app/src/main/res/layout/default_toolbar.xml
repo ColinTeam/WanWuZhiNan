@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <com.wanwuzhinan.mingchang.view.StatusBarView
+            android:id="@+id/status_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_20"
+            app:layout_constraintLeft_toRightOf="@+id/status_bar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_back_mian"/>
+
+        <TextView
+            android:id="@+id/tv_center"
+            style="@style/text_black_18"
+            app:layout_constraintBottom_toBottomOf="@id/iv_back"
+            app:layout_constraintTop_toTopOf="@id/iv_back"
+            app:layout_constraintLeft_toRightOf="@+id/iv_back"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_right"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_44"
+            android:padding="@dimen/dp_14"
+            android:visibility="gone"
+            android:layout_marginRight="@dimen/dp_4"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/status_bar"/>
+
+        <TextView
+            android:id="@+id/tv_right"
+            style="@style/text_333333_15"
+            android:visibility="gone"
+            android:layout_marginRight="@dimen/dp_16"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_center"
+            app:layout_constraintBottom_toBottomOf="@id/tv_center"/>
+
+        <TextView
+            android:id="@+id/bu_right"
+            style="@style/text_white_14"
+            android:visibility="gone"
+            android:paddingVertical="@dimen/dp_3"
+            android:layout_marginRight="@dimen/dp_14"
+            android:background="@drawable/bg_default22_click"
+            android:text="完成"
+            android:paddingHorizontal="@dimen/dp_14"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_center"
+            app:layout_constraintBottom_toBottomOf="@id/tv_center"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

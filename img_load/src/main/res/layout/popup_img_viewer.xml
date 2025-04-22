@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container">
+
+    <com.ad.img_load.photo_view.BlankView
+        android:id="@+id/placeholderView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+
+    <com.ad.img_load.photo_view.PhotoViewContainer
+        android:id="@+id/photoViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.ad.img_load.photo_view.HackyViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.ad.img_load.photo_view.PhotoViewContainer>
+
+    <TextView
+        android:id="@+id/tv_pager_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="20dp"
+        android:text="保存"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:visibility="invisible" />
+
+
+</FrameLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="@dimen/dp_204"
+        android:background="@drawable/shape_ffffff_15"
+        android:layout_marginStart="@dimen/dp_20">
+
+        <com.ad.img_load.img.RoundedImageView
+            android:id="@+id/riv_image"
+            android:layout_width="@dimen/dp_176"
+            android:layout_height="@dimen/dp_104"
+            android:src="@drawable/img_default_icon"
+            app:android_scaleType="6"
+            app:riv_corner_radius="@dimen/dp_6"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginVertical="@dimen/dp_12" />
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/text_black_14"
+            app:layout_constraintTop_toBottomOf="@+id/riv_image"
+            android:layout_marginHorizontal="@dimen/dp_12"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginTop="@dimen/dp_13"
+            android:layout_width="@dimen/dp_0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="物理八分钟"/>
+
+
+        <TextView
+            android:id="@+id/tv_exchange_time"
+            style="@style/text_black_12"
+            android:text="兑换时间：2024.12.12 12:00"
+            android:layout_marginBottom="@dimen/dp_12"
+            app:layout_constraintBottom_toTopOf="@+id/tv_effective_time"
+            android:layout_width="@dimen/dp_0"
+            android:layout_marginHorizontal="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_4"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_effective_time"
+            style="@style/text_black_12"
+            android:text="有效期至：2024.12.12 12:00"
+            app:layout_constraintTop_toBottomOf="@+id/tv_exchange_time"
+            android:layout_width="@dimen/dp_0"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginHorizontal="@dimen/dp_12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

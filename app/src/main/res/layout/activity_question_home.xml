@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_question_home">
+
+        <com.wanwuzhinan.mingchang.view.DefaultToolbar
+            android:id="@+id/tool_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:dt_back_color = "@color/color_333333"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        
+        
+        <LinearLayout
+            android:id="@+id/ll_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_65"
+            android:layout_marginBottom="@dimen/dp_30"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_ask"
+                android:layout_width="@dimen/dp_336"
+                android:layout_height="@dimen/dp_280"
+                android:background="@drawable/bg_question_ask">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_ask_title"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_height="wrap_content"
+                    style="@style/text_333333_24"
+                    android:text="物理万问"
+                    android:textFontWeight="600"
+                    android:layout_marginTop="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_18"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_ask_edit_1"
+                    android:layout_width="@dimen/dp_14"
+                    android:layout_height="@dimen/dp_14"
+                    app:layout_constraintTop_toTopOf="@+id/tv_ask_edit_1"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_ask_edit_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="@dimen/dp_18"
+                    android:src="@mipmap/ic_edit_gray"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_ask_edit_1"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_ask_title"
+                    app:layout_constraintStart_toEndOf= "@+id/iv_ask_edit_1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginStart="@dimen/dp_6"
+                    style="@style/text_666666_16"
+                    android:text="做题答题"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_ask_edit_2"
+                    android:layout_width="@dimen/dp_14"
+                    android:layout_height="@dimen/dp_14"
+                    app:layout_constraintTop_toTopOf="@+id/tv_ask_edit_2"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_ask_edit_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="@dimen/dp_18"
+                    android:src="@mipmap/ic_edit_gray"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_ask_edit_2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_ask_edit_1"
+                    app:layout_constraintStart_toEndOf= "@+id/iv_ask_edit_1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_marginStart="@dimen/dp_6"
+                    style="@style/text_666666_16"
+                    android:text="巩固复习"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="@dimen/dp_178"
+                    android:layout_height="@dimen/dp_178"
+                    android:src="@mipmap/ic_ask_top_right"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="@dimen/dp_88"
+                    android:layout_height="@dimen/dp_95"
+                    android:layout_marginStart="@dimen/dp_14"
+                    android:layout_marginBottom="@dimen/dp_12"
+                    android:src="@mipmap/ic_ask_bottom_left"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_practice"
+                android:layout_width="@dimen/dp_336"
+                android:layout_height="@dimen/dp_280"
+                android:layout_marginStart="@dimen/dp_28"
+                android:background="@drawable/bg_question_practice">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_practice_title"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_height="wrap_content"
+                    style="@style/text_333333_24"
+                    android:text="龙门科举"
+                    android:textFontWeight="600"
+                    android:layout_marginTop="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_18"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_practice_edit_1"
+                    android:layout_width="@dimen/dp_14"
+                    android:layout_height="@dimen/dp_14"
+                    app:layout_constraintTop_toTopOf="@+id/tv_practice_edit_1"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_practice_edit_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="@dimen/dp_18"
+                    android:src="@mipmap/ic_edit_gray"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_practice_edit_1"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_practice_title"
+                    app:layout_constraintStart_toEndOf= "@+id/iv_practice_edit_1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginStart="@dimen/dp_6"
+                    style="@style/text_666666_16"
+                    android:text="中考真题"
+                    />
+
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="@dimen/dp_178"
+                    android:layout_height="@dimen/dp_178"
+                    android:layout_marginTop="@dimen/dp_m_18"
+                    android:layout_marginEnd="@dimen/dp_m_18"
+                    android:src="@mipmap/ic_practice_top_right"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="@dimen/dp_88"
+                    android:layout_height="@dimen/dp_95"
+                    android:layout_marginStart="@dimen/dp_14"
+                    android:layout_marginBottom="@dimen/dp_12"
+                    android:src="@mipmap/ic_practice_bottom_left"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

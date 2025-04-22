@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99333333">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_base"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            
+            <ImageView
+                android:layout_width="@dimen/dp_304"
+                android:layout_height="@dimen/dp_304"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@mipmap/ic_card_get_back"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:id="@+id/iv_top"
+                android:layout_width="@dimen/dp_163"
+                android:layout_height="@dimen/dp_39"
+                android:src="@mipmap/ic_card_get_top"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            
+            <ImageView
+                android:id="@+id/iv_cover"
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_260"
+                android:layout_marginTop="@dimen/dp_10"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_top" />
+
+
+
+
+            <TextView
+                android:id="@+id/tv_sure"
+                style="@style/text_white_18"
+                android:layout_width="150dp"
+                android:layout_height="@dimen/dp_46"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@mipmap/alert_btn_sure_bg"
+                android:gravity="center"
+                android:text="收下奖励"
+                app:layout_constraintTop_toBottomOf="@+id/iv_cover"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                 />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

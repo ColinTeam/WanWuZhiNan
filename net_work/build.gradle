@@ -1,0 +1,67 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'IMG_HOST', '"http://images.smart0006.cn/"'
+        buildConfigField 'String', 'APP_AES_KEY', '"forceGFpT66AjkTM"'
+        buildConfigField 'String', 'APP_AES_IV', '"force2022501luck"'
+        buildConfigField 'String', 'APP_AES_MODEL', '"AES/CBC/PKCS5Padding"'
+        buildConfigField 'String', 'APP_API_SIGNATURE', '"G5D*Y2$FDdf4gf1576SD"'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "Boolean", "IS_ENABLE_LOG", "${isEnableLog.release}"
+            buildConfigField("String", "APP_HOST", "null==null?\"${app_host.release}\":\"\"")
+        }
+
+        debug {
+            buildConfigField "Boolean", "IS_ENABLE_LOG", "${isEnableLog.debug}"
+            buildConfigField("String", "APP_HOST", "null==null?\"${app_host.debug}\":\"\"")
+        }
+    }
+}
+
+dependencies {
+
+    implementation rootProject.ext.dependVersion.core_ktx
+    implementation rootProject.ext.dependVersion.material
+    implementation rootProject.ext.dependVersion.appcompat
+    implementation rootProject.ext.dependVersion.constraintlayout
+    //okhttp
+    implementation rootProject.ext.dependVersion.okhttp
+    // retrofit2
+    def retrofit_version = rootProject.ext.dependVersion.retrofit_version
+    api rootProject.ext.dependVersion.retrofit
+    api rootProject.ext.dependVersion.retrofitRxjava
+    api rootProject.ext.dependVersion.retrofitGson
+    //日志拦截器
+    api('com.github.ihsanbal:LoggingInterceptor:3.1.0') {
+        exclude group: 'org.json', module: 'json'
+    }
+    /** rxjava框架所需依赖  */
+    api 'io.reactivex.rxjava2:rxjava:2.2.6'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    def work_version = "2.7.0"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    testImplementation rootProject.ext.dependVersion.junit
+    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
+    androidTestImplementation rootProject.ext.dependVersion.espresso_core
+}
