@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:background="@drawable/shape_ffffff_8">
+
+        <TextView
+            android:id="@+id/tv_topic"
+            style="@style/text_333333_24"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="第一节"
+            android:paddingBottom="@dimen/dp_20"
+            app:layout_constraintTop_toTopOf="parent"/>
+        
+        
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="@dimen/dp_36"
+            android:layout_height="@dimen/dp_36"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_18"
+            android:text="10"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_topic"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_20"
+            android:background="@mipmap/ic_practice_num_bg"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_black_16"
+            android:textColor="#403210"
+            app:layout_constraintTop_toBottomOf="@+id/tv_topic"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_width="@dimen/dp_0"
+            android:layout_marginStart="@dimen/dp_3"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/dp_36"
+            app:layout_constraintStart_toEndOf="@+id/tv_num"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="10、把一个焦距为10 ，小红画了图中的光路，小红画了图中的光路下列说法正确的是"/>
+
+        <ImageView
+            android:id="@+id/iv_topic"
+            android:visibility="visible"
+            android:scaleType="fitCenter"
+            android:src="@drawable/img_default_icon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:layout_marginTop="@dimen/dp_12"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/re_option"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:orientation="vertical"
+            android:nestedScrollingEnabled="false"
+            app:spanCount="2"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_answer_ask_option"
+            android:layout_marginStart="@dimen/dp_24"
+            android:layout_marginEnd="@dimen/dp_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_topic"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_result"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@+id/re_option">
+
+
+            <View
+                android:id="@+id/v_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@mipmap/ic_line_xu"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="答案解析："
+                style="@style/text_333333_20"
+                android:textColor="#403210"
+                android:layout_marginStart="@dimen/dp_17"
+                android:layout_marginTop="@dimen/dp_24"
+                app:layout_constraintTop_toBottomOf="@+id/v_line"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_sure_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正确答案：B"
+                style="@style/text_333333_20"
+                android:textColor="#FF9424"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_30"
+                app:layout_constraintTop_toBottomOf="@+id/v_line"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_answer_desc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="答案解析内容答案解析内容答案解析内容答案解析内容答案解析内容答案解析内容答案解析内容答案解析内容答案解析内容答案解析内容答案解析内容答案解析内容答案解析内容答案解析内容答案解析内容"
+                style="@style/text_333333_14"
+                android:textColor="#403210"
+                android:lineSpacingExtra="2dp"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginStart="@dimen/dp_17"
+                android:layout_marginEnd="@dimen/dp_30"
+                app:layout_constraintTop_toBottomOf="@+id/tv_sure_answer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

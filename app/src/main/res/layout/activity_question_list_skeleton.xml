@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:background="@drawable/bg_question_list_right"
+        android:paddingHorizontal="@dimen/dp_30"
+        android:paddingTop="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_16">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            style="@style/text_transparent_16"
+            app:layout_constraintTop_toTopOf="parent"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-light"
+            android:maxLines="1"
+            android:text="第一章：01 南海有龙宫？中国最南端"
+            android:textFontWeight="300"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <com.ad.img_load.img.RoundedImageView
+            android:id="@+id/iv_video"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:src="@drawable/shape_e4e4e4_5"
+            app:android_scaleType="6"
+            app:layout_constraintBottom_toTopOf="@+id/lin_imitate"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            app:riv_corner_radius="@dimen/dp_20" />
+
+        <LinearLayout
+            android:id="@+id/lin_imitate"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_46"
+            android:layout_marginRight="@dimen/dp_12"
+            android:background="@drawable/shape_fed847_22"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:alpha="0.4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="0.55"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_video">
+
+            <ImageView
+                android:layout_width="@dimen/dp_46"
+                android:layout_height="@dimen/dp_46" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:text=""
+                android:textColor="@color/color_7F4807"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_video"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_46"
+            android:background="@drawable/line_7f4807_22_1"
+            android:gravity="center"
+            android:text=""
+            android:alpha="0.4"
+            android:textColor="@color/color_7F4807"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="0.45"
+            app:layout_constraintLeft_toRightOf="@+id/lin_imitate"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

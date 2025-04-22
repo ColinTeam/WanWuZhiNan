@@ -1,0 +1,137 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion  rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'WE_CHAT_APP_ID', '"wxd55ebb21dd8fe7a2"'
+        buildConfigField 'String', 'WE_CHAT_APP_SECRET', '"72e067e19f371d8dc3ac4bc9d9e69687"'
+        buildConfigField 'String', 'WE_CHAT_APP_SCOPE', '"snsapi_userinfo"'
+        buildConfigField 'String', 'WE_CHAT_APP_STATE', '"wechat_sdk_demo_test_neng"'
+        buildConfigField 'String', 'WE_CHAT_MINI_ID', '"gh_3f131c23773d"'
+
+        //Bugly
+        buildConfigField 'String', 'BUGLY_APP_ID', '"a5311caff3"'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+    dataBinding {
+        //noinspection DataBindingWithoutKapt
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "Boolean", "IS_ENABLE_LOG", "${isEnableLog.release}"
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "Boolean", "IS_ENABLE_LOG", "${isEnableLog.debug}"
+        }
+    }
+
+}
+
+dependencies {
+
+    implementation rootProject.ext.dependVersion.core_ktx
+    implementation rootProject.ext.dependVersion.material
+    implementation rootProject.ext.dependVersion.appcompat
+    implementation rootProject.ext.dependVersion.constraintlayout
+    //implementation 'com.android.support:support-annotations:28.0.0'
+
+    def lifecycle_version = rootProject.ext.dependVersion.lifecycle_version
+
+    // ViewModel
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // LiveData
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    // 只有Lifecycles (不带 ViewModel or LiveData)
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    // lifecycle注解处理器
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    // 替换 - 如果使用Java8,就用这个替换上面的lifecycle-compiler
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    //以下按需引入
+    // 可选 - 帮助实现Service的LifecycleOwner
+    implementation "androidx.lifecycle:lifecycle-service:$lifecycle_version"
+    // 可选 - ProcessLifecycleOwner给整个 app进程 提供一个lifecycle
+    implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
+    // 可选 - ReactiveStreams support for LiveData
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    //viewpager2
+    implementation 'androidx.viewpager2:viewpager2:1.1.0-beta01'
+
+    //multidex
+    api 'androidx.multidex:multidex:2.0.1'
+
+    //Rxpermissions
+    api 'com.tbruyelle.rxpermissions2:rxpermissions:0.8.2@aar'
+    //图文详情的textview
+    api 'org.sufficientlysecure:html-textview:4.0'
+    //代替sp https://github.com/Tencent/MMKV
+    implementation 'com.tencent:mmkv-static:1.2.7'
+
+    // PictureSelector basic (Necessary)
+    api 'io.github.lucksiege:pictureselector:v3.11.2'
+    // image compress library (Not necessary)
+    api 'io.github.lucksiege:compress:v3.11.2'
+    // uCrop library (Not necessary)
+    api 'io.github.lucksiege:ucrop:v3.11.2'
+    // simple camerax library (Not necessary)
+    api 'io.github.lucksiege:camerax:v3.11.2'
+
+    //列表刷新框架
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-27'
+    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-27'
+
+    //腾讯x5
+    api 'com.tencent.tbs:tbssdk:44226'
+    //Eventbus
+    api 'org.greenrobot:eventbus:3.2.0'
+    //ToastUtils
+    implementation 'com.github.getActivity:ToastUtils:9.5'
+
+    //微信支付
+    api 'com.tencent.mm.opensdk:wechat-sdk-android:+'
+    //支付宝支付
+    implementation 'com.alipay.sdk:alipaysdk-android:+@aar'
+
+    api 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
+
+    api "com.kongzue.dialogx:DialogX:0.0.49"
+    api 'com.github.getActivity:XXPermissions:20.0'
+
+    api project(path: ':net_work')
+
+    //腾讯bug管理平台
+    api 'com.tencent.bugly:crashreport:latest.release'
+//    implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
+
+    testImplementation rootProject.ext.dependVersion.junit
+    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
+    androidTestImplementation rootProject.ext.dependVersion.espresso_core
+}

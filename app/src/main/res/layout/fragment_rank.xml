@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_17"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/shape_ffffff_top_15">
+
+            <ImageView
+                android:layout_width="@dimen/dp_238"
+                android:layout_height="@dimen/dp_238"
+                android:layout_marginStart="@dimen/dp_17"
+                android:layout_marginEnd="@dimen/dp_17"
+                android:layout_marginTop="@dimen/dp_16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@mipmap/ic_rank_bg"/>
+
+            <LinearLayout
+                android:id="@+id/ll_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/dp_40"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <com.ad.img_load.img.RoundedImageView
+                    android:id="@+id/iv_1"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    app:riv_oval="true"
+                    app:android_scaleType="6"
+                    android:src="@mipmap/default_icon" />
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_24"
+                    android:background="@drawable/shape_ffd5a505_4"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_width="@dimen/dp_14"
+                        android:layout_height="@dimen/dp_16"
+                        android:src="@mipmap/ic_compass"/>
+
+                    <TextView
+                        android:id="@+id/tv_num_1"
+                        style="@style/text_333333_12"
+                        android:text="10"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:layout_marginEnd="@dimen/sp_15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_2"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_17"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/dp_76"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <com.ad.img_load.img.RoundedImageView
+                    android:id="@+id/iv_2"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    app:riv_oval="true"
+                    app:android_scaleType="6"
+                    android:src="@mipmap/default_icon" />
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_24"
+                    android:background="@drawable/shape_ffd5a505_4"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_width="@dimen/dp_14"
+                        android:layout_height="@dimen/dp_16"
+                        android:src="@mipmap/ic_compass"/>
+
+                    <TextView
+                        android:id="@+id/tv_num_2"
+                        style="@style/text_333333_12"
+                        android:text="10"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:layout_marginEnd="@dimen/sp_15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_3"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_17"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/dp_97"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <com.ad.img_load.img.RoundedImageView
+                    android:id="@+id/iv_3"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    app:riv_oval="true"
+                    app:android_scaleType="6"
+                    android:src="@mipmap/default_icon" />
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_24"
+                    android:background="@drawable/shape_ffd5a505_4"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_width="@dimen/dp_14"
+                        android:layout_height="@dimen/dp_16"
+                        android:src="@mipmap/ic_compass"/>
+
+                    <TextView
+                        android:id="@+id/tv_num_3"
+                        style="@style/text_333333_12"
+                        android:text="10"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:layout_marginEnd="@dimen/sp_15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@+id/ll_rank"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/dp_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/dp_17"
+            android:paddingHorizontal="@dimen/dp_12"
+            android:paddingTop="@dimen/dp_12"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/shape_ffffff_top_15"
+            android:orientation="vertical"
+            >
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_39"
+                android:background="@drawable/bg_rank_num_bg"
+                android:gravity="center_vertical">
+                
+                <TextView
+                    android:id="@+id/tv_my_num"
+                    style="@style/text_white_20"
+                    android:layout_width="@dimen/dp_55"
+                    android:layout_marginStart="@dimen/dp_27"
+                    android:text="0"/>
+
+                <com.ad.img_load.img.RoundedImageView
+                    android:id="@+id/riv_head"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:src="@mipmap/ic_home_audio"
+                    app:riv_oval="true"
+                    app:android_scaleType="6" />
+
+                <TextView
+                    android:id="@+id/tv_my_name"
+                    style="@style/text_white_12"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/dp_7"
+                    android:text="0"/>
+
+                <LinearLayout
+                    android:layout_width="@dimen/dp_107"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_18">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_19"
+                        android:layout_height="@dimen/dp_19"
+                        android:src="@mipmap/ic_compass"/>
+
+                    <TextView
+                        android:id="@+id/tv_my_compass_num"
+                        style="@style/text_white_16"
+                        android:text="0"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/shape_ffc285_16_line_1"
+                android:paddingHorizontal="@dimen/dp_18"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/text_333333_14"
+                        android:layout_width="@dimen/dp_60"
+                        android:text="排名"/>
+
+                    <TextView
+                        style="@style/text_333333_14"
+                        android:layout_weight="1"
+                        android:text="用户ID"/>
+
+                    <TextView
+                        style="@style/text_333333_14"
+                        android:layout_width="@dimen/dp_107"
+                        android:text="累计指南针"/>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/re_audio_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_rank_list" />
+
+            </LinearLayout>
+            
+
+
+
+
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

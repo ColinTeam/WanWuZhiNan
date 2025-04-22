@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99333333">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width= "636dp"
+            android:layout_height="@dimen/dp_352"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/shape_dd770a_20_5">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="@dimen/dp_12"
+                android:layout_marginVertical="@dimen/dp_12"
+                android:background="@drawable/shape_ffc285_12_line_1">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    style="@style/text_333333_20"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/dp_36"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:text="快速筛选"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_screen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                    android:layout_marginStart="@dimen/dp_36"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        style="@style/text_333333_16"
+                        android:textStyle="bold"
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:text="筛选题目"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_19"
+                        android:orientation="horizontal">
+                        
+                        <TextView
+                            android:id="@+id/tv_finish"
+                            android:layout_width="@dimen/dp_90"
+                            android:layout_height="@dimen/dp_34"
+                            android:text="答过"
+                            android:textSize="@dimen/sp_14"
+                            android:background="@drawable/selector_question_bg"
+                            android:textColor="@drawable/selector_question_textcolore"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/tv_nofinish"
+                            android:layout_width="@dimen/dp_90"
+                            android:layout_height="@dimen/dp_34"
+                            android:text="未答过"
+                            android:background="@drawable/selector_question_bg"
+                            android:textColor="@drawable/selector_question_textcolore"
+                            android:layout_marginStart="@dimen/dp_12"
+                            android:textSize="@dimen/sp_14"
+                            android:gravity="center"/>
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/text_333333_16"
+                        android:textStyle="bold"
+                        android:layout_marginTop="@dimen/dp_19"
+                        android:text="正常情况"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_19"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_true"
+                            android:layout_width="@dimen/dp_90"
+                            android:layout_height="@dimen/dp_34"
+                            android:text="正确"
+                            android:textSize="@dimen/sp_14"
+                            android:background="@drawable/selector_question_bg"
+                            android:textColor="@drawable/selector_question_textcolore"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/tv_false"
+                            android:layout_width="@dimen/dp_90"
+                            android:layout_height="@dimen/dp_34"
+                            android:text="错题"
+                            android:layout_marginStart="@dimen/dp_12"
+                            android:background="@drawable/selector_question_bg"
+                            android:textColor="@drawable/selector_question_textcolore"
+                            android:textSize="@dimen/sp_14"
+                            android:gravity="center"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@+id/ll_screen"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ll_screen"
+                    app:layout_constraintBottom_toBottomOf="@+id/ll_screen"
+                    android:layout_marginStart="@dimen/dp_63"
+                    android:layout_marginEnd="@dimen/dp_35"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        style="@style/text_333333_16"
+                        android:textStyle="bold"
+                        android:text="筛选课程"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/re_list"
+                        android:layout_marginTop="@dimen/dp_19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        app:layoutManager="com.chad.library.adapter.base.layoutmanager.QuickGridLayoutManager"
+                        app:spanCount="3"
+                        tools:listitem="@layout/item_question_screen"
+                        />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_sure"
+                    style="@style/text_white_18"
+                    android:layout_width="@dimen/dp_150"
+                    android:layout_height="@dimen/dp_46"
+                    android:visibility="visible"
+                    android:background="@mipmap/alert_btn_sure_bg"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="center"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:text="确定" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

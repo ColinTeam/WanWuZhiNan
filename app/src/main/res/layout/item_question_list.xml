@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/dp_218"
+            android:layout_height="@dimen/dp_116"
+            android:scaleType="fitXY"
+            android:layout_marginTop="@dimen/dp_40"
+            android:layout_marginEnd="@dimen/dp_40"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@mipmap/bg_question_list_0"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_marginTop="@dimen/dp_56"
+            style="@style/text_white_20"
+            android:text="第一季"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textFontWeight="600"
+            android:layout_width="@dimen/dp_0"
+            android:layout_marginStart="@dimen/dp_16"
+            android:fontFamily="sans-serif-light"
+            app:layout_constraintStart_toStartOf="@+id/iv_back"
+            app:layout_constraintEnd_toEndOf="@+id/iv_back"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_marginTop="@dimen/dp_9"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_width="0dp"
+            style="@style/text_white_14"
+            android:text="第一季"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textFontWeight="600"
+            android:fontFamily="sans-serif-light"
+            app:layout_constraintStart_toStartOf ="@+id/iv_back"
+            app:layout_constraintEnd_toEndOf ="@+id/iv_back"
+            app:layout_constraintTop_toBottomOf ="@+id/tv_name"/>
+        
+        <ImageView
+            android:id="@+id/iv_top"
+            android:layout_width="@dimen/dp_128"
+            android:layout_height="@dimen/dp_128"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@mipmap/ic_question_list_0"/>
+
+        <ImageView
+            android:id="@+id/iv_top_1"
+            android:layout_width="@dimen/dp_72"
+            android:layout_height="@dimen/dp_128"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/iv_back"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+            android:src="@mipmap/ic_answer_list_0"/>
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

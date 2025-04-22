@@ -1,0 +1,42 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion  rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "Boolean", "IS_ENABLE_LOG", "${isEnableLog.release}"
+        }
+        debug{
+            buildConfigField "Boolean", "IS_ENABLE_LOG", "${isEnableLog.debug}"
+        }
+    }
+}
+
+dependencies {
+
+    implementation rootProject.ext.dependVersion.core_ktx
+    implementation rootProject.ext.dependVersion.material
+    implementation rootProject.ext.dependVersion.appcompat
+    implementation rootProject.ext.dependVersion.constraintlayout
+    testImplementation rootProject.ext.dependVersion.junit
+    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
+    androidTestImplementation rootProject.ext.dependVersion.espresso_core
+}

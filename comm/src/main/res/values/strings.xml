@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">智慧鲸</string>
+
+    <string name="public_copy_successfully">内容已复制成功</string>
+    <string name="loading_text">加载中…</string>
+    <string name="permission_error">您没有授予该权限，请在设置中打开该权限</string>
+</resources>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_90"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="@drawable/shape_ffc285_16_line_1"
+        android:layout_marginBottom="@dimen/dp_20">
+
+        <com.ad.img_load.img.RoundedImageView
+            android:id="@+id/riv_image"
+            android:layout_width="@dimen/dp_74"
+            android:layout_height="@dimen/dp_74"
+            app:riv_corner_radius="@dimen/dp_16"
+            app:android_scaleType="6"
+            android:src="@mipmap/default_icon"
+            android:layout_marginStart="@dimen/dp_9"
+            android:layout_marginTop="@dimen/dp_7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/text_black_14"
+            android:textFontWeight="500"
+            app:layout_constraintTop_toTopOf="parent"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginTop="@dimen/dp_13"
+            android:layout_width="@dimen/dp_0"
+            android:layout_marginStart="@dimen/dp_20"
+            app:layout_constraintLeft_toRightOf="@+id/riv_image"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="物理八分钟"/>
+
+
+        <TextView
+            android:id="@+id/tv_subtitle"
+            style="@style/text_black_12"
+            android:text=""
+            android:layout_width="@dimen/dp_0"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_20"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            app:layout_constraintLeft_toRightOf="@+id/riv_image"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_unit"
+            android:text="价值："
+            style="@style/text_333333_14"
+            android:layout_marginTop="@dimen/dp_3"
+            android:layout_marginStart="@dimen/dp_20"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
+            app:layout_constraintLeft_toRightOf="@+id/riv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:text="："
+            android:textFontWeight="600"
+            style="@style/text_333333_14"
+            android:textColor="#FF9424"
+            android:layout_marginTop="@dimen/dp_3"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
+            app:layout_constraintLeft_toRightOf="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_check"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_17"
+            android:gravity="center"
+            style="@style/text_white_12"
+            android:text="查看"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/shape_ff9424_4"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

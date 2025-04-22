@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_F7F8F9">
+
+        <com.wanwuzhinan.mingchang.view.DefaultToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:center_title="@string/add_address"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/lin_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:divider="@drawable/line_dddddd"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:showDividers="middle">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_58"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <TextView
+                    style="@style/text_black_14"
+                    android:layout_centerVertical="true"
+                    android:text="@string/consignee"/>
+
+                <EditText
+                    android:id="@+id/ed_name"
+                    style="@style/text_black_14"
+                    android:background="@null"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_75"
+                    android:textColorHint="@color/color_dddddd"
+                    android:layout_centerVertical="true"
+                    android:layout_width="match_parent"
+                    android:maxLines="1"
+                    android:hint="@string/input_consignee_hint"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_58"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <TextView
+                    style="@style/text_black_14"
+                    android:layout_centerVertical="true"
+                    android:text="@string/phone"/>
+
+                <EditText
+                    android:id="@+id/ed_phone"
+                    style="@style/text_black_14"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_75"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:textColorHint="@color/color_dddddd"
+                    android:layout_centerVertical="true"
+                    android:hint="@string/input_consignee_phone_hint"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/lin_city"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_58"
+                android:background="@drawable/bg_transparent0_click"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <TextView
+                    style="@style/text_black_14"
+                    android:layout_centerVertical="true"
+                    android:text="@string/consignee_city"/>
+
+                <TextView
+                    android:id="@+id/tv_city"
+                    style="@style/text_black_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_75"
+                    android:layout_toLeftOf="@+id/iv_city"
+                    android:textColorHint="@color/color_dddddd"
+                    android:layout_centerVertical="true"
+                    android:hint="@string/input_consignee_city_hint"/>
+
+                <ImageView
+                    android:id="@+id/iv_city"
+                    android:layout_width="@dimen/dp_8"
+                    android:layout_height="@dimen/dp_8"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/ic_right_grey_back"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_82"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <TextView
+                    style="@style/text_black_14"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:text="@string/address_details"/>
+
+                <EditText
+                    android:id="@+id/ed_address"
+                    style="@style/text_black_14"
+                    android:background="@null"
+                    android:minHeight="@dimen/dp_50"
+                    android:gravity="top"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="@dimen/dp_75"
+                    android:textColorHint="@color/color_dddddd"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:hint="@string/input_address_details_hint"/>
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_22"
+            android:paddingHorizontal="@dimen/dp_16"
+            app:layout_constraintTop_toBottomOf="@+id/lin_edit"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_set"
+                style="@style/text_black_13"
+                android:text="@string/set_default_address"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                style="@style/text_666666_12"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintTop_toBottomOf="@+id/tv_set"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="@string/default_use_address"/>
+
+            <Switch
+                android:id="@+id/switch_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:switchMinWidth="@dimen/dp_20"
+                android:thumb="@drawable/base_switch_thumb_selector"
+                android:track="@drawable/base_switch_track_selector"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_save"
+            style="@style/default_button"
+            app:layout_constraintTop_toBottomOf="@+id/cl_default"
+            android:text="@string/save"
+            android:layout_marginTop="@dimen/dp_60"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

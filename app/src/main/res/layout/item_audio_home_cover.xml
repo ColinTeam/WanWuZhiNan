@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/dp_218"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_20"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/shape_ffffff_8">
+
+            <com.ad.img_load.img.RoundedImageView
+                android:id="@+id/riv_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="@dimen/dp_4"
+                android:layout_width="@dimen/dp_210"
+                android:layout_height="@dimen/dp_116"
+                app:riv_corner_radius="@dimen/dp_8"
+                android:src="@mipmap/default_icon"
+                app:android_scaleType="6" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@+id/riv_image"
+                app:layout_constraintBottom_toBottomOf="@+id/riv_image"
+                app:layout_constraintEnd_toEndOf="@+id/riv_image"
+                app:layout_constraintTop_toTopOf="@id/riv_image"
+                android:src="@drawable/audio_image_cover"
+                />
+            
+            <TextView
+                android:id="@+id/tv_subtitle"
+                style="@style/text_white_16"
+                android:text=""
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_18"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_num"
+                style="@style/text_white_14"
+                android:text="1"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="@dimen/dp_18"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/dp_6"
+                android:background="@drawable/shape_ffffff_line_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tv_subtitle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_white_14"
+            android:text=""
+            android:lines="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_3"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_cover" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

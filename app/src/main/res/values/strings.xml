@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">万物指南</string>
+    <string name="input_address_details_hint">请填写街道、楼牌号等</string>
+    <string name="input_consignee_hint">请输入收货人姓名</string>
+    <string name="input_consignee_phone_hint">请输入收货人手机号</string>
+    <string name="input_consignee_city_hint">请选择省市区/县</string>
+    <string name="consignee_city">所在地区</string>
+    <string name="consignee">收货人</string>
+    <string name="set_default_address">设为默认地址</string>
+    <string name="default_use_address">每次下单会默认使用此地址</string>
+    <string name="save">保存</string>
+    <string name="add_address">添加地址</string>
+    <string name="phone">手机号</string>
+    <string name="address_details">详细地址</string>
+    <string name="sure_delete_address">是否确认删除此地址？</string>
+    <string name="privacy_title">我已阅读并同意</string>
+    <string name="user_privacy">《用户协议》</string>
+    <string name="privacy_policy">《隐私政策》</string>
+    <string name="privacy_child">《儿童隐私政策》</string>
+    <string name="and">和</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

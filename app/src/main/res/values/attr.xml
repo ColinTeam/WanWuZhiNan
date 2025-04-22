@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="default_toolbar">
+        <attr name="center_title" format="string" />
+        <attr name="dt_center_title_color" format="color" />
+        <attr name="dt_right_title" format="string" />
+        <attr name="dt_bu_right_title" format="string" />
+        <attr name="dt_back_visibility" format="boolean" />
+        <attr name="dt_back_color" format="color" />
+        <attr name="dt_right_image" format="reference" />
+        <attr name="dt_left_image" format="reference" />
+        <attr name="dt_right_title_color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="default_Evaluate">
+        <attr name="de_type">
+            <enum name="show" value="0" />
+            <enum name="edit" value="1" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="ClickImageView">
+        <attr name="click_type">
+            <enum name="grey" value="0" />
+            <enum name="scale" value="1" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="default_protocol">
+        <attr name="default_protocol_color" format="color" />
+        <attr name="agreement_title1" format="string" />
+        <attr name="agreement_title2" format="string" />
+        <attr name="agreement_title3" format="string" />
+    </declare-styleable>
+    <declare-styleable name="PwdEditText">
+        <attr name="pet_space" format="dimension"/>
+        <attr name="pet_strokeWidth" format="dimension"/>
+        <attr name="pet_checkedColor" format="color"/>
+        <attr name="pet_defaultColor" format="color"/>
+        <attr name="pet_textLength" format="integer"/>
+        <attr name="pet_backColor" format="color"/>
+        <attr name="pet_textColor" format="color"/>
+        <attr name="pet_circle" format="dimension"/>
+        <attr name="pet_round" format="dimension"/>
+        <attr name="pet_textSize" format="dimension"/>
+        <attr name="pet_isPwd" format="boolean"/>
+        <attr name="pet_waitInputColor" format="color"/>
+        <attr name="pet_isWaitInput" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="IndexBar">
+        <attr name="indexBarTextSize" format="dimension"/>
+        <attr name="indexBarPressBackground" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SideIndexBar">
+        <attr name="cp_index_bar_text_size" format="dimension"/>
+        <attr name="cp_index_bar_normal_text_color" format="color|reference"/>
+        <attr name="cp_index_bar_selected_text_color" format="color|reference"/>
+    </declare-styleable>
+    <declare-styleable name="ShapeBlurView">
+        <attr name="blur_radius" format="dimension" />
+        <attr name="blur_down_sample" format="float" />
+        <attr name="blur_overlay_color" format="color" />
+        <attr name="blur_corner_radius" format="dimension" />
+        <attr name="blur_corner_radius_top_left" format="dimension" />
+        <attr name="blur_corner_radius_top_right" format="dimension" />
+        <attr name="blur_corner_radius_bottom_left" format="dimension" />
+        <attr name="blur_corner_radius_bottom_right" format="dimension" />
+        <attr name="blur_border_width" format="dimension" />
+        <attr name="blur_border_color" format="color" />
+        <attr name="blur_mode">
+            <enum name="rectangle" value="0" />
+            <enum name="circle" value="1" />
+            <enum name="oval" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

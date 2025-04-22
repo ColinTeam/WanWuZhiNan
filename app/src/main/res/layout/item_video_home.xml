@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.hjq.shape.layout.ShapeConstraintLayout
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_200"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:shape="rectangle"
+        app:shape_radius="@dimen/dp_6"
+        app:shape_shadowColor="#66000000"
+        app:shape_shadowSize="4dp"
+        app:shape_solidColor="#F0F5FF"
+        >
+
+        <com.ad.img_load.img.RoundedImageView
+            android:id="@+id/riv_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:riv_corner_radius="@dimen/dp_6"
+            android:scaleType="centerCrop"
+            app:android_scaleType="6"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:riv_corner_radius="@dimen/dp_6"
+            app:android_scaleType="6"
+            android:src="@drawable/shape_cover_video_list"/>
+
+        <TextView
+            android:id="@+id/tv_number"
+            style="@style/text_white_14"
+            android:textFontWeight="400"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="@dimen/dp_12"
+            android:layout_width="@dimen/dp_0"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="No.11-18 共8节"/>
+
+        <TextView
+            android:id="@+id/tv_first"
+            style="@style/text_white_14"
+            android:layout_marginTop="@dimen/dp_6"
+            android:textFontWeight="600"
+            app:layout_constraintBottom_toTopOf="@+id/tv_number"
+            app:layout_constraintLeft_toLeftOf="@id/tv_number"
+            app:layout_constraintRight_toRightOf="@id/tv_number"
+            android:layout_width="@dimen/dp_0"
+            android:text="第一季"/>
+
+    </com.hjq.shape.layout.ShapeConstraintLayout>
+
+</layout>

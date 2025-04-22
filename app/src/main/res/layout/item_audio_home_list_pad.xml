@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_24"
+        android:background="@drawable/shape_ffffff_8"
+        android:layout_marginBottom="@dimen/dp_2"
+        android:gravity="center_vertical"
+        >
+        
+        <com.ad.img_load.img.RoundedImageView
+            android:id="@+id/riv_head"
+            android:layout_marginStart="@dimen/dp_11"
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_18"
+            app:android_scaleType="6"
+            android:src="@mipmap/default_icon"
+            app:riv_corner_radius="2dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:textSize="@dimen/sp_7"
+            android:textColor="@color/color_333333"
+            android:gravity="center_vertical"
+            android:text="11111"/>
+
+        <ImageView
+            android:id="@+id/iv_state"
+            android:layout_width="@dimen/dp_11"
+            android:layout_height="@dimen/dp_11"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/dp_6"
+            android:src="@mipmap/ic_play_state"/>
+
+    </LinearLayout>
+
+</layout>

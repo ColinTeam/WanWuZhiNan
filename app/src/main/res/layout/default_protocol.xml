@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_select"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:paddingVertical="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_20"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_read"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:srcCompat="@drawable/selector_default"/>
+
+        <TextView
+            android:id="@+id/tv_read"
+            style="@style/text_333333_13"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text="@string/privacy_title"
+            app:layout_constraintLeft_toRightOf="@+id/iv_select"
+            app:layout_constraintRight_toLeftOf="@+id/tv_user_agreement"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_user_agreement"
+            style="@style/text_999999_13"
+            android:textColor="@color/color_default"
+            app:layout_constraintLeft_toRightOf="@+id/tv_read"
+            app:layout_constraintTop_toTopOf="@+id/iv_select"
+            android:background="@drawable/login_text_agreement_bg"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_select"
+            app:layout_constraintRight_toLeftOf="@+id/tv_and"
+            android:text="@string/user_privacy"/>
+
+        <TextView
+            android:id="@+id/tv_and"
+            style="@style/text_white_13"
+            android:visibility="gone"
+            app:layout_constraintLeft_toRightOf="@+id/tv_user_agreement"
+            app:layout_constraintTop_toTopOf="@+id/iv_select"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_select"
+            app:layout_constraintRight_toLeftOf="@+id/tv_privacy_agreement"
+            android:text="@string/and"/>
+
+        <TextView
+            android:id="@+id/tv_privacy_agreement"
+            style="@style/text_999999_13"
+            android:textColor="@color/color_default"
+            app:layout_constraintLeft_toRightOf="@+id/tv_and"
+            app:layout_constraintTop_toTopOf="@+id/iv_select"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_select"
+            android:background="@drawable/login_text_agreement_bg"
+            android:text="@string/privacy_policy"/>
+
+        <TextView
+            android:id="@+id/tv_child_agreement"
+            style="@style/text_999999_13"
+            android:textColor="@color/color_default"
+            app:layout_constraintLeft_toRightOf="@+id/tv_privacy_agreement"
+            app:layout_constraintTop_toTopOf="@+id/iv_select"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_select"
+            android:background="@drawable/login_text_agreement_bg"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="@string/privacy_child"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bg_honor_home1"/>
+    <item android:drawable="@drawable/bg_honor_home2"
+        android:top="@dimen/dp_6"
+        android:bottom="@dimen/dp_6"
+        android:left="@dimen/dp_6"
+        android:right="@dimen/dp_6"/>
+</layer-list>
