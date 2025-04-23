@@ -2,6 +2,7 @@ package com.ssm.comm.ext
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Point
 import android.graphics.Rect
 import android.util.DisplayMetrics
@@ -9,6 +10,7 @@ import android.util.TypedValue
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.res.ResourcesCompat
 import com.ssm.comm.app.appContext
 
 /**
@@ -16,6 +18,22 @@ import com.ssm.comm.app.appContext
  *  @Date 2020/7/1
  **/
 /************************************** 单位转换*********************************************** */
+
+val Context.displayMetrics: DisplayMetrics
+    get() = resources.displayMetrics
+
+/**
+ * 获取当前设备屏幕的宽高比
+ *
+ * 该扩展属性通过[Context.displayMetrics]获取屏幕物理像素尺寸，并计算宽度与高度的比值。
+ * 注意宽高比始终以宽度为分子，因此返回值可能大于1（横屏）或小于1（竖屏）
+ *
+ * @receiver 上下文对象，用于获取显示度量信息
+ * @return 屏幕的宽高比，返回值为正浮点数，范围在0到+∞之间
+ */
+val Context.aspectRatio: Float
+    get() = displayMetrics.run { widthPixels.toFloat() / heightPixels }
+
 /**
  * 像素密度
  */
@@ -32,9 +50,19 @@ fun dp2px(dpValue: Float): Float {
     )
 }
 
-val Float.dp get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,this, appContext.resources!!.displayMetrics)
+val Float.dp
+    get() = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this,
+        appContext.resources!!.displayMetrics
+    )
 
-val Int.dp get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), appContext.resources!!.displayMetrics).toInt()
+val Int.dp
+    get() = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.toFloat(),
+        appContext.resources!!.displayMetrics
+    ).toInt()
 
 /**
  * px 转成为 dp

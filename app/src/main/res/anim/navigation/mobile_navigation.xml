@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/fragment_home">
+
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.colin.android.demo.kotlin.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment" />
+
+    <fragment
+        android:id="@+id/fragment_gallery"
+        android:name="com.colin.android.demo.kotlin.ui.gallery.GalleryFragment"
+        android:label="@string/title_gallery"
+        tools:layout="@layout/fragment" />
+
+    <fragment
+        android:id="@+id/fragment_slideshow"
+        android:name="com.colin.android.demo.kotlin.ui.slideshow.SlideshowFragment"
+        android:label="@string/title_slideshow"
+        tools:layout="@layout/fragment" />
+    <fragment
+        android:id="@+id/fragment_method"
+        android:name="com.colin.android.demo.kotlin.ui.method.MethodFragment"
+        android:label="@string/title_log"
+        tools:layout="@layout/layout_refresh_list" />
+    <fragment
+        android:id="@+id/fragment_log"
+        android:name="com.colin.android.demo.kotlin.ui.method.LogFragment"
+        android:label="@string/title_log"
+        tools:layout="@layout/layout_refresh_list" />
+    <fragment
+        android:id="@+id/fragment_webIndex"
+        android:name="com.colin.android.demo.kotlin.ui.web.WebIndexFragment"
+        android:label="@string/title_log"
+        tools:layout="@layout/layout_refresh_list" />
+    <action
+        android:id="@+id/action_to_log"
+        app:destination="@+id/fragment_log"
+        app:enterAnim="@android:animator/fade_in"
+        app:exitAnim="@android:animator/fade_out"
+        app:popEnterAnim="@android:animator/fade_in"
+        app:popExitAnim="@android:animator/fade_out"
+        app:popUpTo="@+id/fragment_log" />
+
+</navigation>
