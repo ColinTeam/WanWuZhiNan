@@ -175,6 +175,8 @@ dependencies {
     implementation rootProject.ext.dependVersion.appcompat
     implementation rootProject.ext.dependVersion.recyclerview
     implementation rootProject.ext.dependVersion.constraintlayout
+    implementation rootProject.ext.dependVersion.navigationFragment
+    implementation rootProject.ext.dependVersion.navigationUI
     implementation rootProject.ext.dependVersion.liteavSdk
     //https://github.com/LetMeOff/SimpleDownload 携程下载文件
     implementation 'com.github.LetMeOff:SimpleDownload:v1.0.0'

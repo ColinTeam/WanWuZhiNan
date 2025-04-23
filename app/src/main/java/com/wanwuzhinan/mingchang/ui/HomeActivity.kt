@@ -3,22 +3,21 @@ package com.wanwuzhinan.mingchang.ui
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
-import android.view.Gravity
 import android.view.Menu
-import android.view.MenuItem
-import android.view.WindowManager
-import android.widget.ArrayAdapter
 import androidx.annotation.IdRes
-import androidx.appcompat.widget.ListPopupWindow
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.databinding.ActivityMainBinding
+import com.wanwuzhinan.mingchang.utils.Log
 
 /**
  * Author:ColinLu
@@ -29,50 +28,22 @@ import com.wanwuzhinan.mingchang.databinding.ActivityMainBinding
  */
 class HomeActivity : AppActivity<ActivityMainBinding, HomeViewModel>() {
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private var listPopupWindow: ListPopupWindow? = null
 
 
-    private val callback = object : IAidlRemoteCallback.Stub() {
-        override fun aidlChanged(data: String?) {
-            data?.let { Log.i("data:$it") }
-        }
-
-        override fun itemChanged(itembean: ItemBean?) {
-            itembean?.let { Log.i("itemBean:$it") }
-        }
-
-    }
-    private val connection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName, service: IBinder) {
-            aidlService = IDemoAidlInterface.Stub.asInterface(service)
-            aidlService!!.register(callback)
-        }
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-
-        }
-    }
-    private var aidlService: IDemoAidlInterface? = null
     override fun onResume() {
         super.onResume()
-        viewModel.update(true)
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.update(false)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        aidlService?.let {
-            it.unregister(callback)
-            unbindService(connection)
-        }
+
     }
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
         setSupportActionBar(viewBinding.appBarMain.toolbar)
         viewBinding.appBarMain.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -85,10 +56,7 @@ class HomeActivity : AppActivity<ActivityMainBinding, HomeViewModel>() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.fragment_home,
-                R.id.fragment_gallery,
-                R.id.fragment_method,
-                R.id.fragment_slideshow
+                R.id.fragment_home
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -105,26 +73,11 @@ class HomeActivity : AppActivity<ActivityMainBinding, HomeViewModel>() {
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        viewModel.status.observe {
+        viewModel.isLogin.observe {
             Log.i(TAG, "status:$it")
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_language) {
-            val popupWindow = listPopupWindow ?: createPopupWindow().also {
-                listPopupWindow = it
-            }
-            popupWindow.show()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)

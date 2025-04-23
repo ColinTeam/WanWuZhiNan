@@ -40,13 +40,13 @@ open class AppViewModel : ViewModel() {
         error: suspend (Throwable) -> Unit
     ) = viewModelScope.launch {
         try {
-            if (showLoading) _showLoading.tryEmit(true)
+            if (showLoading) _isLoading.tryEmit(true)
             block()
         } catch (e: Throwable) {
             error(e)
             if (interceptError) action(e)
         }
-        if (showLoading) _showLoading.tryEmit(false)
+        if (showLoading) _isLoading.tryEmit(false)
     }
 
     /**
