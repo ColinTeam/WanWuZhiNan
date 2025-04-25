@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.viewbinding.ViewBinding
+import com.ssm.comm.ext.aspectRatio
 import com.wanwuzhinan.mingchang.utils.Log
 import java.lang.reflect.ParameterizedType
 
@@ -19,6 +21,7 @@ abstract class AppFragment<VB : ViewBinding, VM : ViewModel> : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i(requireContext().aspectRatio)
     }
 
     override fun onCreateView(
@@ -69,7 +72,9 @@ abstract class AppFragment<VB : ViewBinding, VM : ViewModel> : BaseFragment() {
     @Throws(IllegalStateException::class)
     private fun <VM : ViewModel> reflectViewModel(): VM {
         try {
-            return ViewModelProvider.create(bindViewModelStore())[getActualClass(1)]
+            return ViewModelProvider(
+                bindViewModelStore(), ViewModelProvider.NewInstanceFactory(), CreationExtras.Empty
+            )[getActualClass(1)]
         } catch (e: Exception) {
             Log.log(e)
         }

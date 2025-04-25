@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.viewbinding.ViewBinding
 import com.wanwuzhinan.mingchang.utils.Log
 import java.lang.reflect.ParameterizedType
@@ -45,7 +46,9 @@ abstract class AppActivity<VB : ViewBinding, VM : ViewModel> : BaseActivity() {
     @Throws(IllegalStateException::class)
     private fun <VM : ViewModel> reflectViewModel(): VM {
         try {
-            return ViewModelProvider.create(bindViewModelStore())[getActualClass(1)]
+            return ViewModelProvider(
+                bindViewModelStore(), ViewModelProvider.NewInstanceFactory(), CreationExtras.Empty
+            )[getActualClass(1)]
         } catch (e: Exception) {
             Log.log(e)
         }
