@@ -50,11 +50,10 @@
                 android:id="@+id/img_head"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_0"
-
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintStart_toStartOf="@+id/line_margin_start"
                 app:layout_constraintTop_toBottomOf="@+id/line_margin_top"
-                app:layout_constraintWidth_percent="0.25"
+                app:layout_constraintWidth_percent="0.12"
                 app:shapeAppearanceOverlay="@style/ImageCircle"
                 app:srcCompat="@mipmap/ic_head_upload" />
 
@@ -121,431 +120,63 @@
             </com.google.android.material.tabs.TabLayout>
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/img_physics_bg"
+                android:id="@+id/img_one_bg"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_0"
                 android:layout_marginTop="@dimen/common_margin"
+                android:layout_marginEnd="@dimen/common_margin"
+                android:background="@drawable/bg_rank_num_bg"
                 android:contentDescription="物理万事通"
-                android:paddingStart="@dimen/common_margin"
-                android:paddingEnd="@dimen/common_margin"
-                android:src="@drawable/bg_rank_num_bg"
+                android:src="@mipmap/ic_main_audio_02_top_right"
                 app:layout_constraintDimensionRatio="h,1:1"
-                app:layout_constraintEnd_toEndOf="@+id/line_margin_end"
+                app:layout_constraintEnd_toStartOf="@+id/img_two_bg"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="@+id/line_margin_start"
                 app:layout_constraintTop_toBottomOf="@+id/tab"
-                app:shapeAppearanceOverlay="@style/ImagePhysicsBg"
-                app:srcCompat="@mipmap/ic_head_upload" />
+                app:shapeAppearanceOverlay="@style/ImagePhysicsBg" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/img_story_bg"
+                android:id="@+id/img_two_bg"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_0"
-                android:layout_marginTop="@dimen/common_margin"
+                android:background="@drawable/bg_rank_num_bg"
                 android:contentDescription="音频故事通"
-                android:paddingStart="@dimen/common_margin"
-                android:paddingEnd="@dimen/common_margin"
-                android:src="@drawable/bg_rank_num_bg"
                 app:layout_constraintDimensionRatio="h,2:1"
                 app:layout_constraintEnd_toEndOf="@+id/line_margin_end"
-                app:layout_constraintStart_toStartOf="@+id/line_margin_start"
-                app:layout_constraintTop_toBottomOf="@+id/img_physics_bg"
-                app:shapeAppearanceOverlay="@style/ImagePhysicsBg"
-                app:srcCompat="@mipmap/ic_head_upload" />
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/img_one_bg"
+                app:layout_constraintTop_toTopOf="@+id/img_one_bg"
+                app:shapeAppearanceOverlay="@style/ImagePhysicsBg" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/img_best_bg"
+                android:id="@+id/img_three_bg"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_0"
-                android:layout_marginStart="@dimen/common_margin"
                 android:layout_marginTop="@dimen/common_margin"
                 android:layout_marginEnd="@dimen/common_margin"
+                android:background="@drawable/bg_rank_num_bg"
                 android:contentDescription="物理万事通"
-                android:src="@drawable/bg_rank_num_bg"
-                app:layout_constraintDimensionRatio="h,3:2"
-                app:layout_constraintEnd_toEndOf="@+id/line_margin_end"
-                app:layout_constraintEnd_toStartOf="@+id/img_qa_bg"
-                app:layout_constraintHorizontal_weight="3"
-                app:layout_constraintStart_toStartOf="@+id/line_margin_start"
-                app:layout_constraintTop_toBottomOf="@+id/img_story_bg"
-                app:shapeAppearanceOverlay="@style/ImagePhysicsBg"
-                app:srcCompat="@mipmap/ic_head_upload" />
+                app:layout_constraintBottom_toBottomOf="@+id/img_one_bg"
+                app:layout_constraintEnd_toStartOf="@+id/img_four_bg"
+                app:layout_constraintHorizontal_weight="5"
+                app:layout_constraintStart_toStartOf="@+id/img_two_bg"
+                app:layout_constraintTop_toBottomOf="@+id/img_two_bg"
+                app:shapeAppearanceOverlay="@style/ImagePhysicsBg" />
+
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/img_qa_bg"
+                android:id="@+id/img_four_bg"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_0"
-                android:layout_marginEnd="@dimen/common_margin"
+                android:background="@drawable/bg_rank_num_bg"
                 android:contentDescription="龙门题库通"
-                android:src="@drawable/bg_rank_num_bg"
-                app:layout_constraintDimensionRatio="h,2:2"
-                app:layout_constraintEnd_toEndOf="@+id/line_margin_end"
-                app:layout_constraintHorizontal_weight="2"
-                app:layout_constraintStart_toEndOf="@+id/img_best_bg"
-                app:layout_constraintTop_toTopOf="@+id/img_best_bg"
-                app:shapeAppearanceOverlay="@style/ImagePhysicsBg"
-                app:srcCompat="@mipmap/ic_head_upload" />
+                app:layout_constraintBottom_toBottomOf="@+id/img_three_bg"
+                app:layout_constraintEnd_toStartOf="@+id/line_margin_end"
+                app:layout_constraintHorizontal_weight="4"
+                app:layout_constraintStart_toEndOf="@+id/img_three_bg"
+                app:layout_constraintTop_toTopOf="@+id/img_three_bg"
+                app:shapeAppearanceOverlay="@style/ImagePhysicsBg" />
 
-
-            <!--        <com.ad.img_load.img.RoundedImageView-->
-            <!--            android:id="@+id/riv_head"-->
-            <!--            android:layout_width="@dimen/dp_55"-->
-            <!--            android:layout_height="@dimen/dp_55"-->
-            <!--            android:layout_marginStart="@dimen/dp_54"-->
-            <!--            android:layout_marginTop="@dimen/dp_31"-->
-            <!--            android:src="@mipmap/ic_head_upload"-->
-            <!--            app:android_scaleType="6"-->
-            <!--            app:layout_constraintStart_toStartOf="parent"-->
-            <!--            app:layout_constraintTop_toTopOf="parent"-->
-            <!--            app:riv_oval="true" />-->
-
-            <!--        <LinearLayout-->
-            <!--            android:id="@+id/lin_setting"-->
-            <!--            android:layout_width="@dimen/dp_84"-->
-            <!--            android:layout_height="@dimen/dp_20"-->
-            <!--            android:layout_marginStart="@dimen/dp_12"-->
-            <!--            android:layout_marginTop="@dimen/dp_5"-->
-            <!--            android:background="@drawable/shape_ff9424_4"-->
-            <!--            android:gravity="center_vertical"-->
-            <!--            app:layout_constraintStart_toEndOf="@id/riv_head"-->
-            <!--            app:layout_constraintTop_toTopOf="@id/riv_head">-->
-
-            <!--            <TextView-->
-            <!--                style="@style/text_white_14"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="@dimen/dp_9"-->
-            <!--                android:text="个人中心" />-->
-
-            <!--            <ImageView-->
-            <!--                android:layout_width="@dimen/dp_16"-->
-            <!--                android:layout_height="@dimen/dp_16"-->
-            <!--                android:src="@mipmap/ic_arrow_w" />-->
-
-            <!--        </LinearLayout>-->
-
-            <!--        <TextView-->
-            <!--            android:id="@+id/tv_name"-->
-            <!--            android:layout_width="wrap_content"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_marginTop="@dimen/dp_4"-->
-            <!--            android:text=""-->
-            <!--            android:textColor="#FF9424"-->
-            <!--            android:textSize="14sp"-->
-            <!--            app:layout_constraintStart_toStartOf="@+id/lin_setting"-->
-            <!--            app:layout_constraintTop_toBottomOf="@+id/lin_setting" />-->
-
-            <!--        <ImageView-->
-            <!--            android:layout_width="@dimen/dp_153"-->
-            <!--            android:layout_height="@dimen/dp_68"-->
-            <!--            android:layout_marginStart="-12dp"-->
-            <!--            android:layout_marginTop="-8dp"-->
-            <!--            android:src="@mipmap/ic_main_exchange_bg"-->
-            <!--            app:layout_constraintStart_toStartOf="@+id/ll_tools"-->
-            <!--            app:layout_constraintTop_toTopOf="@+id/ll_tools" />-->
-
-            <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-            <!--            android:id="@+id/ll_tools"-->
-            <!--            android:layout_width="wrap_content"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_marginTop="@dimen/dp_25"-->
-            <!--            android:layout_marginEnd="@dimen/dp_40"-->
-            <!--            android:gravity="center"-->
-            <!--            android:orientation="horizontal"-->
-            <!--            app:layout_constraintRight_toRightOf="parent"-->
-            <!--            app:layout_constraintTop_toTopOf="parent">-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/tv_exchange"-->
-            <!--                style="@style/text_333333_14"-->
-            <!--                android:layout_width="@dimen/dp_130"-->
-            <!--                android:layout_height="@dimen/dp_44"-->
-            <!--                android:gravity="center"-->
-            <!--                android:text="兑换课程"-->
-            <!--                android:textColor="@color/white"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/tv_list"-->
-            <!--                style="@style/text_333333_14"-->
-            <!--                android:layout_width="@dimen/dp_130"-->
-            <!--                android:layout_height="@dimen/dp_44"-->
-            <!--                android:layout_marginStart="@dimen/dp_20"-->
-            <!--                android:background="@drawable/shape_ff9424_22_line_1"-->
-            <!--                android:gravity="center"-->
-            <!--                android:text="荣誉榜单"-->
-            <!--                android:textColor="#FF9424"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintStart_toEndOf="@+id/tv_exchange"-->
-            <!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/tv_casting"-->
-            <!--                style="@style/text_333333_14"-->
-            <!--                android:layout_width="@dimen/dp_130"-->
-            <!--                android:layout_height="@dimen/dp_44"-->
-            <!--                android:layout_marginStart="@dimen/dp_20"-->
-            <!--                android:background="@drawable/shape_ff9424_22_line_1"-->
-            <!--                android:gravity="center"-->
-            <!--                android:text="设备投屏"-->
-            <!--                android:textColor="#FF9424"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toEndOf="@+id/tv_list"-->
-            <!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-            <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-            <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-            <!--            android:id="@+id/cl_main"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="match_parent"-->
-            <!--            android:layout_marginStart="@dimen/dp_40"-->
-            <!--            android:layout_marginTop="@dimen/dp_80"-->
-            <!--            android:layout_marginEnd="@dimen/dp_30"-->
-            <!--            android:layout_marginBottom="@dimen/dp_19"-->
-            <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--            app:layout_constraintEnd_toEndOf="parent"-->
-            <!--            app:layout_constraintStart_toStartOf="parent">-->
-
-            <!--            <com.wanwuzhinan.mingchang.view.ClickImageView-->
-            <!--                android:id="@+id/bg_audio"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="0dp"-->
-            <!--                android:layout_marginStart="@dimen/dp_40"-->
-            <!--                android:layout_marginTop="@dimen/dp_20"-->
-            <!--                android:layout_marginEnd="@dimen/dp_15"-->
-            <!--                android:layout_marginBottom="@dimen/dp_12"-->
-            <!--                android:src="@drawable/bg_main_audio"-->
-            <!--                app:layout_constraintBottom_toTopOf="@+id/bg_honor"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintHeight_percent="0.4"-->
-            <!--                app:layout_constraintStart_toEndOf="@+id/bg_video"-->
-            <!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-
-            <!--            <ImageView-->
-            <!--                android:layout_width="@dimen/dp_144"-->
-            <!--                android:layout_height="@dimen/dp_144"-->
-            <!--                android:layout_marginTop="-30dp"-->
-            <!--                android:layout_marginEnd="@dimen/dp_m_20"-->
-            <!--                android:src="@mipmap/ic_main_audio_02_top_right"-->
-            <!--                app:layout_constraintEnd_toEndOf="@+id/bg_audio"-->
-            <!--                app:layout_constraintTop_toTopOf="@+id/bg_audio" />-->
-
-            <!--            <ImageView-->
-            <!--                android:layout_width="@dimen/dp_71"-->
-            <!--                android:layout_height="@dimen/dp_57"-->
-            <!--                android:layout_marginStart="@dimen/dp_16"-->
-            <!--                android:layout_marginBottom="@dimen/dp_m_10"-->
-            <!--                android:src="@mipmap/ic_main_02"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@+id/bg_audio"-->
-            <!--                app:layout_constraintStart_toStartOf="@+id/bg_audio" />-->
-
-
-            <!--            <androidx.appcompat.widget.AppCompatImageView-->
-            <!--                android:layout_width="@dimen/dp_36"-->
-            <!--                android:layout_height="@dimen/dp_36"-->
-            <!--                android:layout_marginStart="@dimen/dp_20"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@+id/tv_audio_title"-->
-            <!--                app:layout_constraintLeft_toRightOf="@id/tv_audio_title"-->
-            <!--                app:layout_constraintTop_toTopOf="@+id/tv_audio_title"-->
-            <!--                app:srcCompat="@mipmap/ic_main_audio_02_stop" />-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/tv_audio_title"-->
-            <!--                style="@style/text_white_20"-->
-            <!--                android:layout_marginStart="@dimen/dp_22"-->
-            <!--                android:layout_marginTop="@dimen/dp_31"-->
-            <!--                android:fontFamily="sans-serif-light"-->
-            <!--                android:text="音频故事通"-->
-            <!--                android:textFontWeight="600"-->
-            <!--                android:textSize="@dimen/dp_28"-->
-            <!--                app:layout_constraintLeft_toLeftOf="@id/bg_audio"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/bg_audio" />-->
-
-            <!--            <com.ad.img_load.img.RoundedImageView-->
-            <!--                android:id="@+id/bg_honor"-->
-            <!--                android:layout_width="@dimen/dp_150"-->
-            <!--                android:layout_height="@dimen/dp_0"-->
-            <!--                android:layout_marginStart="@dimen/dp_12"-->
-            <!--                android:layout_marginEnd="@dimen/dp_16"-->
-            <!--                android:background="@drawable/bg_main_qiang"-->
-            <!--                app:is_filter="1"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintLeft_toRightOf="@+id/bg_question"-->
-            <!--                app:layout_constraintRight_toRightOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/bg_audio" />-->
-
-            <!--            <com.ad.img_load.img.RoundedImageView-->
-            <!--                android:id="@+id/iv_honor"-->
-            <!--                android:layout_width="@dimen/dp_96"-->
-            <!--                android:layout_height="@dimen/dp_96"-->
-            <!--                android:layout_marginTop="@dimen/dp_m_16"-->
-            <!--                android:layout_marginEnd="@dimen/dp_m_20"-->
-            <!--                android:adjustViewBounds="true"-->
-            <!--                android:src="@mipmap/ic_main_honor"-->
-            <!--                app:is_filter="1"-->
-            <!--                app:layout_constraintRight_toRightOf="@id/bg_honor"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/bg_honor" />-->
-
-            <!--            <ImageView-->
-            <!--                android:layout_width="@dimen/dp_85"-->
-            <!--                android:layout_height="72dp"-->
-            <!--                android:layout_marginTop="@dimen/dp_m_16"-->
-            <!--                android:src="@mipmap/ic_main_04"-->
-            <!--                app:layout_constraintStart_toStartOf="@+id/bg_honor"-->
-            <!--                app:layout_constraintTop_toTopOf="@+id/bg_honor" />-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/tv_honor_title"-->
-            <!--                style="@style/text_white_20"-->
-            <!--                android:layout_marginStart="@dimen/dp_17"-->
-            <!--                android:layout_marginBottom="@dimen/dp_19"-->
-            <!--                android:fontFamily="sans-serif-light"-->
-            <!--                android:text="龙门\n题库通"-->
-            <!--                android:textFontWeight="600"-->
-            <!--                android:textSize="@dimen/dp_28"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/bg_honor"-->
-            <!--                app:layout_constraintLeft_toLeftOf="@id/bg_honor" />-->
-
-            <!--            <com.ad.img_load.img.RoundedImageView-->
-            <!--                android:id="@+id/bg_question"-->
-            <!--                android:layout_width="@dimen/dp_0"-->
-            <!--                android:layout_height="@dimen/dp_0"-->
-            <!--                android:layout_marginStart="@dimen/dp_m_20"-->
-            <!--                android:background="@drawable/bg_main_topic"-->
-            <!--                app:is_filter="1"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/bg_honor"-->
-            <!--                app:layout_constraintLeft_toLeftOf="@id/bg_audio"-->
-            <!--                app:layout_constraintRight_toLeftOf="@+id/bg_honor"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/bg_honor" />-->
-
-            <!--            <ImageView-->
-            <!--                android:layout_width="@dimen/dp_82"-->
-            <!--                android:layout_height="@dimen/dp_66"-->
-            <!--                android:layout_marginStart="@dimen/dp__5"-->
-            <!--                android:layout_marginTop="@dimen/dp_m_10"-->
-            <!--                android:src="@mipmap/ic_main_03"-->
-            <!--                app:layout_constraintStart_toStartOf="@+id/bg_question"-->
-            <!--                app:layout_constraintTop_toTopOf="@+id/bg_question" />-->
-
-            <!--            <com.ad.img_load.img.RoundedImageView-->
-            <!--                android:id="@+id/iv_question"-->
-            <!--                android:layout_width="@dimen/dp_89"-->
-            <!--                android:layout_height="@dimen/dp_115"-->
-            <!--                android:layout_marginTop="@dimen/dp_m_20"-->
-            <!--                android:adjustViewBounds="true"-->
-            <!--                android:src="@mipmap/ic_main_question"-->
-            <!--                app:is_filter="1"-->
-            <!--                app:layout_constraintRight_toRightOf="@id/bg_question"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/bg_question" />-->
-
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/tv_question_title"-->
-            <!--                style="@style/text_white_20"-->
-            <!--                android:layout_marginStart="@dimen/dp_20"-->
-            <!--                android:layout_marginBottom="@dimen/dp_20"-->
-            <!--                android:fontFamily="sans-serif-light"-->
-            <!--                android:text="物理\n万问通"-->
-            <!--                android:textFontWeight="600"-->
-            <!--                android:textSize="@dimen/dp_28"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/bg_question"-->
-            <!--                app:layout_constraintLeft_toLeftOf="@id/bg_question" />-->
-
-            <!--            <com.wanwuzhinan.mingchang.view.ClickImageView-->
-            <!--                android:id="@+id/bg_video"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="match_parent"-->
-            <!--                android:layout_marginTop="@dimen/dp_20"-->
-            <!--                android:layout_marginEnd="@dimen/dp_12"-->
-            <!--                android:src="@drawable/bg_main_vide"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/bg_question"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/bg_audio"-->
-            <!--                app:layout_constraintWidth_percent="0.49" />-->
-
-            <!--            <ImageView-->
-            <!--                android:layout_width="@dimen/dp_150"-->
-            <!--                android:layout_height="@dimen/dp_110"-->
-            <!--                android:layout_marginStart="@dimen/dp_m_18"-->
-            <!--                android:layout_marginTop="@dimen/dp_25"-->
-            <!--                android:includeFontPadding="false"-->
-            <!--                android:src="@mipmap/ic_main_01"-->
-            <!--                app:layout_constraintStart_toStartOf="@id/bg_video"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/bg_video" />-->
-
-
-            <!--            <androidx.appcompat.widget.AppCompatImageView-->
-            <!--                android:layout_width="@dimen/dp_42"-->
-            <!--                android:layout_height="@dimen/dp_42"-->
-            <!--                android:layout_marginEnd="@dimen/dp_36"-->
-            <!--                android:layout_marginBottom="@dimen/dp_25"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@+id/bg_video"-->
-            <!--                app:layout_constraintEnd_toEndOf="@id/bg_video"-->
-            <!--                app:srcCompat="@mipmap/ic_main_audio_01_stop" />-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/tv_video_title"-->
-            <!--                style="@style/text_white_20"-->
-            <!--                android:layout_marginLeft="@dimen/dp_28"-->
-            <!--                android:layout_marginBottom="@dimen/dp_25"-->
-            <!--                android:fontFamily="sans-serif-light"-->
-            <!--                android:text="物理\n十分通"-->
-            <!--                android:textFontWeight="600"-->
-            <!--                android:textSize="@dimen/dp_40"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/bg_video"-->
-            <!--                app:layout_constraintLeft_toLeftOf="@id/bg_video" />-->
-            <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-            <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-            <!--            android:layout_width="wrap_content"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_marginStart="@dimen/dp_200"-->
-            <!--            android:layout_marginTop="@dimen/dp_30"-->
-            <!--            android:layout_weight="1"-->
-            <!--            app:layout_constraintStart_toStartOf="parent"-->
-            <!--            app:layout_constraintTop_toTopOf="parent">-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/iv_diqu"-->
-            <!--                android:layout_width="@dimen/dp_300"-->
-            <!--                android:layout_height="@dimen/dp_300"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-            <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-            <!--        <LinearLayout-->
-            <!--            android:id="@+id/ll_ad"-->
-            <!--            android:layout_width="wrap_content"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_marginStart="@dimen/dp_20"-->
-            <!--            android:layout_marginBottom="@dimen/dp_20"-->
-            <!--            android:orientation="vertical"-->
-            <!--            android:visibility="gone"-->
-            <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--            app:layout_constraintStart_toStartOf="parent">-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/iv_ad"-->
-            <!--                android:layout_width="@dimen/dp_108"-->
-            <!--                android:layout_height="@dimen/dp_114"-->
-            <!--                android:src="@mipmap/ic_home_ad" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/iv_ad_close"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="@dimen/dp_40"-->
-            <!--                android:padding="@dimen/dp_6"-->
-            <!--                android:src="@mipmap/ic_home_ad_close" />-->
-
-
-            <!--        </LinearLayout>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

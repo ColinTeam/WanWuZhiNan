@@ -8,7 +8,7 @@
 
     <style name="ImagePhysicsBg" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">30%</item>
+        <item name="cornerSizeTopRight">50%</item>
         <item name="cornerSizeTopLeft">10%</item>
         <item name="cornerSizeBottomLeft">10%</item>
         <item name="cornerSizeBottomRight">10%</item>

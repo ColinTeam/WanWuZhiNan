@@ -40,7 +40,6 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-
         <item name="colorPrimary">@color/transparents</item>
         <item name="colorPrimaryDark">@color/transparents</item>
         <item name="colorAccent">@color/transparents</item>

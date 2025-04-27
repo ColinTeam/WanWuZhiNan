@@ -2,7 +2,7 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Bundle
 import com.wanwuzhinan.mingchang.app.AppFragment
-import com.wanwuzhinan.mingchang.databinding.FragmentHomeBinding
+import com.wanwuzhinan.mingchang.databinding.FragmentSplashBinding
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
 /**
@@ -10,9 +10,9 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  * E-mail:945919945@qq.com
  * Create:2025-04-23 22:34
  *
- * Des   :HomeFragment
+ * Des   :SplashFragment
  */
-class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
+class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
 

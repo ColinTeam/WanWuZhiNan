@@ -13,6 +13,14 @@
     <action
         android:id="@+id/action_toWeb"
         app:destination="@+id/fragment_web" />
+    <action
+        android:id="@+id/action_toAudio"
+        app:destination="@+id/fragment_audio" />
+    <fragment
+        android:id="@+id/fragment_splash"
+        android:name="com.wanwuzhinan.mingchang.ui.fragment.SplashFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_splash" />
     <fragment
         android:id="@+id/fragment_login"
         android:name="com.wanwuzhinan.mingchang.ui.fragment.LoginFragment"
@@ -23,6 +31,11 @@
         android:name="com.wanwuzhinan.mingchang.ui.fragment.HomeFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/fragment_audio"
+        android:name="com.wanwuzhinan.mingchang.ui.fragment.AudioFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_audio" />
     <fragment
         android:id="@+id/fragment_web"
         android:name="com.wanwuzhinan.mingchang.ui.fragment.WebFragment"

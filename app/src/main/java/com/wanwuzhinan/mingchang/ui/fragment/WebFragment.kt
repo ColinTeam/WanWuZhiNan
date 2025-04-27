@@ -16,6 +16,7 @@ import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentWebBinding
 import com.wanwuzhinan.mingchang.utils.Log
+import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
 /**
  * Author:ColinLu

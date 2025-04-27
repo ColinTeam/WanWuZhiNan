@@ -1,25 +1,31 @@
 package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.viewModelScope
-import com.wanwuzhinan.mingchang.entity.UserInfoData
-import com.wanwuzhinan.mingchang.net.repository.HomeRepository
-import com.ssm.comm.data.VersionData
-import com.ssm.comm.ext.StateMutableLiveData
-import com.ssm.comm.ui.base.BaseViewModel
+import com.wanwuzhinan.mingchang.app.AppViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * Author:ColinLu
+ * E-mail:945919945@qq.com
+ * Create:2025-04-23 22:10
+ *
+ * Des   :HomeViewModel
+ */
+class HomeViewModel : AppViewModel() {
+    private val _isLogin: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val _token: MutableStateFlow<String?> = MutableStateFlow(null)
 
-class HomeViewModel : BaseViewModel<UserInfoData, HomeRepository>(HomeRepository()) {
+    val isLogin: Flow<Boolean> = _isLogin.asStateFlow()
+    val token: Flow<String?> = _token.asStateFlow()
 
-    val getVersionLiveData = StateMutableLiveData<VersionData>()
-
-
-    //获取版本号
-    fun getVersion() {
-        viewModelScope.launch {
-            //请求到的数据用livedata包裹
-            getVersionLiveData.value = repository.getVersion()
-        }
+    fun update(isLogin: Boolean) {
+        viewModelScope.launch { _isLogin.value = isLogin }
     }
 
+    fun update(token: String) {
+        viewModelScope.launch { _token.value = token }
+    }
 }

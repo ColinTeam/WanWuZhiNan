@@ -2,7 +2,7 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Bundle
 import com.wanwuzhinan.mingchang.app.AppFragment
-import com.wanwuzhinan.mingchang.databinding.FragmentHomeBinding
+import com.wanwuzhinan.mingchang.databinding.FragmentAudioBinding
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
 /**
@@ -12,7 +12,7 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  *
  * Des   :HomeFragment
  */
-class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
+class AudioFragment : AppFragment<FragmentAudioBinding, HomeViewModel>() {
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
 
