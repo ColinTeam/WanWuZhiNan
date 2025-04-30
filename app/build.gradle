@@ -178,6 +178,8 @@ dependencies {
     implementation rootProject.ext.dependVersion.navigationFragment
     implementation rootProject.ext.dependVersion.navigationUI
     implementation rootProject.ext.dependVersion.liteavSdk
+    implementation rootProject.ext.dependVersion.mediaExo
+    implementation rootProject.ext.dependVersion.mediaSession
     //https://github.com/LetMeOff/SimpleDownload 携程下载文件
     implementation 'com.github.LetMeOff:SimpleDownload:v1.0.0'
     implementation 'com.jakewharton:disklrucache:2.0.2'

@@ -34,8 +34,6 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
-
-
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {

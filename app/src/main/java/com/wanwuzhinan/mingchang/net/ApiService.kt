@@ -1,13 +1,29 @@
 package com.wanwuzhinan.mingchang.net
 
 import com.comm.net_work.entity.ApiConfigInfoResponse
-import com.wanwuzhinan.mingchang.data.*
-import com.comm.net_work.entity.ApiResponse
-import com.wanwuzhinan.mingchang.entity.UploadImgData
-import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.comm.net_work.entity.ApiInfoResponse
 import com.comm.net_work.entity.ApiListResponse
+import com.comm.net_work.entity.ApiResponse
 import com.ssm.comm.data.VersionData
+import com.wanwuzhinan.mingchang.data.AddressData
+import com.wanwuzhinan.mingchang.data.CityData
+import com.wanwuzhinan.mingchang.data.CityListData
+import com.wanwuzhinan.mingchang.data.ConfigData
+import com.wanwuzhinan.mingchang.data.CourseInfoData
+import com.wanwuzhinan.mingchang.data.CourseStudyData
+import com.wanwuzhinan.mingchang.data.ExchangeCodeData
+import com.wanwuzhinan.mingchang.data.ExchangeListData
+import com.wanwuzhinan.mingchang.data.GoodsInfoData
+import com.wanwuzhinan.mingchang.data.GradeData
+import com.wanwuzhinan.mingchang.data.MedalListData
+import com.wanwuzhinan.mingchang.data.QuestionListData
+import com.wanwuzhinan.mingchang.data.QuestionLogData
+import com.wanwuzhinan.mingchang.data.RankHomeData
+import com.wanwuzhinan.mingchang.data.RegisterData
+import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.entity.UploadImgData
+import com.wanwuzhinan.mingchang.entity.UserInfoData
+import com.wanwuzhinan.mingchang.data.AppResponse
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -32,8 +48,16 @@ interface ApiService {
     suspend fun login(
         @Field("phone") phone: String,
         @Field("phone_code") phone_code: String,
-        @Field("device_type") device_type:String
+        @Field("device_type") device_type: String
     ): ApiResponse<RegisterData>
+
+    //登录
+    @FormUrlEncoded
+    @POST("/api/UserLogin/index")
+    suspend fun login(
+        @Field("phone") phone: String,
+        @Field("password") phone_code: String,
+    ): AppResponse<RegisterData>
 
     //获取用户信息
     @POST("/api/User/info")
@@ -113,9 +137,11 @@ interface ApiService {
     //学习课程 记录
     @FormUrlEncoded
     @POST("/api/LessonStudyLog/add")
-    suspend fun courseStudy(@Field("lesson_id") lesson_id: String,
-                            @Field("video_duration") start_second: Int,
-                            @Field("end_second") end_second: Int): ApiResponse<CourseStudyData>
+    suspend fun courseStudy(
+        @Field("lesson_id") lesson_id: String,
+        @Field("video_duration") start_second: Int,
+        @Field("end_second") end_second: Int
+    ): ApiResponse<CourseStudyData>
 
     @FormUrlEncoded
     @POST("/api/Lesson/infoV2")
@@ -131,7 +157,10 @@ interface ApiService {
     //题库答题
     @FormUrlEncoded
     @POST("/api/QuestionsLogs/add")
-    suspend fun questionAdd(@Field("questions_id") questions_id: String,@Field("answer") answer: String): ApiResponse<QuestionLogData>
+    suspend fun questionAdd(
+        @Field("questions_id") questions_id: String,
+        @Field("answer") answer: String
+    ): ApiResponse<QuestionLogData>
 
     //题库答题记录清理
     @POST("/api/QuestionsLogs/clear")
@@ -156,10 +185,12 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/LessonCode/indexLesson")
     suspend fun exchangeList(@Field("group_id") group_id: Int): ApiResponse<ApiListResponse<ExchangeListData>>
+
     //课程兑换码 记录
     @FormUrlEncoded
     @POST("/api/LessonCode/index")
     suspend fun exchangeCodeList(@Field("group_id") group_id: Int): ApiResponse<ApiListResponse<ExchangeCodeData>>
+
     //赠品列表
     @POST("/api/LessonCodeGoods/index")
     suspend fun giveList(): ApiResponse<ApiListResponse<ExchangeListData>>
@@ -233,7 +264,7 @@ interface ApiService {
         @Header("signature") signature: String,
         @Field("password") password: String,
         @Field("code") code: String
-    ) : ApiResponse<MutableList<String>>
+    ): ApiResponse<MutableList<String>>
 
     //获取版本号
     @POST("/v1/common/version")

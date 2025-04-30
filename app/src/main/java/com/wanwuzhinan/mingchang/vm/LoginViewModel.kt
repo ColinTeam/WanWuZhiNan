@@ -1,21 +1,20 @@
 package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.viewModelScope
+import com.ssm.comm.ui.base.BaseViewModel
 import com.wanwuzhinan.mingchang.data.RegisterData
 import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.wanwuzhinan.mingchang.net.repository.LoginRepository
-import com.ssm.comm.ext.StateMutableLiveData
-import com.ssm.comm.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 
 class LoginViewModel : BaseViewModel<UserInfoData, LoginRepository>(LoginRepository()) {
 
-    val registerLiveData = StateMutableLiveData<RegisterData>()
-    val loginLiveData = StateMutableLiveData<RegisterData>()
-    val forgetPassLiveData = StateMutableLiveData<MutableList<String>>()
-    val changePayPassLiveData = StateMutableLiveData<MutableList<String>>()
-    val changeLoginPassLiveData = StateMutableLiveData<MutableList<String>>()
+    val registerLiveData = com.ssm.comm.ext.StateMutableLiveData<RegisterData>()
+    val loginLiveData = com.ssm.comm.ext.StateMutableLiveData<RegisterData>()
+    val forgetPassLiveData = com.ssm.comm.ext.StateMutableLiveData<MutableList<String>>()
+    val changePayPassLiveData = com.ssm.comm.ext.StateMutableLiveData<MutableList<String>>()
+    val changeLoginPassLiveData = com.ssm.comm.ext.StateMutableLiveData<MutableList<String>>()
 
     //注册
     fun register(mobile: String, code: String,password: String,pay_password: String,parent: String) {
