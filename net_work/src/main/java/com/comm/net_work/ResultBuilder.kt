@@ -30,18 +30,18 @@ fun <T> ApiResponse<T>.parseData(listenerBuilder: ResultBuilder<T>.() -> Unit) {
 
 
 class ResultBuilder<T> {
-    var onSuccess: (data: T?,msg: String) -> Unit = {data, msg ->  }
+    var onSuccess: (data: T?,msg: String) -> Unit = {_, _ ->  }
 
     var onDataEmpty: () -> Unit = {}
 
-    var onDataEmpty2: (msg: String) -> Unit = {msg ->  }
+    var onDataEmpty2: (msg: String) -> Unit = { }
 
-    var onFailed: (code: Int?, msg: String?) -> Unit = { code, msg ->
+    var onFailed: (code: Int?, msg: String?) -> Unit = { _, _ ->
         //msg?.let { }
     }
 
-    var onError: (e: Throwable) -> Unit = { e ->
-        e.message?.let { }
+    var onError: (e: Throwable) -> Unit = {
+        it.message?.let { }
     }
     var onComplete: () -> Unit = {}
 }

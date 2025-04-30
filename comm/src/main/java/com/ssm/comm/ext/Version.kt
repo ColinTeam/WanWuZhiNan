@@ -18,7 +18,7 @@ fun getCurrentVersionCode(): Int {
 }
 
 fun getCurrentVersionName(): String {
-    return getCurrentPackageInfo().versionName
+    return "${getCurrentPackageInfo().versionName}"
 }
 
 private fun getCurrentPackageInfo(): PackageInfo {
@@ -38,7 +38,7 @@ fun isNeedUpdate(data: VersionData): Boolean {
     curVersion = curVersion.filterNot { it == "."[0] }
     LogUtils.e("newVersion====================>$newVersion")
     LogUtils.e("curVersion====================>$curVersion")
-    if(isEmpty(newVersion) || isEmpty(curVersion)){
+    if (isEmpty(newVersion) || isEmpty(curVersion)) {
         return false
     }
     val b1 = BigDecimal(newVersion)

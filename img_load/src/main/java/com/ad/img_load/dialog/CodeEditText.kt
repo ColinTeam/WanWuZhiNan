@@ -127,13 +127,13 @@ class CodeEditText : AppCompatEditText {
         setMeasuredDimension(mWidthMeasureSpec, mHeightMeasureSpec)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         this.mTextColor = currentTextColor
         this.setTextColor(Color.TRANSPARENT)
         super.onDraw(canvas)
         this.setTextColor(mTextColor)
         // 重绘背景颜色
-        drawStrokeBackground(canvas!!)
+        drawStrokeBackground(canvas)
         drawCursorBackground(canvas)
         drawText(canvas)
     }

@@ -1,4 +1,4 @@
-rootProject.name = "万物指南"
+rootProject.name = "WanWuZhiNan"
 include ':app'
 include ':net_work'
 include ':comm'

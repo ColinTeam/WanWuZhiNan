@@ -20,9 +20,8 @@ object Md5Utils {
         if(TextUtils.isEmpty(str)){
             return ""
         }
-        var md5: MessageDigest? = null
+        val md5 = MessageDigest.getInstance("MD5")
         try {
-            md5 = MessageDigest.getInstance("MD5")
             val bytes = md5.digest(str.toByteArray())
             val result = StringBuilder()
             for (b in bytes) {

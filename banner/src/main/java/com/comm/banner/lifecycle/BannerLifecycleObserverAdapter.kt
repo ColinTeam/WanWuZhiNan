@@ -1,9 +1,7 @@
 package com.comm.banner.lifecycle
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import com.comm.banner.util.LogUtils
 
 /**
@@ -19,35 +17,29 @@ import com.comm.banner.util.LogUtils
 class BannerLifecycleObserverAdapter constructor(
     lifecycleOwner: LifecycleOwner,
     observer: BannerLifecycleObserver,
-) : LifecycleObserver {
+) : DefaultLifecycleObserver {
 
     private var mObserver: BannerLifecycleObserver
     private var mLifecycleOwner: LifecycleOwner
 
-    init{
+    init {
         this.mObserver = observer
         this.mLifecycleOwner = lifecycleOwner
     }
 
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onStart(){
+    override fun onStart(owner: LifecycleOwner) {
         LogUtils.d("onStart")
         mObserver.onStart(mLifecycleOwner)
     }
 
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onStop(){
+    override fun onStop(owner: LifecycleOwner) {
         LogUtils.d("onStop")
         mObserver.onStop(mLifecycleOwner)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroy(){
+    override fun onDestroy(owner: LifecycleOwner) {
         LogUtils.d("onDestroy")
         mObserver.onDestroy(mLifecycleOwner)
     }
-
 
 }
