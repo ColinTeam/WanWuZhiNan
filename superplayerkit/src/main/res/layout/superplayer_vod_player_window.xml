@@ -175,11 +175,13 @@
             android:src="@drawable/superplayer_ic_vod_fullscreen" />
     </LinearLayout>
 
-    <ProgressBar
+    <TextView
         android:id="@+id/superplayer_pb_live"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:textSize="14sp"
         android:visibility="gone" />
 
     <ImageView

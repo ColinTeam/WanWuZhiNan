@@ -43,7 +43,7 @@ class EditFilePop(var context: Activity) :BasePop<PopEditFileBinding>(context){
                 mDataBinding.tvTopName.text = it
             }
         }
-        setOnClickNoRepeat(mDataBinding.rivHead,mDataBinding.llNv,/*mDataBinding.linArea,*/mDataBinding.tvSave) {
+        setOnClickNoRepeat(mDataBinding.llNv,/*mDataBinding.linArea,*/mDataBinding.tvSave) {
             when (it) {
                 mDataBinding.rivHead ->{//修改头像
                     MediaManager.selectSinglePhoto(

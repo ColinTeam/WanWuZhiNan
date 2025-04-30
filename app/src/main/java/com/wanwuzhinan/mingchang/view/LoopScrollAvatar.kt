@@ -28,6 +28,7 @@ class LoopScrollAvatar @JvmOverloads constructor(
 
     //两边头像的缩放程度
     private val scaleFrom = 0F
+
     //头像大小
     private val avatarSize = dp2px(32F).toInt()
 

@@ -7,6 +7,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
@@ -99,6 +100,9 @@ class AudioHomeIpadActivity : BaseActivity<ActivityAudioHomePadBinding, UserView
 
     override fun initView() {
         initList()
+
+        // 获取窗口的布局参数
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         showBaseLoading()
         mViewModel.courseSubject(ConfigApp.TYPE_AUDIO)

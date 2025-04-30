@@ -10,40 +10,26 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
     <!-- 允许写设备缓存，用于问题排查 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- 允许读设备等信息，用于问题排查 -->
-    <uses-permission
-        android:name="android.permission.QUERY_ALL_PACKAGES"
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.WRITE_MEDIA_STORAGE"
+    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission
-        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission
-        android:name="android.permission.CAMERA"
-        tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <!--    //Android 13版本适配，细化存储权限-->
-    <uses-permission
-        android:name="android.permission.READ_MEDIA_IMAGES"
-        tools:ignore="SelectedPhotoAccess" />
-    <uses-permission
-        android:name="android.permission.READ_MEDIA_AUDIO"
-        tools:ignore="SelectedPhotoAccess" />
-    <uses-permission
-        android:name="android.permission.READ_MEDIA_VIDEO"
-        tools:ignore="SelectedPhotoAccess" />
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
     <queries package="${applicationId}">
         <intent>
@@ -196,14 +182,12 @@
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
 
-        <activity
-            android:name=".ui.phone.RankActivity"
+        <activity android:name=".ui.phone.RankActivity"
             android:exported="false"
-            android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".ui.phone.AnswerErrorAskActivity"
+            android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".ui.phone.AnswerErrorAskActivity"
             android:exported="false"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape"/>
 
         <meta-data
             android:name="ScopedStorage"
@@ -226,7 +210,7 @@
             android:name=".ui.phone.SplashActivity"
             android:exported="true"
             android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme2">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -237,26 +221,14 @@
                 android:value="" />
 
         </activity>
-        <activity
-            android:name=".ui.HomeActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape" />
 
         <meta-data
             android:name="design_width_in_dp"
-            android:value="812" />
+            android:value="812"/>
         <meta-data
             android:name="design_height_in_dp"
-            android:value="375" />
+            android:value="375"/>
 
-        <service
-            android:name=".service.MediaService"
-            android:exported="false"
-            android:foregroundServiceType="mediaPlayback">
-            <intent-filter>
-                <action android:name="android.media3.session.MediaSessionService" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>

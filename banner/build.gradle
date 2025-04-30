@@ -6,7 +6,6 @@ plugins {
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
         minSdkVersion  rootProject.ext.android.minSdkVersion
@@ -28,13 +27,20 @@ android {
             buildConfigField "Boolean", "IS_ENABLE_LOG", "${isEnableLog.debug}"
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
 
     implementation rootProject.ext.dependVersion.core_ktx
-    implementation rootProject.ext.dependVersion.material
     implementation rootProject.ext.dependVersion.appcompat
+    implementation rootProject.ext.dependVersion.material
     implementation rootProject.ext.dependVersion.constraintlayout
     testImplementation rootProject.ext.dependVersion.junit
     androidTestImplementation rootProject.ext.dependVersion.test_ext_junit

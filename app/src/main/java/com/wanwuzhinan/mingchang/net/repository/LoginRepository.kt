@@ -39,7 +39,7 @@ class LoginRepository : CommRepository() {
 
     //登录
     suspend fun login(phone: String, phone_code: String,device_type: String): ApiResponse<RegisterData> {
-        var response=executeHttp { mService.login(phone,phone_code, device_type) }
+        val response=executeHttp { mService.login(phone,phone_code, device_type) }
 
         if(response.data!=null){
             addOkHttpCommBuilder(Constant.TOKEN, response.data?.token!!)

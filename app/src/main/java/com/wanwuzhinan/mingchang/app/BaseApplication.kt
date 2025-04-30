@@ -18,6 +18,7 @@ import com.shuyu.gsyvideoplayer.player.PlayerFactory
 import com.shuyu.gsyvideoplayer.player.SystemPlayerManager
 import com.ssm.comm.app.CommApplication
 import com.ssm.comm.ext.isShowPrivacy
+import com.ssm.comm.ext.setData
 import com.tencent.rtmp.TXLiveBase
 import com.tencent.rtmp.TXLiveBaseListener
 import com.tencent.rtmp.TXPlayerGlobalSetting
@@ -66,6 +67,17 @@ class BaseApplication : CommApplication() {
         initBugly()
         registerToWX()
         initLive()
+
+        TXLiveBase.setListener(object : TXLiveBaseListener() {
+            override fun onLicenceLoaded(result: Int, reason: String) {
+                Log.i("TAG", "onLicenceLoaded: result:$result, reason:$reason")
+                if (result == 0){
+                    setData("TXLiveBaseLicence",1)
+                }else{
+                    initLive()
+                }
+            }
+        })
     }
 
     private fun initImageLoader() {
@@ -95,14 +107,8 @@ class BaseApplication : CommApplication() {
         val licenseURL = "https://license.vod2.myqcloud.com/license/v2/1353990201_1/v_cube.license" // 获取到的 license url
         val licenseKey = "d025b928c9f91abb9a3a354cad87af4b" // 获取到的 license key
         TXLiveBase.getInstance().setLicence(this, licenseURL, licenseKey)
-        TXLiveBase.setListener(object : TXLiveBaseListener() {
-            override fun onLicenceLoaded(result: Int, reason: String) {
-                Log.i("TAG", "onLicenceLoaded: result:$result, reason:$reason")
-                if (result == 0){
 
-                }
-            }
-        })
+
     }
 
 }

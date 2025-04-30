@@ -136,7 +136,6 @@ class AnswerPracticeActivity  : BaseActivity<ActivityAnswerAskBinding, UserViewM
                     }
                     mQuestionList.get(questionIndex).answer_res_answer = model.key
                     mQuestionList.get(questionIndex).answer_res_true = "${model.is_true}"
-
                     mViewModel.questionAdd(
                         mQuestionList.get(questionIndex).id,
                         mQuestionList.get(questionIndex).answersArr.get(answerIndex).key

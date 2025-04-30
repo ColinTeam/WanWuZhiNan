@@ -104,7 +104,7 @@ class EditFileDialog constructor(data: UserInfoData.infoBean) : BaseDialogFragme
             changeButtonBackground()
         }
 
-        setOnClickNoRepeat(mDataBinding!!.rivHead,
+        setOnClickNoRepeat(
             mDataBinding!!.llNv,
             mDataBinding!!.llNan,
             mDataBinding!!.llAddress,

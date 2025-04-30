@@ -6,7 +6,6 @@ plugins {
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
         minSdkVersion  rootProject.ext.android.minSdkVersion
@@ -49,15 +48,25 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
 
     implementation rootProject.ext.dependVersion.core_ktx
-    implementation rootProject.ext.dependVersion.material
     implementation rootProject.ext.dependVersion.appcompat
+    implementation rootProject.ext.dependVersion.material
     implementation rootProject.ext.dependVersion.constraintlayout
     //implementation 'com.android.support:support-annotations:28.0.0'
+    testImplementation rootProject.ext.dependVersion.junit
+    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
+    androidTestImplementation rootProject.ext.dependVersion.espresso_core
 
     def lifecycle_version = rootProject.ext.dependVersion.lifecycle_version
 
@@ -70,7 +79,7 @@ dependencies {
     // Saved state module for ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     // lifecycle注解处理器
-    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     // 替换 - 如果使用Java8,就用这个替换上面的lifecycle-compiler
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     //以下按需引入
@@ -130,8 +139,4 @@ dependencies {
     //腾讯bug管理平台
     api 'com.tencent.bugly:crashreport:latest.release'
 //    implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
-
-    testImplementation rootProject.ext.dependVersion.junit
-    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
-    androidTestImplementation rootProject.ext.dependVersion.espresso_core
 }

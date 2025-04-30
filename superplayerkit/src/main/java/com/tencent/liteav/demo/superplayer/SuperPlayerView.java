@@ -1267,7 +1267,7 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onError(int code, String message) {
-            showToast(message);
+//            showToast(message);
             notifyCallbackPlayError(code);
         }
 
@@ -1306,6 +1306,11 @@ public class SuperPlayerView extends RelativeLayout
                 dynamicWaterConfig.setShowType(DynamicWaterConfig.GHOST_RUNNING);
                 setDynamicWatermarkConfig(dynamicWaterConfig);
             }
+        }
+
+        @Override
+        public void onPlaySpeed(int speed) {
+            mWindowPlayer.changeSpeed(speed);
         }
     }
 
@@ -1460,6 +1465,10 @@ public class SuperPlayerView extends RelativeLayout
 
     public long getProgress() {
         return mProgress;
+    }
+
+    public long getDuration() {
+        return mDuration;
     }
     
     @Override

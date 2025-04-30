@@ -40,6 +40,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
         <item name="colorPrimary">@color/transparents</item>
         <item name="colorPrimaryDark">@color/transparents</item>
         <item name="colorAccent">@color/transparents</item>
@@ -53,5 +54,7 @@
         <item name="colorPrimary">@color/bg_color</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 </resources>

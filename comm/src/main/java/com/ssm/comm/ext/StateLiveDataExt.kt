@@ -27,10 +27,9 @@ fun <T> StateMutableLiveData<T>.observeState(
                 when (apiResponse.code) {
                     //登录过期、账户被管理员限制登录、账号在其他设备登录
                     2,4 -> {
-                        clearAllData()
+
 //                        toastNormal(apiResponse.msg)
                         post(MessageEvent.LOGIN_EXPIRED, apiResponse.msg)
-                        post(MessageEvent.APP_VERSION_UPDATE, apiResponse.msg)
                         toastNormal("当前账户已从其他设备登录，为保障安全，请重新登录")
                     }
                     else -> {
@@ -67,10 +66,9 @@ fun <T> LiveData<ApiResponse<T>>.observeState(
                 when (apiResponse.code) {
                     //登录过期、账户被管理员限制登录、账号在其他设备登录
                     2,4 -> {
-                        clearAllData()
+
 //                        toastNormal(apiResponse.msg)
                         post(MessageEvent.LOGIN_EXPIRED, apiResponse.msg)
-                        post(MessageEvent.APP_VERSION_UPDATE, apiResponse.msg)
                         toastNormal("当前账户已从其他设备登录，为保障安全，请重新登录")
                     }
                     else -> {

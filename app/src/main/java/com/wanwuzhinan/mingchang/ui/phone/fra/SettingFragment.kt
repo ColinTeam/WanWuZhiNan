@@ -146,7 +146,7 @@ class SettingFragment :
             changeButtonBackground()
         }
 
-        setOnClickNoRepeat(mDataBinding.rivHead,
+        setOnClickNoRepeat(
             mDataBinding.llNv,
             mDataBinding.llNan,
             mDataBinding.llAddress,

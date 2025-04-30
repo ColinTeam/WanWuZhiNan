@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -70,7 +71,7 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener,
     private TextView                       mTvDuration;
     private PointSeekBar                   mSeekBarProgress;
     private LinearLayout                   mLayoutReplay;
-    private ProgressBar                    mPbLiveLoading;
+    private TextView                    mPbLiveLoading;
     private ImageView                      mImageStartAndResume;
     private ImageView                      mImageCover;
     // Volume and brightness adjustment layout
@@ -230,7 +231,7 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener,
         mSeekBarProgress.setMax(100);
         mIvFullScreen = (ImageView) findViewById(R.id.superplayer_iv_fullscreen);
         mTvBackToLive = (TextView) findViewById(R.id.superplayer_tv_back_to_live);
-        mPbLiveLoading = (ProgressBar) findViewById(R.id.superplayer_pb_live);
+        mPbLiveLoading = (TextView) findViewById(R.id.superplayer_pb_live);
         mImageCover = (ImageView) findViewById(R.id.superplayer_cover_view);
         mImageStartAndResume = (ImageView) findViewById(R.id.superplayer_resume);
         mIvPlayNext = (ImageView) findViewById(R.id.superplayer_iv_play_next);
@@ -461,6 +462,10 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener,
                 break;
         }
         mCurrentPlayState = playState;
+    }
+
+    public void changeSpeed(int speed){
+        mPbLiveLoading.setText(speed+" kbps");
     }
 
     /**

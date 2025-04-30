@@ -72,7 +72,7 @@ class VideoAnswerActivity : BaseActivity<ActivityAnswerPracticeBinding, UserView
 //                mAdapter.getItem(position)!!.select=!mAdapter.getItem(position)!!.select
 //            }
 //
-
+            showBaseLoading("答题中···")
             mSelectPosition = position
             mViewModel.questionAdd(mQuestionList.get(mPosition).id,mQuestionList.get(mPosition).answersArr.get(position).key)
         }
@@ -188,6 +188,13 @@ class VideoAnswerActivity : BaseActivity<ActivityAnswerPracticeBinding, UserView
                     }
                 }
             }
+
+            onFailed ={ code, msg ->
+                toastError(msg.toString())
+            }
+            onComplete = {
+                dismissBaseLoading()
+            }
         }
     }
 
@@ -247,7 +254,12 @@ class VideoAnswerActivity : BaseActivity<ActivityAnswerPracticeBinding, UserView
     private fun playAudio(url:String){
         if(TextUtils.isEmpty(url)) return
 
-        mMediaPlayer.reset()
+        try {
+            mMediaPlayer.reset()
+        }catch (e:IllegalStateException){
+
+        }
+
         mMediaPlayer.setDataSource(url)
         mMediaPlayer.isLooping = false
         mMediaPlayer.prepareAsync() //异步准备
@@ -278,6 +290,17 @@ class VideoAnswerActivity : BaseActivity<ActivityAnswerPracticeBinding, UserView
                 mMediaPlayer.stop()
             }
             mMediaPlayer.release()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        try {
+            if (mMediaPlayer != null && mMediaPlayer.isPlaying) {
+                mMediaPlayer.pause()
+            }
+        } catch (e: IllegalStateException) {
+            e.printStackTrace() // 可选：记录日志方便排查
         }
     }
 

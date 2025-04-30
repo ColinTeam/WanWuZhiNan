@@ -27,16 +27,17 @@ import com.wanwuzhinan.mingchang.ext.launchSettingActivity
 import com.wanwuzhinan.mingchang.ext.showCardImage
 import com.wanwuzhinan.mingchang.ui.pop.AudioCardPop
 import com.wanwuzhinan.mingchang.ui.pop.CompassNumPop
-import com.wanwuzhinan.mingchang.ui.pop.QuePhaseFinishPop
 
 //答题 龙门题库
 class AnswerAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserViewModel>(UserViewModel()) {
 
     var mId=""
     var mPosition=0
+    var mShowBasePosition = 0
+    var mQuestionCount = 0
     var mSelectPosition=0
     var mType=1//1选择状态 2显示状态
-    lateinit var mQuestionList:MutableList<QuestionListData.questionBean>
+    lateinit var mQuestionList:List<QuestionListData.questionBean>
     lateinit var mAdapter: AnswerPracticeOptionAdapter
     lateinit var mMediaPlayer: MediaPlayer
 
@@ -49,7 +50,7 @@ class AnswerAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserViewMo
 
         initQuestionList()
         showBaseLoading()
-        mViewModel.questionDetail(mId)
+        mViewModel.questionPageDetail(mId,"")
 
         mDataBinding.tvErrorNum.text = "${ConfigApp.question_compass}"
     }
@@ -64,6 +65,7 @@ class AnswerAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserViewMo
             if(mType==2) return@setOnDebouncedItemClick
 
             mSelectPosition = position
+            showBaseLoading("答题中···")
             mViewModel.questionAdd(mQuestionList.get(mPosition).id,mQuestionList.get(mPosition).answersArr.get(position).key)
         }
     }
@@ -84,17 +86,13 @@ class AnswerAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserViewMo
                 }
                 mDataBinding.tvNext->{//
                     mMediaPlayer.pause()
-                    if (mPosition+1 >  mQuestionList.size-1) {
-
-                        CompassNumPop(mActivity, onSure = {
-                            finish()
-                        }, onCancel = {
-                            finish()
-                        }).showPop("完成阶段训练", if (logModel.compass_total.toInt() > 0) "恭喜你" else "别气馁，下次再来！", logModel.compass_total)
-                    }else{
+                    if (mPosition+1 < mQuestionList.size) {
                         mPosition ++
                         mType=1
                         changeQuestion(mPosition)
+                    }else{
+                        showBaseLoading()
+                        mViewModel.questionPageDetail(mId,mQuestionList.last().id)
                     }
                 }
                 mDataBinding.tvReport ->{
@@ -105,27 +103,30 @@ class AnswerAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserViewMo
     }
 
     override fun initRequest() {
-        mViewModel.questionDetailLiveData.observeState(this){
+        mViewModel.questionPageDetailLiveData.observeState(this){
             onSuccess={data, msg ->
 
-                infoModel = data!!.info!!
-
-                for (obj in infoModel.questionsList){
-                    if (obj.id.toInt() == infoModel.answerLastQuestionId){
-                        mPosition = infoModel.questionsList.indexOf(obj)
-                        mPosition ++
-                    }
-                }
-
+                infoModel = data?.info!!
+                mShowBasePosition = infoModel.questionsListPageIndex + 1
+                mQuestionCount = infoModel.questionsCount
+                mType = 1
                 if (infoModel.questionsList.size > 0){
-                    if (mPosition >= infoModel.questionsList.size){
-                        mPosition = 0
-                    }
-                    mQuestionList = infoModel.questionsList
+                    mPosition = 0
                     initQuestionArray()
                 }else{
-                   mDataBinding.llNoData.visibility = View.VISIBLE
+                    mDataBinding.llNoData.visibility = View.VISIBLE
                     mDataBinding.llBg.visibility = View.GONE
+                    if (mPosition > 0) {
+                        CompassNumPop(mActivity, onSure = {
+                            finish()
+                        }, onCancel = {
+                            finish()
+                        }).showPop(
+                            "完成阶段训练",
+                            if (logModel.compass_total.toInt() > 0) "恭喜你" else "别气馁，下次再来！",
+                            logModel.compass_total
+                        )
+                    }
                 }
             }
 
@@ -137,9 +138,13 @@ class AnswerAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserViewMo
                 mDataBinding.llNoData.visibility = View.VISIBLE
                 mDataBinding.llBg.visibility = View.GONE
             }
+            onComplete = {
+                dismissBaseLoading()
+            }
         }
 
         mViewModel.questionAddLiveData.observeState(this){
+
             onSuccess={data, msg ->
                 for (obj in mQuestionList.get(mPosition).answersArr){
                     if (obj.is_true == 1){
@@ -190,6 +195,14 @@ class AnswerAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserViewMo
                         })
                     }
                 }
+            }
+
+            onFailed ={ code, msg ->
+               toastError(msg.toString())
+            }
+
+            onComplete = {
+                dismissBaseLoading()
             }
         }
     }
@@ -243,7 +256,7 @@ class AnswerAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserViewMo
             mAdapter.submitList(answersArr)
             playAudio(mQuestionList.get(mPosition).title_mp3)
         }
-        mDataBinding.tvNum.text = "共${mQuestionList.size}题 已完成${mPosition+1}题"
+        mDataBinding.tvNum.text = "共${mQuestionCount}题 已完成${mPosition+mShowBasePosition}题"
     }
 
 
@@ -282,6 +295,17 @@ class AnswerAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserViewMo
                 mMediaPlayer.stop()
             }
             mMediaPlayer.release()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        try {
+            if (mMediaPlayer != null && mMediaPlayer.isPlaying) {
+                mMediaPlayer.pause()
+            }
+        } catch (e: IllegalStateException) {
+            e.printStackTrace() // 可选：记录日志方便排查
         }
     }
 

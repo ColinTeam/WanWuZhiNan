@@ -1,5 +1,6 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
+import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -23,6 +24,7 @@ import com.ssm.comm.ext.dismissLoadingExt
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.post
 import com.ssm.comm.ui.base.BaseActivity
+import com.tencent.liteav.demo.superplayer.SuperPlayerCode
 import com.tencent.liteav.demo.superplayer.SuperPlayerModel
 import com.tencent.liteav.demo.superplayer.SuperPlayerView.OnSuperPlayerViewCallback
 import com.tencent.liteav.demo.superplayer.model.ISuperPlayerListener
@@ -54,6 +56,8 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
 
     var mData : CourseInfoData? = null
 
+    var errorPro = 0.0F
+
     val timer = object : CountDownTimer(6000, 1000) {
         override fun onTick(millisUntilFinished: Long) {
             mDataBinding.tvDown.text = "${millisUntilFinished / 1000+1}S"
@@ -65,6 +69,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
     }
 
     override fun initView() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         val videoCourseId = intent.getStringExtra(ConfigApp.INTENT_ID)
         val listType = object : TypeToken<ArrayList<SubjectListData.lessonBean>>() {}.type
@@ -103,7 +108,10 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             mDataBinding.tvQuestion,
             mDataBinding.tvSure,
             mDataBinding.tvReload,
-            mDataBinding.netErrorBack){
+            mDataBinding.netErrorBack,
+            mDataBinding.ivVideoBack,
+            mDataBinding.tvVideoReload
+        ){
             when(it){
                 mDataBinding.llMenu ->{
 
@@ -153,6 +161,17 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
 
                 mDataBinding.netErrorBack ->{
                     finish()
+                }
+                mDataBinding.ivVideoBack ->{
+                    finish()
+                }
+                mDataBinding.tvVideoReload ->{
+                    mDataBinding.clVideoNoNet.visibility = View.GONE
+                    mDataBinding.detailPlayer.resetPlayer()
+                    val model = SuperPlayerModel()
+                    model.url = AESDecryptor.decryptAES(mData?.info?.videoAes!!,"W1a2n3W4u5Z6h7i8N9a0n")
+                    mDataBinding.detailPlayer.playWithModelNeedLicence(model)
+                    mDataBinding.detailPlayer.seek(errorPro)
                 }
             }
         }
@@ -257,20 +276,20 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                     }
                 }
 
-                if (event == TXLiveConstants.PLAY_EVT_PLAY_LOADING) {
-                    // 显示当前网速
-                    mDataBinding.tvSpeed.visibility = View.VISIBLE
-                } else if (event == TXLiveConstants.PLAY_EVT_VOD_LOADING_END) {
-                    // 对显示当前网速的 view 进行隐藏
-                    mDataBinding.tvSpeed.visibility = View.GONE
-                }
+//                if (event == TXLiveConstants.PLAY_EVT_PLAY_LOADING) {
+//                    // 显示当前网速
+//                    mDataBinding.tvSpeed.visibility = View.VISIBLE
+//                } else if (event == TXLiveConstants.PLAY_EVT_VOD_LOADING_END) {
+//                    // 对显示当前网速的 view 进行隐藏
+//                    mDataBinding.tvSpeed.visibility = View.GONE
+//                }
             }
 
             override fun onVodNetStatus(player: TXVodPlayer?, status: Bundle?) {
                 // 获取实时速率, 单位：kbps
-                val speed: Int = status?.getInt(TXLiveConstants.NET_STATUS_NET_SPEED) ?: 0
-                Log.e(TAG, "onLiveNetStatus: $speed" )
-                mDataBinding.tvSpeed.text = "${speed}kbps"
+//                val speed: Int = status?.getInt(TXLiveConstants.NET_STATUS_NET_SPEED) ?: 0
+//                Log.e(TAG, "onLiveNetStatus: $speed" )
+//                mDataBinding.tvSpeed.text = "${speed}kbps"
             }
 
             override fun onLivePlayEvent(event: Int, param: Bundle?) {
@@ -308,6 +327,10 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             }
 
             override fun onError(code: Int) {
+                if (code == SuperPlayerCode.NET_ERROR){
+                    mDataBinding.clVideoNoNet.visibility = View.VISIBLE
+                    errorPro = (mDataBinding.detailPlayer.progress/(mDataBinding.detailPlayer.duration*0.1)).toFloat()
+                }
             }
 
             override fun onShowCacheListClick() {
@@ -382,7 +405,13 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             })
             return
         }
-        showBaseLoading()
+        if (mActivity != null) {
+            if (this is Activity && (this.isFinishing || this.isDestroyed)) {
+
+            }else {
+                showBaseLoading()
+            }
+        }
         mViewModel.getLessonInfo(videoData?.id ?: "")
         initVideo()
     }

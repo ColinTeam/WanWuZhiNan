@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Your custom size defind by references, can be writted in anywhere, any module, any values/*.xml, for example: -->
-    <item name="margin_top" type="fraction">0.015</item>
-    <item name="margin_bottom" type="fraction">0.985</item>
-    <item name="margin_start" type="fraction">0.02</item>
-    <item name="margin_end" type="fraction">0.98</item>
-
     <dimen name="common_margin">@dimen/dp_15</dimen>
 
     <dimen name="tab_height">@dimen/dp_40</dimen>
-
 
     <dimen name="dp_m_60">-60dp</dimen>
     <dimen name="dp_m_30">-30dp</dimen>

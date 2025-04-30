@@ -25,6 +25,7 @@ data class QuestionListData(
     var answerLastQuestionBankId: Int,//
     var answerLastQuestionId: Int,//
     var questionsCount: Int,//
+    var questionsListPageIndex: Int,//
     var questionsList: MutableList<questionBean>,//
 ): BaseModel(){
 

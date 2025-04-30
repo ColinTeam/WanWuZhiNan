@@ -167,6 +167,8 @@ public class SuperPlayerImpl implements SuperPlayer, ITXVodPlayListener, ITXLive
      */
     @Override
     public void onNetStatus(TXVodPlayer player, Bundle bundle) {
+        int speed = bundle.getInt(TXLiveConstants.NET_STATUS_NET_SPEED);
+        mObserver.onPlaySpeed(speed);
         if (mSuperPlayerListener != null) {
             mSuperPlayerListener.onVodNetStatus(player, bundle);
         }
@@ -212,7 +214,7 @@ public class SuperPlayerImpl implements SuperPlayer, ITXVodPlayListener, ITXLive
     public void onPlayEvent(TXVodPlayer player, int event, Bundle param) {
         if (event != TXLiveConstants.PLAY_EVT_PLAY_PROGRESS) {
             String playEventLog = "TXVodPlayer onPlayEvent event: " + event + ", " + param.getString(TXLiveConstants.EVT_DESCRIPTION);
-            Log.d(TAG, playEventLog);
+//            Log.d(TAG, playEventLog);
         }
         switch (event) {
             case TXVodConstants.VOD_PLAY_EVT_GET_PLAYINFO_SUCC:
@@ -313,7 +315,11 @@ public class SuperPlayerImpl implements SuperPlayer, ITXVodPlayListener, ITXLive
             // Failed to play on-demand file
             mVodPlayer.stopPlay(true);
             updatePlayerState(SuperPlayerDef.PlayerState.ERROR);
-            onError(SuperPlayerCode.VOD_PLAY_FAIL, param.getString(TXLiveConstants.EVT_DESCRIPTION));
+            if (event == TXLiveConstants.PLAY_ERR_NET_DISCONNECT) {//网络断了
+                onError(SuperPlayerCode.NET_ERROR, param.getString(TXLiveConstants.EVT_DESCRIPTION));
+            }else {
+                onError(SuperPlayerCode.VOD_PLAY_FAIL, param.getString(TXLiveConstants.EVT_DESCRIPTION));
+            }
         }
         if (mSuperPlayerListener != null) {
             mSuperPlayerListener.onVodPlayEvent(player, event, param);

@@ -62,6 +62,7 @@ class AnswerErrorAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserV
             if(mType==2) return@setOnDebouncedItemClick
 
             mSelectPosition = position
+            showBaseLoading("答题中···")
             mViewModel.questionAdd(mQuestionList.get(mPosition).id,mQuestionList.get(mPosition).answersArr.get(position).key)
         }
     }
@@ -181,8 +182,12 @@ class AnswerErrorAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserV
             onDataEmpty2={msg: String ->
                 toastError(msg)
             }
-            onDataEmpty={
+            onFailed ={ code, msg ->
+                toastError(msg.toString())
+            }
 
+            onComplete = {
+                dismissBaseLoading()
             }
         }
     }
@@ -255,8 +260,12 @@ class AnswerErrorAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserV
                 var drawable = mDataBinding.ivPrintGif.drawable as GifDrawable
                 drawable.start()
             }else {
-                Glide.with(this).asGif().load(R.raw.answer_practice_print)
-                    .into(mDataBinding.ivPrintGif)
+                if (this.isFinishing || this.isDestroyed){
+
+                }else {
+                    Glide.with(this).asGif().load(R.raw.answer_practice_print)
+                        .into(mDataBinding.ivPrintGif)
+                }
             }
         }
         mMediaPlayer.setOnCompletionListener {
@@ -274,6 +283,17 @@ class AnswerErrorAskActivity : BaseActivity<ActivityAnswerPracticeBinding, UserV
                 mMediaPlayer.stop()
             }
             mMediaPlayer.release()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        try {
+            if (mMediaPlayer != null && mMediaPlayer.isPlaying) {
+                mMediaPlayer.pause()
+            }
+        } catch (e: IllegalStateException) {
+            e.printStackTrace() // 可选：记录日志方便排查
         }
     }
 

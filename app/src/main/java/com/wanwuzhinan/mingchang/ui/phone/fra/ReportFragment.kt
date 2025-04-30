@@ -12,6 +12,7 @@ import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.ssm.comm.ext.dismissLoadingExt
 import com.ssm.comm.ext.editChange
+import com.ssm.comm.ext.getCurrentVersionName
 import com.ssm.comm.ext.initEditChange
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.showLoadingExt
@@ -69,7 +70,7 @@ class ReportFragment :
             }else{
                 mImageList.add(it!!.data!!.file)
                if (mImageList.size == mImageList.size && mImageList.size > 0){
-                   mViewModel.feedbackLiveData(mSelectType,mDataBinding.edContent.text.trim().toString(),"[${TextUtils.join(",",mImageList)}]")
+                   mViewModel.feedbackLiveData(mSelectType,mDataBinding.edContent.text.trim().toString(),"[${TextUtils.join(",",mImageList)}]",getCurrentVersionName())
                }
             }
         }
@@ -144,7 +145,9 @@ class ReportFragment :
                             mViewModel.uploadImage(File(path))
                         }
                     }else{
-                        mViewModel.feedbackLiveData(mSelectType,mDataBinding.edContent.text.trim().toString(),"")
+                        mViewModel.feedbackLiveData(mSelectType,mDataBinding.edContent.text.trim().toString(),"",
+                            getCurrentVersionName()
+                        )
                     }
 
                 }

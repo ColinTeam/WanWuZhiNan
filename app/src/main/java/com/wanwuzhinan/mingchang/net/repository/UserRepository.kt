@@ -120,6 +120,10 @@ class UserRepository : CommRepository() {
         return executeHttp { mService.questionDetail(id) }
     }
 
+    suspend fun questionPageDetail(id: String,question_id: String): ApiResponse<ApiInfoResponse<QuestionListData>> {
+        return executeHttp { mService.questionPageDetail(id,question_id) }
+    }
+
     //获取配置
     suspend fun getConfig(): ApiResponse<ApiConfigInfoResponse<ConfigData>> {
         return executeHttp { mService.getConfig() }
@@ -142,8 +146,8 @@ class UserRepository : CommRepository() {
         return executeHttp { mService.exchangeCodeList(group_id) }
     }
 
-    suspend fun feedbackAdd(typeid:Int,content:String,photos:String):ApiResponse<MutableList<String>>{
-     return executeHttp { mService.feedbackAdd(typeid,content,photos) }
+    suspend fun feedbackAdd(typeid:Int,content:String,photos:String,version_name:String):ApiResponse<MutableList<String>>{
+     return executeHttp { mService.feedbackAdd(typeid,content,photos, version_name) }
     }
 
     suspend fun editAddress(contact_name:String,contact_address:String,contact_phone:String):ApiResponse<MutableList<String>>{

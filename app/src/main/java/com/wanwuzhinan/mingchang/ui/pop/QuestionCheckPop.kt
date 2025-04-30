@@ -52,7 +52,9 @@ class QuestionCheckPop(var context: Activity) :BasePop<PopQuestionCheckBinding>(
             }
             cur = position
             mList.get(position).isSelect = true
-            mOptionAdapter.submitList(mOptionList.get(position))
+            if (position < mOptionList.size) {
+                mOptionAdapter.submitList(mOptionList.get(position))
+            }
             mAdapter.notifyDataSetChanged()
         }
 

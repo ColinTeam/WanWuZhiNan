@@ -38,6 +38,7 @@ import com.ssm.comm.utils.MMKVUtils
 import com.tencent.mm.opensdk.constants.Build
 import com.tencent.mm.opensdk.modelbiz.WXOpenCustomerServiceChat
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.net.RetrofitClient
 import com.wanwuzhinan.mingchang.thread.EaseThreadManager
 import com.wanwuzhinan.mingchang.ui.publics.WebGoodsViewActivity
 import kotlinx.coroutines.GlobalScope
@@ -218,6 +219,7 @@ fun IWrapView.getTextDescription(
 fun IWrapView.jumpLoginActivity(isClear: Boolean = true) {
     if (isClear) {
         clearAllData()
+        RetrofitClient.addOkHttpCommBuilder(Constant.TOKEN, "")
     }
     val mH = Handler(Looper.getMainLooper())
     mH.postDelayed({

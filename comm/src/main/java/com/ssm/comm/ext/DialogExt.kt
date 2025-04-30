@@ -24,6 +24,9 @@ private val map = mutableMapOf<String, LoadingDialog>()
  */
 fun WrapViewImpl.showLoadingExt(message: String = appContext.resources!!.getString(R.string.loading_text)) {
     val activity = this.getCurrentActivity()
+    if (activity == null || activity.isFinishing || activity.isDestroyed) {
+        return
+    }
     if (!activity.isFinishing) {
         val name = activity.componentName.className
         val loadingDialog: LoadingDialog
@@ -37,7 +40,12 @@ fun WrapViewImpl.showLoadingExt(message: String = appContext.resources!!.getStri
             }
         }
         if (!loadingDialog.isShowing){
-            loadingDialog.show()
+            try {
+                loadingDialog.show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // 这里最好捕获一下，避免极端情况下再崩溃
+            }
         }
     }
 }
@@ -48,6 +56,9 @@ fun WrapViewImpl.showLoadingExt(message: String = appContext.resources!!.getStri
  */
 fun Activity.showLoadingExt(message: String = appContext.resources!!.getString(R.string.loading_text)) {
     val activity = this
+    if (activity == null || activity.isFinishing || activity.isDestroyed) {
+        return
+    }
     if (!activity.isFinishing) {
         val name = activity.componentName.className
         val loadingDialog: LoadingDialog
@@ -61,7 +72,12 @@ fun Activity.showLoadingExt(message: String = appContext.resources!!.getString(R
             }
         }
         if (!loadingDialog.isShowing){
-            loadingDialog.show()
+            try {
+                loadingDialog.show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // 这里最好捕获一下，避免极端情况下再崩溃
+            }
         }
     }
 }
@@ -72,7 +88,20 @@ fun Activity.showLoadingExt(message: String = appContext.resources!!.getString(R
  */
 fun dismissLoadingExt() {
     map.forEach {
-        it.value.dismiss()
+        val dialog = it.value
+        val context = dialog.context
+        if (context is Activity) {
+            if (context.isFinishing || context.isDestroyed) {
+                return@forEach // Activity已经挂了，不再dismiss这个dialog
+            }
+        }
+        if (dialog.isShowing) {
+            try {
+                dialog.dismiss()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
     map.clear()
 }

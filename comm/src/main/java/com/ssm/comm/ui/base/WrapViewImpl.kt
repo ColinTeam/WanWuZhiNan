@@ -171,7 +171,7 @@ class WrapViewImpl(private var activity: AppCompatActivity) : IWrapView {
     }
 
     override fun showBaseLoading(text: String?) {
-        showLoadingExt()
+        showLoadingExt(text.toString())
     }
 
     override fun dismissBaseLoading() {

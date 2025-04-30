@@ -11,7 +11,7 @@ static def releaseTime() {
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
     defaultConfig {
         applicationId "com.wanwuzhinan.mingchang"
 
@@ -130,6 +130,7 @@ android {
         release {
             minifyEnabled false
             shrinkResources false
+            zipAlignEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
@@ -139,6 +140,7 @@ android {
         debug {
             minifyEnabled false
             shrinkResources false
+            zipAlignEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
@@ -164,22 +166,15 @@ android {
 dependencies {
 
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-    implementation project(path: ':banner')
-    implementation project(path: ':comm')
-    implementation project(path: ':img_load')
-    implementation project(path: ':library')
-    implementation project(path: ':superplayerkit')
-
-    implementation rootProject.ext.dependVersion.core_ktx
-    implementation rootProject.ext.dependVersion.material
     implementation rootProject.ext.dependVersion.appcompat
-    implementation rootProject.ext.dependVersion.recyclerview
+    implementation rootProject.ext.dependVersion.material
     implementation rootProject.ext.dependVersion.constraintlayout
-    implementation rootProject.ext.dependVersion.navigationFragment
-    implementation rootProject.ext.dependVersion.navigationUI
-    implementation rootProject.ext.dependVersion.liteavSdk
-    implementation rootProject.ext.dependVersion.mediaExo
-    implementation rootProject.ext.dependVersion.mediaSession
+
+    testImplementation rootProject.ext.dependVersion.junit
+    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
+    androidTestImplementation rootProject.ext.dependVersion.espresso_core
+    implementation rootProject.ext.dependVersion.core_ktx
+
     //https://github.com/LetMeOff/SimpleDownload 携程下载文件
     implementation 'com.github.LetMeOff:SimpleDownload:v1.0.0'
     implementation 'com.jakewharton:disklrucache:2.0.2'
@@ -190,6 +185,14 @@ dependencies {
     //图文详情的textview
     implementation 'org.sufficientlysecure:html-textview:4.0'
     implementation "io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.1"
+
+    implementation project(path: ':comm')
+    implementation project(path: ':banner')
+    implementation project(path: ':img_load')
+    implementation project(path: ':library')
+
+    implementation 'com.tencent.liteav:LiteAVSDK_Player_Premium:latest.release'
+    implementation project(path: ':superplayerkit')
 
     //阴影
     implementation 'io.github.linwg1988:lcardview-kt:1.0.2'
@@ -205,9 +208,4 @@ dependencies {
     implementation 'com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer:v8.4.0-release-jitpack'
 
     implementation 'com.github.getActivity:ShapeView:6.0'
-
-
-    testImplementation rootProject.ext.dependVersion.junit
-    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
-    androidTestImplementation rootProject.ext.dependVersion.espresso_core
 }

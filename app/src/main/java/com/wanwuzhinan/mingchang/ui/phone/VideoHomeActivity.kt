@@ -347,8 +347,10 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
             override fun onAnimationEnd(animation: Animator) {
                 mCurrentAnimation = null
 //                mDataBinding.currentImage.setImageDrawable(imageResId)
-                GlideImgManager.get()
-                    .loadImg(imageResId, expandedImageView, 0)
+                if (expandedImageView.isAttachedToWindow) {
+                    GlideImgManager.get()
+                        .loadImg(imageResId, expandedImageView, 0)
+                }
 
                 GlideImgManager.get()
                     .loadImg(imageResId,mDataBinding.ivBg,0)

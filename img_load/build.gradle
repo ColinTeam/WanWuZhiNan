@@ -6,7 +6,6 @@ plugins {
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
         minSdkVersion  rootProject.ext.android.minSdkVersion
@@ -23,7 +22,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
     dataBinding {
         //noinspection DataBindingWithoutKapt
         enabled = true
@@ -33,23 +38,23 @@ android {
 dependencies {
 
     implementation rootProject.ext.dependVersion.core_ktx
-    implementation rootProject.ext.dependVersion.material
     implementation rootProject.ext.dependVersion.appcompat
+    implementation rootProject.ext.dependVersion.material
     implementation rootProject.ext.dependVersion.constraintlayout
+    testImplementation rootProject.ext.dependVersion.junit
+    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
+    androidTestImplementation rootProject.ext.dependVersion.espresso_core
 
     //图片加载框架
     api 'com.github.bumptech.glide:glide:4.12.0'
-    kapt 'com.github.bumptech.glide:compiler:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
 
     //api 'com.github.yuzhiqiang1993:zxing:2.2.5'//扫一扫
+
     implementation 'com.google.code.gson:gson:2.9.0'
 
     def lifecycle_version = rootProject.ext.dependVersion.lifecycle_version
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
-
-    testImplementation rootProject.ext.dependVersion.junit
-    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
-    androidTestImplementation rootProject.ext.dependVersion.espresso_core
 }

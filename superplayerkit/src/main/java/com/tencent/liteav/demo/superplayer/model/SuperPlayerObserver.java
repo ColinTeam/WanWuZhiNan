@@ -110,4 +110,8 @@ public abstract class SuperPlayerObserver {
     public void onRcvWaterMark(String text, long duration) {
 
     }
+
+    public void onPlaySpeed(int speed){
+
+    }
 }

@@ -7,6 +7,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -84,6 +85,9 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, UserViewModel>(
 
     override fun initView() {
         initList()
+
+        // 获取窗口的布局参数
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         showBaseLoading()
         mViewModel.courseSubject(ConfigApp.TYPE_AUDIO)
@@ -470,12 +474,14 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, UserViewModel>(
     }
 
     private fun nextPlay(){
-        if (mPlayPage+1 < mPlayAudioList!!.size) {
-            mPlayPage ++
-            getLessonInfo()
-        }else{
-            mPlayPage = 0
-            getLessonInfo()
+        if (mPlayAudioList != null) {
+            if (mPlayPage + 1 < mPlayAudioList!!.size) {
+                mPlayPage++
+                getLessonInfo()
+            } else {
+                mPlayPage = 0
+                getLessonInfo()
+            }
         }
     }
 

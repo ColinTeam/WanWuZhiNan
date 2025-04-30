@@ -18,10 +18,11 @@ import com.ssm.comm.utils.StatusBarUtils
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.BaseApplication
 import com.wanwuzhinan.mingchang.databinding.ActivityViewSplashBinding
+import com.wanwuzhinan.mingchang.ext.launchLoginActivity
+import com.wanwuzhinan.mingchang.ext.launchMainActivity
 import com.wanwuzhinan.mingchang.ext.performLaunchPrivacy
 import com.wanwuzhinan.mingchang.ext.performLaunchUserAgreement
 import com.wanwuzhinan.mingchang.net.RetrofitClient
-import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.PrivacyPop
 import com.wanwuzhinan.mingchang.vm.UserViewModel
 import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
@@ -122,12 +123,11 @@ class SplashActivity : BaseActivity<ActivityViewSplashBinding, UserViewModel>(Us
 
     private fun enterApp(){
         (application as BaseApplication).enterInApp()
-        HomeActivity.start(this)
-//        if (Constant.isLogin()) {
-//            launchMainActivity()
-//        } else {
-//            launchLoginActivity()
-//        }
+        if (Constant.isLogin()) {
+            launchMainActivity()
+        } else {
+            launchLoginActivity()
+        }
         this@SplashActivity.finish()
     }
 

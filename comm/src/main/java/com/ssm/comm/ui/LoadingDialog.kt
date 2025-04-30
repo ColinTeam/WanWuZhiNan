@@ -42,7 +42,9 @@ class LoadingDialog(context: Context,private val text: String = "") : AppCompatD
     }
 
     override fun dismiss() {
-        super.dismiss()
-        binding.unbind()
+        if (this.isShowing) {
+            super.dismiss()
+            binding.unbind()
+        }
     }
 }

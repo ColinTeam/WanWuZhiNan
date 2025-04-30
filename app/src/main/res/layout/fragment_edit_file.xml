@@ -39,7 +39,7 @@
                         android:layout_width="@dimen/dp_55"
                         android:layout_height="@dimen/dp_55"
                         app:riv_oval="true"
-                        android:src="@mipmap/ic_head_upload"
+                        android:src="@mipmap/logo"
                         app:android_scaleType="6"
                         android:layout_marginStart="@dimen/dp_35"
                         android:layout_marginTop="@dimen/dp_20"
@@ -49,6 +49,7 @@
                     <ImageView
                         android:layout_width="@dimen/dp_18"
                         android:layout_height="@dimen/dp_18"
+                        android:visibility="gone"
                         android:src="@mipmap/ic_head_car"
                         app:layout_constraintEnd_toEndOf="@id/riv_head"
                         app:layout_constraintBottom_toBottomOf="@id/riv_head"/>

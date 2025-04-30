@@ -1,5 +1,6 @@
 package com.ad.img_load
 
+import android.content.Context
 import android.content.Context.VIBRATOR_SERVICE
 import android.os.Build
 import android.os.VibrationEffect
@@ -77,9 +78,15 @@ fun View.startVibrate(){
     }
     if (vibrator!!.hasVibrator()) {
 
-        // 使用更复杂的震动效果
-        val effect = VibrationEffect.createOneShot(100, 30)
-        vibrator!!.vibrate(effect)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // 使用更复杂的震动效果
+            val effect = VibrationEffect.createOneShot(100, 30)
+            vibrator!!.vibrate(effect)
+        } else {
+            vibrator!!.vibrate(100) // 震动 500 毫秒
+        }
+    }else{
+
     }
 }
 

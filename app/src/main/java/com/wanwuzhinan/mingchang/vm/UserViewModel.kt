@@ -38,6 +38,7 @@ class UserViewModel : BaseViewModel<UserInfoData, UserRepository>(UserRepository
     val courseStudyLiveData = StateMutableLiveData<CourseStudyData>()
     val questionListLiveData = StateMutableLiveData<ApiListResponse<QuestionListData>>()
     val questionDetailLiveData = StateMutableLiveData<ApiInfoResponse<QuestionListData>>()
+    val questionPageDetailLiveData = StateMutableLiveData<ApiInfoResponse<QuestionListData>>()
     val questionAddLiveData = StateMutableLiveData<QuestionLogData>()
     val questionClearLiveData = StateMutableLiveData<Any>()
     val questionErrorLiveData = StateMutableLiveData<ApiListResponse<QuestionListData.questionBean>>()
@@ -143,9 +144,9 @@ class UserViewModel : BaseViewModel<UserInfoData, UserRepository>(UserRepository
         }
     }
 
-    fun feedbackLiveData(typeid: Int,content:String,photos:String){
+    fun feedbackLiveData(typeid: Int,content:String,photos:String,version_name:String){
         viewModelScope.launch {
-            feedbackLiveData.value = repository.feedbackAdd(typeid, content, photos)
+            feedbackLiveData.value = repository.feedbackAdd(typeid, content, photos, version_name)
         }
     }
 
@@ -240,6 +241,13 @@ class UserViewModel : BaseViewModel<UserInfoData, UserRepository>(UserRepository
             questionDetailLiveData.value = repository.questionDetail(id)
         }
     }
+
+    fun questionPageDetail(id: String,question_id: String){
+        viewModelScope.launch {
+            questionPageDetailLiveData.value = repository.questionPageDetail(id,question_id)
+        }
+    }
+
 
     //获取版本号
     fun getVersion() {

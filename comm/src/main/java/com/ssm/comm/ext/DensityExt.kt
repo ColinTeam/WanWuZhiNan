@@ -2,7 +2,6 @@ package com.ssm.comm.ext
 
 import android.app.Activity
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Point
 import android.graphics.Rect
 import android.util.DisplayMetrics
@@ -10,33 +9,13 @@ import android.util.TypedValue
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import androidx.core.content.res.ResourcesCompat
 import com.ssm.comm.app.appContext
 
-/************************************** 单位转换*********************************************** */
 /**
  *  @description:
  *  @Date 2020/7/1
  **/
-const val RATIO_4_3 = 1.3F
-const val RATIO_1_1 = 1.0F
-const val RATIO_16_9 = 1.7F
-
-val Context.displayMetrics: DisplayMetrics
-    get() = resources.displayMetrics
-
-/**
- * 获取当前设备屏幕的宽高比
- *
- * 该扩展属性通过[Context.displayMetrics]获取屏幕物理像素尺寸，并计算宽度与高度的比值。
- * 注意宽高比始终以宽度为分子，因此返回值可能大于1（横屏）或小于1（竖屏）
- *
- * @receiver 上下文对象，用于获取显示度量信息
- * @return 屏幕的宽高比，返回值为正浮点数，范围在0到+∞之间
- */
-val Context.aspectRatio: Float
-    get() = displayMetrics.run { widthPixels.toFloat() / heightPixels }
-
+/************************************** 单位转换*********************************************** */
 /**
  * 像素密度
  */
@@ -47,19 +26,15 @@ fun getDisplayMetrics() = appContext.resources!!.displayMetrics.density
  */
 fun dp2px(dpValue: Float): Float {
     return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP, dpValue, appContext.resources!!.displayMetrics
+        TypedValue.COMPLEX_UNIT_DIP,
+        dpValue,
+        appContext.resources!!.displayMetrics
     )
 }
 
-val Float.dp
-    get() = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP, this, appContext.resources!!.displayMetrics
-    )
+val Float.dp get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,this, appContext.resources!!.displayMetrics)
 
-val Int.dp
-    get() = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), appContext.resources!!.displayMetrics
-    ).toInt()
+val Int.dp get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), appContext.resources!!.displayMetrics).toInt()
 
 /**
  * px 转成为 dp
@@ -71,7 +46,9 @@ fun px2dp(pxValue: Float) = (pxValue / getDisplayMetrics() + 0.5f).toInt()
  */
 fun sp2px(spVal: Float): Float {
     return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_SP, spVal, appContext.resources!!.displayMetrics
+        TypedValue.COMPLEX_UNIT_SP,
+        spVal,
+        appContext.resources!!.displayMetrics
     )
 }
 
@@ -87,9 +64,8 @@ fun px2sp(pxVal: Float) = pxVal / appContext.resources!!.displayMetrics.scaledDe
  */
 fun getScreenWidth(): Int {
     val metric = DisplayMetrics()
-    (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(
-        metric
-    )
+    (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+        .getMetrics(metric)
     return metric.widthPixels
 }
 
@@ -98,9 +74,8 @@ fun getScreenWidth(): Int {
  */
 fun getScreenHeight(): Int {
     val metric = DisplayMetrics()
-    (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(
-        metric
-    )
+    (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+        .getMetrics(metric)
     return metric.heightPixels
 }
 
@@ -109,9 +84,8 @@ fun getScreenHeight(): Int {
  */
 fun getScreenWidth2(): Int {
     val point = Point()
-    (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getSize(
-        point
-    )
+    (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+        .getSize(point)
     return point.x
 }
 
@@ -120,9 +94,8 @@ fun getScreenWidth2(): Int {
  */
 fun getScreenHeight2(): Int {
     val point = Point()
-    (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getSize(
-        point
-    )
+    (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+        .getSize(point)
     return point.y
 }
 
@@ -134,9 +107,11 @@ fun getAllScreenHeight(): Int {
         (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
     try {
         val displayMetrics = DisplayMetrics()
-        val method = Class.forName("android.view.Display").getMethod(
-            "getRealMetrics", DisplayMetrics::class.java
-        )
+        val method =
+            Class.forName("android.view.Display").getMethod(
+                "getRealMetrics",
+                DisplayMetrics::class.java
+            )
         method.invoke(display, displayMetrics)
         return displayMetrics.heightPixels
     } catch (e: Exception) {
@@ -150,9 +125,11 @@ fun getAllScreenWidth(): Int {
         (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
     try {
         val displayMetrics = DisplayMetrics()
-        val method = Class.forName("android.view.Display").getMethod(
-            "getRealMetrics", DisplayMetrics::class.java
-        )
+        val method =
+            Class.forName("android.view.Display").getMethod(
+                "getRealMetrics",
+                DisplayMetrics::class.java
+            )
         method.invoke(display, displayMetrics)
         return displayMetrics.widthPixels
     } catch (e: Exception) {
@@ -168,7 +145,8 @@ fun getAllScreenWidth(): Int {
  */
 fun getStatusBarHeight(): Int {
     var height = 0
-    val resourceId = appContext.resources!!.getIdentifier("status_bar_height", "dimen", "android")
+    val resourceId =
+        appContext.resources!!.getIdentifier("status_bar_height", "dimen", "android")
     if (resourceId > 0) {
         height = appContext.resources!!.getDimensionPixelSize(resourceId)
     }
@@ -189,7 +167,9 @@ fun getStatusBarHeight2(activity: Activity): Int {
  * 标题栏的高度，【注意】要在onWindowFocusChanged中获取才可以
  */
 fun getTitleBarHeight(activity: Activity): Int {
-    val contentTop = activity.window.findViewById<View>(Window.ID_ANDROID_CONTENT).top
+    val contentTop =
+        activity.window.findViewById<View>(Window.ID_ANDROID_CONTENT)
+            .top
     return contentTop - getStatusBarHeight()
 }
 
