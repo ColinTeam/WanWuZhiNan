@@ -20,6 +20,8 @@ import kotlinx.coroutines.Runnable
 object AppMediaManager {
     private lateinit var controllerFuture: ListenableFuture<MediaController>
     private lateinit var player: Player
+    var audioSessionId = -1
+
     fun initMediaController(context: Context) {
         val token = SessionToken(context, ComponentName(context, MediaService::class.java))
         val controller =

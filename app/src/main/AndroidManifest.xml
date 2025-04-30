@@ -26,13 +26,24 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.CAMERA"
+        tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <!--    //Android 13版本适配，细化存储权限-->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
+        tools:ignore="SelectedPhotoAccess" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_AUDIO"
+        tools:ignore="SelectedPhotoAccess" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VIDEO"
+        tools:ignore="SelectedPhotoAccess" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
     <queries package="${applicationId}">
         <intent>
@@ -238,6 +249,14 @@
             android:name="design_height_in_dp"
             android:value="375" />
 
+        <service
+            android:name=".service.MediaService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="android.media3.session.MediaSessionService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
