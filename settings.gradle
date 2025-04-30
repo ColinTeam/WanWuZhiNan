@@ -1,9 +1,33 @@
-rootProject.name = "WanWuZhiNan"
-include ':app'
-include ':net_work'
-include ':comm'
-include ':banner'
-include ':img_load'
-include ':library'
-include ':superplayerkit'
+pluginManagement {
+    repositories {
+        maven { url = uri("https://info-maven.apps.saic-gm.com/repository/maven-public/") }
+        maven { url = uri("https://jitpack.io") }
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        maven { url = uri("https://info-maven.apps.saic-gm.com/repository/maven-public/") }
+        maven { url = uri("https://jitpack.io") }
+        google()
+        mavenCentral()
+    }
+}
 
+rootProject.name = "WanWuZhiNan"
+include(":app")
+include(":banner")
+include(":comm")
+include(":img_load")
+include(":library")
+include(":net_work")
+include(":superplayerkit")

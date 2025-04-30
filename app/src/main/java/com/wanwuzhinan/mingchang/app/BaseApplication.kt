@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import com.ad.img_load.ImageLoader
 import com.comm.net_work.BuildConfig
-import com.hpplay.sdk.source.api.IBindSdkListener
 import com.kongzue.dialogx.DialogX
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator
@@ -17,11 +16,9 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.shuyu.gsyvideoplayer.player.PlayerFactory
 import com.shuyu.gsyvideoplayer.player.SystemPlayerManager
 import com.ssm.comm.app.CommApplication
-import com.ssm.comm.ext.isShowPrivacy
 import com.ssm.comm.ext.setData
 import com.tencent.rtmp.TXLiveBase
 import com.tencent.rtmp.TXLiveBaseListener
-import com.tencent.rtmp.TXPlayerGlobalSetting
 import com.wanwuzhinan.mingchang.R
 import com.zjh.download.SimpleDownload
 

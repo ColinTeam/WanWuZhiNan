@@ -1,53 +1,41 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
     namespace 'com.comm.banner'
-    compileSdk rootProject.ext.android.compileSdkVersion
-
+    compileSdk = 35
     defaultConfig {
-        minSdk rootProject.ext.android.minSdkVersion
-        targetSdk rootProject.ext.android.targetSdkVersion
-
+        minSdk = 27
+        consumerProguardFiles("consumer-rules.pro")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "Boolean", "IS_ENABLE_LOG", "${isEnableLog.release}"
-        }
-        debug{
-            buildConfigField "Boolean", "IS_ENABLE_LOG", "${isEnableLog.debug}"
+            minifyEnabled = false
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
+
     kotlinOptions {
-        jvmTarget = '1.8'
-    }
-    // 添加 kapt 配置
-    kapt {
-        javacOptions {
-            option("-target", "1.8") // 或 '11'
-        }
+        jvmTarget = "21"
     }
 }
 
 dependencies {
-
-    implementation rootProject.ext.dependVersion.core_ktx
-    implementation rootProject.ext.dependVersion.material
-    implementation rootProject.ext.dependVersion.appcompat
-    implementation rootProject.ext.dependVersion.constraintlayout
-    testImplementation rootProject.ext.dependVersion.junit
-    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
-    androidTestImplementation rootProject.ext.dependVersion.espresso_core
+    implementation(libs.bundles.androidCommon)
+    implementation libs.androidx.constraintlayout
+//    testImplementation rootProject.ext.dependVersion.junit
+//    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
+//    androidTestImplementation rootProject.ext.dependVersion.espresso_core
 }

@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.util.setOnDebouncedItemClick
 import com.hpplay.glide.load.resource.gif.GifDrawable
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.AnswerPracticeOptionAdapter
-import com.wanwuzhinan.mingchang.adapter.AnswerPracticeSelectAdapter
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.databinding.ActivityAnswerPracticeBinding

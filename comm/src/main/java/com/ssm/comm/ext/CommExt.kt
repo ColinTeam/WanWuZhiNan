@@ -19,25 +19,24 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.ssm.comm.ui.base.BaseModel
 import com.ssm.comm.app.appContext
 import com.ssm.comm.event.EntityDataEvent
 import com.ssm.comm.event.MessageEvent
+import com.ssm.comm.ui.base.BaseModel
 import org.greenrobot.eventbus.EventBus
 import java.nio.CharBuffer
 import java.util.regex.Pattern
 
 //手机号脱敏处理
-fun String.mobileFormat(): String{
-    if(isEmpty(this) && this.length < 11){
+fun String.mobileFormat(): String {
+    if (isEmpty(this) && this.length < 11) {
         return ""
     }
     val sb = StringBuilder()
-    sb.append(this.subSequence(0,3))
-    for(i in this.indices){
+    sb.append(this.subSequence(0, 3))
+    for (i in this.indices) {
         sb.append("*")
     }
     sb.append(this.substring(this.length - 2))
@@ -45,44 +44,44 @@ fun String.mobileFormat(): String{
 }
 
 //邮箱脱敏
-fun String.emailFormat(): String{
-    if(isEmpty(this)){
+fun String.emailFormat(): String {
+    if (isEmpty(this)) {
         return ""
     }
-    if(!this.contains("@")){
-       return mobileFormat()
+    if (!this.contains("@")) {
+        return mobileFormat()
     }
     val index = this.indexOf("@")
     val end = this.substring(index)
     val sb = StringBuilder()
-    sb.append(this.subSequence(0,1))
-    for(i in this.indices){
+    sb.append(this.subSequence(0, 1))
+    for (i in this.indices) {
         sb.append("*")
     }
     sb.append(end)
     return sb.toString()
 }
 
-fun CharBuffer.charAt(index: Int): Char{
+fun CharBuffer.charAt(index: Int): Char {
     return this[position() + index]
 }
 
-fun post(type: Int,msg: String = ""){
-    EventBus.getDefault().post(MessageEvent(type,msg))
+fun post(type: Int, msg: String = "") {
+    EventBus.getDefault().post(MessageEvent(type, msg))
 }
 
-fun post(type: Int,data: BaseModel){
-    EventBus.getDefault().post(EntityDataEvent(type,data))
+fun post(type: Int, data: BaseModel) {
+    EventBus.getDefault().post(EntityDataEvent(type, data))
 }
 
-fun unregisterBus(subscriber: Any){
-    if (EventBus.getDefault().isRegistered(subscriber)){
+fun unregisterBus(subscriber: Any) {
+    if (EventBus.getDefault().isRegistered(subscriber)) {
         EventBus.getDefault().unregister(subscriber)
     }
 }
 
-fun registerBus(subscriber: Any){
-    if (!EventBus.getDefault().isRegistered(subscriber)){
+fun registerBus(subscriber: Any) {
+    if (!EventBus.getDefault().isRegistered(subscriber)) {
         EventBus.getDefault().register(subscriber)
     }
 }
@@ -102,12 +101,12 @@ fun copyString(mActivity: Context, content: String?) {
     toastSuccess("内容复制成功")
 }
 
-fun String.urlFormat(): String{
-    if(isWebUrlLegal(this)){
+fun String.urlFormat(): String {
+    if (isWebUrlLegal(this)) {
         return this
     }
     //    return String.format("%s%s",,this)
-    return String.format("%s%s",com.comm.net_work.BuildConfig.IMG_HOST,this)
+    return String.format("%s%s", com.comm.net_work.BuildConfig.IMG_HOST, this)
 }
 
 fun isWebUrlLegal(url: String): Boolean {
@@ -118,7 +117,7 @@ fun isWebUrlLegal(url: String): Boolean {
     return Pattern.compile(regex).matcher(url).matches()
 }
 
-fun isEmpty(str: String?): Boolean{
+fun isEmpty(str: String?): Boolean {
     return TextUtils.isEmpty(str)
 }
 
@@ -201,13 +200,13 @@ fun Activity.hideOffKeyboard() {
     }
 }
 
-fun toStartActivity(@NonNull clz: Class<*>) {
+fun toStartActivity(clz: Class<*>) {
     val intent = Intent(appContext, clz)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     appContext.startActivity(intent)
 }
 
-fun toStartActivity(@NonNull clz: Class<*>, @NonNull bundle: Bundle) {
+fun toStartActivity(clz: Class<*>, bundle: Bundle) {
     val intent = Intent(appContext, clz)
     intent.apply {
         putExtras(bundle)
@@ -218,31 +217,32 @@ fun toStartActivity(@NonNull clz: Class<*>, @NonNull bundle: Bundle) {
 
 fun toStartActivity(
     activity: Activity,
-    @NonNull clz: Class<*>,
+    clz: Class<*>,
     code: Int,
-    @NonNull bundle: Bundle,
+    bundle: Bundle,
 ) {
     activity.startActivityForResult(Intent(appContext, clz).putExtras(bundle), code)
 }
 
+@Suppress("DEPRECATION")
 fun toStartActivity(
     fragment: Fragment,
-    @NonNull clz: Class<*>,
+    clz: Class<*>,
     code: Int,
-    @NonNull bundle: Bundle,
+    bundle: Bundle,
 ) {
     fragment.startActivityForResult(Intent(appContext, clz).putExtras(bundle), code)
 }
 
-fun toStartActivity(activity: Activity, @NonNull intent: Intent, code: Int) {
+fun toStartActivity(activity: Activity, intent: Intent, code: Int) {
     activity.startActivityForResult(intent, code)
 }
 
 fun toStartActivity(
-    @NonNull type: Any,
-    @NonNull clz: Class<*>,
+    type: Any,
+    clz: Class<*>,
     code: Int,
-    @NonNull bundle: Bundle,
+    bundle: Bundle,
 ) {
     if (type is Activity) {
         toStartActivity(type, clz, code, bundle)
@@ -254,6 +254,7 @@ fun toStartActivity(
 /**
  * 隐藏状态栏
  */
+@Suppress("DEPRECATION")
 fun hideStatusBar(activity: Activity) {
     val attrs = activity.window.attributes
     attrs.flags = attrs.flags or WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -263,6 +264,7 @@ fun hideStatusBar(activity: Activity) {
 /**
  * 显示状态栏
  */
+@Suppress("DEPRECATION")
 fun showStatusBar(activity: Activity) {
     val attrs = activity.window.attributes
     attrs.flags = attrs.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN.inv()
@@ -304,12 +306,15 @@ fun TextView.drawabImg(id: Int, type: Int = Gravity.LEFT): TextView {
         Gravity.LEFT -> {
             this.setCompoundDrawablesWithIntrinsicBounds(getDrawableExt(id), null, null, null)
         }
+
         Gravity.TOP -> {
             this.setCompoundDrawablesWithIntrinsicBounds(null, getDrawableExt(id), null, null)
         }
+
         Gravity.RIGHT -> {
             this.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableExt(id), null)
         }
+
         Gravity.BOTTOM -> {
             this.setCompoundDrawablesWithIntrinsicBounds(null, null, null, getDrawableExt(id))
         }
@@ -371,7 +376,7 @@ fun saveBitmapToFile(bitmap: Bitmap, activity: Activity): Boolean {
     */
 }
 
-fun EditText.setMaxInput(len: Int){
+fun EditText.setMaxInput(len: Int) {
     this.filters = arrayOf(InputFilter.LengthFilter(len))
 }
 

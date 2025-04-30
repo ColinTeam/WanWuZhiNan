@@ -1,0 +1,77 @@
+[versions]
+gap = "8.9.1"
+gson = "2.10.1"
+gsyvideoplayer = "v10.1.0"
+kotlin = "2.0.21"
+coreKtx = "1.13.1"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+liteavsdk_player_premium = "latest.release"
+material = "1.12.0"
+recyclerview = "1.3.2"
+constraintlayout = "2.2.0"
+swiperefreshlayout = "1.1.0"
+lifecycle = "2.8.7"
+navigation = "2.7.7"
+compileSdk = "34"
+namespace = "com.wanwuzhinan.mingchang"
+minSdk = "27"
+targetSdk = "34"
+versionCode = "1400"
+versionName = "1.4.0"
+jetbrainsKotlinJvm = "1.9.24"
+media = "1.16.0"
+default_world_map = "45424"
+tomtom_sdk = "1.15.0"
+androidx_compat = "1.6.1"
+androidx_constraintlayout = "2.1.4"
+squareup_retrofit = "2.11.0"
+squareup_okhttp = "4.12.0"
+glide = "4.12.0"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+gsyvideoplayer = { module = "com.github.CarGuo.GSYVideoPlayer:gsyvideoplayer", version.ref = "gsyvideoplayer" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+liteavsdk_player_premium = { module = "com.tencent.liteav:LiteAVSDK_Player_Premium", version.ref = "liteavsdk_player_premium" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycle" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+squareup-retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "squareup_retrofit" }
+squareup-retrofit2-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "squareup_retrofit" }
+squareup-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "squareup_okhttp" }
+squareup-okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "squareup_okhttp" }
+media-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media" }
+media-session = { group = "androidx.media3", name = "media3-session", version.ref = "media" }
+media-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media" }
+media-exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "media" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+
+[bundles]
+androidCommon = ["material", "androidx-appcompat", "androidx-core-ktx"]
+androidWidgets = ["androidx-constraintlayout", "androidx-swiperefreshlayout", "androidx-recyclerview"]
+androidNavigation = ["androidx-navigation-ui-ktx", "androidx-navigation-fragment-ktx"]
+lifecycle = ["androidx-lifecycle-process", "androidx-lifecycle-livedata-ktx", "androidx-lifecycle-viewmodel-ktx"]
+squareup = ["squareup-okhttp", "squareup-okhttp-logging", "squareup-retrofit2", "squareup-retrofit2-gson"]
+media = ["media-session", "media-exoplayer"]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "gap" }
+android-library = { id = "com.android.library", version.ref = "gap" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+

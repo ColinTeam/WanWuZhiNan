@@ -1,23 +1,24 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
-    namespace 'com.ad.img_load'
-    compileSdk rootProject.ext.android.compileSdkVersion
-
+    namespace 'com.comm.img_load'
+    compileSdk = 35
     defaultConfig {
-        minSdk rootProject.ext.android.minSdkVersion
-        targetSdk rootProject.ext.android.targetSdkVersion
+        minSdk = 27
+        consumerProguardFiles("consumer-rules.pro")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled = false
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
         }
     }
 
@@ -25,42 +26,32 @@ android {
         //noinspection DataBindingWithoutKapt
         enabled = true
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-    // 添加 kapt 配置
-    kapt {
-        javacOptions {
-            option("-target", "1.8") // 或 '11'
-        }
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 
 dependencies {
+    implementation(libs.bundles.androidCommon)
+    implementation libs.androidx.constraintlayout
+    implementation libs.glide
+    kapt libs.glide.compiler
+    implementation libs.gson
 
-    implementation rootProject.ext.dependVersion.core_ktx
-    implementation rootProject.ext.dependVersion.material
-    implementation rootProject.ext.dependVersion.appcompat
-    implementation rootProject.ext.dependVersion.constraintlayout
-    implementation rootProject.ext.dependVersion.glide
+//    implementation rootProject.ext.dependVersion.constraintlayout
+//    implementation rootProject.ext.dependVersion.glide
 
     //图片加载框架
-    //noinspection KaptUsageInsteadOfKsp
-    kapt 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
 
     //api 'com.github.yuzhiqiang1993:zxing:2.2.5'//扫一扫
-    implementation 'com.google.code.gson:gson:2.9.0'
 
-    def lifecycle_version = rootProject.ext.dependVersion.lifecycle_version
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+//    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.7"
 
-    testImplementation rootProject.ext.dependVersion.junit
-    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
-    androidTestImplementation rootProject.ext.dependVersion.espresso_core
+//    testImplementation rootProject.ext.dependVersion.junit
+//    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
+//    androidTestImplementation rootProject.ext.dependVersion.espresso_core
 }

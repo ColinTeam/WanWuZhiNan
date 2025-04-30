@@ -1,20 +1,18 @@
 package com.ssm.comm.app
 
-import android.content.res.Resources
-import android.text.TextUtils
+//import com.tencent.bugly.Bugly
+//import com.tencent.bugly.crashreport.CrashReport
+import android.content.Context
 import androidx.multidex.MultiDexApplication
 import com.hjq.toast.ToastUtils
 import com.ssm.comm.BuildConfig
-import com.ssm.comm.ext.getCurrentVersionName
-import com.ssm.comm.ext.getUID
 import com.ssm.comm.global.AppActivityManager
 import com.ssm.comm.utils.LogUtils
 import com.tencent.bugly.crashreport.CrashReport
-//import com.tencent.bugly.Bugly
-//import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.tencent.mmkv.MMKV
+import com.tencent.mmkv.MMKVLogLevel
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.QbSdk.PreInitCallback
 import com.tencent.smtt.sdk.TbsListener
@@ -40,7 +38,6 @@ open class CommApplication : MultiDexApplication() {
     var api: IWXAPI? = null
 
     companion object {
-        // 单例不会是null   所以使用notNull委托
         var instance: CommApplication by Delegates.notNull()
     }
 
@@ -49,9 +46,8 @@ open class CommApplication : MultiDexApplication() {
         instance = this
         AppActivityManager.getInstance().init(appContext)
         ToastUtils.init(appContext)
-        initMMKV()
+        initMMKV(this)
         initX5Environment()
-        //MMKVUtils.clearAll()
     }
 
 
@@ -87,15 +83,14 @@ open class CommApplication : MultiDexApplication() {
         this.api?.registerApp(BuildConfig.WE_CHAT_APP_ID)
     }
 
-    private fun initMMKV() {
+    private fun initMMKV(context: Context) {
         //自定义根目录
         val dir = filesDir.absolutePath + "/mmkv"
-        val rootDir = MMKV.initialize(dir)
+        val rootDir = MMKV.initialize(context, dir, MMKVLogLevel.LevelInfo)
         LogUtils.d("mmkv root:$rootDir")
     }
 
-    private fun initX5Environment() {
-        /* SDK内核初始化周期回调，包括 下载、安装、加载 */
+    private fun initX5Environment() {/* SDK内核初始化周期回调，包括 下载、安装、加载 */
         QbSdk.setTbsListener(object : TbsListener {
             /**
              * @param stateCode 110: 表示当前服务器认为该环境下不需要下载
@@ -138,15 +133,4 @@ open class CommApplication : MultiDexApplication() {
         QbSdk.setDownloadWithoutWifi(true)
     }
 
-    override fun getResources(): Resources? {
-        val res = super.getResources()
-        if (res != null) {
-            val config = res.configuration
-            if (config != null && config.fontScale != 1.0f) {
-                config.fontScale = 1.0f
-                res.updateConfiguration(config, res.displayMetrics)
-            }
-        }
-        return res
-    }
 }

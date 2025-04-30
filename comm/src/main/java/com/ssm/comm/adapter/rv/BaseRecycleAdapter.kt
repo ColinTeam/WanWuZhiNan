@@ -20,6 +20,7 @@ import com.ssm.comm.ext.setOnClickNoRepeat
  * Email:shiming024@163.com
  * Description:
  */
+@Suppress("UNCHECKED_CAST")
 class BaseRecycleAdapter<T : Any, VB : ViewDataBinding> constructor(
     listenerBuilder: BuildListener<VB, T>.() -> Unit,
 ) :
@@ -146,8 +147,8 @@ class BaseRecycleAdapter<T : Any, VB : ViewDataBinding> constructor(
             is ViewHolder<*> -> {
                 val len = if (listener.isShowHeader()) position - 1 else position
                 val data = dataList[position]
-                val bind = (holder as ViewHolder<VB>).bind
-                listener.onBindViewHolder(bind, data, len)
+                val bind = holder.bind
+                listener.onBindViewHolder(bind as VB, data, len)
                 checkedViewListener(bind, position, data)
             }
             is ViewHolderEmpty<*> -> {

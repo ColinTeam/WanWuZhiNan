@@ -1,16 +1,17 @@
 package com.ssm.comm.ext
 
-import android.content.Context.VIBRATOR_SERVICE
 import android.os.Build
+import android.os.CombinedVibration
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.os.VibratorManager
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 
 /**
  * 设置防止重复点击事件
@@ -32,27 +33,18 @@ fun setOnClickNoRepeat(vararg views: View?, interval: Long = 500, onClick: (View
  * @param action 执行方法
  */
 var lastClickTime = 0L
-private var vibrator: Vibrator? = null
 fun View.clickNoRepeat(interval: Long = 500, action: (view: View) -> Unit) {
     setOnClickListener {
         val currentTime = System.currentTimeMillis()
         if (lastClickTime != 0L && (currentTime - lastClickTime < interval)) {
             return@setOnClickListener
         }
-        if (vibrator == null) {
-            vibrator = context.getSystemService(VIBRATOR_SERVICE) as Vibrator
-        }
-        if (vibrator!!.hasVibrator()) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                // 使用更复杂的震动效果
-                val effect = VibrationEffect.createOneShot(100, 40)
-                vibrator!!.vibrate(effect)
-            } else {
-                vibrator!!.vibrate(100) // 震动 500 毫秒
-            }
-        }else{
-            Log.e("TAG", "clickNoRepeat: 111111nooooooo" )
+        val effect = VibrationEffect.createOneShot(100, 30)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            ContextCompat.getSystemService<VibratorManager>(context, VibratorManager::class.java)
+                ?.vibrate(CombinedVibration.createParallel(effect))
+        } else {
+            ContextCompat.getSystemService<Vibrator>(context, Vibrator::class.java)?.vibrate(effect)
         }
 
         lastClickTime = currentTime

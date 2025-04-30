@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.ssm.comm.ext
 
 import android.app.Activity
@@ -55,7 +57,7 @@ fun sp2px(spVal: Float): Float {
 /**
  * px转sp
  */
-fun px2sp(pxVal: Float) = pxVal / appContext.resources!!.displayMetrics.scaledDensity
+fun px2sp(pxVal: Float) = pxVal / appContext.resources!!.displayMetrics.density
 
 /************************************** 屏幕宽高*********************************************** */
 

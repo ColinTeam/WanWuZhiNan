@@ -1,8 +1,7 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'kotlin-parcelize'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-parcelize")
 }
 
 static def releaseTime() {
@@ -10,30 +9,27 @@ static def releaseTime() {
 }
 
 android {
-    namespace 'com.wanwuzhinan.mingchang'
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    namespace = "com.wanwuzhinan.mingchang"
+    compileSdk = 35
     defaultConfig {
-        applicationId "com.wanwuzhinan.mingchang"
-
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
-        multiDexEnabled true
+        applicationId = "com.wanwuzhinan.mingchang"
+        minSdk = 27
+        versionCode = 1400
+        versionName = libs.versions.versionName
+        multiDexEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
+        buildConfigField("String", "BUGLY_APP_ID", "\"cccddf0a52\"")
         //开屏是否使用视频
-        buildConfigField "Boolean", "IS_SPLASH_VODEI", "false"
-        //Bugly
-        buildConfigField 'String', 'BUGLY_APP_ID', '"cccddf0a52"'
+        buildConfigField("Boolean", "IS_SPLASH_VODEI", "false")
+
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
         }
     }
 
     buildFeatures {
-        viewBinding true
+        viewBinding = true
+        buildConfig = true
     }
     dataBinding {
         //noinspection DataBindingWithoutKapt
@@ -57,8 +53,7 @@ android {
     }
 
     /**
-     * 修改 Android 12 因为 exported 的构建问题
-     */
+     * 修改 Android 12 因为 exported 的构建问题*/
     android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def processManifest = output.getProcessManifestProvider().get()
@@ -129,67 +124,51 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            shrinkResources false
-            signingConfig signingConfigs.release
+            minifyEnabled = false
+            shrinkResources = false
+            signingConfig = signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
             //打包时间
             resValue "string", "build_time", releaseTime()
         }
         debug {
-            minifyEnabled false
-            shrinkResources false
-            signingConfig signingConfigs.release
+            minifyEnabled = false
+            shrinkResources = false
+            signingConfig = signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
             //打包时间
             resValue "string", "build_time", releaseTime()
         }
     }
 
-    sourceSets.main {
-        jniLibs.srcDirs = ['libs']
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-    // 添加 kapt 配置
-    kapt {
-        javacOptions {
-            option("-target", "1.8") // 或 '11'
+    sourceSets {
+        getByName("main") {
+            jniLibs.srcDirs("libs")
         }
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
 }
 
 dependencies {
 
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-    implementation project(path: ':banner')
-    implementation project(path: ':comm')
-    implementation project(path: ':img_load')
-    implementation project(path: ':library')
-    implementation project(path: ':superplayerkit')
+    implementation(project(":banner"))
+    implementation(project(":comm"))
+    implementation(project(":img_load"))
+    implementation(project(":library"))
+    implementation(project(":net_work"))
+    implementation(project(":superplayerkit"))
+    implementation(libs.bundles.androidCommon)
+    implementation(libs.bundles.androidNavigation)
+    implementation(libs.bundles.androidWidgets)
+    implementation(libs.bundles.lifecycle)
+    implementation(libs.bundles.squareup)
+    implementation(libs.glide)
 
-    implementation rootProject.ext.dependVersion.core_ktx
-    implementation rootProject.ext.dependVersion.material
-    implementation rootProject.ext.dependVersion.appcompat
-    implementation rootProject.ext.dependVersion.recyclerview
-    implementation rootProject.ext.dependVersion.constraintlayout
-    implementation rootProject.ext.dependVersion.navigationFragment
-    implementation rootProject.ext.dependVersion.navigationUI
-    implementation rootProject.ext.dependVersion.liteavSdk
-//    implementation rootProject.ext.dependVersion.mediaExo
-//    implementation rootProject.ext.dependVersion.mediaSession
-//    implementation rootProject.ext.dependVersion.mediaUI
-    implementation rootProject.ext.dependVersion.glide
-    implementation rootProject.ext.dependVersion.danmakuFlameMaster
     //https://github.com/LetMeOff/SimpleDownload 携程下载文件
     implementation 'com.github.LetMeOff:SimpleDownload:v1.0.0'
     implementation 'com.jakewharton:disklrucache:2.0.2'
@@ -210,14 +189,14 @@ dependencies {
     //骨架 skeleton
 //    implementation 'com.ethanhua:skeleton:1.1.2'
     implementation 'io.supercharge:shimmerlayout:2.1.0'
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.ext.dependVersion.lifecycle_version"
+    implementation libs.androidx.lifecycle.runtime.ktx
     //视频播放
-    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyvideoplayer:v10.1.0'
-
+    implementation libs.liteavsdk.player.premium
+    implementation libs.gsyvideoplayer
     implementation 'com.github.getActivity:ShapeView:6.0'
 
 
-    testImplementation rootProject.ext.dependVersion.junit
-    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
-    androidTestImplementation rootProject.ext.dependVersion.espresso_core
+//    testImplementation rootProject.ext.dependVersion.junit
+//    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
+//    androidTestImplementation rootProject.ext.dependVersion.espresso_core
 }

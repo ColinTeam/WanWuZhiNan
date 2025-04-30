@@ -9,10 +9,15 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.ssm.comm.ext.*
+import com.ssm.comm.ext.copyString
+import com.ssm.comm.ext.dismissLoadingExt
+import com.ssm.comm.ext.isEmpty
+import com.ssm.comm.ext.showLoadingExt
+import com.ssm.comm.ext.toastNormal
 import com.ssm.comm.ui.widget.dialog.CommDialog
 import com.ssm.comm.utils.IntentUtils
-import java.util.*
+import java.util.Timer
+import java.util.TimerTask
 
 
 /**
@@ -46,6 +51,7 @@ class WrapViewImpl(private var activity: AppCompatActivity) : IWrapView {
         to()
     }
 
+    @Suppress("DEPRECATION")
     override fun <T : AppCompatActivity> launchActivityForResult(
         clz: Class<T>?,
         requestCode: Int
@@ -54,6 +60,7 @@ class WrapViewImpl(private var activity: AppCompatActivity) : IWrapView {
         to()
     }
 
+    @Suppress("DEPRECATION")
     override fun <T : AppCompatActivity> launchActivityForResult(
         clz: Class<T>?,
         requestCode: Int,

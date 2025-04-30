@@ -16,7 +16,7 @@ import com.comm.banner.BuildConfig
 object LogUtils {
 
     private const val TAG = "app_log"
-    private val DEBUG = BuildConfig.IS_ENABLE_LOG
+    private val DEBUG = BuildConfig.DEBUG
 
     fun d(msg: String){
         loge (msg){

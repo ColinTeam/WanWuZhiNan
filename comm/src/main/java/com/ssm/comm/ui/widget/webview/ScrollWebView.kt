@@ -35,6 +35,7 @@ class ScrollWebView : WebView {
         initViews(context, attrs)
     }
 
+    @Suppress("DEPRECATION")
     @SuppressLint("SetJavaScriptEnabled")
     private fun initViews(context: Context, attrs: AttributeSet?) {
         // 清缓存和记录，缓存引起的白屏
@@ -101,12 +102,15 @@ class ScrollWebView : WebView {
 
 
     //激活 js 调用，设置 webView 活跃状态
+    @Suppress("DEPRECATION")
+    @SuppressLint("SetJavaScriptEnabled")
     fun webViewOnResume(){
         this.onResume()
         this.settings.javaScriptEnabled = true
     }
 
     //退出界面暂停 webView的活跃，并且关闭 JS 支持
+    @Suppress("DEPRECATION")
     fun webViewOnPause(){
         this.onPause()
         this.settings.lightTouchEnabled = false
@@ -120,6 +124,7 @@ class ScrollWebView : WebView {
         this.destroy()
     }
 
+    @Suppress("DEPRECATION")
     override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
         val webContent = contentHeight * scale
         val webNow = height + scaleY

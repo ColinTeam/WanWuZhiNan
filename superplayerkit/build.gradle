@@ -1,37 +1,36 @@
-apply plugin: 'com.android.library'
-
+plugins {
+    alias(libs.plugins.android.library)
+}
 android {
     namespace 'com.tencent.liteav.demo.superplayer'
-    compileSdk rootProject.ext.android.compileSdkVersion
-
+    compileSdk = 35
     defaultConfig {
-        minSdk rootProject.ext.android.minSdkVersion
-        targetSdk rootProject.ext.android.targetSdkVersion
-
+        minSdk = 27
+        consumerProguardFiles("consumer-rules.pro")
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled = false
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+
 }
 
 dependencies {
-    implementation rootProject.ext.dependVersion.liteavSdk
-    implementation rootProject.ext.dependVersion.appcompat
-    implementation rootProject.ext.dependVersion.recyclerview
-    implementation rootProject.ext.dependVersion.constraintlayout
-    implementation rootProject.ext.dependVersion.glide
+
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.glide)
 
     api 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
-    implementation 'androidx.exifinterface:exifinterface:1.2.0'
+    implementation libs.liteavsdk.player.premium
+    implementation 'androidx.exifinterface:exifinterface:1.3.6'
     implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
 }

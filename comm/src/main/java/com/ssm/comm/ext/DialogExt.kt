@@ -1,20 +1,10 @@
 package com.ssm.comm.ext
 
 import android.app.Activity
-import android.app.Dialog
-import android.content.Intent
-import android.graphics.drawable.AnimationDrawable
-import android.view.LayoutInflater
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import com.ssm.comm.ui.base.WrapViewImpl
 import com.ssm.comm.R
 import com.ssm.comm.app.appContext
-import com.ssm.comm.config.Constant
 import com.ssm.comm.ui.LoadingDialog
-import com.ssm.comm.ui.base.IWrapView
-import com.ssm.comm.utils.MMKVUtils
+import com.ssm.comm.ui.base.WrapViewImpl
 
 /*****************************************loading框********************************************/
 private val map = mutableMapOf<String, LoadingDialog>()
@@ -24,7 +14,7 @@ private val map = mutableMapOf<String, LoadingDialog>()
  */
 fun WrapViewImpl.showLoadingExt(message: String = appContext.resources!!.getString(R.string.loading_text)) {
     val activity = this.getCurrentActivity()
-    if (activity == null || activity.isFinishing || activity.isDestroyed) {
+    if (activity.isFinishing || activity.isDestroyed) {
         return
     }
     if (!activity.isFinishing) {
@@ -56,7 +46,7 @@ fun WrapViewImpl.showLoadingExt(message: String = appContext.resources!!.getStri
  */
 fun Activity.showLoadingExt(message: String = appContext.resources!!.getString(R.string.loading_text)) {
     val activity = this
-    if (activity == null || activity.isFinishing || activity.isDestroyed) {
+    if (activity.isFinishing || activity.isDestroyed) {
         return
     }
     if (!activity.isFinishing) {

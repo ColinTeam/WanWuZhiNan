@@ -3,27 +3,18 @@ package com.wanwuzhinan.mingchang.ui.pop
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.View
 import android.view.View.OnLongClickListener
 import com.ad.img_load.glide.manager.GlideImgManager
 import com.ad.img_load.setOnClickNoRepeat
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import com.hpplay.glide.Glide
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.PopExchangeContactBinding
-import com.wanwuzhinan.mingchang.ext.createQRCodeBitmap
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.launchWechatService
 import com.wanwuzhinan.mingchang.utils.SaveImageUtils
 import com.wanwuzhinan.mingchang.utils.SaveListener
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.net.HttpURLConnection
-import java.net.URL
 
 
 class ExchangeContactPop(var context: Activity) :BasePop<PopExchangeContactBinding>(context){

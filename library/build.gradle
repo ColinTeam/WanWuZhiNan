@@ -1,30 +1,31 @@
-apply plugin: 'com.android.library'
-
+plugins {
+    alias(libs.plugins.android.library)
+}
 android {
     namespace 'com.ethanhua.skeleton'
-    compileSdk rootProject.ext.android.compileSdkVersion
-
+    compileSdk = 35
     defaultConfig {
-        minSdk rootProject.ext.android.minSdkVersion
-        targetSdk rootProject.ext.android.targetSdkVersion
+        minSdk = 27
+        consumerProguardFiles("consumer-rules.pro")
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled = false
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation rootProject.ext.dependVersion.appcompat
-    implementation rootProject.ext.dependVersion.recyclerview
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.recyclerview)
     implementation 'io.supercharge:shimmerlayout:2.1.0'
 }
 

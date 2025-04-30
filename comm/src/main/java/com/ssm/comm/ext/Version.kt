@@ -13,8 +13,13 @@ import java.io.File
 import java.io.IOException
 import java.math.BigDecimal
 
-fun getCurrentVersionCode(): Int {
-    return getCurrentPackageInfo().versionCode
+@Suppress("DEPRECATION")
+fun getCurrentVersionCode(): Long {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        getCurrentPackageInfo().longVersionCode
+    } else {
+        getCurrentPackageInfo().versionCode.toLong()
+    }
 }
 
 fun getCurrentVersionName(): String {
@@ -58,8 +63,7 @@ private fun compareVersion(newVersion: String, curVersion: String): Int {
     val minLen: Int = v1Array.size.coerceAtMost(v2Array.size)
     var diff = 0
     // 循环判断每位的大小
-    while (index < minLen
-        && v1Array[index].toInt() - v2Array.get(index).toInt()
+    while (index < minLen && v1Array[index].toInt() - v2Array.get(index).toInt()
             .also { diff = it } == 0
     ) {
         index++

@@ -1,76 +1,55 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
 }
-
 android {
     namespace 'com.ssm.comm'
-    compileSdk rootProject.ext.android.compileSdkVersion
-
+    compileSdk = 35
     defaultConfig {
-        minSdk rootProject.ext.android.minSdkVersion
-        targetSdk rootProject.ext.android.targetSdkVersion
-
+        minSdk = 27
+        buildConfigField("String", "BUGLY_APP_ID", "\"a5311caff3\"")
+        buildConfigField("String", "WE_CHAT_APP_ID", "\"wxd55ebb21dd8fe7a2\"")
+        buildConfigField("String", "WE_CHAT_APP_SECRET", "\"72e067e19f371d8dc3ac4bc9d9e69687\"")
+        buildConfigField("String", "WE_CHAT_APP_SCOPE", "\"snsapi_userinfo\"")
+        buildConfigField("String", "WE_CHAT_APP_STATE", "\"wechat_sdk_demo_test_neng\"")
+        buildConfigField("String", "WE_CHAT_MINI_ID", "\"gh_3f131c23773d\"")
+        consumerProguardFiles("consumer-rules.pro")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled = false
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
+        }
+    }
 
-        buildConfigField 'String', 'WE_CHAT_APP_ID', '"wxd55ebb21dd8fe7a2"'
-        buildConfigField 'String', 'WE_CHAT_APP_SECRET', '"72e067e19f371d8dc3ac4bc9d9e69687"'
-        buildConfigField 'String', 'WE_CHAT_APP_SCOPE', '"snsapi_userinfo"'
-        buildConfigField 'String', 'WE_CHAT_APP_STATE', '"wechat_sdk_demo_test_neng"'
-        buildConfigField 'String', 'WE_CHAT_MINI_ID', '"gh_3f131c23773d"'
-
-        //Bugly
-        buildConfigField 'String', 'BUGLY_APP_ID', '"a5311caff3"'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     buildFeatures {
-        viewBinding true
+        viewBinding = true
+        buildConfig = true
     }
+
     dataBinding {
         //noinspection DataBindingWithoutKapt
         enabled = true
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            buildConfigField "Boolean", "IS_ENABLE_LOG", "${isEnableLog.release}"
-        }
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            buildConfigField "Boolean", "IS_ENABLE_LOG", "${isEnableLog.debug}"
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-    // 添加 kapt 配置
-    kapt {
-        javacOptions {
-            option("-target", "1.8") // 或 '11'
-        }
-    }
 }
 
 dependencies {
-    implementation project(path: ':net_work')
+    implementation(project(":net_work"))
 
-    implementation rootProject.ext.dependVersion.core_ktx
-    implementation rootProject.ext.dependVersion.material
-    implementation rootProject.ext.dependVersion.appcompat
-    implementation rootProject.ext.dependVersion.constraintlayout
+    implementation(libs.bundles.androidCommon)
+    implementation libs.androidx.constraintlayout
     //implementation 'com.android.support:support-annotations:28.0.0'
 
-    def lifecycle_version = rootProject.ext.dependVersion.lifecycle_version
+    def lifecycle_version = "2.8.7"
 
     // ViewModel
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -92,7 +71,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
     // 可选 - ReactiveStreams support for LiveData
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     //viewpager2
     implementation 'androidx.viewpager2:viewpager2:1.1.0-beta01'
@@ -142,7 +120,7 @@ dependencies {
     api 'com.tencent.bugly:crashreport:latest.release'
 //    implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
 
-    testImplementation rootProject.ext.dependVersion.junit
-    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
-    androidTestImplementation rootProject.ext.dependVersion.espresso_core
+//    testImplementation rootProject.ext.dependVersion.junit
+//    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
+//    androidTestImplementation rootProject.ext.dependVersion.espresso_core
 }

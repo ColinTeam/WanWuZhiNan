@@ -1,6 +1,5 @@
 package com.comm.net_work.base
 
-import android.util.Log
 import com.comm.net_work.BuildConfig
 import com.comm.net_work.interceptor.HttpCommonInterceptor
 import com.ihsanbal.logging.Level
@@ -106,12 +105,11 @@ abstract class BaseRetrofitBuilder {
      */
     private fun initLoggingInterceptor(): Interceptor {
         val builder = LoggingInterceptor.Builder()
-        if (BuildConfig.IS_ENABLE_LOG) {
+        if (BuildConfig.DEBUG) {
             builder.setLevel(Level.BODY)
         } else {
             builder.setLevel(Level.BASIC)
         }
-        builder.log(Platform.INFO)
         builder.log(Platform.INFO)
         builder.request(LOG_TAG_HTTP_REQUEST)
         builder.response(LOG_TAG_HTTP_RESULT)

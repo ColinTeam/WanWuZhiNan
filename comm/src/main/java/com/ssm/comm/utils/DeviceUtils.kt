@@ -23,7 +23,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions
  */
 object DeviceUtils {
 
-    @SuppressLint("HardwareIds")
+    @Suppress("DEPRECATION")
+    @SuppressLint("HardwareIds", "CheckResult")
     fun getDeviceId(): String{
         var deviceId = ""
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -37,11 +38,7 @@ object DeviceUtils {
                 .subscribe { granted ->
                     if (granted) {
                         if (tm.deviceId != null){
-                            deviceId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                tm.imei
-                            }else{
-                                tm.deviceId
-                            }
+                            deviceId = tm.imei
                         }
                     } else {
                         toastError(R.string.permission_error)

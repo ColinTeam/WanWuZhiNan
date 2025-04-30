@@ -2,8 +2,6 @@ package com.ssm.comm.ui.base
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -11,7 +9,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.Window
 import android.view.WindowInsetsController
-import android.view.WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 import android.view.WindowManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +22,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.ssm.comm.R
 import com.ssm.comm.ext.toastError
-import com.ssm.comm.utils.NavigationBarUtil
 import com.ssm.comm.utils.StatusBarUtils
 
 
@@ -100,34 +96,23 @@ abstract class BaseActivity<DB : ViewDataBinding,VM : ViewModel>(var viewModel: 
         return true
     }
 
-    @SuppressLint("NewApi")
+    @Suppress("DEPRECATION")
     private  fun setStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window: Window = window
-            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        val window: Window = window
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.setDecorFitsSystemWindows(false)
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.navigationBarColor = Color.TRANSPARENT
-            window.statusBarColor = Color.TRANSPARENT
         }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.navigationBarColor = Color.TRANSPARENT
+        window.statusBarColor = Color.TRANSPARENT
         StatusBarUtils.setStatusBarColor(this, resources!!.getColor(R.color.transparent))
         StatusBarUtils.setStatusBarDarkTheme(this, true)
     }
 
-    override fun getResources(): Resources? {
-        val res: Resources? = super.getResources()
-        if (res != null) {
-            val config: Configuration = res.configuration
-            if (config.fontScale !== 1.0f) {
-                config.fontScale = 1.0f
-                res.updateConfiguration(config, res.displayMetrics)
-            }
-        }
-        return res
-    }
 
     //点击软键盘之外的空白处，隐藏软件盘
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -221,6 +206,7 @@ abstract class BaseActivity<DB : ViewDataBinding,VM : ViewModel>(var viewModel: 
         iWrapView?.dismissBaseLoading()
     }
 
+    @Suppress("DEPRECATION")
     private fun setStatusBarAndText(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // Android 11+（API 30）
@@ -259,12 +245,10 @@ abstract class BaseActivity<DB : ViewDataBinding,VM : ViewModel>(var viewModel: 
 
     open fun initRequest(){}
 
-    public fun finishRefreshLayout(refreshLayout: SmartRefreshLayout, more:String) {
-        if (refreshLayout != null) {
-            refreshLayout.finishRefresh()
-            refreshLayout.finishLoadMore()
-            refreshLayout.setEnableLoadMore(more.equals("1"))
-        }
+     fun finishRefreshLayout(refreshLayout: SmartRefreshLayout, more:String) {
+        refreshLayout.finishRefresh()
+        refreshLayout.finishLoadMore()
+        refreshLayout.setEnableLoadMore(more == "1")
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

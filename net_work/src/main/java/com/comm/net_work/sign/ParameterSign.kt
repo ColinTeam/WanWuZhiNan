@@ -3,7 +3,7 @@ package com.comm.net_work.sign
 import android.util.Log
 import com.comm.net_work.BuildConfig
 import com.comm.net_work.gson.GsonManager
-import java.util.*
+import java.util.TreeMap
 
 /**
  * Company:AD
@@ -28,7 +28,7 @@ object ParameterSign {
             sb.append(key).append(value)
         }
         sb.append(BuildConfig.APP_API_SIGNATURE)
-        if(BuildConfig.IS_ENABLE_LOG){
+        if(BuildConfig.DEBUG){
             Log.e("signMd5","签名参数字符串:$sb")
         }
         return Md5Utils.md5(sb.toString())
@@ -55,7 +55,7 @@ object ParameterSign {
     //根据map参数AES加密
     fun getSignStr(map: Map<String, Any>): String {
         val json = GsonManager.get().getGson().toJson(map)
-        if (BuildConfig.IS_ENABLE_LOG) {
+        if (BuildConfig.DEBUG) {
             Log.e("ParameterSign", "JSON:$json")
             map.forEach { (key, value) ->
                 Log.e("ParameterSign", "KEY:$key")

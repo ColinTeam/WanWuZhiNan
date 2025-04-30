@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.res.ResourcesCompat
 import com.ad.img_load.charAt
 import com.comm.img_load.R
 import java.nio.CharBuffer
@@ -72,8 +73,8 @@ class CodeEditText : AppCompatEditText {
         this.mStrokePadding = applyDimension(12.0f).toFloat()
         this.mCursorWidth = applyDimension(1.0f).toFloat()
         this.mCursorHeight = applyDimension(25.0f).toFloat()
-        this.mStrokeDrawable = resources.getDrawable(R.drawable.edit_code_bg)
-        this.mCursorDrawable = resources.getDrawable(R.drawable.edit_cursor_style)
+        this.mStrokeDrawable = ResourcesCompat.getDrawable(resources,R.drawable.edit_code_bg,context.theme)
+        this.mCursorDrawable = ResourcesCompat.getDrawable(resources,R.drawable.edit_cursor_style,context.theme)
         this.mMaxLength = 6
         this.setMaxLength(mMaxLength)
         this.setBackgroundDrawable(null)

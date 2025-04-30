@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
  * Email:shiming024@163.com
  * Description:
  */
+@Suppress("UNCHECKED_CAST")
 abstract class BaseFragment<DB : ViewDataBinding, VM : ViewModel>(var viewModel: VM) : Fragment(),
     IWrapView {
 
@@ -51,16 +52,13 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : ViewModel>(var viewModel:
         return rootView
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initView()
         initView(savedInstanceState)
         initClick()
         initRequest()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun getResult(resultCode: Int) {
@@ -158,11 +156,9 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : ViewModel>(var viewModel:
 
     open fun initRequest() {}
 
-    public fun finishRefreshLayout(refreshLayout: SmartRefreshLayout, more:String) {
-        if (refreshLayout != null) {
-            refreshLayout.finishRefresh()
-            refreshLayout.finishLoadMore()
-            refreshLayout.setEnableLoadMore(more.equals("1"))
-        }
+    fun finishRefreshLayout(refreshLayout: SmartRefreshLayout, more: String) {
+        refreshLayout.finishRefresh()
+        refreshLayout.finishLoadMore()
+        refreshLayout.setEnableLoadMore(more == "1")
     }
 }
