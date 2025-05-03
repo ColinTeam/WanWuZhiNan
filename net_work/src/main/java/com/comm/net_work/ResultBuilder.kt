@@ -30,6 +30,7 @@ fun <T> ApiResponse<T>.parseData(listenerBuilder: ResultBuilder<T>.() -> Unit) {
 
 
 class ResultBuilder<T> {
+
     var onSuccess: (data: T?,msg: String) -> Unit = {_, _ ->  }
 
     var onDataEmpty: () -> Unit = {}

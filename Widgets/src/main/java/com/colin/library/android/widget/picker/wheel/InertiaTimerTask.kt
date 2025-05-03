@@ -12,7 +12,8 @@ import kotlin.math.abs
  * Des   :InertiaTimerTask:滚动惯性的实现
  */
 class InertiaTimerTask(
-    wheelView: WheelView, velocityY: Int
+    wheelView: WheelView,
+    velocityY: Int
 ) : TimerTask() {
     private var mCurrentVelocityY: Int //当前滑动速度
     private val mFirstVelocityY: Int = velocityY //手指离开屏幕时的初始速度

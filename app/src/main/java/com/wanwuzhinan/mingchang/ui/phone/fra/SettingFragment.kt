@@ -16,25 +16,25 @@ import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.media.MediaManager
 import com.ssm.comm.ui.base.BaseFragment
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.data.GradeData
 import com.wanwuzhinan.mingchang.data.ProvinceListData
 import com.wanwuzhinan.mingchang.databinding.FragmentEditFileBinding
 import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.wanwuzhinan.mingchang.ui.pop.ChooseCityDialog
-import com.wanwuzhinan.mingchang.ui.pop.ChooseGradeDialog
+import com.wanwuzhinan.mingchang.ui.pop.ChooseDialog
 import com.wanwuzhinan.mingchang.view.GlideEngine
 import com.wanwuzhinan.mingchang.vm.UserViewModel
 import java.io.File
 
 //
-class SettingFragment :
-    BaseFragment<FragmentEditFileBinding, UserViewModel>(UserViewModel()) {
+class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(UserViewModel()) {
     private var TAG = "SettingFragment"
 
-    var mAddressList:List<ProvinceListData>?=null
-    var mProvinceName=""
-    var mCityName=""
-    var mAreaName=""
-    var mHeadImg=""
+    var mAddressList: List<ProvinceListData>? = null
+    var mProvinceName = ""
+    var mCityName = ""
+    var mAreaName = ""
+    var mHeadImg = ""
 
     lateinit var mInfo: UserInfoData.infoBean
 
@@ -52,26 +52,26 @@ class SettingFragment :
         mViewModel.getAllRegion()
     }
 
-    override fun initRequest(){
+    override fun initRequest() {
 
-        mViewModel.getUserInfoLiveData.observeState(this){
-            onSuccess={data, msg ->
+        mViewModel.getUserInfoLiveData.observeState(this) {
+            onSuccess = { data, msg ->
                 mInfo = data!!.info
-                mProvinceName=mInfo.province_name
-                mCityName=mInfo.city_name
-                mAreaName=mInfo.area_name
+                mProvinceName = mInfo.province_name
+                mCityName = mInfo.city_name
+                mAreaName = mInfo.area_name
                 mHeadImg = mInfo.headimg
-                GlideImgManager.get().loadImg(mHeadImg,mDataBinding.rivHead,R.mipmap.default_icon)
+                GlideImgManager.get().loadImg(mHeadImg, mDataBinding.rivHead, R.mipmap.default_icon)
 //                mDataBinding.tvIdT.text = (mInfo.id.toInt()+ getConfigData().home_all_number.toInt()).toString()
                 mDataBinding.tvIdT.text = "用户账号：${maskPhoneNumber(mInfo.account)}"
                 mDataBinding.tvUserName.setText(mInfo.truename)
                 mDataBinding.tvSchool.setText(mInfo.school_name)
                 mDataBinding.tvAddress.setText("${mInfo.province_name} ${mInfo.city_name} ${mInfo.area_name}")
-                if (mInfo.city_name.contains(mInfo.province_name)){
+                if (mInfo.city_name.contains(mInfo.province_name)) {
                     mDataBinding.tvAddress.setText("${mInfo.province_name} ${mInfo.area_name}")
                 }
                 mDataBinding.tvGrade.setText(mInfo.grade_name)
-                if (mInfo.sex == "男"){
+                if (mInfo.sex == "男") {
                     mDataBinding.llNv.isSelected = false
                     mDataBinding.ivNv.isSelected = false
                     mDataBinding.tvSexNv.isSelected = false
@@ -79,7 +79,7 @@ class SettingFragment :
                     mDataBinding.llNan.isSelected = true
                     mDataBinding.ivNan.isSelected = true
                     mDataBinding.tvSexNan.isSelected = true
-                }else if (mInfo.sex == "女"){
+                } else if (mInfo.sex == "女") {
                     mDataBinding.llNv.isSelected = true
                     mDataBinding.ivNv.isSelected = true
                     mDataBinding.tvSexNv.isSelected = true
@@ -92,37 +92,33 @@ class SettingFragment :
             }
         }
         mViewModel.getAllGradeLiveData.observeState(this) {
-            onSuccess={data, msg ->
-                ChooseGradeDialog(data!!.listArr,callback = {
-                    onSure ={
-                        mDataBinding!!.tvGrade.text=it
-                    }
-                }).show(mActivity!!.supportFragmentManager,"CommDialog")
+            onSuccess = { data, msg ->
+                showGradeDialog(data)
             }
 
         }
         mViewModel.editUserInfoLiveData.observeState(this) {
-            onSuccess = {data, msg ->
+            onSuccess = { data, msg ->
                 toastSuccess("保存成功")
                 post(MessageEvent.UPDATE_USERINFO, "")
             }
-            onDataEmpty2={
+            onDataEmpty2 = {
                 toastSuccess("保存成功")
                 post(MessageEvent.UPDATE_USERINFO, "")
             }
         }
-        mViewModel.allProvinceLiveData.observeState(this){
-            onSuccess = {data, msg ->
+        mViewModel.allProvinceLiveData.observeState(this) {
+            onSuccess = { data, msg ->
                 mAddressList = data!!.list
             }
 
         }
-        mViewModel.uploadImgLiveData.observeState(this){
-            onSuccess = {data, msg ->
-                if(data ==null){
+        mViewModel.uploadImgLiveData.observeState(this) {
+            onSuccess = { data, msg ->
+                if (data == null) {
                     toastSuccess(msg)
-                }else{
-                    mHeadImg= data.file
+                } else {
+                    mHeadImg = data.file
                     changeButtonBackground()
                 }
             }
@@ -130,7 +126,7 @@ class SettingFragment :
 
     }
 
-    override fun initClick(){
+    override fun initClick() {
 
         initEditChange(mDataBinding.tvUserName) {
             changeButtonBackground()
@@ -141,9 +137,10 @@ class SettingFragment :
             mDataBinding.llNan,
             mDataBinding.llAddress,
             mDataBinding.llYear,
-            mDataBinding.tvSave) {
+            mDataBinding.tvSave
+        ) {
             when (it) {
-                mDataBinding.rivHead ->{//修改头像
+                mDataBinding.rivHead -> {//修改头像
                     MediaManager.selectSinglePhoto(
                         mActivity,
                         GlideEngine.createGlideEngine(),
@@ -153,7 +150,8 @@ class SettingFragment :
                                     val localMedia = result[0]
                                     val path = MediaManager.getSinglePhotoUri(localMedia) ?: ""
 
-                                    GlideImgManager.get().loadImg(path,mDataBinding.rivHead,R.mipmap.default_icon)
+                                    GlideImgManager.get()
+                                        .loadImg(path, mDataBinding.rivHead, R.mipmap.default_icon)
                                     mActivity.showLoadingExt()
                                     mViewModel.uploadImage(File(path))
                                 }
@@ -161,26 +159,26 @@ class SettingFragment :
 
                             override fun onCancel() {
                             }
-                        }
-                    )
+                        })
                 }
-                mDataBinding.llAddress ->{//选择城市
-                    if(mAddressList==null) {
+
+                mDataBinding.llAddress -> {//选择城市
+                    if (mAddressList == null) {
                         toastSuccess("网络不佳，请退出重试")
                         return@setOnClickNoRepeat
                     }
 
                     ChooseCityDialog(mAddressList!!, callback = {
-                        onSure = {s1,s2,s3 ->
+                        onSure = { s1, s2, s3 ->
                             mProvinceName = s1
                             mCityName = s2
                             mAreaName = s3
                             mDataBinding.tvAddress.text = "${s1} ${s2} ${s3}"
-                            if (s2.contains(s1)){
+                            if (s2.contains(s1)) {
                                 mDataBinding.tvAddress.text = "${s1} ${s3}"
                             }
                         }
-                    }).show(mActivity.supportFragmentManager,"CommDialog")
+                    }).show(mActivity.supportFragmentManager, "CommDialog")
 
 //                    ChooseCityUtils.showCityPickerView(context,"",mAddressList!!){
 //                            province,city,area ->
@@ -201,6 +199,7 @@ class SettingFragment :
                     mDataBinding.tvSexNan.isSelected = false
 
                 }
+
                 mDataBinding.llNan -> {//性别
 
                     mDataBinding.llNv.isSelected = false
@@ -212,18 +211,19 @@ class SettingFragment :
                     mDataBinding.tvSexNan.isSelected = true
 
                 }
-                mDataBinding.llYear->{//年级
+
+                mDataBinding.llYear -> {//年级
                     mActivity.showLoadingExt()
                     mViewModel.getAllGrade()
                 }
 
-                mDataBinding.tvSave->{
-                    var name=mDataBinding.tvUserName.text.toString().trim()
-                    var sex = if (mDataBinding.llNan.isSelected ) "男" else "女"
-                    var school=mDataBinding.tvSchool.text.toString().trim()
-                    var grade=mDataBinding.tvGrade.text.toString().trim()
+                mDataBinding.tvSave -> {
+                    var name = mDataBinding.tvUserName.text.toString().trim()
+                    var sex = if (mDataBinding.llNan.isSelected) "男" else "女"
+                    var school = mDataBinding.tvSchool.text.toString().trim()
+                    var grade = mDataBinding.tvGrade.text.toString().trim()
 
-                    if(TextUtils.isEmpty(mHeadImg)){
+                    if (TextUtils.isEmpty(mHeadImg)) {
                         toastSuccess("请上传头像")
                         return@setOnClickNoRepeat
                     }
@@ -233,11 +233,11 @@ class SettingFragment :
 //                        return@setOnClickNoRepeat
 //                    }
 
-                    if(TextUtils.isEmpty(name)){
+                    if (TextUtils.isEmpty(name)) {
                         toastSuccess("请填写真实姓名")
                         return@setOnClickNoRepeat
                     }
-                    if (name.length > 6){
+                    if (name.length > 6) {
                         toastSuccess("姓名最多6个字")
                         return@setOnClickNoRepeat
                     }
@@ -257,7 +257,7 @@ class SettingFragment :
 //                    }
 
                     showBaseLoading()
-                    val  map = HashMap<String, Any>()
+                    val map = HashMap<String, Any>()
                     map["headimg"] = mHeadImg
                     map["province_name"] = mProvinceName
                     map["city_name"] = mCityName
@@ -274,10 +274,10 @@ class SettingFragment :
         }
     }
 
-    private fun changeButtonBackground(){
-        var editTips= editChange(mDataBinding.tvUserName)
+    private fun changeButtonBackground() {
+        var editTips = editChange(mDataBinding.tvUserName)
 
-        mDataBinding.tvSave.setBackgroundResource(if(editTips&&!TextUtils.isEmpty(mHeadImg)) R.drawable.bg_default22_click else R.drawable.shape_ffd8b0_23)
+        mDataBinding.tvSave.setBackgroundResource(if (editTips && !TextUtils.isEmpty(mHeadImg)) R.drawable.bg_default22_click else R.drawable.shape_ffd8b0_23)
     }
 
     override fun getLayoutId(): Int {
@@ -300,5 +300,14 @@ class SettingFragment :
 
     }
 
+    fun showGradeDialog(data: GradeData?) {
+        val list = data?.listArr ?: return
+        ChooseDialog.newInstance(getString(R.string.choose_title_grade), list).show(this)
+//        ChooseGradeDialog(data.listArr, callback = {
+//            onSure = {
+//                mDataBinding.tvGrade.text = it
+//            }
+//        }).show(mActivity.supportFragmentManager, "CommDialog")
+    }
 
 }

@@ -19,21 +19,24 @@
     </style>
 
     <style name="Base.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog">
-        <!-- 无边框 -->
-        <item name="android:windowFrame">@null</item>
         <!-- 浮在 Activity 之上 -->
         <item name="android:windowIsFloating">true</item>
+        <!--全屏-->
+        <item name="android:windowFullscreen">true</item>
+        <!-- 无边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
         <!-- 半透明 -->
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <!-- 背景透明 -->
         <item name="android:windowBackground">@android:color/transparent</item>
         <!-- 遮盖层 -->
         <item name="android:backgroundDimEnabled">true</item>
-        <!-- 无标题 -->
-        <item name="android:windowNoTitle">true</item>
         <!-- 动画效果 -->
-        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+        <item name="android:windowEnterAnimation">@anim/dialog_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_bottom_out</item>
         <!-- Base.Theme.AppCompat.Light.Dialog.Alert 特有的属性，用于指定默认宽度，这里需要禁用 -->
         <item name="android:windowMinWidthMajor">@dimen/dp_0</item>
         <item name="android:windowMinWidthMinor">@dimen/dp_0</item>
@@ -42,7 +45,9 @@
         <item name="windowNoTitle">true</item>
         <!-- ActionMode覆盖Actionbar，不顶下来 -->
         <item name="windowActionModeOverlay">true</item>
+        <!-- 是否有遮盖 -->
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimAmount">@null</item>
     </style>
 
     <style name="Base.Fullscreen">

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/margin_default"
+            android:text="@string/cancel"
+            android:textAppearance="@style/Text.Button.Cancel"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/margin_default"
+            android:text="@string/sure"
+            android:textAppearance="@style/Text.Button.Sure"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_title"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/margin_default"
+            android:textAppearance="@style/Text.Title"
+            app:layout_constrainedWidth="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_sure"
+            app:layout_constraintStart_toEndOf="@+id/text_cancel"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/line"
+            android:background="@color/line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_title" />
+
+        <com.colin.library.android.widget.picker.wheel.WheelView
+            android:id="@+id/wheel"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line"
+            app:wheel_dividerColor="@color/line"
+            app:wheel_dividerWidth="@dimen/line"
+            app:wheel_gravity="center"
+            app:wheel_lineSpacingMultiplier="2.0"
+            app:wheel_loop="true"
+            app:wheel_textColorCenter="@color/text_color_default"
+            app:wheel_textColorOut="@color/text_color_hint"
+            app:wheel_textSize="@dimen/title_text_size" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

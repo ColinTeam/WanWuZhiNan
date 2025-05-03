@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <style name="Text" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textSize">@dimen/default_text_size</item>
+        <item name="android:textColor">@color/text_color_default</item>
+        <item name="android:textColorHint">@color/text_color_hint</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Text.Title" parent="Text">
+        <item name="android:textSize">@dimen/title_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Button" parent="Text">
+        <item name="android:textSize">@dimen/button_text_size</item>
+    </style>
+
+    <style name="Text.Button.Cancel" parent="Text.Button">
+        <item name="android:textColor">@color/button_text_cancel</item>
+    </style>
+
+    <style name="Text.Button.Sure" parent="Text.Button">
+        <item name="android:textColor">@color/button_text_sure</item>
+    </style>
+
     <style name="ImageCircle" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
@@ -13,6 +37,7 @@
         <item name="cornerSizeBottomLeft">10%</item>
         <item name="cornerSizeBottomRight">10%</item>
     </style>
+
 
     <style name="text_transparent_10">
         <item name="android:layout_width">wrap_content</item>

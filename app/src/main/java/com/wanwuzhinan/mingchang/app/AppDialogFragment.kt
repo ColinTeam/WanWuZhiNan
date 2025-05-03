@@ -1,19 +1,19 @@
 package com.wanwuzhinan.mingchang.app
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.viewbinding.ViewBinding
+import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.widget.base.BaseDialogFragment
 import java.lang.reflect.ParameterizedType
 
 
-abstract class AppDialogFragment<VB : ViewBinding>(builder: Builder<*, *>? = null) :
-    BaseDialogFragment(builder?.layoutRes ?: Resources.ID_NULL, builder) {
+abstract class AppDialogFragment<VB : ViewBinding>() :
+    BaseDialogFragment(Constants.ZERO) {
 
     private var _viewBinding: VB? = null
     internal val viewBinding: VB get() = _viewBinding!!

@@ -90,7 +90,7 @@ class WheelView @JvmOverloads constructor(
     private var dividerWidth = 0
 
     // 条目间距倍数
-    private var lineSpacingMultiplier = 1.6f
+    private var lineSpacingMultiplier = 2.0f
     private var isLoop = false
 
     // 第一条线Y坐标值
@@ -261,7 +261,7 @@ class WheelView @JvmOverloads constructor(
     }
 
     override fun scrollBy(x: Int, y: Int) {
-        super.scrollBy(x, y)
+        super.scrollBy(0, y)
         cancelFuture()
         mFuture = mExecutor.scheduleWithFixedDelay(
             InertiaTimerTask(this, y), 0, VELOCITY_FLING.toLong(), TimeUnit.MILLISECONDS
@@ -307,6 +307,13 @@ class WheelView @JvmOverloads constructor(
 
     fun setOnItemSelectedListener(listener: ((Int) -> Unit)?) {
         this.onItemSelectedListener = listener
+    }
+
+    fun setAdapter(adapter: WheelAdapter, listener: ((Int) -> Unit)? = null) {
+        this.adapter = adapter
+        this.onItemSelectedListener = listener
+        reMeasure()
+        invalidate()
     }
 
     fun setAdapter(adapter: WheelAdapter) {
