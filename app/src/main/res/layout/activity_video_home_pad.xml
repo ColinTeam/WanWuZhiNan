@@ -10,82 +10,82 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl"
         android:layout_width="match_parent"
-        android:background="@color/black"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black">
 
         <ImageView
             android:id="@+id/current_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@mipmap/bg_video_home"/>
+            android:src="@mipmap/bg_video_home" />
 
         <ImageView
             android:id="@+id/iv_big"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/iv_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/black"
+            android:scaleType="centerCrop"
             android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:scaleType="centerCrop"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.wanwuzhinan.mingchang.view.DefaultToolbar
             android:id="@+id/tool_bar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginHorizontal="@dimen/dp_40"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/re_list"
             app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/re_list"
-            app:layout_constraintTop_toTopOf="@id/re_list"
-            app:layout_constraintBottom_toBottomOf="@id/re_list">
+            app:layout_constraintTop_toTopOf="@id/re_list">
 
             <TextView
                 android:id="@+id/tv_title"
                 style="@style/text_white_36"
-                android:textFontWeight="600"
-                android:textSize="@dimen/sp_24"
                 android:fontFamily="sans-serif-light"
-                android:text="物理八分钟"/>
+                android:text="物理八分钟"
+                android:textFontWeight="600"
+                android:textSize="@dimen/sp_24" />
         </LinearLayout>
 
-        <com.ad.img_load.img.RoundedImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
-            app:riv_corner_radius="@dimen/dp_12"
-            app:android_scaleType="6"
-            app:layout_constraintDimensionRatio="w,1:2"
-            app:layout_constraintTop_toTopOf="@id/re_list"
             app:layout_constraintBottom_toBottomOf="@id/re_list"
-            app:layout_constraintLeft_toLeftOf="@id/re_list"/>
+            app:layout_constraintDimensionRatio="w,1:2"
+            app:layout_constraintLeft_toLeftOf="@id/re_list"
+            app:layout_constraintTop_toTopOf="@id/re_list"
+            app:shapeAppearanceOverlay="@style/Image.Radius_12" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/re_list"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
-            app:layout_constraintHeight_percent="0.625"
-            app:layout_constraintWidth_percent="0.6"
-            app:layout_constraintVertical_bias="0.6"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
-            tools:listitem="@layout/item_video_home_pad"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.625"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6"
+            app:layout_constraintWidth_percent="0.6"
+            tools:listitem="@layout/item_video_home_pad" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

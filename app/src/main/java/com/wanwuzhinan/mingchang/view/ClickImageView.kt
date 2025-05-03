@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatImageView
+import com.colin.library.android.utils.ResourcesUtil
 import com.wanwuzhinan.mingchang.R
 
 
@@ -21,7 +22,11 @@ class ClickImageView : AppCompatImageView {
         initAttrs(context, attrs)
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initAttrs(context, attrs)
     }
 
@@ -36,6 +41,7 @@ class ClickImageView : AppCompatImageView {
                     setFilter()
                     animate().scaleX(0.95f).scaleY(0.95f).setDuration(100).start()
                 }
+
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     removeFilter()
                     animate().scaleX(1f).scaleY(1f).setDuration(100).start()
@@ -55,7 +61,10 @@ class ClickImageView : AppCompatImageView {
         if (drawable == null) {
             drawable = background
         }
-        drawable?.setColorFilter(context.resources.getColor(R.color.color_cccccc), PorterDuff.Mode.MULTIPLY)
+        drawable?.setColorFilter(
+            ResourcesUtil.getColor(context, R.color.color_cccccc),
+            PorterDuff.Mode.MULTIPLY
+        )
     }
 
     /**

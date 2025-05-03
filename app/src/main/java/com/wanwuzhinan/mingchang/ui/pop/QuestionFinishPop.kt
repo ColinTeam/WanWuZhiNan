@@ -1,12 +1,9 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
 import android.app.Activity
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.PopQuestionFinishBinding
-import com.wanwuzhinan.mingchang.databinding.PopQuestionPhaseFinishBinding
-import com.wanwuzhinan.mingchang.databinding.PopSureBinding
-import com.wanwuzhinan.mingchang.ext.visible
 
 //确认框
 class QuestionFinishPop(var context: Activity) :BasePop<PopQuestionFinishBinding>(context){
@@ -28,7 +25,7 @@ class QuestionFinishPop(var context: Activity) :BasePop<PopQuestionFinishBinding
             mDataBinding.ivStar1.setImageResource(R.mipmap.ic_question_finish_alert_star_s)
         }
         showPop()
-        setOnClickNoRepeat(mDataBinding.tvSure){
+        onClick(mDataBinding.tvSure){
             dismiss()
             when(it){
                 mDataBinding.tvSure ->{

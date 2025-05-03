@@ -31,3 +31,7 @@ include(":img_load")
 include(":library")
 include(":net_work")
 include(":superplayerkit")
+include ':Utils'
+include ':Network'
+include ':ImageLoader'
+include ':Widgets'

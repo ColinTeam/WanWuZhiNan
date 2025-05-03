@@ -25,7 +25,7 @@ class HonorListActivity : BaseActivity<ActivityHonorListBinding, SplashViewModel
     }
 
     private fun initTab() {
-        mDataBinding.viewPager.adapter= TabViewpagerAdapter(supportFragmentManager, mFragmentList)
+        mDataBinding.viewPager.adapter= TabViewpagerAdapter(this, mFragmentList)
 
         mDataBinding.tabLayout.setupWithViewPager(mDataBinding.viewPager)
 

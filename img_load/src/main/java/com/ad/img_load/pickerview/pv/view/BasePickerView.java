@@ -1,5 +1,6 @@
 package com.ad.img_load.pickerview.pv.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -209,16 +210,13 @@ public class BasePickerView {
 
     public void dismissImmediately() {
 
-        mPickerOptions.decorView.post(new Runnable() {
-            @Override
-            public void run() {
-                //从根视图移除
-                mPickerOptions.decorView.removeView(rootView);
-                isShowing = false;
-                dismissing = false;
-                if (onDismissListener != null) {
-                    onDismissListener.onDismiss(BasePickerView.this);
-                }
+        mPickerOptions.decorView.post(() -> {
+            //从根视图移除
+            mPickerOptions.decorView.removeView(rootView);
+            isShowing = false;
+            dismissing = false;
+            if (onDismissListener != null) {
+                onDismissListener.onDismiss(BasePickerView.this);
             }
         });
 
@@ -241,7 +239,6 @@ public class BasePickerView {
     }
 
     public void setKeyBackCancelable(boolean isCancelable) {
-
         ViewGroup View;
         if (isDialog()) {
             View = dialogView;
@@ -258,15 +255,12 @@ public class BasePickerView {
         }
     }
 
-    private final View.OnKeyListener onKeyBackListener = new View.OnKeyListener() {
-        @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_DOWN && isShowing()) {
-                dismiss();
-                return true;
-            }
-            return false;
+    private final View.OnKeyListener onKeyBackListener = (v, keyCode, event) -> {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_DOWN && isShowing()) {
+            dismiss();
+            return true;
         }
+        return false;
     };
 
     protected BasePickerView setOutSideCancelable(boolean isCancelable) {
@@ -298,6 +292,7 @@ public class BasePickerView {
      * Called when the user touch on black overlay, in order to dismiss the dialog.
      */
     private final View.OnTouchListener onCancelableTouchListener = new View.OnTouchListener() {
+        @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {

@@ -3,14 +3,13 @@ package com.wanwuzhinan.mingchang.ui.pop
 import android.app.Activity
 import android.graphics.Color
 import android.view.View
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.MedalListData
 import com.wanwuzhinan.mingchang.databinding.PopShareBinding
 import com.wanwuzhinan.mingchang.ext.createQRCodeBitmap
 import com.wanwuzhinan.mingchang.ext.getConfigData
-import com.wanwuzhinan.mingchang.ext.getUserInfo
 
 
 class SharePop(var context: Activity) :BasePop<PopShareBinding>(context){
@@ -29,7 +28,7 @@ class SharePop(var context: Activity) :BasePop<PopShareBinding>(context){
         GlideImgManager.get().loadImg(getConfigData().qrcode_image,mDataBinding!!.ivCode,0)
         mDataBinding.tvName.text= "我在万物指南获得${bean.name}！"
 
-        setOnClickNoRepeat(mDataBinding.llSave,mDataBinding.llWx,mDataBinding.llQuan){
+        onClick(mDataBinding.llSave,mDataBinding.llWx,mDataBinding.llQuan){
             dismiss()
             when (it){
                 mDataBinding.llSave ->{

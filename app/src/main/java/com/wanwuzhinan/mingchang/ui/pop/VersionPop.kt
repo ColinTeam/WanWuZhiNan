@@ -5,11 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.view.View
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.utils.ext.onClick
 import com.comm.net_work.ByteFormatUtils
-import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.databinding.PopVersionBinding
-import com.wanwuzhinan.mingchang.thread.EaseThreadManager
 import com.ssm.comm.app.appContext
 import com.ssm.comm.data.VersionData
 import com.ssm.comm.ext.installApk
@@ -19,6 +16,9 @@ import com.ssm.comm.ext.toastError
 import com.ssm.comm.ext.toastNormal
 import com.ssm.comm.utils.LogUtils
 import com.tbruyelle.rxpermissions2.RxPermissions
+import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.databinding.PopVersionBinding
+import com.wanwuzhinan.mingchang.thread.EaseThreadManager
 import com.zjh.download.download
 import com.zjh.download.helper.State
 import kotlinx.coroutines.CoroutineScope
@@ -35,10 +35,10 @@ class VersionPop(var context: Activity) :BasePop<PopVersionBinding>(context){
     lateinit var mData:VersionData
 
     override fun initClick() {
-        setOnClickNoRepeat(mDataBinding.tvUpgradation,mDataBinding.tvNot){
+        onClick(mDataBinding.tvUpgradation,mDataBinding.tvNot){
             when (it) {
                 mDataBinding.tvUpgradation -> {//立即升级
-                    mDataBinding!!.tvUpgradation.isEnabled = false
+                    mDataBinding.tvUpgradation.isEnabled = false
                     startDownloadApp(mData.android.version_url)
                 }
                 mDataBinding.tvNot -> {//暂不更新
@@ -51,11 +51,11 @@ class VersionPop(var context: Activity) :BasePop<PopVersionBinding>(context){
 
     fun showPop(data: VersionData) {
         mData=data
-        mDataBinding!!.tvNot.visibility=if(data.android.version_upgrade.equals("1")) View.INVISIBLE else View.VISIBLE
-        mDataBinding!!.tvContent.text = data.android.version_desc
+        mDataBinding.tvNot.visibility=if(data.android.version_upgrade.equals("1")) View.INVISIBLE else View.VISIBLE
+        mDataBinding.tvContent.text = data.android.version_desc
 
         getApkFileSize(data.android.version_url){
-            mDataBinding!!.tvLength.text = "0/${it}"
+            mDataBinding.tvLength.text = "0/${it}"
         }
         showPop()
     }

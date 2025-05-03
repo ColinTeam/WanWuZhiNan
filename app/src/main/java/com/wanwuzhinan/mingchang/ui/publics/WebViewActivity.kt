@@ -1,11 +1,8 @@
 package com.wanwuzhinan.mingchang.ui.publics
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.KeyEvent
-import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.databinding.ActivityWebViewBinding
-import com.wanwuzhinan.mingchang.vm.SplashViewModel
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.isEmpty
 import com.ssm.comm.ext.toastError
@@ -13,6 +10,10 @@ import com.ssm.comm.ui.base.BaseActivity
 import com.ssm.comm.ui.widget.webview.DefWebViewClient
 import com.ssm.comm.ui.widget.webview.SafeWebChromeClient
 import com.tencent.smtt.sdk.WebView
+import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.databinding.ActivityWebViewBinding
+import com.wanwuzhinan.mingchang.vm.SplashViewModel
 
 class WebViewActivity : BaseActivity<ActivityWebViewBinding, SplashViewModel>(SplashViewModel()) {
 
@@ -20,6 +21,8 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding, SplashViewModel>(Sp
         return R.layout.activity_web_view
     }
 
+    @Suppress("DEPRECATION")
+    @SuppressLint("SetJavaScriptEnabled")
     override fun initView() {
         val bundle = getBundle()
         if (bundle != null) {
@@ -47,11 +50,11 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding, SplashViewModel>(Sp
                 this.finish()
                 return
             }
-            Log.e("TAG", "initView: "+url )
+            Log.e("TAG", "initView: " + url)
             val string = bundle.getString(Constant.WEB_TITLE, "")
             if (isEmpty(string)) {
                 mDataBinding.toolbar.setTitleText("")
-            } else  {
+            } else {
                 mDataBinding.toolbar.setTitleText(string)
             }
             val mWebChromeClient =
@@ -77,17 +80,12 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding, SplashViewModel>(Sp
                     }
 
                     override fun onFinished(webView: WebView?, url: String?) {
-                        mDataBinding.webView.loadUrl("javascript:(function(){" +
-                                "var objs = document.getElementsByTagName('img'); " +
-                                "for(var i=0;i<objs.length;i++) " +
-                                "{"
-                                + "var img = objs[i]; " +
-                                " img.style.maxWidth = '100%'; img.style.height = 'auto'; " +
-                                "}" +
-                                "})()");
+                        mDataBinding.webView.loadUrl(
+                            "javascript:(function(){" + "var objs = document.getElementsByTagName('img'); " + "for(var i=0;i<objs.length;i++) " + "{" + "var img = objs[i]; " + " img.style.maxWidth = '100%'; img.style.height = 'auto'; " + "}" + "})()"
+                        );
                     }
                 })
-            mDataBinding.webView.getSettings().javaScriptEnabled=true
+            mDataBinding.webView.settings.javaScriptEnabled = true
             mDataBinding.webView.webChromeClient = mWebChromeClient
             mDataBinding.webView.webViewClient = mWebViewClient
             mDataBinding.webView.loadUrl(url)

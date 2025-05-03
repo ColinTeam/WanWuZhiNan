@@ -1,34 +1,24 @@
 package com.wanwuzhinan.mingchang.ui.phone.fra
 
-import android.annotation.SuppressLint
-import android.os.Build
-import android.os.Bundle
+
 import android.text.TextUtils
-import android.view.View
-import android.widget.TextView
-import androidx.annotation.RequiresApi
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
-import com.kongzue.dialogx.dialogs.CustomDialog
-import com.kongzue.dialogx.interfaces.OnBindView
+import com.colin.library.android.image.glide.GlideImgManager
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.ssm.comm.event.MessageEvent
-import com.ssm.comm.ext.dismissLoadingExt
 import com.ssm.comm.ext.editChange
 import com.ssm.comm.ext.initEditChange
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.post
+import com.ssm.comm.ext.setOnClickNoRepeat
 import com.ssm.comm.ext.showLoadingExt
 import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.media.MediaManager
 import com.ssm.comm.ui.base.BaseFragment
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.adapter.SettingAdapter
 import com.wanwuzhinan.mingchang.data.ProvinceListData
 import com.wanwuzhinan.mingchang.databinding.FragmentEditFileBinding
 import com.wanwuzhinan.mingchang.entity.UserInfoData
-import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ui.pop.ChooseCityDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseGradeDialog
 import com.wanwuzhinan.mingchang.view.GlideEngine
@@ -71,7 +61,7 @@ class SettingFragment :
                 mCityName=mInfo.city_name
                 mAreaName=mInfo.area_name
                 mHeadImg = mInfo.headimg
-                GlideImgManager.get().loadImg(mHeadImg,mDataBinding.rivHead,com.comm.img_load.R.mipmap.default_icon)
+                GlideImgManager.get().loadImg(mHeadImg,mDataBinding.rivHead,R.mipmap.default_icon)
 //                mDataBinding.tvIdT.text = (mInfo.id.toInt()+ getConfigData().home_all_number.toInt()).toString()
                 mDataBinding.tvIdT.text = "用户账号：${maskPhoneNumber(mInfo.account)}"
                 mDataBinding.tvUserName.setText(mInfo.truename)
@@ -163,7 +153,7 @@ class SettingFragment :
                                     val localMedia = result[0]
                                     val path = MediaManager.getSinglePhotoUri(localMedia) ?: ""
 
-                                    GlideImgManager.get().loadImg(path,mDataBinding.rivHead,com.comm.img_load.R.mipmap.default_icon)
+                                    GlideImgManager.get().loadImg(path,mDataBinding.rivHead,R.mipmap.default_icon)
                                     mActivity.showLoadingExt()
                                     mViewModel.uploadImage(File(path))
                                 }

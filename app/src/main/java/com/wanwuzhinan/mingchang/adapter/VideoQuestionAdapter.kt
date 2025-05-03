@@ -4,11 +4,10 @@ import android.content.Context
 import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.ad.img_load.glide.manager.GlideImgManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
+import com.colin.library.android.image.glide.GlideImgManager
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.SubjectListData
 import java.text.SimpleDateFormat
 
@@ -16,7 +15,7 @@ import java.text.SimpleDateFormat
 class VideoQuestionAdapter : BaseQuickAdapter<SubjectListData.lessonBean,QuickViewHolder>() {
     override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: SubjectListData.lessonBean?) {
         holder.setText(R.id.tv_title,item!!.name)
-            .setText(R.id.tv_time,format(item!!.video_duration.toLong()*1000))
+            .setText(R.id.tv_time,format(item.video_duration.toLong()*1000))
             .setImageResource(R.id.iv_quest_score_1,if(item.study_is_success==1) R.mipmap.ic_quest_sorce_s else R.mipmap.ic_quest_sorce_n)
             .setImageResource(R.id.iv_quest_score_2,if(item.study_is_success==1) R.mipmap.ic_quest_sorce_s else R.mipmap.ic_quest_sorce_n)
             .setImageResource(R.id.iv_quest_score_3,if(item.study_is_success==1) R.mipmap.ic_quest_sorce_s else R.mipmap.ic_quest_sorce_n)
@@ -35,7 +34,7 @@ class VideoQuestionAdapter : BaseQuickAdapter<SubjectListData.lessonBean,QuickVi
             .setImageResource(R.id.iv_play,if (item.is_video.toInt() == 0) R.mipmap.ic_video_question_play_gray else R.mipmap.ic_video_question_play)
 
         var ivCover = holder.getView<ImageView>(R.id.iv_cover)
-        GlideImgManager.get().loadImg(item!!.image,ivCover,R.mipmap.class_default)
+        GlideImgManager.get().loadImg(item.image,ivCover,R.mipmap.class_default)
     }
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): QuickViewHolder {

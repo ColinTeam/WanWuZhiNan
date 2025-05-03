@@ -1,6 +1,5 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
-import com.ad.img_load.setOnClickNoRepeat
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.ActivityLoginBinding
 import com.wanwuzhinan.mingchang.ext.editTips
@@ -12,7 +11,6 @@ import com.ssm.comm.ext.*
 import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.isPhone
-import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
 import com.wanwuzhinan.mingchang.ui.publics.WebViewActivity
 
 class LoginActivity  : BaseActivity<ActivityLoginBinding, LoginViewModel>(LoginViewModel()) {

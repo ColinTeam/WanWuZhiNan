@@ -47,6 +47,8 @@ dependencies {
 
     implementation(libs.bundles.androidCommon)
     implementation libs.androidx.constraintlayout
+    implementation libs.mmkv
+    implementation libs.tbssdk
     //implementation 'com.android.support:support-annotations:28.0.0'
 
     def lifecycle_version = "2.8.7"
@@ -82,8 +84,6 @@ dependencies {
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.8.2@aar'
     //图文详情的textview
     api 'org.sufficientlysecure:html-textview:4.0'
-    //代替sp https://github.com/Tencent/MMKV
-    implementation 'com.tencent:mmkv-static:2.0.0'
 
     // PictureSelector basic (Necessary)
     api 'io.github.lucksiege:pictureselector:v3.11.2'
@@ -98,8 +98,7 @@ dependencies {
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-27'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-27'
 
-    //腾讯x5
-    api 'com.tencent.tbs:tbssdk:44226'
+
     //Eventbus
     api 'org.greenrobot:eventbus:3.2.0'
     //ToastUtils

@@ -1,11 +1,11 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
 import android.app.Activity
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.utils.ext.onClick
+import com.ssm.comm.ext.toastError
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.PopNavigationBinding
 import com.wanwuzhinan.mingchang.utils.MapUtil
-import com.ssm.comm.ext.toastError
 
 class NavigationPop(var context: Activity) :BasePop<PopNavigationBinding>(context){
 
@@ -14,7 +14,7 @@ class NavigationPop(var context: Activity) :BasePop<PopNavigationBinding>(contex
     var mAddress=""
 
     override fun initClick() {
-        setOnClickNoRepeat(mDataBinding.tvGdMap,mDataBinding.tvBdMap,mDataBinding.tvTencentMap,mDataBinding.tvCancel){
+        onClick(mDataBinding.tvGdMap,mDataBinding.tvBdMap,mDataBinding.tvTencentMap,mDataBinding.tvCancel){
             dismiss()
             when(it){
                 mDataBinding.tvGdMap ->{//高德

@@ -3,7 +3,11 @@ package com.ad.img_load.pickerview.wheelview.timer;
 import android.os.Handler;
 import android.os.Message;
 
+import androidx.annotation.NonNull;
+
 import com.ad.img_load.pickerview.wheelview.view.WheelView;
+
+import java.lang.ref.WeakReference;
 
 
 /**
@@ -17,25 +21,27 @@ public final class MessageHandler extends Handler {
     public static final int WHAT_SMOOTH_SCROLL = 2000;
     public static final int WHAT_ITEM_SELECTED = 3000;
 
-    private final WheelView wheelView;
+    private final WeakReference<WheelView> wheelView;
 
     public MessageHandler(WheelView wheelView) {
-        this.wheelView = wheelView;
+        this.wheelView = new WeakReference(wheelView);
     }
 
     @Override
-    public final void handleMessage(Message msg) {
+    public final void handleMessage(@NonNull Message msg) {
+        WheelView view = wheelView.get();
+        if (view == null) return;
         switch (msg.what) {
             case WHAT_INVALIDATE_LOOP_VIEW:
-                wheelView.invalidate();
+                view.invalidate();
                 break;
 
             case WHAT_SMOOTH_SCROLL:
-                wheelView.smoothScroll(WheelView.ACTION.FLING);
+                view.smoothScroll(WheelView.ACTION.FLING);
                 break;
 
             case WHAT_ITEM_SELECTED:
-                wheelView.onItemSelected();
+                view.onItemSelected();
                 break;
         }
     }

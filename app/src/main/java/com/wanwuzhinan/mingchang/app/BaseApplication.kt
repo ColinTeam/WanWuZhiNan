@@ -2,7 +2,9 @@ package com.wanwuzhinan.mingchang.app
 
 import android.content.Context
 import android.util.Log
-import com.ad.img_load.ImageLoader
+import com.colin.library.android.image.glide.GlideImageLoader
+import com.colin.library.android.utils.config.UtilConfig
+import com.colin.library.android.utils.helper.UtilHelper
 import com.comm.net_work.BuildConfig
 import com.kongzue.dialogx.DialogX
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -37,6 +39,7 @@ class BaseApplication : CommApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        UtilHelper.init(UtilConfig.newBuilder(this, true).build())
         initImageLoader()
         initDownload()
         DialogX.init(this);
@@ -78,7 +81,7 @@ class BaseApplication : CommApplication() {
     }
 
     private fun initImageLoader() {
-        ImageLoader.getDefault()
+        GlideImageLoader.getDefault()
             .diskCacheOptions
             .withContext(this)
             .loadPlaceholderRes(-1)
@@ -92,6 +95,7 @@ class BaseApplication : CommApplication() {
             .setMemoryCacheSize(1.5f)
             .build()
     }
+
 
 
     //携程下载

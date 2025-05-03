@@ -26,6 +26,6 @@ android {
 dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.recyclerview)
-    implementation 'io.supercharge:shimmerlayout:2.1.0'
+    implementation libs.shimmerlayout
 }
 

@@ -2,9 +2,8 @@ package com.wanwuzhinan.mingchang.data
 
 import android.os.Parcelable
 import com.ssm.comm.ui.base.BaseModel
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+@kotlinx.parcelize.Parcelize
 data class AddressData(
     var address_id: String,//
     var provinceCode: String,//

@@ -18,41 +18,41 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="match_parent"
             style="@style/text_transparent_14"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
             android:ellipsize="end"
             android:fontFamily="sans-serif-light"
             android:maxLines="1"
             android:text="第一章：01 南海有龙宫？中国最南端"
             android:textFontWeight="300"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.ad.img_load.img.RoundedImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_video"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
             android:layout_marginVertical="@dimen/dp_10"
+            android:scaleType="centerCrop"
             android:src="@drawable/shape_e4e4e4_5"
-            app:android_scaleType="6"
             app:layout_constraintBottom_toTopOf="@+id/lin_imitate"
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            app:riv_corner_radius="@dimen/dp_20" />
+            app:shapeAppearanceOverlay="@style/Image.Radius_20" />
 
         <LinearLayout
             android:id="@+id/lin_imitate"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
             android:layout_marginRight="@dimen/dp_12"
-            app:layout_constraintTop_toTopOf="@id/tv_video"
+            android:alpha="0.4"
             android:background="@drawable/shape_fed847_22"
             android:gravity="center"
             android:orientation="horizontal"
-            android:alpha="0.4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_weight="0.55"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/tv_video">
+            app:layout_constraintRight_toLeftOf="@+id/tv_video"
+            app:layout_constraintTop_toTopOf="@id/tv_video">
 
             <ImageView
                 android:layout_width="@dimen/dp_46"
@@ -71,11 +71,11 @@
             android:id="@+id/tv_video"
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/dp_8"
+            android:alpha="0.4"
             android:background="@drawable/line_7f4807_22_1"
             android:gravity="center"
+            android:paddingVertical="@dimen/dp_8"
             android:text=""
-            android:alpha="0.4"
             android:textColor="@color/color_7F4807"
             android:textSize="@dimen/sp_16"
             app:layout_constraintBottom_toBottomOf="parent"

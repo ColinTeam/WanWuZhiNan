@@ -1,44 +1,43 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
-import android.util.Log
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.ad.img_load.clickNoRepeat
-import com.ad.img_load.setOnClickNoRepeat
 import com.chad.library.adapter.base.util.addOnDebouncedChildClick
 import com.chad.library.adapter.base.util.setOnDebouncedItemClick
-import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.adapter.VideoListLeftAdapter
-import com.wanwuzhinan.mingchang.adapter.VideoListRightAdapter
-import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.SubjectListData
-import com.wanwuzhinan.mingchang.data.UploadProgressEvent
-import com.wanwuzhinan.mingchang.databinding.ActivityVideoListBinding
-import com.wanwuzhinan.mingchang.ui.pop.ExchangeCoursePop
-import com.wanwuzhinan.mingchang.ui.pop.LightPop
-import com.wanwuzhinan.mingchang.vm.UserViewModel
-import com.ethanhua.skeleton.RecyclerViewSkeletonScreen
-import com.ethanhua.skeleton.Skeleton
-import com.ssm.comm.config.Constant
+import com.colin.library.android.utils.Log
+import com.colin.library.android.utils.ext.onClick
 import com.ssm.comm.event.EntityDataEvent
 import com.ssm.comm.event.MessageEvent
+import com.ssm.comm.ext.clickNoRepeat
 import com.ssm.comm.ext.getAllScreenHeight
 import com.ssm.comm.ext.getAllScreenWidth
-import com.ssm.comm.ext.getAudioData
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.registerBus
 import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.ui.base.BaseActivity
+import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.CatePhoneAdapter
+import com.wanwuzhinan.mingchang.adapter.VideoListLeftAdapter
 import com.wanwuzhinan.mingchang.adapter.VideoQuestionAdapter
-import com.wanwuzhinan.mingchang.ext.*
+import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.data.UploadProgressEvent
+import com.wanwuzhinan.mingchang.databinding.ActivityVideoListBinding
+import com.wanwuzhinan.mingchang.ext.getConfigData
+import com.wanwuzhinan.mingchang.ext.launchExchangeActivity
+import com.wanwuzhinan.mingchang.ext.launchVideoAnswerActivity
+import com.wanwuzhinan.mingchang.ext.launchVideoPlayActivity
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
+import com.wanwuzhinan.mingchang.ui.pop.ExchangeCoursePop
+import com.wanwuzhinan.mingchang.ui.pop.LightPop
 import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
 import com.wanwuzhinan.mingchang.ui.pop.ReportPop
-import com.zjh.download.utils.TAG
+import com.wanwuzhinan.mingchang.vm.UserViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
@@ -55,10 +54,11 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
     lateinit var mCateAdapter: CatePhoneAdapter
     lateinit var mLeftAdapter: VideoListLeftAdapter
     lateinit var mRightAdapter: VideoQuestionAdapter
-    var mSkeletonLeft: RecyclerViewSkeletonScreen? = null
-    var mSkeletonRight: RecyclerViewSkeletonScreen? = null
+//    var mSkeletonLeft: RecyclerViewSkeletonScreen? = null
+//    var mSkeletonRight: RecyclerViewSkeletonScreen? = null
     lateinit var mLightPop:LightPop
 
+    @SuppressLint("UseKtx")
     override fun initView() {
         if(getConfigData().apple_is_audit == 1){
             mDataBinding.llReport.visibility = View.VISIBLE
@@ -73,20 +73,20 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
         initRightList()
         initRightCate()
 
-        mSkeletonLeft = Skeleton.bind(mDataBinding.reLeft)
-            .adapter(mLeftAdapter)
-            .frozen(false)
-            .color(R.color.shimmer_color)
-            .load(R.layout.item_video_list_left_skeleton)
-            .show()
-        mSkeletonRight = Skeleton.bind(mDataBinding.reRight)
-            .adapter(mRightAdapter)
-            .frozen(false)
-            .color(R.color.shimmer_color)
-            .load(R.layout.item_video_list_right_skeleton)
-            .show()
+//        mSkeletonLeft = Skeleton.bind(mDataBinding.reLeft)
+//            .adapter(mLeftAdapter)
+//            .frozen(false)
+//            .color(R.color.shimmer_color)
+//            .load(R.layout.item_video_list_left_skeleton)
+//            .show()
+//        mSkeletonRight = Skeleton.bind(mDataBinding.reRight)
+//            .adapter(mRightAdapter)
+//            .frozen(false)
+//            .color(R.color.shimmer_color)
+//            .load(R.layout.item_video_list_right_skeleton)
+//            .show()
         mViewModel.courseQuarterList(mId)
-        mDataBinding.llReport.clickNoRepeat {
+        mDataBinding.llReport.onClick {
             ReportPop(this@VideoListActivity).showPop(){
                 lifecycleScope.launch {
                     showBaseLoading()
@@ -97,7 +97,7 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
             }
         }
         mDataBinding.ivChange.clickNoRepeat {
-            if (mDataBinding.sclCateList.visibility == View.VISIBLE){
+            if (mDataBinding.sclCateList.isVisible){
                 mDataBinding.sclCateList.visibility = View.GONE
             }else{
                 mDataBinding.sclCateList.visibility = View.VISIBLE
@@ -233,15 +233,15 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
 
     override fun initRequest() {
         mViewModel.courseQuarterListLiveData.observeState(this) {
-            mSkeletonLeft!!.hide()
-            mSkeletonRight!!.hide()
+//            mSkeletonLeft!!.hide()
+//            mSkeletonRight!!.hide()
             onSuccess = { data, msg ->
                 for (obj in data!!.list!!){
                     if (obj.id == mSelectId){
-                        mPosition = data!!.list!!.indexOf(obj)
+                        mPosition = data.list!!.indexOf(obj)
                     }
                 }
-                if (mPosition <= data!!.list!!.size - 1) {
+                if (mPosition <= data.list!!.size - 1) {
                     data.list!!.get(mPosition).select = true
                 }
                 mLeftAdapter.submitList(data.list)
@@ -260,7 +260,7 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: EntityDataEvent) {
-        Log.e(TAG, "onMessageEvent: "+event.type )
+        Log.e( "onMessageEvent: ${event.type}")
         when (event.type) {
             MessageEvent.UPDATE_PROGRESS -> {
                 val uploadProgressEvent = event.data as UploadProgressEvent

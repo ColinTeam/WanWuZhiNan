@@ -1,33 +1,16 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
-import android.annotation.SuppressLint
-import android.os.Build
 import android.text.TextUtils
-import android.util.Log
 import android.view.Gravity
-import androidx.annotation.RequiresApi
-import androidx.core.widget.addTextChangedListener
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
-import com.luck.picture.lib.entity.LocalMedia
-import com.luck.picture.lib.interfaces.OnResultCallbackListener
-import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.databinding.PopEditFileBinding
-import com.wanwuzhinan.mingchang.entity.UserInfoData
-import com.wanwuzhinan.mingchang.vm.UserViewModel
+import com.colin.library.android.utils.ext.onClick
 import com.ssm.comm.ext.dismissLoadingExt
 import com.ssm.comm.ext.editChange
 import com.ssm.comm.ext.initEditChange
-import com.ssm.comm.ext.observeState
-import com.ssm.comm.ext.showLoadingExt
 import com.ssm.comm.ext.toastSuccess
-import com.ssm.comm.media.MediaManager
 import com.ssm.comm.ui.base.BaseDialogFragment
-import com.wanwuzhinan.mingchang.data.ProvinceListData
+import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.PopAddressBinding
-import com.wanwuzhinan.mingchang.utils.ChooseCityUtils
-import com.wanwuzhinan.mingchang.view.GlideEngine
-import java.io.File
+import com.wanwuzhinan.mingchang.vm.UserViewModel
 
 
 class EditAddressDialog constructor() : BaseDialogFragment<PopAddressBinding>(){
@@ -61,7 +44,7 @@ class EditAddressDialog constructor() : BaseDialogFragment<PopAddressBinding>(){
             changeButtonBackground()
         }
 
-        setOnClickNoRepeat(
+        onClick(
             mDataBinding!!.tvSave,
             mDataBinding!!.ivCancel) {
             when (it) {
@@ -72,15 +55,15 @@ class EditAddressDialog constructor() : BaseDialogFragment<PopAddressBinding>(){
 
                     if(TextUtils.isEmpty(name)){
                         toastSuccess("请填写收货人姓名")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
                     if(TextUtils.isEmpty(phone)){
                         toastSuccess("请输入手机号")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
                     if(TextUtils.isEmpty(address)){
                         toastSuccess("请输入收货地址")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
                     mViewModel.editAddress(name,address,phone)
                 }

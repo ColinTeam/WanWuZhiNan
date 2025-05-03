@@ -1,14 +1,15 @@
 package com.wanwuzhinan.mingchang.data
 
-import com.ad.img_load.pickerview.wheelview.interfaces.IPickerViewData
+import com.colin.library.android.widget.picker.IPickerText
+
 
 data class ProvinceListData(
     val children: ArrayList<ProvinceListData> = ArrayList<ProvinceListData>(),
     val value: Int = 0,
     val label: String = "-"
-): IPickerViewData {
+) : IPickerText {
 
-    override fun getPickerViewText(): String {
+    override fun showText(): String {
         return this.label
     }
 }

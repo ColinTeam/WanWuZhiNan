@@ -23,28 +23,28 @@
             android:layout_height="match_parent"
             app:dt_back_color="@color/black"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/re_list"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
-            app:layout_constraintWidth_percent="0.25"
             android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_60"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/dp_60"
+            app:layout_constraintWidth_percent="0.25"
             tools:listitem="@layout/item_question_list_pad" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_info"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
-            android:layout_marginBottom="@dimen/dp_20"
             android:layout_marginHorizontal="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_20"
             android:background="@drawable/bg_question_list_right"
             android:paddingHorizontal="@dimen/dp_15"
             android:paddingTop="@dimen/dp_10"
@@ -65,54 +65,53 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.ad.img_load.img.RoundedImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_video"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0"
                 android:layout_marginVertical="@dimen/dp_10"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ic_home_audio"
-                app:android_scaleType="6"
                 app:layout_constraintBottom_toTopOf="@+id/lin_imitate"
                 app:layout_constraintTop_toBottomOf="@+id/tv_name"
-                app:riv_corner_radius="@dimen/dp_20" />
+                app:shapeAppearanceOverlay="@style/Image.Radius_20" />
 
             <com.wanwuzhinan.mingchang.view.blur.ShapeBlurView
                 android:id="@+id/blur"
                 android:layout_width="@dimen/dp_38"
                 android:layout_height="@dimen/dp_38"
+                app:blur_corner_radius="@dimen/dp_50"
                 app:blur_overlay_color="@color/white50"
-                app:layout_constraintVertical_chainStyle="packed"
+                app:blur_radius="@dimen/dp_5"
+                app:layout_constraintBottom_toTopOf="@+id/tv_duration"
                 app:layout_constraintLeft_toLeftOf="@id/iv_video"
                 app:layout_constraintRight_toRightOf="@id/iv_video"
                 app:layout_constraintTop_toTopOf="@id/iv_video"
-                app:layout_constraintBottom_toTopOf="@+id/tv_duration"
-                app:blur_radius="@dimen/dp_5"
-                app:blur_corner_radius="@dimen/dp_50"/>
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="@dimen/dp_38"
                 android:layout_height="@dimen/dp_38"
-                app:srcCompat="@drawable/ic_main_audio_stop"
-                app:layout_constraintTop_toTopOf="@id/blur"
+                app:layout_constraintBottom_toBottomOf="@id/blur"
                 app:layout_constraintLeft_toLeftOf="@id/blur"
                 app:layout_constraintRight_toRightOf="@id/blur"
-                app:layout_constraintBottom_toBottomOf="@id/blur"/>
+                app:layout_constraintTop_toTopOf="@id/blur"
+                app:srcCompat="@drawable/ic_main_audio_stop" />
 
             <TextView
                 android:id="@+id/tv_duration"
                 style="@style/text_white_14"
                 android:layout_marginTop="@dimen/dp_6"
-                app:layout_constraintTop_toBottomOf="@+id/blur"
+                android:text="00:00"
+                app:layout_constraintBottom_toBottomOf="@id/iv_video"
                 app:layout_constraintLeft_toLeftOf="@id/iv_video"
                 app:layout_constraintRight_toRightOf="@id/iv_video"
-                app:layout_constraintBottom_toBottomOf="@id/iv_video"
-                android:text="00:00"/>
+                app:layout_constraintTop_toBottomOf="@+id/blur" />
 
             <LinearLayout
                 android:id="@+id/lin_imitate"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_0"
-                app:layout_constraintTop_toTopOf="@id/tv_video"
                 android:layout_marginRight="@dimen/dp_12"
                 android:background="@drawable/shape_fed847_22"
                 android:gravity="center"
@@ -120,7 +119,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_weight="0.55"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/tv_video">
+                app:layout_constraintRight_toLeftOf="@+id/tv_video"
+                app:layout_constraintTop_toTopOf="@id/tv_video">
 
                 <ImageView
                     android:layout_width="@dimen/dp_26"
@@ -140,9 +140,9 @@
                 android:id="@+id/tv_video"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/dp_8"
                 android:background="@drawable/line_7f4807_22_1"
                 android:gravity="center"
+                android:paddingVertical="@dimen/dp_8"
                 android:text="完整视频"
                 android:textColor="@color/color_7F4807"
                 android:textSize="@dimen/sp_13"

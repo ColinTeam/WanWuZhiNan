@@ -15,7 +15,7 @@ import io.supercharge.shimmerlayout.ShimmerLayout;
 public class SkeletonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int mItemCount;
-    private int mLayoutReference;
+//    private int mLayoutReference;
     private int[] mLayoutArrayReferences;
     private int mColor;
     private boolean mShimmer;

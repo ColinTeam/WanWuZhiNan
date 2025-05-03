@@ -15,70 +15,69 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintDimensionRatio="w,1:2"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintDimensionRatio="w,1:2">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.ad.img_load.img.RoundedImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/riv_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:riv_corner_radius="@dimen/dp_12"
                 android:scaleType="centerCrop"
-                app:android_scaleType="6"
-                app:layout_constraintTop_toTopOf="parent"
+                android:src="@mipmap/bg_main_video"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:src="@mipmap/bg_main_video"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/Image.Radius_12" />
 
-            <com.ad.img_load.img.RoundedImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:riv_corner_radius="@dimen/dp_6"
-                app:android_scaleType="6"
-                android:src="@color/color_20000000"/>
+                android:scaleType="centerCrop"
+                android:src="@color/color_20000000"
+                app:shapeAppearanceOverlay="@style/Image.Radius_6" />
 
             <TextView
                 android:id="@+id/tv_number"
                 style="@style/text_white_10"
-                android:textFontWeight="300"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="@dimen/dp_0"
                 android:layout_margin="@dimen/dp_20"
                 android:fontFamily="sans-serif-light"
-                android:layout_width="@dimen/dp_0"
+                android:text="No.11-18 共8节"
+                android:textFontWeight="300"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:text="No.11-18 共8节"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_first"
                 style="@style/text_white_14"
+                android:layout_width="@dimen/dp_0"
                 android:layout_marginTop="@dimen/dp_12"
-                app:layout_constraintTop_toBottomOf="@+id/tv_number"
+                android:text="第一季"
                 app:layout_constraintLeft_toLeftOf="@id/tv_number"
                 app:layout_constraintRight_toRightOf="@id/tv_number"
-                android:layout_width="@dimen/dp_0"
-                android:text="第一季"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_number" />
 
             <ImageView
                 android:id="@+id/iv_line"
                 android:layout_width="@dimen/dp_96"
                 android:layout_height="@dimen/dp_1"
                 android:layout_marginLeft="@dimen/dp_20"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@id/iv_back"
+                android:background="@color/white"
                 app:layout_constraintBottom_toBottomOf="@id/iv_back"
-                android:background="@color/white"/>
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_back" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_back"
                 android:layout_width="@dimen/dp_16"
                 android:layout_height="@dimen/dp_16"
-                app:srcCompat="@drawable/back"
-                android:rotation="180"
-                android:layout_marginBottom="@dimen/dp_20"
                 android:layout_marginLeft="@dimen/dp_m_10"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:rotation="180"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/iv_line"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:srcCompat="@drawable/back" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

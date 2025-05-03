@@ -23,16 +23,16 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-            <com.ad.img_load.img.RoundedImageView
+            <com.colin.library.android.widget.image.RoundImageView
                 android:id="@+id/riv_head"
                 android:layout_width="@dimen/dp_162"
                 android:layout_height="@dimen/dp_162"
                 android:layout_marginTop="@dimen/dp_111"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/logo"
-                app:android_scaleType="6"
                 app:layout_constraintStart_toStartOf="@+id/ll_tools"
                 app:layout_constraintTop_toTopOf="parent"
-                app:riv_oval="true" />
+                app:round_oval="true" />
 
             <LinearLayout
                 android:id="@+id/lin_setting"
@@ -41,18 +41,17 @@
                 android:layout_marginStart="@dimen/dp_61"
                 android:background="@drawable/shape_ff9424_35"
                 android:gravity="center_vertical"
-                app:layout_constraintStart_toEndOf="@id/riv_head"
-                app:layout_constraintTop_toTopOf="@id/riv_head"
                 app:layout_constraintBottom_toBottomOf="@id/riv_head"
-                >
+                app:layout_constraintStart_toEndOf="@id/riv_head"
+                app:layout_constraintTop_toTopOf="@id/riv_head">
 
                 <TextView
                     style="@style/text_white_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_31"
-                    android:textSize="50sp"
-                    android:text="个人中心" />
+                    android:text="个人中心"
+                    android:textSize="50sp" />
 
                 <ImageView
                     android:layout_width="@dimen/dp_56"
@@ -67,18 +66,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_61"
-                app:layout_constraintStart_toEndOf="@id/lin_setting"
-                app:layout_constraintTop_toTopOf="@id/riv_head"
-                app:layout_constraintBottom_toBottomOf="@id/riv_head"
-                android:textSize="50sp"
+                android:text=""
                 android:textColor="#FF9424"
-                android:text=""/>
+                android:textSize="50sp"
+                app:layout_constraintBottom_toBottomOf="@id/riv_head"
+                app:layout_constraintStart_toEndOf="@id/lin_setting"
+                app:layout_constraintTop_toTopOf="@id/riv_head" />
 
             <ImageView
                 android:layout_width="416dp"
                 android:layout_height="@dimen/dp_184"
-                android:layout_marginTop="-14dp"
                 android:layout_marginStart="-33dp"
+                android:layout_marginTop="-14dp"
                 android:src="@mipmap/ic_main_exchange_bg_ipad"
                 app:layout_constraintStart_toStartOf="@+id/ll_tools"
                 app:layout_constraintTop_toTopOf="@+id/ll_tools" />
@@ -90,8 +89,8 @@
                 android:layout_marginTop="@dimen/dp_49"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/riv_head">
 
                 <TextView
@@ -99,10 +98,10 @@
                     style="@style/text_333333_14"
                     android:layout_width="@dimen/dp_350"
                     android:layout_height="@dimen/dp_120"
-                    android:textSize="@dimen/dp_43"
                     android:gravity="center"
                     android:text="兑换课程"
                     android:textColor="@color/white"
+                    android:textSize="@dimen/dp_43"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,11 +111,11 @@
                     android:layout_width="@dimen/dp_350"
                     android:layout_height="@dimen/dp_120"
                     android:layout_marginStart="@dimen/dp_151"
-                    android:textSize="@dimen/dp_43"
                     android:background="@drawable/shape_ff9424_50_line_1"
                     android:gravity="center"
                     android:text="进步榜样"
                     android:textColor="#FF9424"
+                    android:textSize="@dimen/dp_43"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_exchange"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -127,12 +126,12 @@
                     style="@style/text_333333_14"
                     android:layout_width="@dimen/dp_350"
                     android:layout_height="@dimen/dp_120"
-                    android:textSize="@dimen/dp_43"
                     android:layout_marginStart="@dimen/dp_151"
                     android:background="@drawable/shape_ff9424_50_line_1"
                     android:gravity="center"
                     android:text="设备投屏"
                     android:textColor="#FF9424"
+                    android:textSize="@dimen/dp_43"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_list"
@@ -145,9 +144,9 @@
                 android:id="@+id/cl_main"
                 android:layout_width="0dp"
                 android:layout_height="706dp"
-                app:layout_constraintDimensionRatio="w,1422:706"
                 android:layout_marginBottom="@dimen/dp_93"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="w,1422:706"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -155,8 +154,8 @@
                     android:id="@+id/bg_audio"
                     android:layout_width="594dp"
                     android:layout_height="337dp"
-                    android:layout_marginTop="@dimen/dp_84"
                     android:layout_marginStart="@dimen/dp_60"
+                    android:layout_marginTop="@dimen/dp_84"
                     android:layout_marginEnd="@dimen/dp_69"
                     android:src="@drawable/bg_main_audio_ipad"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -167,7 +166,7 @@
                     android:layout_height="@dimen/dp_284"
                     android:src="@mipmap/ic_main_audio_02_top_right"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:layout_width="@dimen/dp_123"
@@ -201,7 +200,7 @@
                     app:layout_constraintLeft_toLeftOf="@id/bg_audio"
                     app:layout_constraintTop_toTopOf="@id/bg_audio" />
 
-                <com.ad.img_load.img.RoundedImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/bg_honor"
                     android:layout_width="@dimen/dp_253"
                     android:layout_height="@dimen/dp_216"
@@ -210,16 +209,16 @@
                     app:layout_constraintBottom_toBottomOf="@id/bg_video"
                     app:layout_constraintRight_toRightOf="parent" />
 
-                <com.ad.img_load.img.RoundedImageView
+                <com.colin.library.android.widget.image.RoundImageView
                     android:id="@+id/iv_honor"
                     android:layout_width="@dimen/dp_153"
                     android:layout_height="@dimen/dp_153"
                     android:layout_marginTop="@dimen/dp_20"
                     android:adjustViewBounds="true"
                     android:src="@mipmap/ic_main_honor"
-                    app:is_filter="1"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bg_audio" />
+                    app:layout_constraintTop_toBottomOf="@+id/bg_audio"
+                    app:round_filter="1" />
 
                 <ImageView
                     android:layout_width="@dimen/dp_136"
@@ -227,8 +226,7 @@
                     android:layout_marginTop="@dimen/dp_20"
                     android:src="@mipmap/ic_main_04"
                     app:layout_constraintStart_toStartOf="@+id/bg_honor"
-                    app:layout_constraintTop_toBottomOf="@+id/bg_audio"
-                    />
+                    app:layout_constraintTop_toBottomOf="@+id/bg_audio" />
 
                 <TextView
                     android:id="@+id/tv_honor_title"
@@ -242,14 +240,14 @@
                     app:layout_constraintBottom_toBottomOf="@id/bg_honor"
                     app:layout_constraintLeft_toLeftOf="@id/bg_honor" />
 
-                <com.ad.img_load.img.RoundedImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/bg_question"
                     android:layout_width="@dimen/dp_323"
                     android:layout_height="@dimen/dp_216"
                     android:background="@drawable/bg_main_topic_ipad"
+                    app:layout_constraintBottom_toBottomOf="@+id/bg_video"
                     app:layout_constraintLeft_toLeftOf="@id/bg_audio"
-                    app:layout_constraintTop_toTopOf="@id/bg_honor"
-                    app:layout_constraintBottom_toBottomOf="@+id/bg_video"/>
+                    app:layout_constraintTop_toTopOf="@id/bg_honor" />
 
                 <ImageView
                     android:layout_width="@dimen/dp_132"
@@ -260,7 +258,7 @@
                     app:layout_constraintStart_toStartOf="@+id/bg_question"
                     app:layout_constraintTop_toTopOf="@+id/bg_question" />
 
-                <com.ad.img_load.img.RoundedImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/iv_question"
                     android:layout_width="@dimen/dp_142"
                     android:layout_height="@dimen/dp_185"
@@ -281,18 +279,18 @@
                     android:textFontWeight="600"
                     android:textSize="@dimen/dp_48"
                     app:layout_constraintBottom_toBottomOf="@id/bg_question"
-                    app:layout_constraintTop_toTopOf="@id/bg_question"
-                    app:layout_constraintLeft_toLeftOf="@id/bg_question" />
+                    app:layout_constraintLeft_toLeftOf="@id/bg_question"
+                    app:layout_constraintTop_toTopOf="@id/bg_question" />
 
                 <com.wanwuzhinan.mingchang.view.ClickImageView
                     android:id="@+id/bg_video"
                     android:layout_width="669dp"
                     android:layout_height="595dp"
-                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginStart="@dimen/dp_31"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:src="@drawable/bg_main_vide_ipad"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/bg_audio"/>
+                    app:layout_constraintTop_toTopOf="@id/bg_audio" />
 
                 <ImageView
                     android:layout_width="@dimen/dp_267"
@@ -351,14 +349,14 @@
 
         <LinearLayout
             android:id="@+id/ll_ad"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_40"
             android:layout_marginBottom="@dimen/dp_40"
-            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="vertical">
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
                 android:id="@+id/iv_ad"
@@ -371,8 +369,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_100"
                 android:padding="@dimen/dp_16"
-                android:src="@mipmap/ic_home_ad_close"
-                />
+                android:src="@mipmap/ic_home_ad_close" />
 
 
         </LinearLayout>

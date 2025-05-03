@@ -5,22 +5,21 @@ import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
-import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.ProvinceListData
-import com.wanwuzhinan.mingchang.databinding.PopEditFileBinding
-import com.wanwuzhinan.mingchang.entity.UserInfoData
-import com.wanwuzhinan.mingchang.view.GlideEngine
-import com.wanwuzhinan.mingchang.vm.UserViewModel
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.ext.onClick
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.ssm.comm.ext.dismissLoadingExt
 import com.ssm.comm.ext.showLoadingExt
 import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.media.MediaManager
+import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.data.ProvinceListData
+import com.wanwuzhinan.mingchang.databinding.PopEditFileBinding
+import com.wanwuzhinan.mingchang.entity.UserInfoData
+import com.wanwuzhinan.mingchang.view.GlideEngine
+import com.wanwuzhinan.mingchang.vm.UserViewModel
 import java.io.File
-import java.util.ArrayList
 
 //编辑用户资料
 class EditFilePop(var context: Activity) :BasePop<PopEditFileBinding>(context){
@@ -43,7 +42,7 @@ class EditFilePop(var context: Activity) :BasePop<PopEditFileBinding>(context){
                 mDataBinding.tvTopName.text = it
             }
         }
-        setOnClickNoRepeat(mDataBinding.llNv,/*mDataBinding.linArea,*/mDataBinding.tvSave) {
+        onClick(mDataBinding.llNv,/*mDataBinding.linArea,*/mDataBinding.tvSave) {
             when (it) {
                 mDataBinding.rivHead ->{//修改头像
                     MediaManager.selectSinglePhoto(
@@ -72,7 +71,7 @@ class EditFilePop(var context: Activity) :BasePop<PopEditFileBinding>(context){
                 /*mDataBinding.linArea ->{//选择城市
                     if(mAddressList==null) {
                         toastSuccess("网络不佳，请退出重试")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
                     ChooseCityUtils.showCityPickerView(mContext,"",mAddressList!!){
                             province,city,area ->
@@ -91,32 +90,32 @@ class EditFilePop(var context: Activity) :BasePop<PopEditFileBinding>(context){
 
                     if(TextUtils.isEmpty(mHeadImg)){
                         toastSuccess("请上传头像")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
 
                     if(TextUtils.isEmpty(name)){
                         toastSuccess("请填写真实姓名")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
 
                     if(TextUtils.isEmpty(sex)){
                         toastSuccess("请选择性别")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
 
                     if(TextUtils.isEmpty(city)){
                         toastSuccess("请选择地区")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
 
                     if(TextUtils.isEmpty(school)){
                         toastSuccess("请填写学校")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
 
                     if(TextUtils.isEmpty(grade)){
                         toastSuccess("请选择年纪")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
 
                     context.showLoadingExt()

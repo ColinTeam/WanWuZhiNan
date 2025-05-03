@@ -1,21 +1,18 @@
 package com.wanwuzhinan.mingchang.ui.publics
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.databinding.ActivityWebViewBinding
-import com.wanwuzhinan.mingchang.vm.SplashViewModel
 import com.ssm.comm.config.Constant
-import com.ssm.comm.ext.isEmpty
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.setOnClickNoRepeat
-import com.ssm.comm.ext.toastError
 import com.ssm.comm.ui.base.BaseActivity
 import com.ssm.comm.ui.widget.webview.DefWebViewClient
 import com.ssm.comm.ui.widget.webview.SafeWebChromeClient
 import com.tencent.smtt.sdk.WebView
+import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.databinding.ActivityWebViewBinding
 import com.wanwuzhinan.mingchang.ui.pop.EditAddressDialog
 import com.wanwuzhinan.mingchang.vm.UserViewModel
 
@@ -25,6 +22,8 @@ class WebGoodsViewActivity : BaseActivity<ActivityWebViewBinding, UserViewModel>
         return R.layout.activity_web_view
     }
 
+    @Suppress("DEPRECATION")
+    @SuppressLint("SetJavaScriptEnabled")
     override fun initView() {
         val bundle = getBundle()
         if (bundle != null) {
@@ -50,10 +49,10 @@ class WebGoodsViewActivity : BaseActivity<ActivityWebViewBinding, UserViewModel>
 
                             }
                         })
-                    mDataBinding.webView.getSettings().javaScriptEnabled=true
+                    mDataBinding.webView.settings.javaScriptEnabled=true
                     mDataBinding.webView.webChromeClient = mWebChromeClient
                     mDataBinding.webView.webViewClient = mWebViewClient
-                    mDataBinding.webView.loadData(data!!.info!!.content,"text/html", "UTF-8")
+                    mDataBinding.webView.loadData(data.info!!.content,"text/html", "UTF-8")
                 }
             }
 

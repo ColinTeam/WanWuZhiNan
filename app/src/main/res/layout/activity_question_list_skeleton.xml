@@ -28,17 +28,17 @@
             android:textFontWeight="300"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
-        <com.ad.img_load.img.RoundedImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_video"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_12"
             android:src="@drawable/shape_e4e4e4_5"
-            app:android_scaleType="6"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@+id/lin_imitate"
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            app:riv_corner_radius="@dimen/dp_20" />
+            app:shapeAppearanceOverlay="@style/Image.Radius_20"/>
 
         <LinearLayout
             android:id="@+id/lin_imitate"

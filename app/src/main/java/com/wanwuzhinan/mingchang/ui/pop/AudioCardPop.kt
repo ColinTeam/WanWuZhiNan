@@ -1,28 +1,17 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.CountDownTimer
-import android.util.Log
-import android.view.View
-import android.view.View.OnLongClickListener
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.MedalListData
 import com.wanwuzhinan.mingchang.databinding.PopAudioCardBinding
-import com.wanwuzhinan.mingchang.databinding.PopExchangeContactBinding
-import com.wanwuzhinan.mingchang.databinding.PopNetErrorBinding
-import com.wanwuzhinan.mingchang.ext.createQRCodeBitmap
-import com.wanwuzhinan.mingchang.ext.getConfigData
-import com.wanwuzhinan.mingchang.ext.getUserInfo
-import com.wanwuzhinan.mingchang.ext.launchWechatService
 
 
 class AudioCardPop(var context: Activity,var onSure: () -> Unit) :BasePop<PopAudioCardBinding>(context){
 
     override fun initClick() {
-        setOnClickNoRepeat(mDataBinding.tvSure){
+        onClick(mDataBinding.tvSure){
             when(it){
                 mDataBinding.tvSure->{
                     timer.cancel()

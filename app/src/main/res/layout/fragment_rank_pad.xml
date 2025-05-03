@@ -14,67 +14,67 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ll_rank"
             android:layout_width="0dp"
-            android:layout_marginBottom="@dimen/dp_10"
-            app:layout_constraintWidth_percent="0.4"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/shape_ffffff_15"
             app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/shape_ffffff_15">
+            app:layout_constraintWidth_percent="0.4">
 
             <ImageView
                 android:id="@+id/iv_bg"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="w,664:505"
                 android:layout_marginStart="@dimen/dp_12"
                 android:layout_marginEnd="@dimen/dp_12"
                 android:layout_marginBottom="@dimen/dp_84"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@mipmap/ic_rank_bg_ipad"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:background="@mipmap/ic_rank_bg_ipad"/>
+                app:layout_constraintDimensionRatio="w,664:505"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
 
             <LinearLayout
                 android:id="@+id/ll_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iv_bg"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:gravity="center_horizontal">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iv_bg">
 
-                <com.ad.img_load.img.RoundedImageView
+                <com.colin.library.android.widget.image.RoundImageView
                     android:id="@+id/iv_1"
                     android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dp_40"
-                    app:riv_oval="true"
-                    app:android_scaleType="6"
-                    android:src="@mipmap/default_icon" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/default_icon"
+                    app:round_oval="true" />
 
                 <LinearLayout
-                    android:layout_marginTop="@dimen/dp_20"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:background="@drawable/shape_ffd5a505_4"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_marginStart="@dimen/dp_10"
                         android:layout_width="@dimen/dp_14"
                         android:layout_height="@dimen/dp_16"
-                        android:src="@mipmap/ic_compass"/>
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:src="@mipmap/ic_compass" />
 
                     <TextView
                         android:id="@+id/tv_num_1"
                         style="@style/text_333333_12"
-                        android:text="10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_5"
                         android:layout_marginEnd="@dimen/sp_15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="10" />
 
 
                 </LinearLayout>
@@ -85,43 +85,43 @@
                 android:id="@+id/ll_2"
                 android:layout_width="@dimen/dp_80"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_12"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/iv_bg"
                 android:layout_marginTop="@dimen/dp_56"
+                android:layout_marginEnd="@dimen/dp_12"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:gravity="center_horizontal">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_bg">
 
-                <com.ad.img_load.img.RoundedImageView
+                <com.colin.library.android.widget.image.RoundImageView
                     android:id="@+id/iv_2"
                     android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dp_40"
-                    app:riv_oval="true"
-                    app:android_scaleType="6"
-                    android:src="@mipmap/default_icon" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/default_icon"
+                    app:round_oval="true" />
 
                 <LinearLayout
-                    android:layout_marginTop="@dimen/dp_20"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:background="@drawable/shape_ffd5a505_4"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_marginStart="@dimen/dp_10"
                         android:layout_width="@dimen/dp_14"
                         android:layout_height="@dimen/dp_16"
-                        android:src="@mipmap/ic_compass"/>
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:src="@mipmap/ic_compass" />
 
                     <TextView
                         android:id="@+id/tv_num_2"
                         style="@style/text_333333_12"
-                        android:text="10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_5"
                         android:layout_marginEnd="@dimen/sp_15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="10" />
 
 
                 </LinearLayout>
@@ -134,42 +134,42 @@
                 android:layout_width="@dimen/dp_80"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_12"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/iv_bg"
                 android:layout_marginTop="@dimen/dp_67"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:gravity="center_horizontal">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_bg">
 
-                <com.ad.img_load.img.RoundedImageView
+                <com.colin.library.android.widget.image.RoundImageView
                     android:id="@+id/iv_3"
                     android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dp_40"
-                    app:riv_oval="true"
-                    app:android_scaleType="6"
-                    android:src="@mipmap/default_icon" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/default_icon"
+                    app:round_oval="true" />
 
                 <LinearLayout
-                    android:layout_marginTop="@dimen/dp_20"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:background="@drawable/shape_ffd5a505_4"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_marginStart="@dimen/dp_10"
                         android:layout_width="@dimen/dp_14"
                         android:layout_height="@dimen/dp_16"
-                        android:src="@mipmap/ic_compass"/>
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:src="@mipmap/ic_compass" />
 
                     <TextView
                         android:id="@+id/tv_num_3"
                         style="@style/text_333333_12"
-                        android:text="10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_5"
                         android:layout_marginEnd="@dimen/sp_15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="10" />
 
 
                 </LinearLayout>
@@ -182,46 +182,45 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintStart_toEndOf="@+id/ll_rank"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/dp_24"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="@dimen/dp_20"
-            android:paddingHorizontal="@dimen/dp_12"
-            android:paddingTop="@dimen/dp_12"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_24"
             android:background="@drawable/shape_ffffff_top_15"
             android:orientation="vertical"
-            >
-            
+            android:paddingHorizontal="@dimen/dp_12"
+            android:paddingTop="@dimen/dp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ll_rank"
+            app:layout_constraintTop_toTopOf="parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_39"
                 android:background="@drawable/bg_rank_num_bg"
                 android:gravity="center_vertical">
-                
+
                 <TextView
                     android:id="@+id/tv_my_num"
                     style="@style/text_white_20"
                     android:layout_width="@dimen/dp_55"
                     android:layout_marginStart="@dimen/dp_27"
-                    android:text="0"/>
+                    android:text="0" />
 
-                <com.ad.img_load.img.RoundedImageView
+                <com.colin.library.android.widget.image.RoundImageView
                     android:id="@+id/riv_head"
                     android:layout_width="@dimen/dp_24"
                     android:layout_height="@dimen/dp_24"
+                    android:scaleType="centerCrop"
                     android:src="@mipmap/ic_home_audio"
-                    app:riv_oval="true"
-                    app:android_scaleType="6" />
+                    app:round_oval="true" />
 
                 <TextView
                     android:id="@+id/tv_my_name"
                     style="@style/text_white_12"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/dp_7"
-                    android:text="0"/>
+                    android:layout_weight="1"
+                    android:text="0" />
 
                 <LinearLayout
                     android:layout_width="@dimen/dp_107"
@@ -231,15 +230,15 @@
                     <ImageView
                         android:layout_width="@dimen/dp_19"
                         android:layout_height="@dimen/dp_19"
-                        android:src="@mipmap/ic_compass"/>
+                        android:src="@mipmap/ic_compass" />
 
                     <TextView
                         android:id="@+id/tv_my_compass_num"
                         style="@style/text_white_16"
-                        android:text="0"
-                        android:layout_marginStart="@dimen/dp_5"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:text="0" />
 
                 </LinearLayout>
 
@@ -251,8 +250,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="9dp"
                 android:background="@drawable/shape_ffc285_16_line_1"
-                android:paddingHorizontal="@dimen/dp_18"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/dp_18">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -262,17 +261,17 @@
                     <TextView
                         style="@style/text_333333_14"
                         android:layout_width="@dimen/dp_60"
-                        android:text="排名"/>
+                        android:text="排名" />
 
                     <TextView
                         style="@style/text_333333_14"
                         android:layout_weight="1"
-                        android:text="用户ID"/>
+                        android:text="用户ID" />
 
                     <TextView
                         style="@style/text_333333_14"
                         android:layout_width="@dimen/dp_107"
-                        android:text="累计指南针"/>
+                        android:text="累计指南针" />
 
                 </LinearLayout>
 
@@ -285,13 +284,9 @@
                     tools:listitem="@layout/item_rank_list" />
 
             </LinearLayout>
-            
-
-
 
 
         </LinearLayout>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

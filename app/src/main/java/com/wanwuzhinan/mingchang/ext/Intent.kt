@@ -2,9 +2,6 @@ package com.wanwuzhinan.mingchang.ext
 
 import android.content.res.Configuration
 import android.util.Log
-import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.SubjectListData
-import com.wanwuzhinan.mingchang.ui.phone.*
 import com.google.gson.Gson
 import com.ssm.comm.app.appContext
 import com.ssm.comm.ext.getAudioData
@@ -12,11 +9,33 @@ import com.ssm.comm.ext.getScreenHeight2
 import com.ssm.comm.ext.getScreenWidth2
 import com.ssm.comm.ext.toastError
 import com.ssm.comm.ui.base.IWrapView
-import com.tencent.rtmp.TXLiveBase
+import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.pad.MainIpadActivity
 import com.wanwuzhinan.mingchang.ui.pad.MainIpadWidthActivity
 import com.wanwuzhinan.mingchang.ui.pad.VideoListPadActivity
+import com.wanwuzhinan.mingchang.ui.phone.AnswerAskActivity
+import com.wanwuzhinan.mingchang.ui.phone.AnswerErrorAskActivity
+import com.wanwuzhinan.mingchang.ui.phone.AnswerPracticeActivity
+import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
+import com.wanwuzhinan.mingchang.ui.phone.AudioPlayInfoActivity
+import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
+import com.wanwuzhinan.mingchang.ui.phone.ExchangeCourseActivity
+import com.wanwuzhinan.mingchang.ui.phone.HonorHomeActivity
+import com.wanwuzhinan.mingchang.ui.phone.HonorListActivity
+import com.wanwuzhinan.mingchang.ui.phone.LoginActivity
+import com.wanwuzhinan.mingchang.ui.phone.MainActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionHomeActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionVideoActivity
+import com.wanwuzhinan.mingchang.ui.phone.RankActivity
+import com.wanwuzhinan.mingchang.ui.phone.SettingActivity
+import com.wanwuzhinan.mingchang.ui.phone.VideoAnswerActivity
+import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
+import com.wanwuzhinan.mingchang.ui.phone.VideoListActivity
+import com.wanwuzhinan.mingchang.ui.phone.VideoPlayActivity
 
 //判断当前设备是手机还是平板
 fun isPhone(): Boolean {

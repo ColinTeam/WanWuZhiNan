@@ -1,21 +1,33 @@
 package com.wanwuzhinan.mingchang.net.repository
 
 import com.comm.net_work.entity.ApiConfigInfoResponse
-import com.wanwuzhinan.mingchang.data.*
+import com.comm.net_work.entity.ApiInfoResponse
+import com.comm.net_work.entity.ApiListResponse
 import com.comm.net_work.entity.ApiResponse
 import com.comm.net_work.gson.GsonManager
+import com.ssm.comm.data.VersionData
+import com.ssm.comm.utils.LogUtils
+import com.wanwuzhinan.mingchang.data.CityData
+import com.wanwuzhinan.mingchang.data.ConfigData
+import com.wanwuzhinan.mingchang.data.CourseInfoData
+import com.wanwuzhinan.mingchang.data.CourseStudyData
+import com.wanwuzhinan.mingchang.data.ExchangeCodeData
+import com.wanwuzhinan.mingchang.data.ExchangeListData
+import com.wanwuzhinan.mingchang.data.GoodsInfoData
+import com.wanwuzhinan.mingchang.data.GradeData
+import com.wanwuzhinan.mingchang.data.MedalListData
+import com.wanwuzhinan.mingchang.data.QuestionListData
+import com.wanwuzhinan.mingchang.data.QuestionLogData
+import com.wanwuzhinan.mingchang.data.RankHomeData
+import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.data.TextDescriptionData
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.wanwuzhinan.mingchang.net.repository.comm.CommRepository
 import com.wanwuzhinan.mingchang.thread.EaseThreadManager
-import com.comm.net_work.entity.ApiInfoResponse
-import com.comm.net_work.entity.ApiListResponse
-import com.hpplay.common.asyncmanager.AsyncFileParameter.In
-import com.ssm.comm.data.VersionData
-import com.ssm.comm.utils.LogUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -50,7 +62,7 @@ class UserRepository : CommRepository() {
     }
 
     //获取年级
-    suspend fun getAllGrade(pid: Int=16): ApiResponse<GradeData> {
+    suspend fun getAllGrade(pid: Int = 16): ApiResponse<GradeData> {
         return executeHttp { mService.getAllGrade(pid) }
     }
 
@@ -60,22 +72,28 @@ class UserRepository : CommRepository() {
     }
 
     //音频视频科目列表
-    suspend fun courseSubjectList(id: String,need_lesson: Int): ApiResponse<ApiInfoResponse<SubjectListData>> {
-        return executeHttp { mService.courseSubjectList(id,need_lesson) }
+    suspend fun courseSubjectList(
+        id: String,
+        need_lesson: Int
+    ): ApiResponse<ApiInfoResponse<SubjectListData>> {
+        return executeHttp { mService.courseSubjectList(id, need_lesson) }
     }
 
     //音频视频科目季度列表
-    suspend fun courseQuarterList(lesson_subject_id:String,need_lesson: Int): ApiResponse<ApiListResponse<SubjectListData>> {
-        return executeHttp { mService.courseQuarterList(lesson_subject_id,need_lesson) }
+    suspend fun courseQuarterList(
+        lesson_subject_id: String,
+        need_lesson: Int
+    ): ApiResponse<ApiListResponse<SubjectListData>> {
+        return executeHttp { mService.courseQuarterList(lesson_subject_id, need_lesson) }
     }
 
     //音频视频列表通过季度id获取
-    suspend fun courseList(lesson_quarter_id:String): ApiResponse<ApiListResponse<SubjectListData.lessonBean>> {
+    suspend fun courseList(lesson_quarter_id: String): ApiResponse<ApiListResponse<SubjectListData.lessonBean>> {
         return executeHttp { mService.courseList(lesson_quarter_id) }
     }
 
     //课程兑换
-    suspend fun courseExchange(code:String): ApiResponse<MutableList<String>> {
+    suspend fun courseExchange(code: String): ApiResponse<MutableList<String>> {
         return executeHttp { mService.courseExchange(code) }
     }
 
@@ -90,21 +108,28 @@ class UserRepository : CommRepository() {
     }
 
     //学习课程 记录
-    suspend fun courseStudy(lesson_id: String,start_second: Int,end_second: Int): ApiResponse<CourseStudyData> {
-        return executeHttp { mService.courseStudy(lesson_id,start_second, end_second) }
+    suspend fun courseStudy(
+        lesson_id: String,
+        start_second: Int,
+        end_second: Int
+    ): ApiResponse<CourseStudyData> {
+        return executeHttp { mService.courseStudy(lesson_id, start_second, end_second) }
     }
 
     suspend fun getLessonInfo(id: String): ApiResponse<CourseInfoData> {
         return executeHttp { mService.getLessonInfo(id) }
     }
+
     //题库列表
     suspend fun questionList(typeid: Int): ApiResponse<ApiListResponse<QuestionListData>> {
         return executeHttp { mService.questionList(typeid) }
     }
+
     //题库答题
-    suspend fun questionAdd(questions_id: String,answer:String): ApiResponse<QuestionLogData> {
-        return executeHttp { mService.questionAdd(questions_id,answer) }
+    suspend fun questionAdd(questions_id: String, answer: String): ApiResponse<QuestionLogData> {
+        return executeHttp { mService.questionAdd(questions_id, answer) }
     }
+
     suspend fun questionClear(): ApiResponse<Any> {
         return executeHttp { mService.questionClear() }
     }
@@ -120,8 +145,11 @@ class UserRepository : CommRepository() {
         return executeHttp { mService.questionDetail(id) }
     }
 
-    suspend fun questionPageDetail(id: String,question_id: String): ApiResponse<ApiInfoResponse<QuestionListData>> {
-        return executeHttp { mService.questionPageDetail(id,question_id) }
+    suspend fun questionPageDetail(
+        id: String,
+        question_id: String
+    ): ApiResponse<ApiInfoResponse<QuestionListData>> {
+        return executeHttp { mService.questionPageDetail(id, question_id) }
     }
 
     //获取配置
@@ -133,10 +161,12 @@ class UserRepository : CommRepository() {
     suspend fun exchangeList(group_id: Int): ApiResponse<ApiListResponse<ExchangeListData>> {
         return executeHttp { mService.exchangeList(group_id) }
     }
+
     //课程赠品记录
     suspend fun giveList(): ApiResponse<ApiListResponse<ExchangeListData>> {
         return executeHttp { mService.giveList() }
     }
+
     //课程赠品信息
     suspend fun goodsInfo(goods_id: String): ApiResponse<ApiInfoResponse<GoodsInfoData>> {
         return executeHttp { mService.goodsInfo(goods_id) }
@@ -146,20 +176,26 @@ class UserRepository : CommRepository() {
         return executeHttp { mService.exchangeCodeList(group_id) }
     }
 
-    suspend fun feedbackAdd(typeid:Int,content:String,photos:String,version_name:String):ApiResponse<MutableList<String>>{
-     return executeHttp { mService.feedbackAdd(typeid,content,photos, version_name) }
+    suspend fun feedbackAdd(
+        typeid: Int,
+        content: String,
+        photos: String,
+        version_name: String
+    ): ApiResponse<MutableList<String>> {
+        return executeHttp { mService.feedbackAdd(typeid, content, photos, version_name) }
     }
 
-    suspend fun editAddress(contact_name:String,contact_address:String,contact_phone:String):ApiResponse<MutableList<String>>{
+    suspend fun editAddress(
+        contact_name: String,
+        contact_address: String,
+        contact_phone: String
+    ): ApiResponse<MutableList<String>> {
         return executeHttp { mService.editAddress(contact_name, contact_address, contact_phone) }
     }
 
-    suspend fun rankIndex():ApiResponse<RankHomeData>{
+    suspend fun rankIndex(): ApiResponse<RankHomeData> {
         return executeHttp { mService.rankIndex() }
     }
-
-
-
 
 
     //获取版本号
@@ -172,9 +208,9 @@ class UserRepository : CommRepository() {
     suspend fun uploadImage(
         file: File
     ): ApiResponse<UploadImgData> {
-        val requestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+        val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, requestBody)
-        return executeHttp { mService.uploadImage( part) }
+        return executeHttp { mService.uploadImage(part) }
     }
 
 
@@ -187,8 +223,8 @@ class UserRepository : CommRepository() {
     ) {
         showLoading()
         EaseThreadManager.getInstance().runOnIOThread {
-            val signature = setSignStr(Pair("key",key))
-            val call = mService.getTextDescription(signature,key)
+            val signature = setSignStr(Pair("key", key))
+            val call = mService.getTextDescription(signature, key)
             //调用enqueue方法异步返回结果
             call.enqueue(object : retrofit2.Callback<ResponseBody> {
                 override fun onResponse(
@@ -199,7 +235,8 @@ class UserRepository : CommRepository() {
                         val result = response.body()!!.string()
                         LogUtils.e("result===================>${result}")
                         val response =
-                            GsonManager.get().getGson().fromJson(result, TextDescriptionData::class.java)
+                            GsonManager.get().getGson()
+                                .fromJson(result, TextDescriptionData::class.java)
                         if (response.code == 200) {
                             EaseThreadManager.getInstance().runOnMainThread {
                                 hideLoading()

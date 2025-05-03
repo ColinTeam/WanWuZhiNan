@@ -31,49 +31,48 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_6"
                 android:orientation="horizontal"
-                tools:itemCount="3"
                 android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toEndOf="@+id/toolbar"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/toolbar"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="3"
                 tools:listitem="@layout/item_answer_practice" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/re_list"
                 android:layout_width="@dimen/dp_0"
-                android:layout_marginTop="@dimen/dp_10"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginBottom="@dimen/dp_20"
+                android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/ll_audio"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/toolbar"
-                app:layout_constraintBottom_toTopOf="@+id/ll_audio"
                 tools:listitem="@layout/item_audio_home_cover" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ll_audio"
                 android:layout_width="@dimen/dp_237"
                 android:layout_height="@dimen/dp_200"
-
                 android:layout_marginBottom="4.3dp"
                 android:background="@drawable/bg_audio_home_view"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/toolbar">
 
-                <com.ad.img_load.img.RoundedImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/riv_image"
                     android:layout_width="@dimen/dp_55"
                     android:layout_height="@dimen/dp_55"
                     android:layout_marginTop="@dimen/dp_25"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/shape_ffffff_8"
-                    app:android_scaleType="6"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:riv_corner_radius="@dimen/dp_8" />
+                    app:shapeAppearanceOverlay="@style/Image.Radius_8" />
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -139,9 +138,9 @@
                     android:id="@+id/lin_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_12"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/dp_12"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/lin_progress">
@@ -200,13 +199,13 @@
                     android:id="@+id/iv_volume"
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
-                    android:padding="@dimen/dp_2"
-                    android:visibility="visible"
                     android:layout_marginStart="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_9"
-                    app:srcCompat="@mipmap/ic_volume_b"
+                    android:padding="@dimen/dp_2"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:srcCompat="@mipmap/ic_volume_b" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -216,13 +215,13 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/dp_8"
                 android:layout_marginEnd="@dimen/dp_7"
-                android:paddingVertical="@dimen/dp_10"
-                android:paddingHorizontal="@dimen/dp_15"
+                android:layout_marginBottom="@dimen/dp_1"
                 android:background="@drawable/bg_audio_home_view"
                 android:orientation="vertical"
+                android:paddingHorizontal="@dimen/dp_15"
+                android:paddingVertical="@dimen/dp_10"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="@dimen/dp_1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ll_audio"
                 app:layout_constraintTop_toTopOf="@+id/ll_audio"
@@ -235,21 +234,21 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginEnd="@dimen/dp_6"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.core.widget.NestedScrollView
                     android:id="@+id/scl_cate_list"
                     android:layout_width="@dimen/dp_155"
                     android:layout_height="0dp"
-                    android:visibility="gone"
-                    android:layout_marginBottom="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_30"
                     android:layout_marginEnd="@dimen/dp_15"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginTop="@dimen/dp_30">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -260,68 +259,69 @@
                             android:id="@+id/cl_list_bg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
                             <ImageView
                                 android:id="@+id/iv_state"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp_70"
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/ic_video_mj_top"
-                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"/>
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/re_cate_list"
-                                app:layout_constraintTop_toBottomOf="@+id/iv_state"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                tools:listitem="@layout/item_cate_list"
-                                tools:itemCount="3"/>
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/iv_state"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/item_cate_list" />
 
                             <ImageView
                                 android:id="@+id/iv_ding_top_1"
                                 android:layout_width="@dimen/dp_10"
                                 android:layout_height="@dimen/dp_30"
-                                android:src="@mipmap/ic_mj_ding_top"
                                 android:layout_marginStart="@dimen/dp_30"
-                                android:scaleType="fitXY"
                                 android:layout_marginTop="@dimen/dp_60"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"/>
+                                android:scaleType="fitXY"
+                                android:src="@mipmap/ic_mj_ding_top"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
                                 android:id="@+id/iv_ding_top_2"
                                 android:layout_width="@dimen/dp_10"
                                 android:layout_height="@dimen/dp_30"
-                                android:src="@mipmap/ic_mj_ding_top"
                                 android:layout_marginStart="@dimen/dp_70"
                                 android:scaleType="fitXY"
-                                app:layout_constraintTop_toTopOf="@+id/iv_ding_top_1"
-                                app:layout_constraintStart_toEndOf="@+id/iv_ding_top_1"/>
+                                android:src="@mipmap/ic_mj_ding_top"
+                                app:layout_constraintStart_toEndOf="@+id/iv_ding_top_1"
+                                app:layout_constraintTop_toTopOf="@+id/iv_ding_top_1" />
 
                             <ImageView
                                 android:id="@+id/iv_ding_bottom_1"
                                 android:layout_width="@dimen/dp_10"
                                 android:layout_height="@dimen/dp_30"
-                                android:src="@mipmap/ic_mj_ding_bottom"
                                 android:layout_marginStart="@dimen/dp_30"
                                 android:layout_marginTop="@dimen/dp_26"
                                 android:scaleType="fitXY"
-                                app:layout_constraintTop_toBottomOf="@+id/iv_ding_top_1"
-                                app:layout_constraintStart_toStartOf="parent"/>
+                                android:src="@mipmap/ic_mj_ding_bottom"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/iv_ding_top_1" />
 
                             <ImageView
                                 android:id="@+id/iv_ding_bottom_2"
                                 android:layout_width="@dimen/dp_10"
                                 android:layout_height="@dimen/dp_30"
+                                android:layout_marginStart="@dimen/dp_70"
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/ic_mj_ding_bottom"
-                                android:layout_marginStart="@dimen/dp_70"
-                                app:layout_constraintTop_toTopOf="@+id/iv_ding_bottom_1"
-                                app:layout_constraintStart_toEndOf="@+id/iv_ding_bottom_1"/>
+                                app:layout_constraintStart_toEndOf="@+id/iv_ding_bottom_1"
+                                app:layout_constraintTop_toTopOf="@+id/iv_ding_bottom_1" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -333,10 +333,9 @@
                     android:id="@+id/iv_change"
                     android:layout_width="@dimen/dp_50"
                     android:layout_height="@dimen/dp_50"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:src="@mipmap/ic_change_mj"
-                    />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -363,8 +362,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_56"
+                android:layout_marginEnd="@dimen/dp_20"
                 android:layout_marginBottom="@dimen/dp_31"
                 android:background="@mipmap/bg_video_play">
 
@@ -383,19 +382,19 @@
                         android:layout_height="@dimen/dp_100"
                         android:src="@mipmap/ic_auido_pan"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintEnd_toEndOf="parent" />
 
-                    <com.ad.img_load.img.RoundedImageView
+                    <com.colin.library.android.widget.image.RoundImageView
                         android:id="@+id/riv_image_big"
                         android:layout_width="@dimen/dp_56"
                         android:layout_height="@dimen/dp_56"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/img_default_icon"
-                        app:android_scaleType="6"
-                        app:riv_oval = "true"
+                        app:layout_constraintBottom_toBottomOf="@+id/iv_file"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_file"
                         app:layout_constraintStart_toStartOf="@+id/iv_file"
                         app:layout_constraintTop_toTopOf="@+id/iv_file"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_file"
-                        app:layout_constraintEnd_toEndOf="@+id/iv_file"/>
+                        app:round_oval="true" />
 
                     <ImageView
                         android:layout_width="@dimen/dp_43"
@@ -409,10 +408,10 @@
                 <TextView
                     android:id="@+id/tv_big_title"
                     style="@style/text_white_12"
-                    android:text=""
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="@dimen/dp_31"
+                    android:text=""
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cl_image" />
 
 
@@ -443,7 +442,7 @@
                         android:layout_height="wrap_content"
                         android:max="0"
                         android:maxHeight="@dimen/dp_5"
-                        android:minHeight= "@dimen/dp_5"
+                        android:minHeight="@dimen/dp_5"
                         android:progress="0"
                         android:progressDrawable="@drawable/audio_progress"
                         android:thumb="@drawable/oval_white"

@@ -3,16 +3,10 @@ package com.wanwuzhinan.mingchang.adapter
 import android.content.Context
 import android.graphics.Color
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.ad.img_load.glide.manager.GlideImgManager
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.util.setOnDebouncedItemClick
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
-import com.comm.banner.listener.OnBannerListener
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.QuestionListData.questionBean
-import com.wanwuzhinan.mingchang.data.QuestionScreenData
 
 
 class QuestionCheckAdapter : BaseQuickAdapter<questionBean?,QuickViewHolder>() {

@@ -1,15 +1,17 @@
 package com.wanwuzhinan.mingchang.adapter
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-class TabViewpagerAdapter(fm: FragmentManager, var fs: MutableList<Fragment>) : FragmentPagerAdapter(fm) {
+import androidx.fragment.app.FragmentStatePagerAdapter
 
-    override fun getCount(): Int {
-        return fs!!.size
-    }
+@Suppress("DEPRECATION")
+class TabViewpagerAdapter(activity: AppCompatActivity, val fs: MutableList<Fragment>) :
+    FragmentStatePagerAdapter(
+        activity.supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+    ) {
 
-    override fun getItem(position: Int): Fragment {
-        return fs!!.get(position)
-    }
+
+    override fun getItem(p0: Int) = fs[p0]
+
+    override fun getCount() = fs.size
 }

@@ -1,53 +1,39 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
 import android.app.Activity
-import android.graphics.Color
-import android.os.CountDownTimer
-import android.util.Log
-import android.view.View
-import android.view.View.OnLongClickListener
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
-import com.ad.img_load.startVibrate
-import com.hpplay.common.asyncmanager.AsyncFileParameter.In
+import android.content.Context
+import com.colin.library.android.utils.Log
+import com.colin.library.android.utils.VibratorUtil
+import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.adapter.AnswerPracticeSelectAdapter
 import com.wanwuzhinan.mingchang.adapter.QuestionCheckAdapter
 import com.wanwuzhinan.mingchang.adapter.QuestionScreenAdapter
-import com.wanwuzhinan.mingchang.data.MedalListData
-import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.QuestionListData.questionBean
 import com.wanwuzhinan.mingchang.data.QuestionScreenData
-import com.wanwuzhinan.mingchang.databinding.PopAudioCardBinding
-import com.wanwuzhinan.mingchang.databinding.PopExchangeContactBinding
-import com.wanwuzhinan.mingchang.databinding.PopNetErrorBinding
 import com.wanwuzhinan.mingchang.databinding.PopQuestionCheckBinding
-import com.wanwuzhinan.mingchang.databinding.PopQuestionScreenBinding
-import com.wanwuzhinan.mingchang.ext.createQRCodeBitmap
-import com.wanwuzhinan.mingchang.ext.getConfigData
-import com.wanwuzhinan.mingchang.ext.getUserInfo
-import com.wanwuzhinan.mingchang.ext.launchWechatService
+import java.lang.ref.WeakReference
 
 
-class QuestionCheckPop(var context: Activity) :BasePop<PopQuestionCheckBinding>(context){
+class QuestionCheckPop(context: Activity) : BasePop<PopQuestionCheckBinding>(context) {
+    private val contextRef: WeakReference<Context?> = WeakReference<Context?>(context)
 
-
-    lateinit var mAdapter:QuestionScreenAdapter
-    lateinit var mOptionAdapter:QuestionCheckAdapter
-    var mList:MutableList<QuestionScreenData> = mutableListOf()
-    var mOptionList:MutableList<MutableList<questionBean>> = mutableListOf()
+    lateinit var mAdapter: QuestionScreenAdapter
+    lateinit var mOptionAdapter: QuestionCheckAdapter
+    var mList: MutableList<QuestionScreenData> = mutableListOf()
+    var mOptionList: MutableList<MutableList<questionBean>> = mutableListOf()
     var cur = -1
 
     override fun initClick() {
-        mAdapter= QuestionScreenAdapter()
-        mDataBinding.reList.adapter=mAdapter
+        mAdapter = QuestionScreenAdapter()
+        mDataBinding.reList.adapter = mAdapter
 
         mOptionAdapter = QuestionCheckAdapter()
-        mDataBinding.reListOption.adapter=mOptionAdapter
+        mDataBinding.reListOption.adapter = mOptionAdapter
 
-        mAdapter.setOnItemClickListener{adapter, view, position ->
-            view.startVibrate()
-            for (obj in mList){
+        mAdapter.setOnItemClickListener { adapter, view, position ->
+            val context = contextRef.get()?:return@setOnItemClickListener
+            VibratorUtil.startVibrator(context)
+            for (obj in mList) {
                 obj.isSelect = false
             }
             cur = position
@@ -58,30 +44,30 @@ class QuestionCheckPop(var context: Activity) :BasePop<PopQuestionCheckBinding>(
             mAdapter.notifyDataSetChanged()
         }
 
-        mOptionAdapter.setOnItemClickListener{adapter, view, position ->
-            view.startVibrate()
-            if (mListener != null){
-                mListener!!.click(cur,position)
+        mOptionAdapter.setOnItemClickListener { adapter, view, position ->
+            val context = contextRef.get()?:return@setOnItemClickListener
+            if (mListener != null) {
+                mListener!!.click(cur, position)
                 dismiss()
             }
         }
 
-        setOnClickNoRepeat(
+        onClick(
             mDataBinding.ivClose
-        ){
-            when(it){
-                mDataBinding.ivClose->{
+        ) {
+            when (it) {
+                mDataBinding.ivClose -> {
                     dismiss()
                 }
             }
         }
     }
 
-    fun setList(list:MutableList<questionBean>){
-        for (i in 0 until Math.floor(list.size/20.0).toInt()){
-            if (i == 0){
-                mList.add(QuestionScreenData(i,true))
-            }else {
+    fun setList(list: MutableList<questionBean>) {
+        for (i in 0 until Math.floor(list.size / 20.0).toInt()) {
+            if (i == 0) {
+                mList.add(QuestionScreenData(i, true))
+            } else {
                 mList.add(QuestionScreenData(i, false))
             }
         }
@@ -102,26 +88,26 @@ class QuestionCheckPop(var context: Activity) :BasePop<PopQuestionCheckBinding>(
             mOptionList.add(tmpList)
         }
 
-        if (mList.size > 0){
+        if (mList.size > 0) {
             cur = 0
             mOptionAdapter.submitList(mOptionList.get(cur))
         }
 
-        Log.e("QuestionCheckPop", "setList: "+mOptionList.size )
+        Log.e("QuestionCheckPop", "setList: " + mOptionList.size)
         mAdapter.submitList(mList)
     }
 
-    var mListener:OnCheckListener? = null
+    var mListener: OnCheckListener? = null
 
     fun setOnCheckListener(listener: OnCheckListener) {
         mListener = listener
     }
 
     interface OnCheckListener {
-        fun click(cur:Int,postion:Int)
+        fun click(cur: Int, postion: Int)
     }
 
-    fun showPop(){
+    fun showPop() {
         mAdapter.notifyDataSetChanged()
         mOptionAdapter.notifyDataSetChanged()
         showHeightPop()

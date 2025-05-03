@@ -10,32 +10,29 @@
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
-        android:background="@drawable/shape_ffffff_8"
         android:layout_marginBottom="@dimen/dp_8"
-        android:gravity="center_vertical"
-        >
-        
-        <com.ad.img_load.img.RoundedImageView
+        android:background="@drawable/shape_ffffff_8"
+        android:gravity="center_vertical">
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/riv_head"
-            android:layout_marginStart="@dimen/dp_11"
             android:layout_width="@dimen/dp_34"
             android:layout_height="@dimen/dp_34"
-            app:android_scaleType="6"
+            android:layout_marginStart="@dimen/dp_11"
             android:src="@mipmap/default_icon"
-            app:riv_corner_radius="4dp"
-            />
+            app:shapeAppearanceOverlay="@style/Image.Radius_4" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginStart="@dimen/dp_16"
             android:layout_marginEnd="@dimen/dp_16"
-            android:textSize="@dimen/sp_16"
-            android:textColor="@color/color_333333"
+            android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="11111"/>
+            android:text="11111"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_16" />
 
         <ImageView
             android:id="@+id/iv_state"
@@ -43,7 +40,7 @@
             android:layout_height="@dimen/dp_19"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/dp_16"
-            android:src="@mipmap/ic_play_state"/>
+            android:src="@mipmap/ic_play_state" />
 
     </LinearLayout>
 

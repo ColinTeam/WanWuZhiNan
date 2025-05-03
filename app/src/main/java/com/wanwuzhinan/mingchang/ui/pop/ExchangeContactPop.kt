@@ -5,8 +5,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.View
 import android.view.View.OnLongClickListener
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.PopExchangeContactBinding
 import com.wanwuzhinan.mingchang.ext.getConfigData
@@ -26,7 +26,7 @@ class ExchangeContactPop(var context: Activity) :BasePop<PopExchangeContactBindi
 
         GlideImgManager.get().loadFitCenterImg(getConfigData().qrcode_image,mDataBinding.ivCode,0)
 
-        setOnClickNoRepeat(mDataBinding.toolBar.getLeftBack(),mDataBinding.tvOpen){
+        onClick(mDataBinding.toolBar.getLeftBack(),mDataBinding.tvOpen){
             when(it){
                 mDataBinding.toolBar.getLeftBack()->{
                     dismiss()

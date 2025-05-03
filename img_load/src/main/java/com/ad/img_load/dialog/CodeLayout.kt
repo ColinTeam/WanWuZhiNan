@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.ad.img_load.countDown
 import com.ad.img_load.setOnClickNoRepeat
 import com.comm.img_load.R
 

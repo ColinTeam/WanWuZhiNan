@@ -1,18 +1,19 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.utils.ext.onClick
+import com.ssm.comm.ext.observeState
+import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.HonorHomeAdapter
+import com.wanwuzhinan.mingchang.data.MedalListData
 import com.wanwuzhinan.mingchang.databinding.ActivityHonorHomeBinding
-import com.wanwuzhinan.mingchang.ext.*
+import com.wanwuzhinan.mingchang.ext.launchHonorListActivity
+import com.wanwuzhinan.mingchang.ext.visible
 import com.wanwuzhinan.mingchang.ui.pop.SharePop
 import com.wanwuzhinan.mingchang.utils.SaveImageUtils
 import com.wanwuzhinan.mingchang.utils.SaveListener
 import com.wanwuzhinan.mingchang.view.CardScaleHelper
 import com.wanwuzhinan.mingchang.vm.UserViewModel
-import com.ssm.comm.ext.observeState
-import com.ssm.comm.ui.base.BaseActivity
-import com.wanwuzhinan.mingchang.data.MedalListData
 
 class HonorHomeActivity  : BaseActivity<ActivityHonorHomeBinding, UserViewModel>(UserViewModel()) {
 
@@ -44,7 +45,7 @@ class HonorHomeActivity  : BaseActivity<ActivityHonorHomeBinding, UserViewModel>
     }
 
     override fun initClick() {
-        setOnClickNoRepeat(mDataBinding.linMy,mDataBinding.tvShare) {
+        onClick(mDataBinding.linMy,mDataBinding.tvShare) {
             when(it){
                 mDataBinding.linMy->{
                     launchHonorListActivity()

@@ -69,13 +69,14 @@
                     android:layout_width="wrap_content"
                     android:gravity="center"
                     android:text="本次获得"
-                    android:textColor="#403210"/>
+                    android:textColor="#403210" />
+
                 <TextView
                     style="@style/text_333333_14"
                     android:layout_width="wrap_content"
                     android:gravity="center"
                     android:text="1枚"
-                    android:textColor="#FE9323"/>
+                    android:textColor="#FE9323" />
 
                 <TextView
                     android:id="@+id/tv_type"
@@ -83,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:gravity="center"
                     android:text="科学家集卡"
-                    android:textColor="#403210"/>
+                    android:textColor="#403210" />
 
             </LinearLayout>
 
@@ -92,20 +93,20 @@
                 android:layout_width="@dimen/dp_76"
                 android:layout_height="@dimen/dp_76"
                 android:layout_marginTop="@dimen/dp_4"
-                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/shape_ffc285_20_line_1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ll_num"
-                android:background="@drawable/shape_ffc285_20_line_1">
-                
-                <com.ad.img_load.img.RoundedImageView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_num">
+
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/iv_cover"
                     android:layout_width="@dimen/dp_66"
                     android:layout_height="@dimen/dp_66"
-                    app:android_scaleType="6"
                     android:layout_marginStart="@dimen/dp_5"
                     android:layout_marginTop="@dimen/dp_5"
-                    app:riv_corner_radius="@dimen/dp_20"
-                    android:src="@mipmap/default_icon"/>
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/default_icon"
+                    app:shapeAppearanceOverlay="@style/Image.Radius_20" />
 
             </LinearLayout>
 
@@ -113,13 +114,13 @@
                 android:id="@+id/tv_name"
                 style="@style/text_333333_14"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/dp_4"
                 android:gravity="center"
                 android:text="科学家集卡"
-                android:layout_marginTop="@dimen/dp_4"
                 android:textColor="#403210"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ll_cover"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_cover" />
 
 
             <LinearLayout
@@ -163,10 +164,9 @@
                 android:background="@mipmap/alert_btn_sure_bg"
                 android:gravity="center"
                 android:text="立即播放"
-                app:layout_constraintEnd_toEndOf="@+id/iv_bg"
-                app:layout_constraintStart_toStartOf="@+id/iv_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
-                 />
+                app:layout_constraintEnd_toEndOf="@+id/iv_bg"
+                app:layout_constraintStart_toStartOf="@+id/iv_bg" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

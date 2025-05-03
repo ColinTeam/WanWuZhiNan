@@ -80,17 +80,24 @@ fun AppCompatActivity.countDown(
         }.onStart {
             // 倒计时开始 ，在这里可以让Button 禁止点击状态
             start(this@launch)
-        }.onCompletion {
+        }.onCompletion { cause ->
             // 倒计时结束 ，在这里可以让Button 恢复点击状态
-            end()
-        }.catch {
-            //错误
+            if (cause == null) {
+                end()
+            } else {
+                // 处理协程取消或其他异常情况
+                // 例如：记录日志或恢复UI状态
+            }
+        }.catch { exception ->
+            // 处理异常，例如记录日志
+            println("倒计时异常: ${exception.message}")
         }.collect {
             // 在这里 更新值来显示到UI
             next(it)
         }
     }
 }
+
 
 
 

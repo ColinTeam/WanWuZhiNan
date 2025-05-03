@@ -2,7 +2,7 @@ package com.wanwuzhinan.mingchang.data
 
 import android.os.Parcelable
 import com.wanwuzhinan.mingchang.view.indexlib.indexbar.bean.BaseIndexPinyinBean
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 
 @Parcelize

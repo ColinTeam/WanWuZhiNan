@@ -11,60 +11,60 @@
         android:layout_height="@dimen/dp_200"
         android:layout_marginRight="@dimen/dp_12">
 
-        <com.ad.img_load.img.RoundedImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/riv_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:src="@drawable/shape_e4e4e4_5"
-            app:android_scaleType="6"
             app:layout_constraintDimensionRatio="h,1:0.6"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius="@dimen/dp_6" />
+            app:shapeAppearanceOverlay="@style/Image.Radius_6" />
 
         <TextView
             android:id="@+id/tv_number"
             style="@style/text_transparent_10"
-            android:textFontWeight="300"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="@dimen/dp_0"
             android:layout_margin="@dimen/dp_12"
             android:fontFamily="sans-serif-light"
-            android:layout_width="@dimen/dp_0"
+            android:text="No.11-18 共8节"
+            android:textFontWeight="300"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="No.11-18 共8节"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_first"
             style="@style/text_transparent_14"
+            android:layout_width="@dimen/dp_0"
             android:layout_marginTop="@dimen/dp_6"
-            app:layout_constraintTop_toBottomOf="@+id/tv_number"
+            android:text="第一季"
             app:layout_constraintLeft_toLeftOf="@id/tv_number"
             app:layout_constraintRight_toRightOf="@id/tv_number"
-            android:layout_width="@dimen/dp_0"
-            android:text="第一季"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_number" />
 
         <ImageView
             android:id="@+id/iv_file"
             android:layout_width="@dimen/dp_64"
             android:layout_height="@dimen/dp_64"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
             android:layout_margin="@dimen/dp_12"
             android:alpha="0.3"
-            android:src="@mipmap/ic_audio_film"/>
+            android:src="@mipmap/ic_audio_film"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
-        <com.ad.img_load.img.RoundedImageView
+        <com.colin.library.android.widget.image.RoundImageView
             android:id="@+id/riv_head"
             android:layout_width="@dimen/dp_38"
             android:layout_height="@dimen/dp_38"
+            android:scaleType="centerCrop"
             android:src="@drawable/shape_e4e4e4_5"
-            app:riv_oval="true"
-            app:android_scaleType="6"
-            app:layout_constraintTop_toTopOf="@id/iv_file"
             app:layout_constraintBottom_toBottomOf="@id/iv_file"
             app:layout_constraintLeft_toLeftOf="@id/iv_file"
-            app:layout_constraintRight_toRightOf="@id/iv_file"/>
+            app:layout_constraintRight_toRightOf="@id/iv_file"
+            app:layout_constraintTop_toTopOf="@id/iv_file"
+            app:round_oval="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

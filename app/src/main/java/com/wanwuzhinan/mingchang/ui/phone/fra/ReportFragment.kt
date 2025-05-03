@@ -1,40 +1,23 @@
 package com.wanwuzhinan.mingchang.ui.phone.fra
 
-import android.annotation.SuppressLint
-import android.os.Build
-import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import androidx.annotation.RequiresApi
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.ResourcesUtil
+import com.colin.library.android.utils.ext.onClick
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.ssm.comm.ext.dismissLoadingExt
-import com.ssm.comm.ext.editChange
 import com.ssm.comm.ext.getCurrentVersionName
-import com.ssm.comm.ext.initEditChange
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.showLoadingExt
 import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.media.MediaManager
 import com.ssm.comm.ui.base.BaseFragment
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.adapter.ExchangeCourseAdapter
-import com.wanwuzhinan.mingchang.adapter.SettingAdapter
 import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.ProvinceListData
-import com.wanwuzhinan.mingchang.databinding.FragmentEditFileBinding
-import com.wanwuzhinan.mingchang.databinding.FragmentExchangeCourseBinding
 import com.wanwuzhinan.mingchang.databinding.FragmentReportBinding
-import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.wanwuzhinan.mingchang.ext.editTips
-import com.wanwuzhinan.mingchang.ui.pop.ChooseCityDialog
-import com.wanwuzhinan.mingchang.ui.pop.ChooseGradeDialog
-import com.wanwuzhinan.mingchang.ui.pop.EditAddressDialog
-import com.wanwuzhinan.mingchang.ui.pop.EditFileDialog
-import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
-import com.wanwuzhinan.mingchang.utils.SkeletonUtils
 import com.wanwuzhinan.mingchang.view.GlideEngine
 import com.wanwuzhinan.mingchang.vm.UserViewModel
 import java.io.File
@@ -103,16 +86,16 @@ class ReportFragment :
         mDataBinding.tvVideo.setBackgroundResource(if(type==ConfigApp.COURSE_VIDEO) R.drawable.shape_fc982e_16 else R.drawable.shape_ffeacc_16)
         mDataBinding.tvAudio.setBackgroundResource(if(type==ConfigApp.COURSE_AUDIO) R.drawable.shape_fc982e_16 else  R.drawable.shape_ffeacc_16)
         mDataBinding.tvClass.setBackgroundResource(if(type==ConfigApp.COURSE_GIVE) R.drawable.shape_fc982e_16 else  R.drawable.shape_ffeacc_16)
-
-        mDataBinding.tvVideo.setTextColor(if(type==ConfigApp.COURSE_VIDEO) resources!!.getColor(R.color.white) else resources!!.getColor(R.color.color_ff9424))
-        mDataBinding.tvAudio.setTextColor(if(type==ConfigApp.COURSE_AUDIO) resources!!.getColor(R.color.white) else resources!!.getColor(R.color.color_ff9424))
-        mDataBinding.tvClass.setTextColor(if(type==ConfigApp.COURSE_GIVE) resources!!.getColor(R.color.white) else resources!!.getColor(R.color.color_ff9424))
+        val selectedColor = ResourcesUtil.getColor(requireContext(),R.color.white)
+        val normalColor = ResourcesUtil.getColor(requireContext(),R.color.color_ff9424)
+        mDataBinding.tvVideo.setTextColor(if(type==ConfigApp.COURSE_VIDEO) selectedColor else normalColor)
+        mDataBinding.tvAudio.setTextColor(if(type==ConfigApp.COURSE_AUDIO) selectedColor else normalColor)
+        mDataBinding.tvClass.setTextColor(if(type==ConfigApp.COURSE_GIVE) selectedColor else normalColor)
 
     }
 
     override fun initClick() {
-
-        setOnClickNoRepeat(
+        onClick(
             mDataBinding.tvAudio,
             mDataBinding.tvVideo,
             mDataBinding.tvClass,
@@ -135,13 +118,13 @@ class ReportFragment :
                 mDataBinding.tvSubmit ->{
 
                     var tips= editTips(mDataBinding.edContent)
-                    if(!tips) return@setOnClickNoRepeat
+                    if(!tips) return@onClick
                     showBaseLoading()
-                    if (mSelectList.size > 0){
+                    if (mSelectList.isNotEmpty()){
                         mImageList.clear()
                         for (localMedia in mSelectList){
                             val path = MediaManager.getSinglePhotoUri(localMedia) ?: ""
-                            mActivity!!.showLoadingExt()
+                            mActivity.showLoadingExt()
                             mViewModel.uploadImage(File(path))
                         }
                     }else{
@@ -196,15 +179,15 @@ class ReportFragment :
         mDataBinding.ivUpload.visibility = View.VISIBLE
 
         if (mSelectList.size > 0){
-            GlideImgManager.get().loadImg(MediaManager.getSinglePhotoUri(mSelectList[0]) ?: "",mDataBinding.iv1,com.comm.img_load.R.mipmap.default_icon)
+            GlideImgManager.get().loadImg(MediaManager.getSinglePhotoUri(mSelectList[0]) ?: "",mDataBinding.iv1,R.mipmap.default_icon)
             mDataBinding.iv1.visibility = View.VISIBLE
         }
         if (mSelectList.size > 1){
-            GlideImgManager.get().loadImg(MediaManager.getSinglePhotoUri(mSelectList[1]) ?: "",mDataBinding.iv2,com.comm.img_load.R.mipmap.default_icon)
+            GlideImgManager.get().loadImg(MediaManager.getSinglePhotoUri(mSelectList[1]) ?: "",mDataBinding.iv2,R.mipmap.default_icon)
             mDataBinding.iv2.visibility = View.VISIBLE
         }
         if (mSelectList.size > 2){
-            GlideImgManager.get().loadImg(MediaManager.getSinglePhotoUri(mSelectList[2]) ?: "",mDataBinding.iv3,com.comm.img_load.R.mipmap.default_icon)
+            GlideImgManager.get().loadImg(MediaManager.getSinglePhotoUri(mSelectList[2]) ?: "",mDataBinding.iv3,R.mipmap.default_icon)
             mDataBinding.iv3.visibility = View.VISIBLE
             mDataBinding.ivUpload.visibility = View.GONE
         }

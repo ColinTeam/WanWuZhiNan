@@ -837,6 +837,6 @@ public class WheelView extends View {
 
     @Override
     public Handler getHandler() {
-        return handler;
+        return super.getHandler();
     }
 }

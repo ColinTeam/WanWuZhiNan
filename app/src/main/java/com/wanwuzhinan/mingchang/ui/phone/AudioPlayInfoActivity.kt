@@ -1,15 +1,15 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
 import android.text.Html
+import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.vm.UserViewModel
-import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.databinding.ActivityAudioInfoBinding
+import com.wanwuzhinan.mingchang.vm.UserViewModel
 
 //音频播放
-class AudioPlayInfoActivity : BaseActivity<ActivityAudioInfoBinding, UserViewModel>(UserViewModel()) {
-
+class AudioPlayInfoActivity :
+    BaseActivity<ActivityAudioInfoBinding, UserViewModel>(UserViewModel()) {
 
 
     override fun initView() {
@@ -18,7 +18,7 @@ class AudioPlayInfoActivity : BaseActivity<ActivityAudioInfoBinding, UserViewMod
 
 
         mDataBinding.tvTitle.text = title
-        mDataBinding.tvContent.text = Html.fromHtml(data)
+        mDataBinding.tvContent.text = Html.fromHtml(data, 0)
 
     }
 

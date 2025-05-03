@@ -6,18 +6,17 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.graphics.Point
 import android.graphics.Rect
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.img.RoundedImageView
-import com.ad.img_load.setOnClickNoRepeat
 import com.chad.library.adapter.base.util.setOnDebouncedItemClick
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.ext.onClick
+import com.ssm.comm.ext.observeState
+import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.VideoHomeAdapter
 import com.wanwuzhinan.mingchang.config.ConfigApp
@@ -26,8 +25,6 @@ import com.wanwuzhinan.mingchang.databinding.ActivityVideoHomeBinding
 import com.wanwuzhinan.mingchang.ext.launchVideoListActivity
 import com.wanwuzhinan.mingchang.utils.FadeInOutItemAnimator
 import com.wanwuzhinan.mingchang.vm.UserViewModel
-import com.ssm.comm.ext.observeState
-import com.ssm.comm.ui.base.BaseActivity
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -77,7 +74,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
     }
 
     override fun initClick() {
-        setOnClickNoRepeat(
+        onClick(
             mDataBinding.ivNext,
             mDataBinding.ivPro,
             mDataBinding.llShowBig
@@ -207,9 +204,6 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
             val dataBean = mAdapter.items[0]
             var image = mAdapter.getViewByPosition(0, R.id.riv_image)
             if (image == null) return
-            image as RoundedImageView
-            var drawable = image.drawable
-
             mScrollPosition++
             if (mScrollPosition >= mAdapter.items.size) {
                 mScrollPosition = 0

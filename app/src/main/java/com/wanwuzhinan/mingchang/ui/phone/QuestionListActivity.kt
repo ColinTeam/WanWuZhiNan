@@ -1,7 +1,5 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
 import com.chad.library.adapter.base.util.setOnDebouncedItemClick
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.QuestionListAdapter
@@ -9,7 +7,6 @@ import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.ActivityQuestionListBinding
 import com.wanwuzhinan.mingchang.ext.launchAnswerAskActivity
 import com.wanwuzhinan.mingchang.ext.launchAnswerPracticeActivity
-import com.wanwuzhinan.mingchang.ext.launchQuestionVideoActivity
 import com.wanwuzhinan.mingchang.utils.SkeletonUtils
 import com.wanwuzhinan.mingchang.vm.UserViewModel
 import com.ssm.comm.ext.observeState

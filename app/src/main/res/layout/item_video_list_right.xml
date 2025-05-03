@@ -14,35 +14,34 @@
             android:id="@+id/cl_info"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
+            android:layout_marginRight="@dimen/dp_40"
+            android:background="@drawable/bg_video_list_rights"
             android:padding="@dimen/dp_14"
             app:layout_constraintDimensionRatio="h,1:0.95"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/bg_video_list_rights"
-            android:layout_marginRight="@dimen/dp_40">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.ad.img_load.img.RoundedImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/riv_head"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginBottom="@dimen/dp_6"
-                app:is_filter="1"
-                app:layout_constraintBottom_toTopOf="@+id/tv_name"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ic_home_audio"
-                app:riv_corner_radius="@dimen/dp_8"
-                app:android_scaleType="6" />
+                app:layout_constraintBottom_toTopOf="@+id/tv_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/Image.Radius_8" />
 
             <TextView
                 android:id="@+id/tv_name"
                 style="@style/text_black_12"
-                android:text="中国的心脏：中轴线与紫禁城"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:minLines="2"
                 android:layout_width="@dimen/dp_0"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:minLines="2"
+                android:text="中国的心脏：中轴线与紫禁城"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintRight_toRightOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
@@ -50,26 +49,26 @@
             android:layout_width="@dimen/dp_40"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@id/cl_info"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_10"
-            app:layout_constraintTop_toTopOf="@id/iv_ball"
+            android:background="@drawable/horizontal_dotted_line"
             app:layout_constraintBottom_toBottomOf="@id/iv_ball"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@id/iv_empty"
-            android:background="@drawable/horizontal_dotted_line"/>
+            app:layout_constraintTop_toTopOf="@id/iv_ball" />
 
         <ImageView
             android:id="@+id/iv_ball"
             android:layout_width="@dimen/dp_36"
             android:layout_height="@dimen/dp_30"
+            android:src="@mipmap/ic_ball_night"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_info"
             app:layout_constraintLeft_toLeftOf="@id/cl_info"
             app:layout_constraintRight_toRightOf="@id/cl_info"
-            android:src="@mipmap/ic_ball_night"/>
+            app:layout_constraintTop_toBottomOf="@+id/cl_info" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -10,21 +10,19 @@
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
-        android:background="@drawable/shape_ffffff_8"
         android:layout_marginBottom="@dimen/dp_8"
-        android:gravity="center_vertical"
-        >
-        
-        <com.ad.img_load.img.RoundedImageView
+        android:background="@drawable/shape_ffffff_8"
+        android:gravity="center_vertical">
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_num"
             android:layout_width="@dimen/dp_34"
-            android:layout_marginEnd="@dimen/dp_26"
             android:layout_height="@dimen/dp_34"
-            app:android_scaleType="6"
-            android:visibility="gone"
+            android:layout_marginEnd="@dimen/dp_26"
+            android:scaleType="centerCrop"
             android:src="@mipmap/ic_rank_one"
-            app:riv_corner_radius="4dp"
-            />
+            android:visibility="gone"
+            app:shapeAppearanceOverlay="@style/Image.Radius_4" />
 
         <TextView
             android:id="@+id/tv_num"
@@ -32,22 +30,22 @@
             android:layout_width="@dimen/dp_34"
             android:layout_marginEnd="@dimen/dp_26"
             android:gravity="center"
-            android:text="0"/>
+            android:text="0" />
 
-        <com.ad.img_load.img.RoundedImageView
+        <com.colin.library.android.widget.image.RoundImageView
             android:id="@+id/riv_head"
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
+            android:scaleType="centerCrop"
             android:src="@mipmap/ic_home_audio"
-            app:riv_oval="true"
-            app:android_scaleType="6" />
+            app:round_oval="true" />
 
         <TextView
             android:id="@+id/tv_my_name"
             style="@style/text_333333_12"
-            android:layout_weight="1"
             android:layout_marginStart="@dimen/dp_7"
-            android:text="0"/>
+            android:layout_weight="1"
+            android:text="0" />
 
         <LinearLayout
             android:layout_width="@dimen/dp_107"
@@ -56,15 +54,15 @@
             <ImageView
                 android:layout_width="@dimen/dp_19"
                 android:layout_height="@dimen/dp_19"
-                android:src="@mipmap/ic_compass"/>
+                android:src="@mipmap/ic_compass" />
 
             <TextView
                 android:id="@+id/tv_compass_num"
                 style="@style/text_333333_16"
-                android:text="0"
-                android:layout_marginStart="@dimen/dp_5"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_5"
+                android:text="0" />
 
         </LinearLayout>
 

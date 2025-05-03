@@ -10,18 +10,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.ad.img_load.countDown
-import com.ad.img_load.dialog.CodeDialog
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.wanwuzhinan.mingchang.data.CodeData
-import com.wanwuzhinan.mingchang.data.ConfigData
-import com.wanwuzhinan.mingchang.data.TextDescriptionData
-import com.wanwuzhinan.mingchang.entity.UserInfoData
-import com.wanwuzhinan.mingchang.net.repository.LoginRepository
-import com.wanwuzhinan.mingchang.net.repository.UserRepository
-import com.wanwuzhinan.mingchang.ui.phone.LoginActivity
-import com.wanwuzhinan.mingchang.ui.pop.SurePop
-import com.wanwuzhinan.mingchang.ui.publics.WebViewActivity
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.countDown
 import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
@@ -31,19 +21,27 @@ import com.kongzue.dialogx.dialogs.CustomDialog
 import com.kongzue.dialogx.interfaces.OnBindView
 import com.ssm.comm.app.CommApplication
 import com.ssm.comm.config.Constant
-import com.ssm.comm.ext.*
+import com.ssm.comm.ext.clearAllData
+import com.ssm.comm.ext.setData
+import com.ssm.comm.ext.toastError
 import com.ssm.comm.global.AppActivityManager
 import com.ssm.comm.ui.base.IWrapView
 import com.ssm.comm.utils.MMKVUtils
 import com.tencent.mm.opensdk.constants.Build
 import com.tencent.mm.opensdk.modelbiz.WXOpenCustomerServiceChat
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.data.CodeData
+import com.wanwuzhinan.mingchang.data.ConfigData
+import com.wanwuzhinan.mingchang.data.TextDescriptionData
+import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.wanwuzhinan.mingchang.net.RetrofitClient
+import com.wanwuzhinan.mingchang.net.repository.LoginRepository
+import com.wanwuzhinan.mingchang.net.repository.UserRepository
 import com.wanwuzhinan.mingchang.thread.EaseThreadManager
+import com.wanwuzhinan.mingchang.ui.phone.LoginActivity
+import com.wanwuzhinan.mingchang.ui.pop.SurePop
 import com.wanwuzhinan.mingchang.ui.publics.WebGoodsViewActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.wanwuzhinan.mingchang.ui.publics.WebViewActivity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Hashtable
@@ -364,22 +362,6 @@ fun AppCompatActivity.startCountDowntime(sendTv: TextView) {
     )
 }*/
 
-fun IWrapView.showCodeDialog(type: String, complete: (code: String, type: String) -> Unit) {
-    val currentActivity = this.getCurrentActivity()
-    if (currentActivity.isFinishing) {
-        return
-    }
-    val dialog = CodeDialog(currentActivity) {
-        onDialogTitle = { "短信验证码" }
-        onCodeMobile = { getUMobile() }
-        onCodeType = { type }
-        onCodeTime = { 60 }
-        onComplete = { code, type ->
-            complete(code, type)
-        }
-    }
-    dialog.show()
-}
 
 fun showCardImage(image:String,complete: () -> Unit){
     EaseThreadManager.getInstance().runOnMainThread{
@@ -392,7 +374,7 @@ fun showCardImage(image:String,complete: () -> Unit){
                         complete()
                         dialog.dismiss()
                     }
-                    GlideImgManager.get().loadFitCenterImg(image,imageView,com.comm.img_load.R.mipmap.default_icon)
+                    GlideImgManager.get().loadFitCenterImg(image,imageView,R.mipmap.default_icon)
                 }
             })
             .show()

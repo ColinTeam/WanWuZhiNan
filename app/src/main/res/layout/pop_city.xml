@@ -55,19 +55,19 @@
                 android:orientation="horizontal">
 
 
-                <com.ad.img_load.pickerview.wheelview.view.WheelView
+                <com.colin.library.android.widget.picker.wheel.WheelView
                     android:id="@+id/wheel_pro"
                     android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
 
-                <com.ad.img_load.pickerview.wheelview.view.WheelView
+                <com.colin.library.android.widget.picker.wheel.WheelView
                     android:id="@+id/wheel_city"
                     android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
 
-                <com.ad.img_load.pickerview.wheelview.view.WheelView
+                <com.colin.library.android.widget.picker.wheel.WheelView
                     android:id="@+id/wheel_area"
                     android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"

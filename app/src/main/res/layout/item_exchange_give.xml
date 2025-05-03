@@ -13,12 +13,12 @@
         android:background="@drawable/shape_ffc285_16_line_1"
         android:layout_marginBottom="@dimen/dp_20">
 
-        <com.ad.img_load.img.RoundedImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/riv_image"
             android:layout_width="@dimen/dp_74"
             android:layout_height="@dimen/dp_74"
-            app:riv_corner_radius="@dimen/dp_16"
-            app:android_scaleType="6"
+            app:shapeAppearanceOverlay="@style/Image.Radius_16"
+            android:scaleType="centerCrop"
             android:src="@mipmap/default_icon"
             android:layout_marginStart="@dimen/dp_9"
             android:layout_marginTop="@dimen/dp_7"

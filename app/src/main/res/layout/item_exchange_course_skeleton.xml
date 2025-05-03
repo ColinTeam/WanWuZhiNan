@@ -15,71 +15,71 @@
             android:id="@+id/bg"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/shape_white60_20"
-            app:layout_constraintDimensionRatio="w,18.5:30"/>
+            app:layout_constraintDimensionRatio="w,18.5:30"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.ad.img_load.img.RoundedImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
-            app:riv_corner_radius="@dimen/dp_20"
-            app:android_scaleType="6"
             android:alpha="0.3"
-            app:layout_constraintTop_toTopOf="@id/bg"
-            app:layout_constraintRight_toRightOf="@id/bg"
-            app:layout_constraintLeft_toLeftOf="@id/bg"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/bg_setting_file"
             app:layout_constraintBottom_toBottomOf="@id/bg"
-            android:src="@mipmap/bg_setting_file"/>
+            app:layout_constraintLeft_toLeftOf="@id/bg"
+            app:layout_constraintRight_toRightOf="@id/bg"
+            app:layout_constraintTop_toTopOf="@id/bg"
+            app:shapeAppearanceOverlay="@style/Image.Radius_20" />
 
         <TextView
             android:id="@+id/tv_name"
             style="@style/text_transparent_16"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginHorizontal="@dimen/dp_12"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:layout_marginTop="@dimen/dp_24"
             android:layout_width="@dimen/dp_0"
+            android:layout_marginHorizontal="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_24"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="1"
+            android:text="物理八分钟"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="物理八分钟"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.ad.img_load.img.RoundedImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/riv_image"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
+            android:layout_marginVertical="@dimen/dp_12"
             android:src="@drawable/shape_e4e4e4_5"
-            app:android_scaleType="6"
-            app:riv_corner_radius="@dimen/dp_6"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/Image.Radius_6"
+            app:layout_constraintBottom_toTopOf="@+id/tv_exchange_time"
+            app:layout_constraintDimensionRatio="w,12:16"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginVertical="@dimen/dp_12"
-            app:layout_constraintDimensionRatio="w,12:16"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            app:layout_constraintBottom_toTopOf="@+id/tv_exchange_time"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"/>
 
         <TextView
             android:id="@+id/tv_exchange_time"
             style="@style/text_transparent_12"
-            android:text="兑换时间：2024.12.12 12:00"
             android:layout_marginBottom="@dimen/dp_12"
-            app:layout_constraintBottom_toTopOf="@+id/tv_effective_time"
             android:gravity="center"
+            android:text="兑换时间：2024.12.12 12:00"
+            app:layout_constraintBottom_toTopOf="@+id/tv_effective_time"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent" />
 
         <TextView
             android:id="@+id/tv_effective_time"
             style="@style/text_transparent_12"
-            android:text="有效期至：2024.12.12 12:00"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="@dimen/dp_24"
             android:gravity="center"
+            android:text="有效期至：2024.12.12 12:00"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

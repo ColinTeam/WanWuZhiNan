@@ -1,76 +1,46 @@
 package com.wanwuzhinan.mingchang.ui.pad
 
 import android.animation.ObjectAnimator
-import android.app.Service
-import android.graphics.Color
-import android.media.AudioManager
 import android.media.MediaPlayer
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.SeekBar
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import com.ad.img_load.countDown
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
-import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.util.setOnDebouncedItemClick
-import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.adapter.AudioBannerImagerAdapter
-import com.wanwuzhinan.mingchang.adapter.AudioHomeAdapter
-import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.SubjectListData
-import com.wanwuzhinan.mingchang.databinding.ActivityAudioHomeBinding
-import com.wanwuzhinan.mingchang.ext.launchVideoListActivity
-import com.wanwuzhinan.mingchang.utils.SkeletonUtils
-import com.wanwuzhinan.mingchang.vm.UserViewModel
-import com.comm.banner.indicator.CircleIndicator
-import com.comm.banner.indicator.Indicator
-import com.comm.banner.listener.OnBannerListener
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.countDown
 import com.comm.net_work.sign.AESDecryptor
-import com.hpplay.glide.load.resource.gif.GifDrawable
-import com.kongzue.dialogx.dialogs.CustomDialog
-import com.kongzue.dialogx.interfaces.OnBindView
 import com.ssm.comm.config.Constant
 import com.ssm.comm.event.MessageEvent
 import com.ssm.comm.ext.dismissLoadingExt
 import com.ssm.comm.ext.getAllScreenHeight
 import com.ssm.comm.ext.getAllScreenWidth
 import com.ssm.comm.ext.getAudioData
-import com.ssm.comm.ext.getScreenHeight2
-import com.ssm.comm.ext.getUID
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.post
 import com.ssm.comm.ext.setData
+import com.ssm.comm.ext.setOnClickNoRepeat
 import com.ssm.comm.global.AppActivityManager
 import com.ssm.comm.ui.base.BaseActivity
-import com.wanwuzhinan.mingchang.adapter.AnswerPracticeOptionAdapter
-import com.wanwuzhinan.mingchang.adapter.AnswerPracticeSelectAdapter
-import com.wanwuzhinan.mingchang.adapter.AudioHomeCoverAdapter
+import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.AudioHomeCoverPadAdapter
-import com.wanwuzhinan.mingchang.adapter.AudioHomeListAdapter
 import com.wanwuzhinan.mingchang.adapter.AudioHomeListPadAdapter
-import com.wanwuzhinan.mingchang.adapter.CatePadAdapter
 import com.wanwuzhinan.mingchang.adapter.CatePhoneAdapter
+import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.CourseInfoData
+import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.data.UploadProgressEvent
 import com.wanwuzhinan.mingchang.databinding.ActivityAudioHomePadBinding
 import com.wanwuzhinan.mingchang.ext.launchAudioPlayInfoActivity
 import com.wanwuzhinan.mingchang.ext.launchExchangeActivity
-import com.wanwuzhinan.mingchang.ext.setUserData
 import com.wanwuzhinan.mingchang.ext.showCardImage
-import com.wanwuzhinan.mingchang.ui.pop.AudioCardPop
-import com.wanwuzhinan.mingchang.ui.pop.EditAddressDialog
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeCoursePop
-import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
 import com.wanwuzhinan.mingchang.utils.AnimationUtils
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.wanwuzhinan.mingchang.vm.UserViewModel
 import me.jessyan.autosize.internal.CustomAdapt
 import java.text.SimpleDateFormat
 
@@ -196,7 +166,7 @@ class AudioHomeIpadActivity : BaseActivity<ActivityAudioHomePadBinding, UserView
         }
 
         mViewModel.courseQuarterListLiveData.observeState(this){
-            SkeletonUtils.hideList()
+//            SkeletonUtils.hideList()
             onSuccess={data, msg ->
                 if(!data!!.list.isNullOrEmpty()){
                     mAudioList = data.list
@@ -377,9 +347,7 @@ class AudioHomeIpadActivity : BaseActivity<ActivityAudioHomePadBinding, UserView
         ) {
             when (it) {
                 mDataBinding.rivImageBig,mDataBinding.clBig ->{
-                    if (mPlayData!!.info.content != null){
-                        launchAudioPlayInfoActivity(mPlayData!!.info.content,mPlayData!!.info.name)
-                    }
+                    launchAudioPlayInfoActivity(mPlayData!!.info.content,mPlayData!!.info.name)
                 }
                 mDataBinding.rivImage,mDataBinding.llAudio ->{
                     if (mPlayData != null) {

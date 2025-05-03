@@ -1,10 +1,11 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
 import android.app.Activity
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.utils.ext.onClick
 import com.ssm.comm.app.appContext
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.setData
+import com.ssm.comm.ext.setOnClickNoRepeat
 import com.ssm.comm.global.AppActivityManager
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.PopPrivacyBinding
@@ -15,7 +16,7 @@ class PrivacyPop(var context: Activity):BasePop<PopPrivacyBinding>(context){
 
     override fun initClick() {
         isFocusable=false
-        setOnClickNoRepeat(mDataBinding.tvRefuse){
+        onClick(mDataBinding.tvRefuse){
             dismiss()
             AppActivityManager.getInstance().finishAllActivities()
             exitProcess(0)

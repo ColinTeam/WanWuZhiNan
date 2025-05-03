@@ -42,6 +42,7 @@ object SaveImageUtils {
         return bmp
     }
 
+    @Suppress("DEPRECATION")
     fun startSaveBitmap(bmp: Bitmap, listener: SaveListener) {
         // 新建目录appDir，并把图片存到其下
         val appDir = File(appContext.getExternalFilesDir(null)?.path + "BarcodeBitmap")

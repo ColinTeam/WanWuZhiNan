@@ -1,7 +1,8 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
 import android.app.Activity
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.utils.ext.onClick
+import com.ssm.comm.ext.setOnClickNoRepeat
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.PopSureBinding
 import com.wanwuzhinan.mingchang.ext.visible
@@ -18,7 +19,7 @@ class SurePop(var context: Activity) :BasePop<PopSureBinding>(context){
         mDataBinding.tvSure.text=sure
 
         showPop()
-        setOnClickNoRepeat(mDataBinding.tvSure,mDataBinding.tvCancel){
+        onClick(mDataBinding.tvSure,mDataBinding.tvCancel){
             when(it){
                 mDataBinding.tvSure ->{
                     onSure()

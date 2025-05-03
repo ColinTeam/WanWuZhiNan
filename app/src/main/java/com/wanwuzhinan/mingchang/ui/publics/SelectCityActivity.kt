@@ -3,6 +3,12 @@ package com.wanwuzhinan.mingchang.ui.publics
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.colin.library.android.utils.ResourcesUtil
+import com.ssm.comm.event.MessageEvent
+import com.ssm.comm.ext.observeState
+import com.ssm.comm.ext.post
+import com.ssm.comm.ext.setOnClickNoRepeat
+import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.CityListAdapter
 import com.wanwuzhinan.mingchang.data.CityEntityEvent
@@ -11,11 +17,6 @@ import com.wanwuzhinan.mingchang.databinding.ActivitySelectCityBinding
 import com.wanwuzhinan.mingchang.view.indexlib.indexbar.widget.CustomLinearLayoutManager
 import com.wanwuzhinan.mingchang.view.indexlib.suspension.SuspensionDecoration
 import com.wanwuzhinan.mingchang.vm.ShopViewModel
-import com.ssm.comm.event.MessageEvent
-import com.ssm.comm.ext.observeState
-import com.ssm.comm.ext.post
-import com.ssm.comm.ext.setOnClickNoRepeat
-import com.ssm.comm.ui.base.BaseActivity
 
 //选择城市
 class SelectCityActivity : BaseActivity<ActivitySelectCityBinding, ShopViewModel>(ShopViewModel()) {
@@ -249,9 +250,11 @@ class SelectCityActivity : BaseActivity<ActivitySelectCityBinding, ShopViewModel
         rv2: RelativeLayout,
         rv3: RelativeLayout
     ) {
-        tv1.setTextColor(resources!!.getColor(R.color.color_default))
-        tv2.setTextColor(resources!!.getColor(R.color.color_333333))
-        tv3.setTextColor(resources!!.getColor(R.color.color_333333))
+        val defaultColor = ResourcesUtil.getColor(this,R.color.color_default)
+        val normalColor = ResourcesUtil.getColor(this,R.color.color_333333)
+        tv1.setTextColor(defaultColor)
+        tv2.setTextColor(normalColor)
+        tv3.setTextColor(normalColor)
 
         rv1.visibility = View.VISIBLE
         rv2.visibility = View.GONE

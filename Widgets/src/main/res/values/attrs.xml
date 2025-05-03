@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ShimmerLayout">
+        <attr name="shimmer_color" format="color|reference" />
+        <attr name="shimmer_animation_duration" format="integer|reference" />
+        <attr name="shimmer_auto_start" format="boolean|reference" />
+        <attr name="shimmer_angle" format="integer|reference" />
+        <attr name="shimmer_mask_width" format="fraction|reference" />
+        <attr name="shimmer_gradient_width" format="fraction|reference" />
+        <attr name="shimmer_reverse_animation" format="boolean|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="android:scaleType" />
+        <attr name="round_radius" format="dimension" />
+        <attr name="round_radius_top_left" format="dimension" />
+        <attr name="round_radius_top_right" format="dimension" />
+        <attr name="round_radius_bottom_left" format="dimension" />
+        <attr name="round_radius_bottom_right" format="dimension" />
+        <attr name="round_border_width" format="dimension" />
+        <attr name="round_border_color" format="color|reference" />
+        <attr name="round_mutate_background" format="boolean" />
+        <attr name="round_oval" format="boolean" />
+        <attr name="round_filter" format="integer" />
+        <attr name="round_tile_mode" format="integer">
+            <enum name="clamp" value="0" />
+            <enum name="repeat" value="1" />
+            <enum name="mirror" value="2" />
+        </attr>
+        <attr name="round_tile_mode_x" format="integer">
+            <enum name="clamp" value="0" />
+            <enum name="repeat" value="1" />
+            <enum name="mirror" value="2" />
+        </attr>
+        <attr name="round_tile_mode_y" format="integer">
+            <enum name="clamp" value="0" />
+            <enum name="repeat" value="1" />
+            <enum name="mirror" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="WheelView">
+        <attr name="wheel_gravity">
+            <enum name="center" value="17" />
+            <enum name="left" value="3" />
+            <enum name="right" value="5" />
+        </attr>
+        <attr name="wheel_loop" format="boolean|reference" />
+        <attr name="wheel_textSize" format="dimension|reference" />
+        <attr name="wheel_textColorOut" format="color|reference" />
+        <attr name="wheel_textColorCenter" format="color|reference" />
+        <attr name="wheel_dividerColor" format="color|reference" />
+        <attr name="wheel_dividerWidth" format="dimension|reference" />
+        <attr name="wheel_lineSpacingMultiplier" format="float|fraction" />
+    </declare-styleable>
+</resources>

@@ -1,11 +1,10 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
-import android.graphics.Bitmap
 import android.util.Log
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.ext.onClick
+import com.wanwuzhinan.mingchang.BuildConfig
 import com.google.gson.Gson
-import com.ssm.comm.BuildConfig
 import com.ssm.comm.app.CommApplication
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ui.base.BaseActivity
@@ -46,7 +45,7 @@ class HonorDetailActivity  : BaseActivity<ActivityHonorDetailBinding, UserViewMo
 
 
     override fun initClick() {
-        setOnClickNoRepeat(mDataBinding.linMy,mDataBinding.llShare) {
+        onClick(mDataBinding.linMy,mDataBinding.llShare) {
             when(it){
                 mDataBinding.linMy->{
                     finish()

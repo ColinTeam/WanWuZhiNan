@@ -1,15 +1,17 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
 import android.graphics.Color
-import com.ad.img_load.pickerview.pv.adapter.ArrayWheelAdapter
-import com.ad.img_load.pickerview.wheelview.view.WheelView
-import com.ad.img_load.setOnClickNoRepeat
+import androidx.core.graphics.toColorInt
+import com.colin.library.android.utils.ext.onClick
+import com.colin.library.android.widget.picker.adapter.ArrayWheelAdapter
+import com.colin.library.android.widget.picker.wheel.WheelView
+import com.ssm.comm.ui.base.BaseDialogFragment
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.PopSexBinding
-import com.ssm.comm.ui.base.BaseDialogFragment
 
 
-class ChooseSexDialog constructor(callback: ViewClickCallBack.() ->Unit) : BaseDialogFragment<PopSexBinding>(){
+class ChooseSexDialog constructor(callback: ViewClickCallBack.() -> Unit) :
+    BaseDialogFragment<PopSexBinding>() {
 
     private var gender = ""
     private var callback = ViewClickCallBack().also(callback)
@@ -17,14 +19,15 @@ class ChooseSexDialog constructor(callback: ViewClickCallBack.() ->Unit) : BaseD
     override fun initViews() {
         isCancelable = true
 
-        setOnClickNoRepeat(mDataBinding!!.tvCancel , mDataBinding!!.tvSure){
+        onClick(mDataBinding!!.tvCancel, mDataBinding!!.tvSure) {
 
-            when(it){
-                mDataBinding!!.tvSure ->{
+            when (it) {
+                mDataBinding!!.tvSure -> {
                     callback.onSure(gender)
                     dismiss()
                 }
-                mDataBinding!!.tvCancel ->{
+
+                mDataBinding!!.tvCancel -> {
                     dismiss()
                 }
             }
@@ -34,28 +37,28 @@ class ChooseSexDialog constructor(callback: ViewClickCallBack.() ->Unit) : BaseD
     }
 
     private fun initWheel() {
-        var sexList = mutableListOf<String>("男","女")
-        gender=sexList.get(0)
+        var sexList = mutableListOf<String>("男", "女")
+        gender = sexList[0]
         val sexAdapter = ArrayWheelAdapter(sexList)
-        mDataBinding!!.wheelSex.currentItem=0
-        mDataBinding!!.wheelSex.adapter = sexAdapter
+        mDataBinding!!.wheelSex.setCurrentItem(0)
+        mDataBinding!!.wheelSex.setAdapter(sexAdapter)
         mDataBinding!!.wheelSex.setOnItemSelectedListener {
-            gender =sexList.get(it)
+            gender = sexList[it]
         }
     }
 
-    private fun setWheel(view: WheelView){
+    private fun setWheel(view: WheelView) {
         view.setItemsVisibleCount(5)
         view.setCyclic(false)
         view.setTextColorCenter(Color.BLACK)
-        view.setTextColorOut(Color.parseColor("#bfbfbf"))
+        view.setTextColorOut("#bfbfbf".toColorInt())
         view.setDividerType(WheelView.DividerType.FILL)
-        view.setDividerColor(Color.parseColor("#00ffffff"))
+        view.setDividerColor("#00ffffff".toColorInt())
         view.setLineSpacingMultiplier(2f)
     }
 
-    class ViewClickCallBack{
-        var onSure: (sex:String) -> Unit = {}
+    class ViewClickCallBack {
+        var onSure: (sex: String) -> Unit = {}
     }
 
     override fun getLayoutId(): Int {

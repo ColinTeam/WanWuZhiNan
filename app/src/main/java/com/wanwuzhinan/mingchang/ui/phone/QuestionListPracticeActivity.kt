@@ -1,21 +1,20 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
-import com.ad.img_load.setOnClickNoRepeat
-import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.ext.launchAnswerAskActivity
-import com.wanwuzhinan.mingchang.ext.launchAnswerPracticeActivity
-import com.wanwuzhinan.mingchang.utils.SkeletonUtils
-import com.wanwuzhinan.mingchang.vm.UserViewModel
+import com.colin.library.android.utils.ext.onClick
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ui.base.BaseActivity
+import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.databinding.ActivityQuestionListPracticeBinding
 import com.wanwuzhinan.mingchang.ext.getConfigData
+import com.wanwuzhinan.mingchang.ext.launchAnswerPracticeActivity
 import com.wanwuzhinan.mingchang.ext.launchExchangeActivity
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeCoursePop
 import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
+import com.wanwuzhinan.mingchang.utils.SkeletonUtils
+import com.wanwuzhinan.mingchang.vm.UserViewModel
 import java.text.SimpleDateFormat
 
 //龙门题库
@@ -32,9 +31,7 @@ class QuestionListPracticeActivity   : BaseActivity<ActivityQuestionListPractice
     }
 
     private fun initList(){
-
-
-        setOnClickNoRepeat(mDataBinding.tvNumber1,
+        onClick(mDataBinding.tvNumber1,
             mDataBinding.tvNumber2,
             mDataBinding.tvNumber3,
             mDataBinding.tvNumber4,

@@ -1,17 +1,17 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.mediarouter.media.MediaControlIntent
 import androidx.mediarouter.media.MediaRouteSelector
 import androidx.mediarouter.media.MediaRouter
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.Log
+import com.colin.library.android.utils.ext.onClick
 import com.comm.net_work.sign.AESDecryptor
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -52,15 +52,15 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
     var mPosition = 0
     var mVideoList: ArrayList<SubjectListData.lessonBean>? = null
     var seek = 0L
-    lateinit var startBtn:ImageView
+    lateinit var startBtn: ImageView
 
-    var mData : CourseInfoData? = null
+    var mData: CourseInfoData? = null
 
     var errorPro = 0.0F
 
     val timer = object : CountDownTimer(6000, 1000) {
         override fun onTick(millisUntilFinished: Long) {
-            mDataBinding.tvDown.text = "${millisUntilFinished / 1000+1}S"
+            mDataBinding.tvDown.text = "${millisUntilFinished / 1000 + 1}S"
         }
 
         override fun onFinish() {
@@ -84,7 +84,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             finish()
         } else {
             val videoData = mVideoList?.get(mPosition)
-            if (videoData?.has_power == "0"){
+            if (videoData?.has_power == "0") {
                 ExchangeCoursePop(mActivity).showPop(onSure = {
                     finish()
                     launchExchangeActivity()
@@ -100,8 +100,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
     }
 
     override fun initClick() {
-
-        setOnClickNoRepeat(
+        onClick(
             mDataBinding.tvPlay,
             mDataBinding.llMenu,
             mDataBinding.ivShare,
@@ -111,31 +110,34 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             mDataBinding.netErrorBack,
             mDataBinding.ivVideoBack,
             mDataBinding.tvVideoReload
-        ){
-            when(it){
-                mDataBinding.llMenu ->{
+        ) {
+            when (it) {
+                mDataBinding.llMenu -> {
 
                 }
-                mDataBinding.tvPlay ->{
+
+                mDataBinding.tvPlay -> {
                     timer.cancel()
-                    if (mPosition >= mVideoList!!.size-1){
+                    if (mPosition >= mVideoList!!.size - 1) {
                         finish()
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
                     playNextVideo()
                 }
-                mDataBinding.tvQuestion ->{
+
+                mDataBinding.tvQuestion -> {
                     timer.cancel()
-                    if (mPosition >= mVideoList!!.size-1){
+                    if (mPosition >= mVideoList!!.size - 1) {
                         finish()
                         launchQuestionListActivity(ConfigApp.TYPE_ASK)
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
                     val videoData = mVideoList?.get(mPosition)
                     launchVideoAnswerActivity(videoData!!.id)
                     finish()
                 }
-                mDataBinding.ivShare ->{
+
+                mDataBinding.ivShare -> {
                     initShare()
                 }
 
@@ -143,33 +145,37 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                     mDataBinding.llTips.visibility = View.GONE
                     mDataBinding.detailPlayer.onResume()
                 }
-                mDataBinding.tvReload ->{
+
+                mDataBinding.tvReload -> {
                     mDataBinding.clNoNet.visibility = View.GONE
                     val videoData = mVideoList?.get(mPosition)
-                    if (videoData?.has_power == "0"){
+                    if (videoData?.has_power == "0") {
                         ExchangeCoursePop(mActivity).showPop(onSure = {
                             finish()
                             launchExchangeActivity()
                         }, onContact = {
                             ExchangeContactPop(mActivity).showPop()
                         })
-                    }else {
+                    } else {
                         showBaseLoading()
                         mViewModel.getLessonInfo(videoData?.id ?: "")
                     }
                 }
 
-                mDataBinding.netErrorBack ->{
+                mDataBinding.netErrorBack -> {
                     finish()
                 }
-                mDataBinding.ivVideoBack ->{
+
+                mDataBinding.ivVideoBack -> {
                     finish()
                 }
-                mDataBinding.tvVideoReload ->{
+
+                mDataBinding.tvVideoReload -> {
                     mDataBinding.clVideoNoNet.visibility = View.GONE
                     mDataBinding.detailPlayer.resetPlayer()
                     val model = SuperPlayerModel()
-                    model.url = AESDecryptor.decryptAES(mData?.info?.videoAes!!,"W1a2n3W4u5Z6h7i8N9a0n")
+                    model.url =
+                        AESDecryptor.decryptAES(mData?.info?.videoAes!!, "W1a2n3W4u5Z6h7i8N9a0n")
                     mDataBinding.detailPlayer.playWithModelNeedLicence(model)
                     mDataBinding.detailPlayer.seek(errorPro)
                 }
@@ -177,18 +183,20 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
         }
     }
 
-    fun initShare(){
+    fun initShare() {
         mDataBinding.detailPlayer.onPause()
         mDataBinding.llShare.visibility = View.VISIBLE
 
         LelinkSourceSDK.getInstance()
-            .setSdkInitInfo(getApplicationContext(),"23294","250b751fc44ca5a443fd9e55679e67b1")
+            .setSdkInitInfo(getApplicationContext(), "23294", "250b751fc44ca5a443fd9e55679e67b1")
             .easyPush(mDataBinding.llShare)
 
-        LelinkSourceSDK.getInstance().setEasyCastListener(object:IEasyCastListener{
+        LelinkSourceSDK.getInstance().setEasyCastListener(object : IEasyCastListener {
             override fun onCast(p0: LelinkServiceInfo?): EasyCastBean {
                 val bean = EasyCastBean()
-                bean.url = AESDecryptor.decryptAES(mData?.info?.videoAes!!,"W1a2n3W4u5Z6h7i8N9a0n") //实际需要投屏的url
+                bean.url = AESDecryptor.decryptAES(
+                    mData?.info?.videoAes!!, "W1a2n3W4u5Z6h7i8N9a0n"
+                ) //实际需要投屏的url
                 return bean
             }
 
@@ -212,10 +220,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             }
 
             override fun onCastPositionUpdate(
-                p0: LelinkServiceInfo?,
-                p1: EasyCastBean?,
-                p2: Long,
-                p3: Long
+                p0: LelinkServiceInfo?, p1: EasyCastBean?, p2: Long, p3: Long
             ) {
             }
 
@@ -231,21 +236,22 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
 
     override fun onPause() {
         super.onPause()
-         mDataBinding.detailPlayer.onPause()
+        mDataBinding.detailPlayer.onPause()
 //        post(
 //            MessageEvent.UPDATE_PROGRESS, UploadProgressEvent(
 //                mData!!.info.id.toString(),mData!!.info.video_duration,(mDataBinding.detailPlayer.currentPositionWhenPlaying /1000).toInt()
 //            )
 //        )
     }
+
     private fun initVideo() {
 
-        mDataBinding.detailPlayer.setSuperPlayerListener(object : ISuperPlayerListener{
+        mDataBinding.detailPlayer.setSuperPlayerListener(object : ISuperPlayerListener {
             override fun onVodPlayEvent(player: TXVodPlayer?, event: Int, param: Bundle?) {
-                if (event == 2013){
+                if (event == 2013) {
 
                 }
-                if (event == 2006){
+                if (event == 2006) {
                     if (mData != null) {
                         mViewModel.courseStudy(
                             mData!!.info.id.toString(),
@@ -257,7 +263,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                     }
                 }
 
-                if (event == 2005){
+                if (event == 2005) {
                     val progress = param!!.getInt(TXLiveConstants.EVT_PLAY_PROGRESS_MS)
                     val duration = param!!.getInt(TXLiveConstants.EVT_PLAY_DURATION_MS)
                     val playable = param!!.getInt(TXLiveConstants.EVT_PLAYABLE_DURATION_MS)
@@ -300,7 +306,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             }
         })
 
-        mDataBinding.detailPlayer.setPlayerViewCallback(object:OnSuperPlayerViewCallback{
+        mDataBinding.detailPlayer.setPlayerViewCallback(object : OnSuperPlayerViewCallback {
             override fun onStartFullScreenPlay() {
 
             }
@@ -327,9 +333,10 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             }
 
             override fun onError(code: Int) {
-                if (code == SuperPlayerCode.NET_ERROR){
+                if (code == SuperPlayerCode.NET_ERROR) {
                     mDataBinding.clVideoNoNet.visibility = View.VISIBLE
-                    errorPro = (mDataBinding.detailPlayer.progress/(mDataBinding.detailPlayer.duration*0.1)).toFloat()
+                    errorPro =
+                        (mDataBinding.detailPlayer.progress / (mDataBinding.detailPlayer.duration * 0.1)).toFloat()
                 }
             }
 
@@ -352,51 +359,49 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             onFailed = { code, msg ->
                 getVideo()
             }
-            onError ={e ->
+            onError = { e ->
                 mDataBinding.clNoNet.visibility = View.VISIBLE
             }
         }
         mViewModel.courseStudyLiveData.observeForever {
-            if(mActivity!!.isFinishing||mActivity!!.isDestroyed) return@observeForever
+            if (mActivity!!.isFinishing || mActivity!!.isDestroyed) return@observeForever
             dismissLoadingExt()
-            if (it.data != null){
+            if (it.data != null) {
                 var data = it.data
                 post(
                     MessageEvent.UPDATE_NIGHT, UploadProgressEvent(
-                        "0",
-                        0,
-                        0
+                        "0", 0, 0
                     )
                 )
                 if (data!!.medalCardList.size > 0) {
                     showCardImage(data.medalCardList.get(0).image_selected, complete = {
                         getVideo()
                     })
-                }else{
+                } else {
                     if (data.medalList.size > 0) {
                         showCardImage(data.medalList.get(0).image, complete = {
                             getVideo()
                         })
-                    }else{
+                    } else {
                         getVideo()
                     }
                 }
-            }else{
+            } else {
                 getVideo()
             }
         }
     }
 
-    private fun playNextVideo(){
+    private fun playNextVideo() {
         mDataBinding.llMenu.visibility = View.GONE
         if (mPosition >= mVideoList?.size!! - 1) {
             launchQuestionListActivity(ConfigApp.TYPE_ASK)
             finish()
             return
         }
-        mPosition ++
+        mPosition++
         val videoData = mVideoList?.get(mPosition)
-        if (videoData?.has_power == "0"){
+        if (videoData?.has_power == "0") {
             ExchangeCoursePop(mActivity).showPop(onSure = {
                 finish()
                 launchExchangeActivity()
@@ -405,24 +410,18 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             })
             return
         }
-        if (mActivity != null) {
-            if (this is Activity && (this.isFinishing || this.isDestroyed)) {
-
-            }else {
-                showBaseLoading()
-            }
-        }
+        if (!this.isFinishing && !this.isDestroyed) showBaseLoading()
         mViewModel.getLessonInfo(videoData?.id ?: "")
         initVideo()
     }
 
-    private fun startPlayVideo(){
+    private fun startPlayVideo() {
 
         mDataBinding.llMenu.visibility = View.GONE
         timer.cancel()
 
         val model = SuperPlayerModel()
-        model.url = AESDecryptor.decryptAES(mData?.info?.videoAes!!,"W1a2n3W4u5Z6h7i8N9a0n")
+        model.url = AESDecryptor.decryptAES(mData?.info?.videoAes!!, "W1a2n3W4u5Z6h7i8N9a0n")
         mDataBinding.detailPlayer.playWithModelNeedLicence(model)
         seek = 0
         seek = if (mData?.info?.study_end_second!! < mData?.info?.video_duration!!) {
@@ -433,6 +432,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
 //        mDataBinding.detailPlayer.startPlayLogic()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getVideo() {
         if (mPosition >= mVideoList?.size!! - 1) {
             mDataBinding.llMenu.visibility = View.VISIBLE
@@ -443,17 +443,13 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             mDataBinding.ivCover.setImageResource(R.mipmap.ic_video_finish);
             timer.start()
         } else {
-            val videoData = mVideoList?.get(mPosition+1)
+            val videoData = mVideoList?.get(mPosition + 1)
             mDataBinding.llMenu.visibility = View.VISIBLE
             mDataBinding.tvTitle.text = videoData!!.name
-            GlideImgManager.get().loadImg(videoData.image,mDataBinding.ivCover,R.drawable.img_default_icon)
+            GlideImgManager.get()
+                .loadImg(videoData.image, mDataBinding.ivCover, R.drawable.img_default_icon)
             timer.start()
         }
-    }
-
-    override fun onBackPressed() {
-
-        super.onBackPressed()
     }
 
 
@@ -467,22 +463,23 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
         return R.layout.activity_video_play
     }
 
-    
-    fun initRouter(){
+
+    fun initRouter() {
 
         var mediaRouter = MediaRouter.getInstance(applicationContext)
 
 
         // 定义要查找的媒体路由类型
-        var mediaRouteSelector = MediaRouteSelector.Builder()
-            .addControlCategory(MediaControlIntent.CATEGORY_LIVE_VIDEO)
-            .build()
+        var mediaRouteSelector =
+            MediaRouteSelector.Builder().addControlCategory(MediaControlIntent.CATEGORY_LIVE_VIDEO)
+                .build()
 
         // 设置MediaRouteButton
         mDataBinding.btnMediaRoute.routeSelector = mediaRouteSelector
 
         // 创建回调处理路由选择事件
         var mediaRouterCallback = object : MediaRouter.Callback() {
+            @Suppress("DEPRECATION")
             override fun onRouteSelected(router: MediaRouter, info: MediaRouter.RouteInfo) {
                 super.onRouteSelected(router, info)
                 // 当用户选择了投屏目标时触发
@@ -492,6 +489,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
 
             }
 
+            @Suppress("DEPRECATION")
             override fun onRouteUnselected(router: MediaRouter, info: MediaRouter.RouteInfo) {
                 super.onRouteUnselected(router, info)
                 // 当用户取消选择投屏目标时触发
@@ -500,7 +498,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             }
         }
 
-        mediaRouter.addCallback(mediaRouteSelector,mediaRouterCallback)
+        mediaRouter.addCallback(mediaRouteSelector, mediaRouterCallback)
 
     }
 }

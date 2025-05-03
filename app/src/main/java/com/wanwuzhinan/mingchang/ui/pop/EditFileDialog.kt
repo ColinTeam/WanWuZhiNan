@@ -1,34 +1,27 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.text.TextUtils
-import android.util.Log
 import android.view.Gravity
-import androidx.annotation.RequiresApi
-import androidx.core.widget.addTextChangedListener
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.ext.onClick
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.ssm.comm.event.MessageEvent
-import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.databinding.PopEditFileBinding
-import com.wanwuzhinan.mingchang.entity.UserInfoData
-import com.wanwuzhinan.mingchang.vm.UserViewModel
 import com.ssm.comm.ext.dismissLoadingExt
 import com.ssm.comm.ext.editChange
 import com.ssm.comm.ext.initEditChange
-import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.post
 import com.ssm.comm.ext.showLoadingExt
 import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.media.MediaManager
 import com.ssm.comm.ui.base.BaseDialogFragment
+import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.ProvinceListData
-import com.wanwuzhinan.mingchang.ext.getConfigData
-import com.wanwuzhinan.mingchang.utils.ChooseCityUtils
+import com.wanwuzhinan.mingchang.databinding.PopEditFileBinding
+import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.wanwuzhinan.mingchang.view.GlideEngine
+import com.wanwuzhinan.mingchang.vm.UserViewModel
 import java.io.File
 
 
@@ -104,7 +97,7 @@ class EditFileDialog constructor(data: UserInfoData.infoBean) : BaseDialogFragme
             changeButtonBackground()
         }
 
-        setOnClickNoRepeat(
+        onClick(
             mDataBinding!!.llNv,
             mDataBinding!!.llNan,
             mDataBinding!!.llAddress,
@@ -116,14 +109,13 @@ class EditFileDialog constructor(data: UserInfoData.infoBean) : BaseDialogFragme
                         mActivity,
                         GlideEngine.createGlideEngine(),
                         object : OnResultCallbackListener<LocalMedia> {
-                            @RequiresApi(Build.VERSION_CODES.N)
                             @SuppressLint("NotifyDataSetChanged")
                             override fun onResult(result: ArrayList<LocalMedia>?) {
                                 if (result != null) {
                                     val localMedia = result[0]
                                     val path = MediaManager.getSinglePhotoUri(localMedia) ?: ""
 
-                                    GlideImgManager.get().loadImg(path,mDataBinding!!.rivHead,com.comm.img_load.R.mipmap.default_icon)
+                                    GlideImgManager.get().loadImg(path,mDataBinding!!.rivHead,R.mipmap.default_icon)
                                     mActivity!!.showLoadingExt()
                                     mViewModel.uploadImage(File(path))
                                 }
@@ -137,17 +129,17 @@ class EditFileDialog constructor(data: UserInfoData.infoBean) : BaseDialogFragme
                 mDataBinding!!.llAddress ->{//选择城市
                     if(mAddressList==null) {
                         toastSuccess("网络不佳，请退出重试")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
 
                     ChooseCityDialog(mAddressList!!, callback = {
-                        onSure = {s1,s2,s3 ->
-                            mProvinceName = s1
-                            mCityName = s2
-                            mAreaName = s3
-                            mDataBinding!!.tvAddress.text = "${s1} ${s2} ${s3}"
-                            if (s2.contains(s1)){
-                                mDataBinding!!.tvAddress.text = "${s1} ${s3}"
+                        onSure = {province,city,area ->
+                            mProvinceName = province
+                            mCityName = city
+                            mAreaName = area
+                            mDataBinding!!.tvAddress.text = "$province $city $area"
+                            if (city.contains(province)){
+                                mDataBinding!!.tvAddress.text = "$province $area"
                             }
                         }
                     }).show(mActivity!!.supportFragmentManager,"CommDialog")
@@ -195,35 +187,35 @@ class EditFileDialog constructor(data: UserInfoData.infoBean) : BaseDialogFragme
 
                     if(TextUtils.isEmpty(mHeadImg)){
                         toastSuccess("请上传头像")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
 
 //                    if(TextUtils.isEmpty(mCityName)){
 //                        toastSuccess("请选择地区")
-//                        return@setOnClickNoRepeat
+//                        return@onClick
 //                    }
 
                     if(TextUtils.isEmpty(name)){
                         toastSuccess("请填写真实姓名")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
                     if (name.length > 6){
                         toastSuccess("姓名最多6个字")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
 
 //                    if(TextUtils.isEmpty(sex)){
 //                        toastSuccess("请选择性别")
-//                        return@setOnClickNoRepeat
+//                        return@onClick
 //                    }
 //                    if(TextUtils.isEmpty(school)){
 //                        toastSuccess("请填写学校")
-//                        return@setOnClickNoRepeat
+//                        return@onClick
 //                    }
 
 //                    if(TextUtils.isEmpty(grade)){
 //                        toastSuccess("请选择年级")
-//                        return@setOnClickNoRepeat
+//                        return@onClick
 //                    }
 
                     mActivity!!.showLoadingExt()
@@ -246,7 +238,7 @@ class EditFileDialog constructor(data: UserInfoData.infoBean) : BaseDialogFragme
 
     private fun setData(){
         mHeadImg=data.headimg
-        GlideImgManager.get().loadImg(mHeadImg,mDataBinding!!.rivHead,com.comm.img_load.R.mipmap.default_icon)
+        GlideImgManager.get().loadImg(mHeadImg,mDataBinding!!.rivHead,R.mipmap.default_icon)
         mDataBinding!!.tvTopName.text=" ${data.account}"
         mDataBinding!!.tvTopName.text=data.nickname
         mDataBinding!!.tvUserName.setText(data.truename)

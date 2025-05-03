@@ -1,43 +1,12 @@
 package com.wanwuzhinan.mingchang.ui.phone.fra
 
-import android.annotation.SuppressLint
-import android.os.Build
-import android.os.Bundle
-import android.text.TextUtils
-import android.view.View
-import androidx.annotation.RequiresApi
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
-import com.luck.picture.lib.entity.LocalMedia
-import com.luck.picture.lib.interfaces.OnResultCallbackListener
-import com.ssm.comm.ext.dismissLoadingExt
-import com.ssm.comm.ext.editChange
-import com.ssm.comm.ext.initEditChange
+import com.colin.library.android.image.glide.GlideImgManager
 import com.ssm.comm.ext.observeState
-import com.ssm.comm.ext.showLoadingExt
-import com.ssm.comm.ext.toastSuccess
-import com.ssm.comm.media.MediaManager
 import com.ssm.comm.ui.base.BaseFragment
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.adapter.ExchangeCourseAdapter
 import com.wanwuzhinan.mingchang.adapter.RankAdapter
-import com.wanwuzhinan.mingchang.adapter.SettingAdapter
-import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.ProvinceListData
-import com.wanwuzhinan.mingchang.databinding.FragmentEditFileBinding
-import com.wanwuzhinan.mingchang.databinding.FragmentExchangeCourseBinding
 import com.wanwuzhinan.mingchang.databinding.FragmentRankBinding
-import com.wanwuzhinan.mingchang.databinding.FragmentReportBinding
-import com.wanwuzhinan.mingchang.entity.UserInfoData
-import com.wanwuzhinan.mingchang.ui.pop.ChooseCityDialog
-import com.wanwuzhinan.mingchang.ui.pop.ChooseGradeDialog
-import com.wanwuzhinan.mingchang.ui.pop.EditAddressDialog
-import com.wanwuzhinan.mingchang.ui.pop.EditFileDialog
-import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
-import com.wanwuzhinan.mingchang.utils.SkeletonUtils
-import com.wanwuzhinan.mingchang.view.GlideEngine
 import com.wanwuzhinan.mingchang.vm.UserViewModel
-import java.io.File
 
 //
 class RankFragment :

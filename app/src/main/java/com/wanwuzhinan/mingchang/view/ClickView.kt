@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.LinearLayout
+import com.colin.library.android.utils.ResourcesUtil
 import com.wanwuzhinan.mingchang.R
 
 
@@ -46,8 +47,9 @@ class ClickView : LinearLayout {
     /**
      * 设置滤镜
      */
+    @Suppress("DEPRECATION")
     private fun setFilter() {
-        background?.setColorFilter(context.resources.getColor(R.color.color_cccccc), PorterDuff.Mode.MULTIPLY)
+        background?.setColorFilter(ResourcesUtil.getColor(context,R.color.color_cccccc), PorterDuff.Mode.MULTIPLY)
     }
 
     /**

@@ -3,41 +3,42 @@ package com.wanwuzhinan.mingchang.utils
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.colin.library.android.widget.skeleton.ISkeletonScreen
+import com.colin.library.android.widget.skeleton.RecyclerViewSkeletonScreen
+import com.colin.library.android.widget.skeleton.ViewSkeletonScreen
 import com.wanwuzhinan.mingchang.R
-import com.ethanhua.skeleton.RecyclerViewSkeletonScreen
-import com.ethanhua.skeleton.Skeleton
-import com.ethanhua.skeleton.SkeletonScreen
 
 object SkeletonUtils {
 
-    var mSkeletonList : RecyclerViewSkeletonScreen? = null
-    var mSkeletonView : SkeletonScreen? = null
+    var mSkeletonList: RecyclerViewSkeletonScreen? = null
+    var mSkeletonView: ISkeletonScreen? = null
 
-    fun showList(reList:RecyclerView,adapter : Adapter<RecyclerView.ViewHolder>,layout:Int){
-        mSkeletonList = Skeleton.bind(reList)
-            .adapter(adapter)
-            .frozen(false)
-            .color(R.color.shimmer_color)
-            .load(layout)
-            .show()
+    fun showList(view: RecyclerView, adapter: Adapter<RecyclerView.ViewHolder>, layout: Int) {
+        mSkeletonList =
+            bind(view).adapter(adapter).frozen(false).color(R.color.shimmer_color).itemResId(layout)
+                .build()
+        mSkeletonList?.show()
     }
 
-    fun showView(view: View,layout: Int){
-        mSkeletonView = Skeleton.bind(view)
-            .color(R.color.shimmer_color)
-            .load(layout)
-            .show()
+    fun showView(view: View, layout: Int) {
+        mSkeletonView = bind(view).color(R.color.shimmer_color).load(layout).build()
+        mSkeletonView?.show()
     }
 
-    fun hideList(){
-       if(mSkeletonList!=null){
-           mSkeletonList!!.hide()
-       }
+    fun hideList() {
+        mSkeletonList?.hide()
     }
 
-    fun hideView(){
-        if(mSkeletonView!=null){
-            mSkeletonView!!.hide()
-        }
+    fun hideView() {
+        mSkeletonView?.hide()
+    }
+
+
+    private fun bind(recyclerView: RecyclerView): RecyclerViewSkeletonScreen.Builder {
+        return RecyclerViewSkeletonScreen.Builder(recyclerView)
+    }
+
+    private fun bind(view: View): ViewSkeletonScreen.Builder {
+        return ViewSkeletonScreen.Builder(view)
     }
 }

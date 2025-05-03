@@ -2,12 +2,11 @@ package com.wanwuzhinan.mingchang.adapter
 
 import android.content.Context
 import android.view.ViewGroup
-import com.ad.img_load.glide.manager.GlideImgManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
+import com.colin.library.android.image.glide.GlideImgManager
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.ExchangeListData
-import com.wanwuzhinan.mingchang.ext.convertTimestampToDateTime
 
 
 class ExchangeGiveAdapter : BaseQuickAdapter<ExchangeListData,QuickViewHolder>() {

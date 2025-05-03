@@ -2,7 +2,7 @@ package com.wanwuzhinan.mingchang.data
 
 import android.os.Parcelable
 import com.ssm.comm.ui.base.BaseModel
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 data class SubjectListData(
     var id: String,//

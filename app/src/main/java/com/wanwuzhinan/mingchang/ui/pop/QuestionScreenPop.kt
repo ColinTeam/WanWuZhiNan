@@ -1,29 +1,13 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
 import android.app.Activity
-import android.graphics.Color
-import android.os.CountDownTimer
-import android.util.Log
-import android.view.View
-import android.view.View.OnLongClickListener
-import com.ad.img_load.glide.manager.GlideImgManager
-import com.ad.img_load.setOnClickNoRepeat
-import com.hpplay.common.asyncmanager.AsyncFileParameter.In
+import com.colin.library.android.utils.Log
+import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.adapter.AnswerPracticeSelectAdapter
 import com.wanwuzhinan.mingchang.adapter.QuestionScreenAdapter
-import com.wanwuzhinan.mingchang.data.MedalListData
-import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.QuestionListData.questionBean
 import com.wanwuzhinan.mingchang.data.QuestionScreenData
-import com.wanwuzhinan.mingchang.databinding.PopAudioCardBinding
-import com.wanwuzhinan.mingchang.databinding.PopExchangeContactBinding
-import com.wanwuzhinan.mingchang.databinding.PopNetErrorBinding
 import com.wanwuzhinan.mingchang.databinding.PopQuestionScreenBinding
-import com.wanwuzhinan.mingchang.ext.createQRCodeBitmap
-import com.wanwuzhinan.mingchang.ext.getConfigData
-import com.wanwuzhinan.mingchang.ext.getUserInfo
-import com.wanwuzhinan.mingchang.ext.launchWechatService
 
 
 class QuestionScreenPop(var context: Activity , var onSure: (finishS:Boolean,noFinishS:Boolean,trueS:Boolean,falseS:Boolean,selectList:MutableList<Int> ) -> Unit) :BasePop<PopQuestionScreenBinding>(context){
@@ -43,7 +27,7 @@ class QuestionScreenPop(var context: Activity , var onSure: (finishS:Boolean,noF
             mAdapter.notifyDataSetChanged()
         }
 
-        setOnClickNoRepeat(
+        onClick(
             mDataBinding.tvSure,
             mDataBinding.tvFinish,
             mDataBinding.tvNofinish,

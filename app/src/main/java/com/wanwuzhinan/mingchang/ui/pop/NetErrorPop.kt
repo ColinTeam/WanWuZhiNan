@@ -5,7 +5,8 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.util.Log
 import android.view.View
-import com.ad.img_load.setOnClickNoRepeat
+import com.colin.library.android.utils.ext.onClick
+import com.ssm.comm.ext.setOnClickNoRepeat
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.PopNetErrorBinding
 
@@ -14,7 +15,7 @@ class NetErrorPop(var context: Activity) :BasePop<PopNetErrorBinding>(context){
 
     override fun initClick() {
 
-        setOnClickNoRepeat(mDataBinding.ivCancel,mDataBinding.tvSure){
+        onClick(mDataBinding.ivCancel,mDataBinding.tvSure){
             when(it){
                 mDataBinding.ivCancel,mDataBinding.tvSure->{
                     dismiss()
