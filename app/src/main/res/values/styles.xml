@@ -13,6 +13,12 @@
         <item name="android:textSize">@dimen/sp_16</item>
     </style>
 
+    <style name="Text.Home" parent="Text">
+        <item name="android:fontFamily">@font/misans_bold</item>
+        <item name="android:textSize">@dimen/text_home_title</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="Text.Tab.Selected" parent="Text">
         <item name="android:textColor">@color/color_active</item>
     </style>
@@ -58,17 +64,37 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="ImagePhysicsBg" parent="">
+    <style name="ImageCardBg" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">50%</item>
-        <item name="cornerSizeTopLeft">10%</item>
-        <item name="cornerSizeBottomLeft">10%</item>
-        <item name="cornerSizeBottomRight">10%</item>
+        <item name="cornerSizeTopRight">60%</item>
+        <item name="cornerSizeTopLeft">20%</item>
+        <item name="cornerSizeBottomLeft">20%</item>
+        <item name="cornerSizeBottomRight">30%</item>
     </style>
 
     <style name="Style" parent="Base.Activity">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Style.Image" parent="Widget.AppCompat.ImageButton">
+        <item name="android:layout_width">@dimen/image_width</item>
+        <item name="android:layout_height">@dimen/image_height</item>
+        <item name="android:contentDescription">@string/app_name</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="contentDescription">@string/app_name</item>
+    </style>
+
+    <style name="Style.Image.Avatar" parent="Style.Image">
+        <item name="android:layout_width">@dimen/image_width</item>
+        <item name="android:layout_height">@dimen/image_height</item>
+        <item name="shapeAppearanceOverlay">@style/ImageCircle</item>
+    </style>
+
+    <style name="Style.Image.Card" parent="Style.Image">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">@dimen/dp_0</item>
+        <item name="shapeAppearanceOverlay">@style/ImageCardBg</item>
     </style>
 
     <style name="Style.Edit" parent="Style">
@@ -80,6 +106,39 @@
         <item name="android:paddingHorizontal">@dimen/margin_default</item>
         <item name="android:singleLine">true</item>
         <item name="android:textAppearance">@style/Text.Edit</item>
+    </style>
+
+    <style name="Style.Text" parent="Style">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">@dimen/dp_0</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingHorizontal">@dimen/margin_default_half</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">@style/Text</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeStepGranularity">@dimen/text_home_step</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/sp_40</item>
+        <item name="android:autoSizeMinTextSize">@dimen/sp_20</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeStepGranularity">@dimen/text_home_step</item>
+        <item name="autoSizeMaxTextSize">@dimen/sp_40</item>
+        <item name="autoSizeMinTextSize">@dimen/sp_20</item>
+    </style>
+
+    <style name="Style.Text.Home" parent="Style.Text">
+        <item name="android:textAppearance">@style/Text.Home</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/text_home_max</item>
+        <item name="android:autoSizeMinTextSize">@dimen/text_home_min</item>
+        <item name="android:fontWeight">400</item>
+        <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
+        <item name="autoSizeMaxTextSize">@dimen/text_home_max</item>
+        <item name="autoSizeMinTextSize">@dimen/text_home_min</item>
+        <item name="fontWeight">400</item>
+    </style>
+
+    <style name="Style.Text.Home.Two" parent="Style.Text.Home">
+        <item name="android:singleLine">false</item>
+        <item name="android:maxLines">2</item>
     </style>
 
     <style name="Style.Edit.Phone" parent="Style.Edit">
@@ -823,7 +882,7 @@
         <item name="cornerSizeBottomLeft">8dp</item>
     </style>
 
-    <style name="Image" parent="Widget.Material3.ChipGroup">
+    <style name="Image" parent="Widget.AppCompat.ImageButton">
         <item name="android:src">@mipmap/ic_launcher</item>
     </style>
 

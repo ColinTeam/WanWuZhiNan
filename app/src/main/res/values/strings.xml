@@ -18,6 +18,16 @@
     <string name="login_protocol_link_1">《用户服务协议》</string>
     <string name="login_protocol_link_2">《用户隐私政策》</string>
     <string name="login_protocol_link_3">《儿童隐私政策》</string>
+    <!--主页-->
+    <string name="home_setting">个人中心</string>
+    <string name="home_tab_class">兑换课程</string>
+    <string name="home_tab_honor">荣誉榜单</string>
+    <string name="home_tab_device">设备投屏</string>
+    <string name="home_tab_notice">更新通知</string>
+    <string name="home_one_title">物理\n十分通</string>
+    <string name="home_two_title">音频故事</string>
+    <string name="home_three_title">物理\n万问</string>
+    <string name="home_four_title">龙门\n题库</string>
 
     <string name="password_tips">设置密码|密码为6-20个数字、英文字母组合</string>
     <string name="password_new_hint">输入新密码</string>
