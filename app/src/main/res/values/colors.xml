@@ -2,11 +2,21 @@
 <resources>
     <color name="text_color_default">#403210</color>
     <color name="text_color_hint">#BFBFBF</color>
+    <color name="text_color_link">@color/color_ff9424</color>
+    <color name="color_active">@color/color_ff9424</color>
 
     <color name="button_text_cancel">#AAAAAA</color>
     <color name="button_text_sure">@color/color_1684FC</color>
 
     <color name="line">#DDDDDD</color>
+
+    <!--Button颜色定义样例-->
+    <color name="bt_ripple">@color/color_FFE7E7E7</color>
+    <color name="bt_bg_default">@color/color_active</color>
+    <color name="bt_bg_disable">#c9c6c3</color>
+    <color name="bt_bg_checked">@color/color_FFD04840</color>
+    <color name="bt_bg_pressed">@color/color_FFD04840</color>
+
 
     <color name="color_default">#7969FF</color>
     <color name="color_default_click">#6256CD</color>

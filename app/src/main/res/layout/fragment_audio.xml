@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_login">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivContentBg"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="@fraction/login_tab_height"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="@fraction/login_tab_width"
+            app:shapeAppearanceOverlay="@style/Image.Radius_20" />
+
+        <ImageView
+            android:id="@+id/iv_ai"
+            android:layout_width="@dimen/dp_75"
+            android:layout_height="@dimen/dp_120"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/dp_30"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_login_a"
+            app:layout_constraintStart_toStartOf="@+id/ivContentBg"
+            app:layout_constraintTop_toTopOf="@+id/ivContentBg" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_33"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@+id/iv_ai"
+            app:layout_constraintTop_toTopOf="@+id/ivContentBg"
+            app:tabIndicator="@drawable/tab_indicator_login"
+            app:tabMode="scrollable"
+            app:tabSelectedTextAppearance="@style/Text.Tab.Selected"
+            app:tabSelectedTextColor="@color/color_active"
+            app:tabTextAppearance="@style/Text.Tab">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_by_sms" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_by_password" />
+        </com.google.android.material.tabs.TabLayout>
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etPhone"
+            style="@style/Style.Edit.Phone"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLogin"
+            app:layout_constraintWidth_percent="0.55" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etSMS"
+            style="@style/Style.Edit.SMS"
+            android:layout_marginTop="@dimen/margin_default_half"
+            app:layout_constraintEnd_toEndOf="@+id/etPhone"
+            app:layout_constraintStart_toStartOf="@+id/etPhone"
+            app:layout_constraintTop_toBottomOf="@+id/etPhone" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSmsSend"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_0"
+            android:gravity="center_vertical|end"
+            android:minWidth="@dimen/dp_110"
+            android:paddingHorizontal="@dimen/margin_default"
+            android:text="@string/login_sms_action"
+            android:textAppearance="@style/Text"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintBottom_toBottomOf="@id/etSMS"
+            app:layout_constraintEnd_toEndOf="@+id/etSMS"
+            app:layout_constraintTop_toTopOf="@+id/etSMS" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etPassword"
+            style="@style/Style.Edit.Password"
+            android:layout_marginTop="@dimen/margin_default_half"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/etPhone"
+            app:layout_constraintStart_toStartOf="@+id/etPhone"
+            app:layout_constraintTop_toBottomOf="@+id/etPhone"
+            tools:visibility="gone" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSmsTips"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:gravity="center_vertical|end"
+            android:text="@string/login_sms_fail"
+            android:textAppearance="@style/Text.Tips"
+            app:layout_constraintBottom_toTopOf="@id/etPhone"
+            app:layout_constraintEnd_toEndOf="@+id/etPhone"
+            app:layout_constraintStart_toEndOf="@+id/tabLogin"
+            app:layout_constraintTop_toTopOf="@+id/tabLogin" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPwdTips"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:gravity="center_vertical|end"
+            android:text="@string/login_forget_password"
+            android:textAppearance="@style/Text.Tips"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/etPhone"
+            app:layout_constraintEnd_toEndOf="@+id/etPhone"
+            app:layout_constraintStart_toEndOf="@+id/tabLogin"
+            app:layout_constraintTop_toTopOf="@+id/tabLogin"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rbProtocolTips"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_25"
+            android:layout_marginBottom="@dimen/margin_default"
+            android:buttonTint="@color/color_ff9424"
+            android:gravity="center_vertical"
+            android:text="@string/login_protocol_tips"
+            android:textAppearance="@style/Text.Tips"
+            app:layout_constraintBottom_toBottomOf="@+id/ivContentBg"
+            app:layout_constraintEnd_toStartOf="@+id/tvProtocolLink1"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/ivContentBg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProtocolLink1"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_25"
+            android:gravity="center_vertical"
+            android:text="@string/login_protocol_link_1"
+            android:textAppearance="@style/Text.Tips.Link"
+            app:layout_constraintBottom_toBottomOf="@+id/rbProtocolTips"
+            app:layout_constraintEnd_toStartOf="@+id/tvProtocolLink2"
+            app:layout_constraintStart_toEndOf="@+id/rbProtocolTips"
+            app:layout_constraintTop_toTopOf="@+id/rbProtocolTips" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProtocolLink2"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_25"
+            android:gravity="center_vertical"
+            android:text="@string/login_protocol_link_2"
+            android:textAppearance="@style/Text.Tips.Link"
+            app:layout_constraintBottom_toBottomOf="@+id/rbProtocolTips"
+            app:layout_constraintEnd_toStartOf="@+id/tvProtocolLink3"
+            app:layout_constraintStart_toEndOf="@+id/tvProtocolLink1"
+            app:layout_constraintTop_toTopOf="@+id/rbProtocolTips" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProtocolLink3"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_25"
+            android:gravity="center_vertical"
+            android:text="@string/login_protocol_link_3"
+            android:textAppearance="@style/Text.Tips.Link"
+            app:layout_constraintBottom_toBottomOf="@+id/rbProtocolTips"
+            app:layout_constraintEnd_toEndOf="@+id/ivContentBg"
+            app:layout_constraintStart_toEndOf="@+id/tvProtocolLink2"
+            app:layout_constraintTop_toTopOf="@+id/rbProtocolTips" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonLogin"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginBottom="@dimen/margin_default"
+            android:background="@drawable/bg_button_login"
+            android:text="@string/login"
+            android:textAppearance="@style/Text.Button"
+            app:layout_constraintBottom_toTopOf="@id/rbProtocolTips"
+            app:layout_constraintEnd_toEndOf="@id/ivContentBg"
+            app:layout_constraintStart_toStartOf="@id/ivContentBg" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,25 +1,47 @@
 package com.wanwuzhinan.mingchang.vm
 
-import androidx.lifecycle.viewModelScope
-import com.wanwuzhinan.mingchang.entity.UserInfoData
-import com.wanwuzhinan.mingchang.net.repository.HomeRepository
-import com.ssm.comm.data.VersionData
-import com.ssm.comm.ext.StateMutableLiveData
-import com.ssm.comm.ui.base.BaseViewModel
-import kotlinx.coroutines.launch
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.colin.library.android.network.request
+import com.colin.library.android.utils.Log
+import com.wanwuzhinan.mingchang.app.AppViewModel
+import com.wanwuzhinan.mingchang.data.RegisterData
+import com.wanwuzhinan.mingchang.data.UserInfo
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
+/**
+ * Author:ColinLu
+ * E-mail:945919945@qq.com
+ * Create:2025-04-23 22:10
+ *
+ * Des   :HomeViewModel
+ */
+class HomeViewModel : AppViewModel() {
 
-class HomeViewModel : BaseViewModel<UserInfoData, HomeRepository>(HomeRepository()) {
+    private val _user: MutableLiveData<RegisterData> = MutableLiveData()
+    private val _userFlow: MutableStateFlow<RegisterData?> = MutableStateFlow(null)
+    private val _msg: MutableLiveData<String> = MutableLiveData("")
+    private val _UserInfo: MutableLiveData<UserInfo?> = MutableLiveData(null)
 
-    val getVersionLiveData = StateMutableLiveData<VersionData>()
+    val user: LiveData<RegisterData> = _user
+    val userFlow = _userFlow.asStateFlow()
+    val msg: LiveData<String> = _msg
+    val userInfo: LiveData<UserInfo?> = _UserInfo
 
+    fun update(isLogin: Boolean) {
 
-    //获取版本号
-    fun getVersion() {
-        viewModelScope.launch {
-            //请求到的数据用livedata包裹
-            getVersionLiveData.value = repository.getVersion()
-        }
     }
 
+     suspend fun getUserInfo() {
+        request({ service.newUserInfo() }, {
+            Log.e("success it:${it}")
+        }, {
+            Log.e("failure it:${it}")
+        })
+    }
+
+    suspend fun login(phone: String, password: String) {
+
+    }
 }

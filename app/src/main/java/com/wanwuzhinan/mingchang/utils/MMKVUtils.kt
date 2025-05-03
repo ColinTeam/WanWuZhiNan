@@ -1,4 +1,4 @@
-package com.ssm.comm.utils
+package com.wanwuzhinan.mingchang.utils
 
 import android.os.Parcelable
 import com.tencent.mmkv.MMKV

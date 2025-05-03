@@ -106,7 +106,7 @@ abstract class BaseRetrofitBuilder {
     private fun initLoggingInterceptor(): Interceptor {
         val builder = LoggingInterceptor.Builder()
         if (BuildConfig.DEBUG) {
-            builder.setLevel(Level.BODY)
+            builder.setLevel(Level.BASIC)
         } else {
             builder.setLevel(Level.BASIC)
         }

@@ -21,6 +21,7 @@ import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.data.RankHomeData
 import com.wanwuzhinan.mingchang.data.RegisterData
 import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.data.UserInfoResponse
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfoData
 import okhttp3.MultipartBody
@@ -47,12 +48,16 @@ interface ApiService {
     suspend fun login(
         @Field("phone") phone: String,
         @Field("phone_code") phone_code: String,
-        @Field("device_type") device_type:String
+        @Field("device_type") device_type: String
     ): ApiResponse<RegisterData>
 
     //获取用户信息
     @POST("/api/User/info")
     suspend fun getUserInfo(): ApiResponse<UserInfoData>
+
+    //获取用户信息
+    @POST("/api/User/info")
+    suspend fun newUserInfo(): UserInfoResponse
 
     //修改用户信息
     @FormUrlEncoded
@@ -89,8 +94,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/LessonSubject/info")
     suspend fun courseSubjectList(
-        @Field("id") id: String,
-        @Field("need_lesson") need_lesson: Int
+        @Field("id") id: String, @Field("need_lesson") need_lesson: Int
     ): ApiResponse<ApiInfoResponse<SubjectListData>>
 
     //音频视频科目季度列表
@@ -128,9 +132,11 @@ interface ApiService {
     //学习课程 记录
     @FormUrlEncoded
     @POST("/api/LessonStudyLog/add")
-    suspend fun courseStudy(@Field("lesson_id") lesson_id: String,
-                            @Field("video_duration") start_second: Int,
-                            @Field("end_second") end_second: Int): ApiResponse<CourseStudyData>
+    suspend fun courseStudy(
+        @Field("lesson_id") lesson_id: String,
+        @Field("video_duration") start_second: Int,
+        @Field("end_second") end_second: Int
+    ): ApiResponse<CourseStudyData>
 
     @FormUrlEncoded
     @POST("/api/Lesson/infoV2")
@@ -146,7 +152,9 @@ interface ApiService {
     //题库答题
     @FormUrlEncoded
     @POST("/api/QuestionsLogs/add")
-    suspend fun questionAdd(@Field("questions_id") questions_id: String,@Field("answer") answer: String): ApiResponse<QuestionLogData>
+    suspend fun questionAdd(
+        @Field("questions_id") questions_id: String, @Field("answer") answer: String
+    ): ApiResponse<QuestionLogData>
 
     //题库答题记录清理
     @POST("/api/QuestionsLogs/clear")
@@ -166,7 +174,9 @@ interface ApiService {
     //题目详情分页
     @FormUrlEncoded
     @POST("/api/QuestionsBank/infoPage")
-    suspend fun questionPageDetail(@Field("id") id: String,@Field("question_id") question_id: String): ApiResponse<ApiInfoResponse<QuestionListData>>
+    suspend fun questionPageDetail(
+        @Field("id") id: String, @Field("question_id") question_id: String
+    ): ApiResponse<ApiInfoResponse<QuestionListData>>
 
 
     //获取配置
@@ -177,10 +187,12 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/LessonCode/indexLesson")
     suspend fun exchangeList(@Field("group_id") group_id: Int): ApiResponse<ApiListResponse<ExchangeListData>>
+
     //课程兑换码 记录
     @FormUrlEncoded
     @POST("/api/LessonCode/index")
     suspend fun exchangeCodeList(@Field("group_id") group_id: Int): ApiResponse<ApiListResponse<ExchangeCodeData>>
+
     //赠品列表
     @POST("/api/LessonCodeGoods/index")
     suspend fun giveList(): ApiResponse<ApiListResponse<ExchangeListData>>
@@ -245,8 +257,7 @@ interface ApiService {
         @Field("new_password") new_password: String,
         @Field("new_password2") new_password2: String,
         @Field("code") code: String
-    )
-            : ApiResponse<MutableList<String>>
+    ): ApiResponse<MutableList<String>>
 
     //修改登录密码
     @FormUrlEncoded
@@ -255,7 +266,7 @@ interface ApiService {
         @Header("signature") signature: String,
         @Field("password") password: String,
         @Field("code") code: String
-    ) : ApiResponse<MutableList<String>>
+    ): ApiResponse<MutableList<String>>
 
     //获取版本号
     @POST("/v1/common/version")
@@ -266,8 +277,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/v1/illustrate/get_index")
     fun getTextDescription(
-        @Header("signature") signature: String,
-        @Field("key") key: String
+        @Header("signature") signature: String, @Field("key") key: String
     ): Call<ResponseBody>
 
     //获取地址列表
@@ -278,8 +288,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/v1/address/add")
     suspend fun addAddress(
-        @Header("signature") signature: String,
-        @FieldMap map: MutableMap<String, Any>
+        @Header("signature") signature: String, @FieldMap map: MutableMap<String, Any>
     ): ApiResponse<MutableList<String>>
 
 
@@ -287,8 +296,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/v1/address/del")
     suspend fun deleteAddress(
-        @Header("signature") signature: String,
-        @Field("address_id") address_id: String
+        @Header("signature") signature: String, @Field("address_id") address_id: String
     ): ApiResponse<MutableList<String>>
 
     //获取默认地址
@@ -299,8 +307,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/v1/gaode/get_city")
     suspend fun getCityList(
-        @Header("signature") signature: String,
-        @Field("city_id") city_id: String
+        @Header("signature") signature: String, @Field("city_id") city_id: String
     ): ApiResponse<MutableList<CityListData>>
 
 }

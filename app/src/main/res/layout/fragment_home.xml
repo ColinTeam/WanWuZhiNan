@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+    <!--写一套适合竖屏布局，兼容任何比例-->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/line_margin_top"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="@fraction/margin_top"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/line_margin_bottom"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="@fraction/margin_bottom" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/line_margin_start"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="@fraction/margin_start"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/line_margin_end"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="@fraction/margin_end" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_head"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintStart_toStartOf="@+id/line_margin_start"
+                app:layout_constraintTop_toBottomOf="@+id/line_margin_top"
+                app:layout_constraintWidth_percent="0.12"
+                app:shapeAppearanceOverlay="@style/ImageCircle"
+                app:srcCompat="@mipmap/ic_head_upload" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_margin"
+                android:layout_marginBottom="@dimen/common_margin"
+                android:background="@drawable/shape_ff9424_4"
+                android:drawableStart="@drawable/back"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/dp_8"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintBottom_toTopOf="@+id/tv_name"
+                app:layout_constraintStart_toEndOf="@+id/img_head"
+                app:layout_constraintTop_toTopOf="@+id/img_head"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_4"
+                android:textColor="#FF9424"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/img_head"
+                app:layout_constraintEnd_toStartOf="@+id/line_margin_end"
+                app:layout_constraintStart_toStartOf="@+id/tv_center"
+                app:layout_constraintTop_toBottomOf="@+id/tv_center"
+                tools:text="@string/app_name" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/common_margin"
+                app:layout_constraintEnd_toStartOf="@+id/line_margin_end"
+                app:layout_constraintStart_toEndOf="@+id/line_margin_start"
+                app:layout_constraintTop_toBottomOf="@+id/img_head"
+                app:tabGravity="fill"
+                app:tabMode="fixed">
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/item_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/app_name" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/item_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/app_name" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/item_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/app_name" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_one_bg"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:layout_marginTop="@dimen/common_margin"
+                android:layout_marginEnd="@dimen/common_margin"
+                android:background="@drawable/bg_rank_num_bg"
+                android:contentDescription="物理万事通"
+                android:src="@mipmap/ic_main_audio_02_top_right"
+                app:layout_constraintEnd_toStartOf="@+id/img_two_bg"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.461"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="@+id/line_margin_start"
+                app:layout_constraintTop_toBottomOf="@+id/tab"
+                app:layout_constraintWidth_percent="0.688"
+                app:shapeAppearanceOverlay="@style/ImagePhysicsBg" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_two_bg"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:background="@drawable/bg_rank_num_bg"
+                android:contentDescription="音频故事通"
+                app:layout_constraintDimensionRatio="h,2:1"
+                app:layout_constraintEnd_toEndOf="@+id/line_margin_end"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/img_one_bg"
+                app:layout_constraintTop_toTopOf="@+id/img_one_bg"
+                app:shapeAppearanceOverlay="@style/ImagePhysicsBg" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_three_bg"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:layout_marginTop="@dimen/common_margin"
+                android:layout_marginEnd="@dimen/common_margin"
+                android:background="@drawable/bg_rank_num_bg"
+                android:contentDescription="物理万事通"
+                app:layout_constraintBottom_toBottomOf="@+id/img_one_bg"
+                app:layout_constraintEnd_toStartOf="@+id/img_four_bg"
+                app:layout_constraintHorizontal_weight="5"
+                app:layout_constraintStart_toStartOf="@+id/img_two_bg"
+                app:layout_constraintTop_toBottomOf="@+id/img_two_bg"
+                app:shapeAppearanceOverlay="@style/ImagePhysicsBg" />
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_four_bg"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:background="@drawable/bg_rank_num_bg"
+                android:contentDescription="龙门题库通"
+                app:layout_constraintBottom_toBottomOf="@+id/img_three_bg"
+                app:layout_constraintEnd_toStartOf="@+id/line_margin_end"
+                app:layout_constraintHorizontal_weight="4"
+                app:layout_constraintStart_toEndOf="@+id/img_three_bg"
+                app:layout_constraintTop_toTopOf="@+id/img_three_bg"
+                app:shapeAppearanceOverlay="@style/ImagePhysicsBg" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

@@ -42,6 +42,8 @@ object ConfigApp {
     const val COURSE_AUDIO = 2//音频
     const val COURSE_GIVE = 3//赠品
 
+    const val MMKV_SPLASH_TIME = "MMKV_SPLASH_TIME"
+
     var question_count_error = 0
     var question_compass = 0
 }

@@ -6,6 +6,32 @@
         <item name="android:textColor">@color/text_color_default</item>
         <item name="android:textColorHint">@color/text_color_hint</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="Text.Tab" parent="Text">
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+
+    <style name="Text.Tab.Selected" parent="Text">
+        <item name="android:textColor">@color/color_active</item>
+    </style>
+
+    <style name="Text.Tips" parent="Text">
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="Text.Tips.Protocol" parent="Text">
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="Text.Tips.Link" parent="Text">
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/text_color_link</item>
+    </style>
+
+    <style name="Text.Edit" parent="Text">
+        <item name="android:textSize">@dimen/edit_text_size</item>
     </style>
 
     <style name="Text.Title" parent="Text">
@@ -15,6 +41,7 @@
 
     <style name="Text.Button" parent="Text">
         <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textColor">@color/tab_honor</item>
     </style>
 
     <style name="Text.Button.Cancel" parent="Text.Button">
@@ -24,6 +51,7 @@
     <style name="Text.Button.Sure" parent="Text.Button">
         <item name="android:textColor">@color/button_text_sure</item>
     </style>
+
 
     <style name="ImageCircle" parent="">
         <item name="cornerFamily">rounded</item>
@@ -38,6 +66,41 @@
         <item name="cornerSizeBottomRight">10%</item>
     </style>
 
+    <style name="Style" parent="Base.Activity">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Style.Edit" parent="Style">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">@dimen/edit_height</item>
+        <item name="android:background">@drawable/shape_2c2d66_22</item>
+        <item name="android:imeOptions">flagNoExtractUi</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingHorizontal">@dimen/margin_default</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">@style/Text.Edit</item>
+    </style>
+
+    <style name="Style.Edit.Phone" parent="Style.Edit">
+        <item name="android:inputType">phone</item>
+        <item name="android:digits">@string/login_digits_phone</item>
+        <item name="android:maxLength">11</item>
+        <item name="android:hint">@string/login_phone_hint</item>
+    </style>
+
+    <style name="Style.Edit.SMS" parent="Style.Edit">
+        <item name="android:inputType">number</item>
+        <item name="android:digits">@string/login_digits_phone</item>
+        <item name="android:maxLength">6</item>
+        <item name="android:hint">@string/login_sms_hint</item>
+    </style>
+
+    <style name="Style.Edit.Password" parent="Style.Edit">
+        <item name="android:inputType">textPassword</item>
+        <item name="android:maxLength">@integer/password_length_max</item>
+        <item name="android:hint">@string/login_password_hint</item>
+    </style>
 
     <style name="text_transparent_10">
         <item name="android:layout_width">wrap_content</item>
