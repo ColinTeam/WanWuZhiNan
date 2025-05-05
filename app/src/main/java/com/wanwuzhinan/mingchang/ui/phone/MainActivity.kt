@@ -8,10 +8,8 @@ import com.google.gson.Gson
 import com.ssm.comm.config.Constant
 import com.ssm.comm.event.MessageEvent
 import com.ssm.comm.ext.getCurrentVersionCode
-import com.ssm.comm.ext.getToken
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.registerBus
-import com.ssm.comm.ext.setData
 import com.ssm.comm.ext.setOnClickNoRepeat
 import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
@@ -28,6 +26,8 @@ import com.wanwuzhinan.mingchang.ext.launchVideoHomeActivity
 import com.wanwuzhinan.mingchang.ext.performLaunchH5Agreements
 import com.wanwuzhinan.mingchang.ui.pop.EditFileDialog
 import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
+import com.wanwuzhinan.mingchang.utils.getToken
+import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.UserViewModel
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

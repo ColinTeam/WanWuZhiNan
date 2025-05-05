@@ -302,12 +302,12 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
 
     fun showGradeDialog(data: GradeData?) {
         val list = data?.listArr ?: return
-        ChooseDialog.newInstance(getString(R.string.choose_title_grade), list).show(this)
-//        ChooseGradeDialog(data.listArr, callback = {
-//            onSure = {
-//                mDataBinding.tvGrade.text = it
-//            }
-//        }).show(mActivity.supportFragmentManager, "CommDialog")
+        val dialog = ChooseDialog.newInstance(getString(R.string.choose_title_grade), list).apply {
+            sure = {
+                mDataBinding.tvGrade.text = list[it]
+            }
+        }
+        dialog.show(this)
     }
 
 }

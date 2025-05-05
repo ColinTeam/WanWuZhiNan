@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import android.util.Log
 import com.google.gson.Gson
 import com.ssm.comm.app.appContext
-import com.ssm.comm.ext.getAudioData
 import com.ssm.comm.ext.getScreenHeight2
 import com.ssm.comm.ext.getScreenWidth2
 import com.ssm.comm.ext.toastError
@@ -36,6 +35,7 @@ import com.wanwuzhinan.mingchang.ui.phone.VideoAnswerActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoListActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoPlayActivity
+import com.wanwuzhinan.mingchang.utils.getAudioData
 
 //判断当前设备是手机还是平板
 fun isPhone(): Boolean {

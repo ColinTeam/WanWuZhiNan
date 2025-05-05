@@ -18,10 +18,10 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.shuyu.gsyvideoplayer.player.PlayerFactory
 import com.shuyu.gsyvideoplayer.player.SystemPlayerManager
 import com.ssm.comm.app.CommApplication
-import com.ssm.comm.ext.setData
 import com.tencent.rtmp.TXLiveBase
 import com.tencent.rtmp.TXLiveBaseListener
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.utils.setData
 import com.zjh.download.SimpleDownload
 
 

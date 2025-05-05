@@ -38,6 +38,7 @@ class WebFragment() : AppFragment<FragmentWebBinding, HomeViewModel>() {
         Log.i("webType:$webType url:$url title:$title content:$content")
     }
 
+    @Suppress("DEPRECATION")
     @SuppressLint("SetJavaScriptEnabled")
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         val url = getWebUrl()

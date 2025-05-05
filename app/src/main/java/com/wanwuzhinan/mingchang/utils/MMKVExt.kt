@@ -1,7 +1,6 @@
-package com.ssm.comm.ext
+package com.wanwuzhinan.mingchang.utils
 
 import com.ssm.comm.config.Constant
-import com.ssm.comm.utils.MMKVUtils
 
 fun getToken(): String {
     return MMKVUtils.decodeString(Constant.TOKEN)

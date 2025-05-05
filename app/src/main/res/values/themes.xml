@@ -21,6 +21,10 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
+    <style name="Theme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
     <!--启动界面主题-->
     <style name="SplashThem" parent="Theme.AppCompat.Light.NoActionBar">
         <!--去掉标题栏-->

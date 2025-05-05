@@ -21,12 +21,9 @@ import com.kongzue.dialogx.dialogs.CustomDialog
 import com.kongzue.dialogx.interfaces.OnBindView
 import com.ssm.comm.app.CommApplication
 import com.ssm.comm.config.Constant
-import com.ssm.comm.ext.clearAllData
-import com.ssm.comm.ext.setData
 import com.ssm.comm.ext.toastError
 import com.ssm.comm.global.AppActivityManager
 import com.ssm.comm.ui.base.IWrapView
-import com.ssm.comm.utils.MMKVUtils
 import com.tencent.mm.opensdk.constants.Build
 import com.tencent.mm.opensdk.modelbiz.WXOpenCustomerServiceChat
 import com.wanwuzhinan.mingchang.R
@@ -42,6 +39,8 @@ import com.wanwuzhinan.mingchang.ui.phone.LoginActivity
 import com.wanwuzhinan.mingchang.ui.pop.SurePop
 import com.wanwuzhinan.mingchang.ui.publics.WebGoodsViewActivity
 import com.wanwuzhinan.mingchang.ui.publics.WebViewActivity
+import com.wanwuzhinan.mingchang.utils.MMKVUtils
+import com.wanwuzhinan.mingchang.utils.clearAllData
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Hashtable
@@ -290,13 +289,6 @@ fun Activity.performLaunchH5Agreement(url: String, title: String) {
     startActivity(intent)
 }
 
-
-//保存用户数据
-fun setUserData(token:String,user_id:String,mobile:String){
-    setData(Constant.TOKEN, token)
-    setData(Constant.USER_ID, user_id)
-    setData(Constant.USER_MOBILE, mobile)
-}
 
 //获取验证码
 fun IWrapView.getCode(mobile: String, sendTv: TextView, repository: LoginRepository, success: (data: CodeData?) -> Unit = {}) {

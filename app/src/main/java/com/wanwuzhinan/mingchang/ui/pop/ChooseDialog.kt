@@ -5,7 +5,7 @@ import android.view.Gravity
 import android.view.View
 import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.ext.onClick
-import com.colin.library.android.widget.picker.adapter.ArrayWheelAdapter
+import com.colin.library.android.widget.wheel.ArrayWheelAdapter
 import com.wanwuzhinan.mingchang.app.AppDialogFragment
 import com.wanwuzhinan.mingchang.databinding.DialogChooseBinding
 
@@ -17,11 +17,11 @@ import com.wanwuzhinan.mingchang.databinding.DialogChooseBinding
  * Des   :ChooseDialog
  */
 class ChooseDialog private constructor(
-    private val title: CharSequence, private val array: List<String>,
-    private val cancel: ((View) -> Unit)? = null,
-    private val sure: ((View, Int) -> Unit)? = null,
+    private val title: CharSequence, private val array: List<String>
 ) : AppDialogFragment<DialogChooseBinding>() {
 
+    var sure: ((Int) -> Unit) = { }
+    var cancel: ((View) -> Unit) = { }
 
     companion object {
         const val TYPE_SEX = 0
@@ -45,19 +45,20 @@ class ChooseDialog private constructor(
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
             textTitle.text = title
-            wheel.setAdapter(ArrayWheelAdapter(array)) {
-                selected = it
+            wheel.setAdapter(ArrayWheelAdapter<String>())
+            wheel.setOnItemSelectedListener { _, position ->
+                selected = position
             }
         }
         onClick(viewBinding.textCancel, viewBinding.textSure) {
             when (it) {
                 viewBinding.textCancel -> {
-                    cancel?.invoke(it)
+                    cancel.invoke(it)
                     dismiss()
                 }
 
                 viewBinding.textSure -> {
-                    sure?.invoke(it, selected)
+                    sure.invoke(selected)
                     dismiss()
                 }
             }

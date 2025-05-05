@@ -20,10 +20,8 @@ import com.ssm.comm.event.MessageEvent
 import com.ssm.comm.ext.dismissLoadingExt
 import com.ssm.comm.ext.getAllScreenHeight
 import com.ssm.comm.ext.getAllScreenWidth
-import com.ssm.comm.ext.getAudioData
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.post
-import com.ssm.comm.ext.setData
 import com.ssm.comm.global.AppActivityManager
 import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
@@ -42,6 +40,8 @@ import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeCoursePop
 import com.wanwuzhinan.mingchang.utils.AnimationUtils
 import com.wanwuzhinan.mingchang.utils.SkeletonUtils
+import com.wanwuzhinan.mingchang.utils.getAudioData
+import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.UserViewModel
 import java.text.SimpleDateFormat
 

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivAvatar"
+            style="@style/Style.Image.Avatar"
+            android:layout_marginStart="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_31"
+            android:padding="@dimen/dp_0"
+            android:src="@drawable/bg_home_one_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginStart="@dimen/margin_default_half"
+            android:background="@drawable/shape_ff9424_4"
+            android:paddingHorizontal="@dimen/margin_default_half"
+            android:text="@string/home_setting"
+            android:textAppearance="@style/Text.Tips"
+            android:textColor="@color/white"
+            app:drawableEndCompat="@drawable/back"
+            app:layout_constraintStart_toEndOf="@+id/ivAvatar"
+            app:layout_constraintTop_toTopOf="@+id/ivAvatar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_default_half"
+            android:minLines="1"
+            android:paddingHorizontal="@dimen/margin_default_half"
+            android:textAppearance="@style/Text.Tips"
+            android:textColor="@color/color_active"
+            app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
+            app:layout_constraintStart_toStartOf="@+id/tvSetting"
+            tools:text="@string/app_name" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabHome"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/dp_50"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivAvatar"
+            app:tabSelectedTextAppearance="@style/Text.Tab.Selected"
+            app:tabSelectedTextColor="@color/color_active"
+            app:tabTextAppearance="@style/Text.Tab">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_by_sms" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_by_password" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivOneBg"
+            style="@style/Style.Image.Card"
+            android:layout_marginTop="@dimen/dp_32"
+            android:layout_marginBottom="@dimen/dp_50"
+            android:src="@drawable/bg_home_one_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ivAvatar"
+            app:layout_constraintTop_toBottomOf="@+id/ivAvatar"
+            app:layout_constraintWidth_percent="0.461" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivOneNumber"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_marginStart="@dimen/margin_default"
+            android:src="@mipmap/ic_main_01"
+            app:layout_constraintStart_toStartOf="@+id/ivOneBg"
+            app:layout_constraintTop_toTopOf="@+id/ivOneBg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/ivOneTitle"
+            style="@style/Style.Text.Home.Two"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_100"
+            android:layout_marginBottom="@dimen/dp_150"
+            android:text="@string/home_one_title"
+            android:textSize="150sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivOneBg"
+            app:layout_constraintEnd_toStartOf="@+id/ivAnim"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="@+id/ivOneBg" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivOneMedia"
+            style="@style/Style.Image.Avatar"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            android:layout_marginEnd="@dimen/dp_120"
+            android:layout_marginBottom="@dimen/dp_50"
+            android:src="@mipmap/ic_main_audio_01_stop"
+            app:layout_constraintBottom_toBottomOf="@id/ivOneBg"
+            app:layout_constraintEnd_toEndOf="@id/ivOneBg"
+            app:layout_constraintStart_toStartOf="@+id/ivAnim" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAnim"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default_half"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/ivTwoBg"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/ivOneTitle"
+            app:layout_constraintTop_toTopOf="@+id/ivOneBg" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivTwoBg"
+            style="@style/Style.Image.Card"
+            android:layout_marginStart="@dimen/dp_60"
+            android:layout_marginEnd="@dimen/dp_150"
+            android:src="@drawable/bg_home_two_bg"
+            app:layout_constraintBottom_toTopOf="@+id/ivThreeBg"
+            app:layout_constraintEnd_toEndOf="@+id/tabHome"
+            app:layout_constraintStart_toEndOf="@+id/ivOneBg"
+            app:layout_constraintTop_toTopOf="@+id/ivOneBg"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintWidth_percent="0.461" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/ivTwoTitle"
+            style="@style/Style.Text.Home"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_60"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:text="@string/home_two_title"
+            app:layout_constraintBottom_toBottomOf="@+id/ivTwoBg"
+            app:layout_constraintEnd_toStartOf="@+id/ivTwoMedia"
+            app:layout_constraintStart_toStartOf="@+id/ivTwoBg"
+            app:layout_constraintTop_toTopOf="@+id/ivTwoBg"
+            tools:ignore="UnusedAttribute" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivTwoNumber"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="@dimen/margin_default"
+            android:src="@mipmap/ic_main_02"
+            app:layout_constraintBottom_toBottomOf="@+id/ivTwoBg"
+            app:layout_constraintStart_toStartOf="@+id/ivTwoBg" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivTwoMedia"
+            style="@style/Style.Image.Avatar"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginStart="@dimen/dp_50"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:src="@mipmap/ic_main_audio_02_stop"
+            app:layout_constraintBottom_toBottomOf="@id/ivTwoTitle"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toStartOf="@+id/ivTwoLogo"
+            app:layout_constraintTop_toTopOf="@id/ivTwoTitle" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivTwoLogo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@mipmap/ic_main_audio_02_top_right"
+            app:layout_constraintBottom_toBottomOf="@id/ivTwoBg"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toEndOf="@id/tabHome"
+            app:layout_constraintTop_toBottomOf="@+id/tabHome"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivThreeBg"
+            style="@style/Style.Image.Card"
+            android:layout_marginStart="@dimen/margin_default"
+            android:src="@drawable/bg_home_three_bg"
+            app:layout_constraintBottom_toBottomOf="@+id/ivOneBg"
+            app:layout_constraintEnd_toStartOf="@+id/ivFourBg"
+            app:layout_constraintHorizontal_weight="54"
+            app:layout_constraintStart_toEndOf="@+id/ivOneBg"
+            app:layout_constraintTop_toBottomOf="@+id/ivTwoBg"
+            app:layout_constraintVertical_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivThreeNumber"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="@dimen/margin_default"
+            android:src="@mipmap/ic_main_03"
+            app:layout_constraintStart_toStartOf="@+id/ivThreeBg"
+            app:layout_constraintTop_toBottomOf="@+id/ivTwoBg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/ivThreeTitle"
+            style="@style/Style.Text.Home.Two"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_60"
+            android:layout_marginBottom="@dimen/dp_60"
+            android:text="@string/home_three_title"
+            app:layout_constraintBottom_toBottomOf="@+id/ivThreeBg"
+            app:layout_constraintEnd_toStartOf="@+id/ivThreeLogo"
+            app:layout_constraintStart_toStartOf="@+id/ivThreeBg"
+            tools:ignore="UnusedAttribute" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivThreeLogo"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:src="@mipmap/ic_main_question"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toEndOf="@id/ivThreeBg"
+            app:layout_constraintStart_toEndOf="@+id/ivThreeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ivTwoBg" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivFourBg"
+            style="@style/Style.Image.Card"
+            android:layout_marginStart="@dimen/margin_default"
+            android:src="@drawable/bg_home_four_bg"
+            app:layout_constraintBottom_toBottomOf="@+id/ivThreeBg"
+            app:layout_constraintEnd_toEndOf="@+id/ivTwoBg"
+            app:layout_constraintHorizontal_weight="46"
+            app:layout_constraintStart_toEndOf="@+id/ivThreeBg"
+            app:layout_constraintTop_toTopOf="@+id/ivThreeBg" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivFourNumber"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="@dimen/margin_default"
+            android:src="@mipmap/ic_main_04"
+            app:layout_constraintStart_toStartOf="@+id/ivFourBg"
+            app:layout_constraintTop_toBottomOf="@+id/ivTwoBg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/ivFourTitle"
+            style="@style/Style.Text.Home.Two"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_60"
+            android:layout_marginBottom="@dimen/dp_60"
+            android:text="@string/home_four_title"
+            app:layout_constraintBottom_toBottomOf="@+id/ivFourBg"
+            app:layout_constraintEnd_toStartOf="@+id/ivFourLogo"
+            app:layout_constraintStart_toStartOf="@+id/ivFourBg"
+            tools:ignore="UnusedAttribute" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivFourLogo"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:src="@mipmap/ic_main_honor"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toEndOf="@id/ivFourBg"
+            app:layout_constraintStart_toEndOf="@+id/ivFourTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ivTwoBg" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

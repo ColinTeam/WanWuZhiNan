@@ -8,10 +8,8 @@ import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.player.PlayerFactory
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType
 import com.ssm.comm.config.Constant
-import com.ssm.comm.ext.clearAllData
-import com.ssm.comm.ext.isShowPrivacy
+import com.ssm.comm.ext.isEmpty
 import com.ssm.comm.ext.observeState
-import com.ssm.comm.ext.setData
 import com.ssm.comm.ui.base.BaseActivity
 import com.ssm.comm.utils.NavigationBarUtil
 import com.ssm.comm.utils.StatusBarUtils
@@ -24,6 +22,10 @@ import com.wanwuzhinan.mingchang.ext.performLaunchPrivacy
 import com.wanwuzhinan.mingchang.ext.performLaunchUserAgreement
 import com.wanwuzhinan.mingchang.net.RetrofitClient
 import com.wanwuzhinan.mingchang.ui.pop.PrivacyPop
+import com.wanwuzhinan.mingchang.utils.clearAllData
+import com.wanwuzhinan.mingchang.utils.getToken
+import com.wanwuzhinan.mingchang.utils.isShowPrivacy
+import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.UserViewModel
 import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
 
@@ -123,7 +125,7 @@ class SplashActivity : BaseActivity<ActivityViewSplashBinding, UserViewModel>(Us
 
     private fun enterApp(){
         (application as BaseApplication).enterInApp()
-        if (Constant.isLogin()) {
+        if (!isEmpty(getToken())) {
             launchMainActivity()
         } else {
             launchLoginActivity()

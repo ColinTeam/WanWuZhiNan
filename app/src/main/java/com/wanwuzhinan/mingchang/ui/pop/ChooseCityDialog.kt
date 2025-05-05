@@ -1,11 +1,9 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import androidx.core.graphics.toColorInt
 import com.colin.library.android.utils.ext.onClick
-import com.colin.library.android.widget.picker.adapter.ArrayWheelAdapter
-import com.colin.library.android.widget.picker.wheel.WheelView
+import com.colin.library.android.widget.wheel.ArrayWheelAdapter
+import com.colin.library.android.widget.wheel.WheelView
 import com.ssm.comm.ui.base.BaseDialogFragment
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.ProvinceListData
@@ -98,56 +96,56 @@ class ChooseCityDialog constructor(
         areaName = options3Items[0][0][0].label.toString()
 
 
-        mDataBinding!!.wheelPro.setCurrentItem(0)
-        mDataBinding!!.wheelPro.setAdapter(sexAdapter)
-        mDataBinding!!.wheelPro.setOnItemSelectedListener {
-            proName = options1Items?.get(it)?.label.toString()
-            cityName = options2Items[0][0].label.toString()
-            areaName = options3Items[0][0][0].label.toString()
-
-            val cityAdapter = ArrayWheelAdapter(options2Items.get(it))
-            mDataBinding!!.wheelCity.setCurrentItem(0)
-            mDataBinding!!.wheelCity.setAdapter(cityAdapter)
-
-            val areaAdapter = ArrayWheelAdapter(options3Items[it][0])
-            mDataBinding!!.wheelArea.setCurrentItem(0)
-            mDataBinding!!.wheelArea.setAdapter(areaAdapter)
-
-        }
-
-        val cityAdapter = ArrayWheelAdapter(options2Items[0])
-        mDataBinding!!.wheelCity.setCurrentItem(0)
-        mDataBinding!!.wheelCity.setAdapter(cityAdapter)
-        mDataBinding!!.wheelCity.setOnItemSelectedListener {
-
-            cityName =
-                options2Items[mDataBinding!!.wheelPro.getCurrentItem()][it].label.toString()
-            areaName = options3Items[mDataBinding!!.wheelPro.getCurrentItem()][it][0].label.toString()
-
-            val areaAdapter =
-                ArrayWheelAdapter(options3Items[mDataBinding!!.wheelPro.getCurrentItem()].get(it))
-            mDataBinding!!.wheelArea.setCurrentItem(0)
-            mDataBinding!!.wheelArea.setAdapter(areaAdapter)
-        }
-
-        val areaAdapter = ArrayWheelAdapter(options3Items[0][0])
-        mDataBinding!!.wheelArea.setCurrentItem(0)
-        mDataBinding!!.wheelArea.setAdapter(areaAdapter)
-        mDataBinding!!.wheelArea.setOnItemSelectedListener {
-            areaName = options3Items[mDataBinding!!.wheelPro.getCurrentItem()]
-                .get(mDataBinding!!.wheelCity.getCurrentItem())[it].label.toString()
-        }
+//        mDataBinding!!.wheelPro.setCurrentItem(0)
+//        mDataBinding!!.wheelPro.setAdapter(sexAdapter)
+//        mDataBinding!!.wheelPro.setOnItemSelectedListener {
+//            proName = options1Items?.get(it)?.label.toString()
+//            cityName = options2Items[0][0].label.toString()
+//            areaName = options3Items[0][0][0].label.toString()
+//
+//            val cityAdapter = ArrayWheelAdapter(options2Items.get(it))
+//            mDataBinding!!.wheelCity.setCurrentItem(0)
+//            mDataBinding!!.wheelCity.setAdapter(cityAdapter)
+//
+//            val areaAdapter = ArrayWheelAdapter(options3Items[it][0])
+//            mDataBinding!!.wheelArea.setCurrentItem(0)
+//            mDataBinding!!.wheelArea.setAdapter(areaAdapter)
+//
+//        }
+//
+//        val cityAdapter = ArrayWheelAdapter(options2Items[0])
+//        mDataBinding!!.wheelCity.setCurrentItem(0)
+//        mDataBinding!!.wheelCity.setAdapter(cityAdapter)
+//        mDataBinding!!.wheelCity.setOnItemSelectedListener {
+//
+//            cityName =
+//                options2Items[mDataBinding!!.wheelPro.getCurrentItem()][it].label.toString()
+//            areaName = options3Items[mDataBinding!!.wheelPro.getCurrentItem()][it][0].label.toString()
+//
+//            val areaAdapter =
+//                ArrayWheelAdapter(options3Items[mDataBinding!!.wheelPro.getCurrentItem()].get(it))
+//            mDataBinding!!.wheelArea.setCurrentItem(0)
+//            mDataBinding!!.wheelArea.setAdapter(areaAdapter)
+//        }
+//
+//        val areaAdapter = ArrayWheelAdapter(options3Items[0][0])
+//        mDataBinding!!.wheelArea.setCurrentItem(0)
+//        mDataBinding!!.wheelArea.setAdapter(areaAdapter)
+//        mDataBinding!!.wheelArea.setOnItemSelectedListener {
+//            areaName = options3Items[mDataBinding!!.wheelPro.getCurrentItem()]
+//                .get(mDataBinding!!.wheelCity.getCurrentItem())[it].label.toString()
+//        }
     }
 
     @SuppressLint("UseKtx")
     private fun setWheel(view: WheelView) {
-        view.setItemsVisibleCount(6)
-        view.setCyclic(false)
-        view.setTextColorCenter(Color.BLACK)
-        view.setTextColorOut("#bfbfbf".toColorInt())
-        view.setDividerType(WheelView.DividerType.FILL)
-        view.setDividerColor("#00ffffff".toColorInt())
-        view.setLineSpacingMultiplier(2f)
+//        view.setItemsVisibleCount(6)
+//        view.setCyclic(false)
+//        view.setTextColorCenter(Color.BLACK)
+//        view.setTextColorOut("#bfbfbf".toColorInt())
+//        view.setDividerType(WheelView.DividerType.FILL)
+//        view.setDividerColor("#00ffffff".toColorInt())
+//        view.setLineSpacingMultiplier(2f)
     }
 
     class ViewClickCallBack {

@@ -2,8 +2,6 @@ package com.ssm.comm.config
 
 import android.os.Environment
 import com.ssm.comm.R
-import com.ssm.comm.ext.getToken
-import com.ssm.comm.ext.isEmpty
 import com.ssm.comm.app.appContext
 import java.io.File
 
@@ -65,9 +63,6 @@ object Constant {
         return String.format("%s%s",parent, PATH)
     }
 
-    fun isLogin(): Boolean {
-        return !isEmpty(getToken())
-    }
 
     const val H5_URL = "h5_url"
     const val URL_TYPE = "url_type"

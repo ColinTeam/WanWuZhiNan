@@ -8,7 +8,6 @@ import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.SettingData
 import com.wanwuzhinan.mingchang.ext.*
 import com.wanwuzhinan.mingchang.vm.UserViewModel
-import com.ssm.comm.ext.clearAllData
 import com.ssm.comm.ext.getCurrentVersionCode
 import com.ssm.comm.ext.getCurrentVersionName
 import com.ssm.comm.ext.toastSuccess
@@ -20,6 +19,7 @@ import com.wanwuzhinan.mingchang.ui.phone.fra.ExchangeCourseFragment
 import com.wanwuzhinan.mingchang.ui.phone.fra.ReportFragment
 import com.wanwuzhinan.mingchang.ui.phone.fra.SettingFragment
 import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
+import com.wanwuzhinan.mingchang.utils.clearAllData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

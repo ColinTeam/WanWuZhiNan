@@ -1,17 +1,24 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
+import com.ssm.comm.config.Constant
+import com.ssm.comm.ext.editChange
+import com.ssm.comm.ext.initEditChange
+import com.ssm.comm.ext.observeState
+import com.ssm.comm.ext.setOnClickNoRepeat
+import com.ssm.comm.ext.toastError
+import com.ssm.comm.ext.toastSuccess
+import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.ActivityLoginBinding
 import com.wanwuzhinan.mingchang.ext.editTips
 import com.wanwuzhinan.mingchang.ext.getCode
-import com.wanwuzhinan.mingchang.ext.launchMainActivity
-import com.wanwuzhinan.mingchang.vm.LoginViewModel
-import com.ssm.comm.config.Constant
-import com.ssm.comm.ext.*
-import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.isPhone
+import com.wanwuzhinan.mingchang.ext.launchMainActivity
 import com.wanwuzhinan.mingchang.ui.publics.WebViewActivity
+import com.wanwuzhinan.mingchang.utils.getClearAccount
+import com.wanwuzhinan.mingchang.utils.setData
+import com.wanwuzhinan.mingchang.vm.LoginViewModel
 
 class LoginActivity  : BaseActivity<ActivityLoginBinding, LoginViewModel>(LoginViewModel()) {
 

@@ -5,7 +5,7 @@ import com.comm.net_work.base.BaseRetrofitBuilder
 import com.comm.net_work.interceptor.HttpCommonInterceptor
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.getCurrentVersionName
-import com.ssm.comm.ext.getToken
+import com.wanwuzhinan.mingchang.utils.getToken
 import okhttp3.OkHttpClient
 
 /**
