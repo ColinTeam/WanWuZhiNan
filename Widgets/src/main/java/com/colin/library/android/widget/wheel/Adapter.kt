@@ -7,10 +7,9 @@ package com.colin.library.android.widget.wheel
  *
  * Des   :Adapter
  */
-abstract class BaseWheelAdapter<T>(data: List<T>? = null) {
+abstract class BaseAdapter<T>(data: List<T>? = null) {
 
     private val dataList: MutableList<T> = mutableListOf()
-
     private var isRangeData: Boolean = false
     private val rangeDataList: MutableList<T> by lazy { mutableListOf<T>() }
     var isCyclic: Boolean = false
@@ -69,10 +68,10 @@ abstract class BaseWheelAdapter<T>(data: List<T>? = null) {
  * WheelView Adapter 的实现类
  **/
 open class ArrayWheelAdapter<T> @JvmOverloads constructor(data: List<T>? = null) :
-    BaseWheelAdapter<T>(data) {
+    BaseAdapter<T>(data) {
 
-    internal var textFormatter: TextFormatter? = null
     internal var formatter: ((Any?) -> String)? = null
+    internal var textFormatter: TextFormatter? = null
     internal var finishScrollCallback: OnFinishScrollCallback? = null
     internal var selectedPosition: Int = 0
     internal var itemIndexer: ItemIndexer? = null
@@ -107,20 +106,16 @@ open class ArrayWheelAdapter<T> @JvmOverloads constructor(data: List<T>? = null)
      */
     @JvmOverloads
     fun indexOf(item: Any?, isCompareFormatText: Boolean = false): Int {
-        return itemIndexer?.indexOf(this, item) ?: (itemIndexerBlock?.invoke(this, item)
+        return itemIndexer?.indexOf(item) ?: (itemIndexerBlock?.invoke(this, item)
             ?: internalIndexOf(item, isCompareFormatText))
     }
 
     private fun internalIndexOf(item: Any?, isCompareFormatText: Boolean): Int {
         for (i in getData().indices) {
             if (isCompareFormatText) {
-                if (getItemTextByIndex(i) == item) {
-                    return i
-                }
+                if (getItemTextByIndex(i) == item) return i
             } else {
-                if (getData()[i] == item) {
-                    return i
-                }
+                if (getData()[i] == item) return i
             }
         }
         return -1
@@ -159,7 +154,6 @@ open class ArrayWheelAdapter<T> @JvmOverloads constructor(data: List<T>? = null)
     }
 
     internal interface OnFinishScrollCallback {
-
         fun onFinishScroll()
     }
 }
@@ -168,8 +162,7 @@ open class ArrayWheelAdapter<T> @JvmOverloads constructor(data: List<T>? = null)
 /**
  * item 索引器，用来自定义 indexOf 逻辑
  *
- * @author zyyoona7
  */
 interface ItemIndexer {
-    fun indexOf(adapter: ArrayWheelAdapter<*>, item: Any?): Int
+    fun indexOf(item: Any?): Int
 }

@@ -1,6 +1,7 @@
 package com.wanwuzhinan.mingchang.ui.phone.fra
 
 
+import android.annotation.SuppressLint
 import android.text.TextUtils
 import com.colin.library.android.image.glide.GlideImgManager
 import com.luck.picture.lib.entity.LocalMedia
@@ -20,7 +21,7 @@ import com.wanwuzhinan.mingchang.data.GradeData
 import com.wanwuzhinan.mingchang.data.ProvinceListData
 import com.wanwuzhinan.mingchang.databinding.FragmentEditFileBinding
 import com.wanwuzhinan.mingchang.entity.UserInfoData
-import com.wanwuzhinan.mingchang.ui.pop.ChooseCityDialog
+import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseDialog
 import com.wanwuzhinan.mingchang.view.GlideEngine
 import com.wanwuzhinan.mingchang.vm.UserViewModel
@@ -126,6 +127,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun initClick() {
 
         initEditChange(mDataBinding.tvUserName) {
@@ -167,18 +169,30 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                         toastSuccess("网络不佳，请退出重试")
                         return@setOnClickNoRepeat
                     }
-
-                    ChooseCityDialog(mAddressList!!, callback = {
-                        onSure = { s1, s2, s3 ->
-                            mProvinceName = s1
-                            mCityName = s2
-                            mAreaName = s3
-                            mDataBinding.tvAddress.text = "${s1} ${s2} ${s3}"
-                            if (s2.contains(s1)) {
-                                mDataBinding.tvAddress.text = "${s1} ${s3}"
+                    ChooseAreaDialog.newInstance(
+                        mAddressList!!, mProvinceName, mCityName, mAreaName
+                    ).apply {
+                        sure = { province, city, area ->
+                            mProvinceName = province
+                            mCityName = city
+                            mAreaName = area
+                            mDataBinding.tvAddress.text = "$province $city $area"
+                            if (city.contains(province)) {
+                                mDataBinding.tvAddress.text = "$province $area"
                             }
                         }
-                    }).show(mActivity.supportFragmentManager, "CommDialog")
+                    }.show(this@SettingFragment)
+//                    ChooseCityDialog(mAddressList!!, callback = {
+//                        onSure = { s1, s2, s3 ->
+//                            mProvinceName = s1
+//                            mCityName = s2
+//                            mAreaName = s3
+//                            mDataBinding.tvAddress.text = "${s1} ${s2} ${s3}"
+//                            if (s2.contains(s1)) {
+//                                mDataBinding.tvAddress.text = "${s1} ${s3}"
+//                            }
+//                        }
+//                    }).show(mActivity.supportFragmentManager, "CommDialog")
 
 //                    ChooseCityUtils.showCityPickerView(context,"",mAddressList!!){
 //                            province,city,area ->
@@ -302,12 +316,11 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
 
     fun showGradeDialog(data: GradeData?) {
         val list = data?.listArr ?: return
-        val dialog = ChooseDialog.newInstance(getString(R.string.choose_title_grade), list).apply {
+        ChooseDialog.newInstance(getString(R.string.choose_title_grade), list).apply {
             sure = {
                 mDataBinding.tvGrade.text = list[it]
             }
-        }
-        dialog.show(this)
+        }.show(this)
     }
 
 }

@@ -35,6 +35,7 @@
 
     <string name="choose_title_sex">选择性别</string>
     <string name="choose_title_grade">选择年级</string>
+    <string name="choose_title_area">选择地区</string>
     <string name="man">男</string>
     <string name="woman">女</string>
     <string name="input_address_details_hint">请填写街道、楼牌号等</string>

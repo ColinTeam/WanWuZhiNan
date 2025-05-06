@@ -25,10 +25,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "WanWuZhiNan"
 include(":app")
-include(":banner")
+//include(":banner")
 include(":comm")
-include(":img_load")
-include(":library")
+//include(":img_load")
+//include(":library")
 include(":net_work")
 include(":superplayerkit")
 include ':Utils'

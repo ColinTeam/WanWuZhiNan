@@ -73,21 +73,21 @@ open class WheelView @JvmOverloads constructor(
     /**
      * 画笔
      */
-    private val normalPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val mainTextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
+    private val dividerPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val centerTextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
     private val leftTextPaint =
         TextPaint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
     private val rightTextPaint =
         TextPaint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
 
-    private val mainTextRect = Rect()
+    private val centerTextRect = Rect()
     private val leftTextRect = Rect()
     private val rightTextRect = Rect()
 
     /**
      * 文字的最大宽度
      */
-    private var mainTextMaxWidth: Int = 0
+    private var centerTextMaxWidth: Int = 0
 
     /**
      * 测量文字完成后的原始宽度
@@ -104,7 +104,7 @@ open class WheelView @JvmOverloads constructor(
     /**
      * 文字高度
      */
-    private var mainTextHeight: Int = 0
+    private var centerTextHeight: Int = 0
     private var leftTextHeight: Int = 0
     private var rightTextHeight: Int = 0
 
@@ -210,19 +210,16 @@ open class WheelView @JvmOverloads constructor(
     /**
      * 当前选中的下标
      */
-    private var selectedPosition: Int = 0/*
-      ---------- 文字相关 ----------
-     */
+    private var selectedPosition: Int = 0
 
     /**
      * 最大文本宽度测量模式，适当的模式可以减少文字测量时间
      */
     var maxTextWidthMeasureType: MeasureType = MeasureType.DEFAULT
         set(value) {
-            if (value != field) {
-                field = value
-                notifyChanged()
-            }
+            if (value == field) return
+            field = value
+            notifyChanged()
         }
 
     /**
@@ -233,10 +230,9 @@ open class WheelView @JvmOverloads constructor(
      */
     var gravity: Int = Gravity.CENTER
         set(value) {
-            if (value != field) {
-                field = value
-                notifyDataSetChanged()
-            }
+            if (value == field) return
+            field = value
+            notifyDataSetChanged()
         }
 
     /**
@@ -244,9 +240,7 @@ open class WheelView @JvmOverloads constructor(
      */
     var textSize: Int = DEFAULT_TEXT_SIZE
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             notifyDataSetChanged()
         }
@@ -256,6 +250,7 @@ open class WheelView @JvmOverloads constructor(
      */
     var isAutoFitTextSize: Boolean = false
         set(value) {
+            if (value == field) return
             field = value
             notifyDataSetChanged()
         }
@@ -265,9 +260,7 @@ open class WheelView @JvmOverloads constructor(
      */
     var minTextSize: Int = DEFAULT_MIN_TEXT_SIZE
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             notifyChanged()
         }
@@ -277,9 +270,7 @@ open class WheelView @JvmOverloads constructor(
      */
     var textAlign: Paint.Align = Paint.Align.CENTER
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             notifyTextAlignChanged()
         }
@@ -290,9 +281,7 @@ open class WheelView @JvmOverloads constructor(
     @ColorInt
     var normalTextColor: Int = DEFAULT_NORMAL_TEXT_COLOR
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             invalidate()
         }
@@ -303,9 +292,7 @@ open class WheelView @JvmOverloads constructor(
     @ColorInt
     var selectedTextColor: Int = DEFAULT_SELECTED_TEXT_COLOR
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             invalidate()
         }
@@ -317,9 +304,7 @@ open class WheelView @JvmOverloads constructor(
      */
     var textPaddingLeft: Int = DEFAULT_TEXT_PADDING
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             requestLayout()
         }
@@ -331,9 +316,7 @@ open class WheelView @JvmOverloads constructor(
      */
     var textPaddingRight: Int = DEFAULT_TEXT_PADDING
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             requestLayout()
         }
@@ -354,30 +337,12 @@ open class WheelView @JvmOverloads constructor(
     private var boldTypeface: Typeface? = null
 
     /**
-     * 是否绘制debug文字区域边界
-     */
-    var drawDebugRectEnabled: Boolean = false
-        set(value) {
-            if (value == field) {
-                return
-            }
-            field = value
-            invalidate()
-        }
-
-    /*
-      ---------- 文字相关 ----------
-     */
-
-    /**
      * 可见的item条数
      */
     var visibleItems: Int = DEFAULT_VISIBLE_ITEM
         set(value) {
             val newValue = adjustVisibleItems(value)
-            if (newValue == field) {
-                return
-            }
+            if (newValue == field) return
             field = newValue
             notifyChanged()
         }
@@ -387,9 +352,7 @@ open class WheelView @JvmOverloads constructor(
      */
     var lineSpacing: Int = DEFAULT_LINE_SPACING
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             notifyChanged()
         }
@@ -405,22 +368,14 @@ open class WheelView @JvmOverloads constructor(
             notifyCyclicChanged()
         }
 
-    /*
-      ---------- 分割线相关 ----------
-     */
-
     /**
      * 是否显示分割线
      */
     var isShowDivider: Boolean = false
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
-            if (dividerOffsetY > 0) {
-                calculateTopAndBottomLimit()
-            }
+            if (dividerOffsetY > 0) calculateTopAndBottomLimit()
             invalidate()
         }
 
@@ -429,23 +384,18 @@ open class WheelView @JvmOverloads constructor(
      */
     var dividerColor: Int = DEFAULT_SELECTED_TEXT_COLOR
         set(@ColorInt value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
-            if (isShowDivider) {
-                invalidate()
-            }
+            if (isShowDivider) invalidate()
         }
 
     /**
      * 分割线高度
      */
+    @Px
     var dividerHeight: Int = DEFAULT_DIVIDER_HEIGHT
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             if (isShowDivider) {
                 invalidate()
@@ -457,9 +407,7 @@ open class WheelView @JvmOverloads constructor(
      */
     var dividerType: DividerType = DividerType.FILL
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             if (isShowDivider) {
                 invalidate()
@@ -471,13 +419,9 @@ open class WheelView @JvmOverloads constructor(
      */
     var dividerPadding: Int = 0
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
-            if (isShowDivider) {
-                invalidate()
-            }
+            if (isShowDivider) invalidate()
         }
 
     /**
@@ -485,13 +429,9 @@ open class WheelView @JvmOverloads constructor(
      */
     var dividerCap: Paint.Cap = Paint.Cap.ROUND
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
-            if (isShowDivider) {
-                invalidate()
-            }
+            if (isShowDivider) invalidate()
         }
 
     /**
@@ -499,9 +439,7 @@ open class WheelView @JvmOverloads constructor(
      */
     var dividerOffsetY: Int = 0
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             if (isShowDivider) {
                 calculateTopAndBottomLimit()
@@ -509,22 +447,12 @@ open class WheelView @JvmOverloads constructor(
             }
         }
 
-    /*
-      ---------- 分割线相关 ----------
-     */
-
-    /*
-      ---------- 选中区域蒙层相关 ----------
-     */
-
     /**
      * 是否绘制选中区域
      */
     var isShowCurtain: Boolean = false
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             invalidate()
         }
@@ -535,22 +463,10 @@ open class WheelView @JvmOverloads constructor(
     @ColorInt
     var curtainColor: Int = Color.TRANSPARENT
         set(@ColorInt value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
-            if (isShowCurtain) {
-                invalidate()
-            }
+            if (isShowCurtain) invalidate()
         }
-
-    /*
-      ---------- 选中区域蒙层相关 ----------
-     */
-
-    /*
-      ---------- 3D效果相关 ----------
-     */
 
     /**
      * 是否是弯曲（3D）效果
@@ -608,10 +524,6 @@ open class WheelView @JvmOverloads constructor(
             invalidate()
         }
 
-    /*
-      ---------- 3D效果相关 ----------
-     */
-
     /**
      * 是否开启音频效果
      */
@@ -628,10 +540,6 @@ open class WheelView @JvmOverloads constructor(
      */
     var isResetSelectedPosition = false
 
-    /*
-      ---------- 选中范围限制 ----------
-     */
-
     private var maxSelectedPosition: Int = -1
     private var minSelectedPosition: Int = -1
 
@@ -643,28 +551,18 @@ open class WheelView @JvmOverloads constructor(
     /**
      * setSelectedRange 后，展示和操作形式 @see [OverRangeMode]
      */
-    private var mOverRangeMode: OverRangeMode = OverRangeMode.NORMAL/*
-      ---------- 选中范围限制 ----------
-     */
+    private var mOverRangeMode: OverRangeMode = OverRangeMode.NORMAL
 
-    /*
-      ---------- 左右额外文字相关 ----------
-     */
-
-    var leftText: CharSequence = ""
+    var leftText: CharSequence? = null
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             notifyChanged()
         }
 
-    var rightText: CharSequence = ""
+    var rightText: CharSequence? = null
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             notifyChanged()
         }
@@ -672,9 +570,7 @@ open class WheelView @JvmOverloads constructor(
     @Px
     var leftTextSize: Int = DEFAULT_TEXT_SIZE
         set(value) {
-            if (value == field) {
-                return
-            }
+            if (value == field) return
             field = value
             notifyChanged()
         }
@@ -747,21 +643,9 @@ open class WheelView @JvmOverloads constructor(
             invalidate()
         }
 
-    /*
-      ---------- 左右额外文字相关 ----------
-     */
-
-    /*
-      ---------- 监听器 -----------
-     */
-
-    private var itemSelectedListener: ((WheelView, Int) -> Unit)? = null
+    private var itemSelectedListener: ((Int) -> Unit) = {}
     private var scrollChangedListener: OnScrollChangedListener? = null
     private var itemPositionChangedListener: OnItemPositionChangedListener? = null
-
-    /*
-      ---------- 监听器 ----------
-     */
 
     /**
      * adapter 中的 textFormatter
@@ -851,10 +735,6 @@ open class WheelView @JvmOverloads constructor(
          */
         const val DIVIDER_WRAP_ALL = 2
 
-        /*
-          ---------- 三种测量文字最大宽度的模式 ----------
-         */
-
         /**
          * 按照相同宽度测量，即只测量一个 item 的宽度来作为数据的最大宽度
          */
@@ -943,7 +823,7 @@ open class WheelView @JvmOverloads constructor(
         val viewConfiguration = ViewConfiguration.get(context)
         maxFlingVelocity = viewConfiguration.scaledMaximumFlingVelocity
         minFlingVelocity = viewConfiguration.scaledMinimumFlingVelocity
-        mainTextPaint.textAlign = textAlign
+        centerTextPaint.textAlign = textAlign
         leftTextPaint.textAlign = Paint.Align.CENTER
         rightTextPaint.textAlign = Paint.Align.CENTER
         context.withStyledAttributes(attrs, R.styleable.WheelView, defStyleAttr, 0) {
@@ -966,8 +846,8 @@ open class WheelView @JvmOverloads constructor(
             textPaddingRight =
                 getDimensionPixelSize(R.styleable.WheelView_wheel_textPaddingRight, textPadding)
 
-            leftText = getString(R.styleable.WheelView_wheel_leftText) ?: ""
-            rightText = getString(R.styleable.WheelView_wheel_rightText) ?: ""
+            leftText = getString(R.styleable.WheelView_wheel_leftText)
+            rightText = getString(R.styleable.WheelView_wheel_rightText)
             leftTextSize = getDimensionPixelSize(
                 R.styleable.WheelView_wheel_leftTextSize, DEFAULT_TEXT_SIZE
             )
@@ -1000,16 +880,16 @@ open class WheelView @JvmOverloads constructor(
                 R.styleable.WheelView_wheel_lineSpacing, DEFAULT_LINE_SPACING
             )
 
-            visibleItems = getInt(R.styleable.WheelView_wheel_visibleItems, DEFAULT_VISIBLE_ITEM)
             //跳转可见item为奇数
-            visibleItems = adjustVisibleItems(visibleItems)
+            visibleItems = adjustVisibleItems(
+                getInt(R.styleable.WheelView_wheel_visibleItems, DEFAULT_VISIBLE_ITEM)
+            )
             val selectedPosition = getInt(R.styleable.WheelView_wheel_selected, 0)
             val maxSelectedPosition =
                 getInt(R.styleable.WheelView_wheel_selectedMax, Constants.INVALID)
             val minSelectedPosition =
                 getInt(R.styleable.WheelView_wheel_selectedMin, Constants.INVALID)
             initSelectedPositionAndRange(selectedPosition, minSelectedPosition, maxSelectedPosition)
-
 
             isShowDivider = getBoolean(R.styleable.WheelView_wheel_showDivider, false)
             dividerType =
@@ -1072,7 +952,7 @@ open class WheelView @JvmOverloads constructor(
      * @return 调整后的可见条目数
      */
     private fun adjustVisibleItems(visibleItems: Int): Int {
-        return abs(visibleItems / 2 * 2 + 1) // 当传入的值为偶数时,换算成奇数;
+        return if (visibleItems % 2 == 0) visibleItems + 1 else visibleItems
     }
 
 
@@ -1102,9 +982,10 @@ open class WheelView @JvmOverloads constructor(
         } else {
             itemHeight * visibleItems + paddingTop + paddingBottom
         }
-        val leftTextExtraWidth = if (leftText.isEmpty()) 0 else leftTextWidth + leftTextMarginRight
+        val leftTextExtraWidth =
+            if (leftText.isNullOrEmpty()) 0 else leftTextWidth + leftTextMarginRight
         val rightTextExtraWidth =
-            if (rightText.isEmpty()) 0 else rightTextWidth + rightTextMarginLeft
+            if (rightText.isNullOrEmpty()) 0 else rightTextWidth + rightTextMarginLeft
         //默认主体文字是居中的，所以如果左右有额外文字的话需要保证主体文字居中，宽度计算需要根据左右文字较大的一个*2
         val leftAndRightExtraWidth = if (gravity == Gravity.CENTER_HORIZONTAL) {
             leftTextExtraWidth + rightTextExtraWidth
@@ -1112,12 +993,12 @@ open class WheelView @JvmOverloads constructor(
             max(leftTextExtraWidth, rightTextExtraWidth) * 2
         }
         var width: Int =
-            mainTextMaxWidth + leftAndRightExtraWidth + textPaddingLeft + textPaddingRight + paddingLeft + paddingRight
+            centerTextMaxWidth + leftAndRightExtraWidth + textPaddingLeft + textPaddingRight + paddingLeft + paddingRight
         //根据偏移计算偏移造成的额外宽度
         if (isCurved && (curvedArcDirection == CurvedArcDirection.LEFT || curvedArcDirection == CurvedArcDirection.RIGHT)) {
             val towardRange = (sin(Math.PI / 48) * height * curvedArcDirectionFactor).toInt()
             //如果偏移时候宽度足够则不需要增加宽度，如果宽度不足则增加宽度以适配偏移
-            if (width <= mainTextMaxWidth + towardRange) {
+            if (width <= centerTextMaxWidth + towardRange) {
                 width += towardRange
                 curvedArcWidth = towardRange
             } else {
@@ -1127,8 +1008,8 @@ open class WheelView @JvmOverloads constructor(
 
         val realWidth = resolveSize(width, widthMeasureSpec)
         if (realWidth > 0 && width > realWidth) {
-            //测量的宽度比实际宽度要大，重新设置 mainTextMaxWidth
-            mainTextMaxWidth =
+            //测量的宽度比实际宽度要大，重新设置 centerTextMaxWidth
+            centerTextMaxWidth =
                 realWidth - textPaddingLeft - textPaddingRight - leftAndRightExtraWidth - paddingLeft - paddingRight - curvedArcWidth
             //最大宽度变了，则标记一下
             isDataSetChanged = true
@@ -1164,14 +1045,14 @@ open class WheelView @JvmOverloads constructor(
             resizeArray.clear()
             for (i in 0 until it.getItemCount()) {
                 val measureText = it.getItemText(it.getItemData(i))
-                val textWidth = mainTextPaint.measureText(measureText).toInt()
-                if (textWidth > mainTextMaxWidth) {
+                val textWidth = centerTextPaint.measureText(measureText).toInt()
+                if (textWidth > centerTextMaxWidth) {
                     val newTextSize = resizeTextSize(measureText, textWidth)
                     resizeArray.put(i, newTextSize)
                 }
             }
             //测量结束 恢复字体大小
-            mainTextPaint.textSize = textSize.toFloat()
+            centerTextPaint.textSize = textSize.toFloat()
         }
     }
 
@@ -1180,7 +1061,7 @@ open class WheelView @JvmOverloads constructor(
      */
     private fun resizeTextSize(measureText: String, textWidth: Int): Float {
         //通过计算得出大概的期望文字大小
-        val hopeTextSize: Float = mainTextMaxWidth * 1f / textWidth * textSize
+        val hopeTextSize: Float = centerTextMaxWidth * 1f / textWidth * textSize
         if (hopeTextSize < minTextSize) {
             return minTextSize.toFloat()
         }
@@ -1188,8 +1069,8 @@ open class WheelView @JvmOverloads constructor(
         var finalTextSize = hopeTextSize
         var isFirstDo = true
         do {
-            mainTextPaint.textSize = finalTextSize
-            newTextWidth = mainTextPaint.measureText(measureText)
+            centerTextPaint.textSize = finalTextSize
+            newTextWidth = centerTextPaint.measureText(measureText)
             if (!isFirstDo) {
                 finalTextSize -= 1
                 if (finalTextSize < minTextSize) {
@@ -1198,9 +1079,9 @@ open class WheelView @JvmOverloads constructor(
                 }
             }
             isFirstDo = false
-        } while (newTextWidth > mainTextMaxWidth)
+        } while (newTextWidth > centerTextMaxWidth)
         //恢复textSize
-        mainTextPaint.textSize = textSize.toFloat()
+        centerTextPaint.textSize = textSize.toFloat()
         return finalTextSize
     }
 
@@ -1215,15 +1096,15 @@ open class WheelView @JvmOverloads constructor(
     private fun calculateTextSizeAndItemHeight(isDataSetChanged: Boolean) {
         calculateLeftTextWidth()
         calculateRightTextWidth()
-        //数据变化时或者mainTextMaxWidth已经变化 才重新测量文字宽高，减少计算量
-        if (isDataSetChanged || mainTextMaxWidth <= 0 || originTextMaxWidth != mainTextMaxWidth) {
+        //数据变化时或者centerTextMaxWidth已经变化 才重新测量文字宽高，减少计算量
+        if (isDataSetChanged || centerTextMaxWidth <= 0 || originTextMaxWidth != centerTextMaxWidth) {
             calculateMaxTextWidth()
         }
         calculateItemHeight()
     }
 
     private fun calculateLeftTextWidth() {
-        if (leftText.isEmpty()) {
+        if (leftText.isNullOrEmpty()) {
             leftTextWidth = 0
             leftTextHeight = 0
             return
@@ -1234,7 +1115,7 @@ open class WheelView @JvmOverloads constructor(
     }
 
     private fun calculateRightTextWidth() {
-        if (rightText.isEmpty()) {
+        if (rightText.isNullOrEmpty()) {
             rightTextWidth = 0
             rightTextHeight = 0
             return
@@ -1254,14 +1135,14 @@ open class WheelView @JvmOverloads constructor(
                 return
             }
             //重新测量时 清除之前计算的值
-            mainTextMaxWidth = 0
-            mainTextPaint.textSize = textSize.toFloat()
+            centerTextMaxWidth = 0
+            centerTextPaint.textSize = textSize.toFloat()
             if (maxTextWidthMeasureType == MeasureType.SAME_WIDTH) {
-                mainTextMaxWidth =
-                    mainTextPaint.measureText(it.getItemText(it.getItemData(0))).toInt()
+                centerTextMaxWidth =
+                    centerTextPaint.measureText(it.getItemText(it.getItemData(0))).toInt()
             } else if (maxTextWidthMeasureType == MeasureType.SAME_WIDTH_WITH_NUM) {
-                mainTextMaxWidth =
-                    calculateMainTextMaxWidthBySameWidthWithNum(it.getItemText(it.getItemData(0)))
+                centerTextMaxWidth =
+                    calculatecenterTextMaxWidthBySameWidthWithNum(it.getItemText(it.getItemData(0)))
             } else {
                 var maxLength = -1
                 for (i in 0 until it.getItemCount()) {
@@ -1277,21 +1158,21 @@ open class WheelView @JvmOverloads constructor(
                     } else {
                         text
                     }
-                    val textWidth = mainTextPaint.measureText(realText).toInt()
-                    mainTextMaxWidth = max(textWidth, mainTextMaxWidth)
+                    val textWidth = centerTextPaint.measureText(realText).toInt()
+                    centerTextMaxWidth = max(textWidth, centerTextMaxWidth)
                 }
             }
             //保存测量完的文字最大宽度
-            originTextMaxWidth = mainTextMaxWidth
-            mainTextHeight =
-                (mainTextPaint.fontMetrics.bottom - mainTextPaint.fontMetrics.top).toInt()
+            originTextMaxWidth = centerTextMaxWidth
+            centerTextHeight =
+                (centerTextPaint.fontMetrics.bottom - centerTextPaint.fontMetrics.top).toInt()
         } ?: logAdapterNull()
     }
 
-    private fun calculateMainTextMaxWidthBySameWidthWithNum(itemText: String): Int {
+    private fun calculatecenterTextMaxWidthBySameWidthWithNum(itemText: String): Int {
         val maxWidthNum = calculateMaxWidthNum()
         val measureText = itemText.replace(Regex("\\d"), maxWidthNum.toString())
-        return mainTextPaint.measureText(measureText).roundToInt()
+        return centerTextPaint.measureText(measureText).roundToInt()
     }
 
     private fun calculateMaxWidthNum(): Int {
@@ -1299,7 +1180,7 @@ open class WheelView @JvmOverloads constructor(
         var maxNumWidth = 0
         var maxNum = 0
         for (i in 0..9) {
-            val currentWidth = mainTextPaint.measureText(i.toString()).roundToInt()
+            val currentWidth = centerTextPaint.measureText(i.toString()).roundToInt()
             if (currentWidth > maxNumWidth) {
                 maxNum = i
                 maxNumWidth = currentWidth
@@ -1310,18 +1191,19 @@ open class WheelView @JvmOverloads constructor(
 
     private fun calculateTextRect() {
         val centerY = measuredHeight / 2
-        val leftTextExtraWidth = if (leftText.isEmpty()) 0 else leftTextWidth + leftTextMarginRight
+        val leftTextExtraWidth =
+            if (leftText.isNullOrEmpty()) 0 else leftTextWidth + leftTextMarginRight
         val rightTextExtraWidth =
-            if (rightText.isEmpty()) 0 else rightTextWidth + rightTextMarginLeft
+            if (rightText.isNullOrEmpty()) 0 else rightTextWidth + rightTextMarginLeft
 
         val mainLeft = when (gravity) {
-            Gravity.CENTER_HORIZONTAL -> (measuredWidth - leftTextExtraWidth - mainTextMaxWidth - rightTextExtraWidth) / 2 + leftTextExtraWidth
+            Gravity.CENTER_HORIZONTAL -> (measuredWidth - leftTextExtraWidth - centerTextMaxWidth - rightTextExtraWidth) / 2 + leftTextExtraWidth
 
-            else -> measuredWidth / 2 - mainTextMaxWidth / 2
+            else -> measuredWidth / 2 - centerTextMaxWidth / 2
         }
-        val mainTop = centerY - mainTextHeight / 2
-        mainTextRect.set(
-            mainLeft, mainTop, mainLeft + mainTextMaxWidth, mainTop + mainTextHeight
+        val mainTop = centerY - centerTextHeight / 2
+        centerTextRect.set(
+            mainLeft, mainTop, mainLeft + centerTextMaxWidth, mainTop + centerTextHeight
         )
 
         calculateLeftTextRect()
@@ -1331,25 +1213,25 @@ open class WheelView @JvmOverloads constructor(
     }
 
     private fun calculateLeftTextRect() {
-        if (leftText.isEmpty()) return
-        val leftTextLeft = mainTextRect.left - leftTextMarginRight - leftTextWidth
+        if (leftText.isNullOrEmpty()) return
+        val leftTextLeft = centerTextRect.left - leftTextMarginRight - leftTextWidth
         val leftTextTop = when (leftTextGravity) {
-            Gravity.TOP -> mainTextRect.top
-            Gravity.BOTTOM -> mainTextRect.bottom - leftTextHeight
-            else -> mainTextRect.centerY() - leftTextHeight / 2
+            Gravity.TOP -> centerTextRect.top
+            Gravity.BOTTOM -> centerTextRect.bottom - leftTextHeight
+            else -> centerTextRect.centerY() - leftTextHeight / 2
         }
-        leftTextRect.set(leftTextLeft, leftTextTop, leftTextLeft + leftTextWidth, leftTextTop + leftTextHeight)
+        leftTextRect.set(
+            leftTextLeft, leftTextTop, leftTextLeft + leftTextWidth, leftTextTop + leftTextHeight
+        )
     }
 
     private fun calculateRightTextRect() {
-        if (rightText.isEmpty()) {
-            return
-        }
-        val rightTextLeft = mainTextRect.left + mainTextMaxWidth + rightTextMarginLeft
+        if (rightText.isNullOrEmpty()) return
+        val rightTextLeft = centerTextRect.left + centerTextMaxWidth + rightTextMarginLeft
         val rightTextTop = when (rightTextGravity) {
-            Gravity.TOP -> mainTextRect.top
-            Gravity.BOTTOM -> mainTextRect.bottom - rightTextHeight
-            else -> mainTextRect.centerY() - rightTextHeight / 2
+            Gravity.TOP -> centerTextRect.top
+            Gravity.BOTTOM -> centerTextRect.bottom - rightTextHeight
+            else -> centerTextRect.centerY() - rightTextHeight / 2
         }
         rightTextRect.set(
             rightTextLeft,
@@ -1365,7 +1247,7 @@ open class WheelView @JvmOverloads constructor(
     private fun calculateItemHeight() {
         //itemHeight实际等于字体高度+一个行间距
         itemHeight =
-            (mainTextPaint.fontMetrics.bottom - mainTextPaint.fontMetrics.top + lineSpacing).toInt()
+            (centerTextPaint.fontMetrics.bottom - centerTextPaint.fontMetrics.top + lineSpacing).toInt()
     }
 
     /**
@@ -1373,9 +1255,9 @@ open class WheelView @JvmOverloads constructor(
      */
     private fun calculateDrawStart() {
         textDrawStartX = when (textAlign) {
-            Paint.Align.LEFT -> mainTextRect.left
-            Paint.Align.RIGHT -> mainTextRect.right
-            else -> mainTextRect.centerX()
+            Paint.Align.LEFT -> centerTextRect.left
+            Paint.Align.RIGHT -> centerTextRect.right
+            else -> centerTextRect.centerX()
         }
     }
 
@@ -1460,11 +1342,8 @@ open class WheelView @JvmOverloads constructor(
 
         //绘制item
         for (i in minIndex until maxIndex) {
-            if (isCurved) {
-                drawCurvedItem(canvas, i, scrolledOffset, scrolledItem)
-            } else {
-                drawNormalItem(canvas, i, scrolledOffset, scrolledItem)
-            }
+            if (isCurved) drawCurvedItem(canvas, i, scrolledOffset, scrolledItem)
+            else drawNormalItem(canvas, i, scrolledOffset, scrolledItem)
         }
 
     }
@@ -1475,16 +1354,14 @@ open class WheelView @JvmOverloads constructor(
      * @param canvas 画布
      */
     private fun drawCurtainRect(canvas: Canvas) {
-        if (!isShowCurtain) {
-            return
-        }
-        normalPaint.color = curtainColor
+        if (!isShowCurtain) return
+        dividerPaint.color = curtainColor
         canvas.drawRect(
             clipLeft.toFloat(),
             selectedItemTopLimit.toFloat(),
             clipRight.toFloat(),
             selectedItemBottomLimit.toFloat(),
-            normalPaint
+            dividerPaint
         )
     }
 
@@ -1494,20 +1371,18 @@ open class WheelView @JvmOverloads constructor(
      * @param canvas 画布
      */
     private fun drawDivider(canvas: Canvas) {
-        if (!isShowDivider) {
-            return
-        }
-        normalPaint.color = dividerColor
-        val originStrokeWidth = normalPaint.strokeWidth
-        normalPaint.strokeJoin = Paint.Join.ROUND
-        normalPaint.strokeCap = dividerCap
-        normalPaint.strokeWidth = dividerHeight.toFloat()
+        if (!isShowDivider) return
+        dividerPaint.color = dividerColor
+        val originStrokeWidth = dividerPaint.strokeWidth
+        dividerPaint.strokeJoin = Paint.Join.ROUND
+        dividerPaint.strokeCap = dividerCap
+        dividerPaint.strokeWidth = dividerHeight.toFloat()
         val startX: Float
         val stopX: Float
         when (dividerType) {
             DividerType.WRAP -> {
-                val wStartX = mainTextRect.left - dividerPadding
-                val wStopX = mainTextRect.right + dividerPadding
+                val wStartX = centerTextRect.left - dividerPadding
+                val wStopX = centerTextRect.right + dividerPadding
                 //边界处理 超过边界直接按照DIVIDER_TYPE_FILL类型处理
                 startX = if (wStartX < clipLeft) clipLeft.toFloat() else wStartX.toFloat()
                 stopX = if (wStopX > clipRight) clipRight.toFloat() else wStopX.toFloat()
@@ -1515,9 +1390,9 @@ open class WheelView @JvmOverloads constructor(
 
             DividerType.WRAP_ALL -> {
                 val aStartX =
-                    mainTextRect.left - leftTextWidth - leftTextMarginRight - dividerPadding
+                    centerTextRect.left - leftTextWidth - leftTextMarginRight - dividerPadding
                 val aStopX =
-                    mainTextRect.right + rightTextWidth + rightTextMarginLeft + dividerPadding
+                    centerTextRect.right + rightTextWidth + rightTextMarginLeft + dividerPadding
                 //边界处理 超过边界直接按照DIVIDER_TYPE_FILL类型处理
                 startX = if (aStartX < clipLeft) clipLeft.toFloat() else aStartX.toFloat()
                 stopX = if (aStopX > clipRight) clipRight.toFloat() else aStopX.toFloat()
@@ -1533,48 +1408,35 @@ open class WheelView @JvmOverloads constructor(
             selectedItemTopLimit.toFloat(),
             stopX,
             selectedItemTopLimit.toFloat(),
-            normalPaint
+            dividerPaint
         )
         canvas.drawLine(
             startX,
             selectedItemBottomLimit.toFloat(),
             stopX,
             selectedItemBottomLimit.toFloat(),
-            normalPaint
+            dividerPaint
         )
-        normalPaint.strokeWidth = originStrokeWidth
+        dividerPaint.strokeWidth = originStrokeWidth
     }
 
     /**
      * 绘制左右额外文字
      */
     private fun drawExtraText(canvas: Canvas) {
-        //debug 绘制边界
-        if (drawDebugRectEnabled) {
-            val color = leftTextPaint.color
-            leftTextPaint.color = Color.BLUE
-            canvas.drawRect(mainTextRect, leftTextPaint)
-            leftTextPaint.color = Color.RED
-            canvas.drawRect(leftTextRect, leftTextPaint)
-            leftTextPaint.color = Color.GREEN
-            canvas.drawRect(rightTextRect, leftTextPaint)
-            leftTextPaint.color = color
-        }
         drawExtraLeftText(canvas)
         drawExtraRightText(canvas)
     }
 
     private fun drawExtraLeftText(canvas: Canvas) {
-        if (leftText.isEmpty()) {
-            return
-        }
+        if (leftText.isNullOrEmpty()) return
         leftTextPaint.textSize = leftTextSize.toFloat()
         leftTextPaint.color = leftTextColor
         val centerToBaselineY = centerToBaselineY(leftTextPaint)
         canvas.drawText(
-            leftText,
+            leftText!!,
             0,
-            leftText.length,
+            leftText!!.length,
             leftTextRect.centerX().toFloat(),
             (leftTextRect.centerY() - centerToBaselineY).toFloat(),
             leftTextPaint
@@ -1582,16 +1444,14 @@ open class WheelView @JvmOverloads constructor(
     }
 
     private fun drawExtraRightText(canvas: Canvas) {
-        if (rightText.isEmpty()) {
-            return
-        }
+        if (rightText.isNullOrEmpty()) return
         rightTextPaint.textSize = rightTextSize.toFloat()
         rightTextPaint.color = rightTextColor
         val centerToBaselineY = centerToBaselineY(rightTextPaint)
         canvas.drawText(
-            rightText,
+            rightText!!,
             0,
-            rightText.length,
+            rightText!!.length,
             rightTextRect.centerX().toFloat(),
             (rightTextRect.centerY() - centerToBaselineY).toFloat(),
             rightTextPaint
@@ -1603,14 +1463,10 @@ open class WheelView @JvmOverloads constructor(
      */
     private fun checkEllipseText(oriText: String?): String {
         val originText = oriText ?: return ""
-        if (originText.trim().isEmpty()) {
-            return ""
-        }
-        if (isAutoFitTextSize) {
-            return originText
-        }
+        if (originText.trim().isEmpty()) return ""
+        if (isAutoFitTextSize) return originText
         return TextUtils.ellipsize(
-            originText, mainTextPaint, mainTextMaxWidth.toFloat(), TextUtils.TruncateAt.END
+            originText, centerTextPaint, centerTextMaxWidth.toFloat(), TextUtils.TruncateAt.END
         )?.toString() ?: ""
     }
 
@@ -1626,9 +1482,7 @@ open class WheelView @JvmOverloads constructor(
         canvas: Canvas, index: Int, scrolledOffset: Int, scrolledItem: Int
     ) {
         val text = checkEllipseText(wheelAdapter?.getItemTextByIndex(index))
-        if (text.trim().isEmpty()) {
-            return
-        }
+        if (text.trim().isEmpty()) return
 
         //index 的 item 距离中间项的偏移
         val item2CenterOffsetY = (index - scrolledItem) * itemHeight - scrolledOffset
@@ -1639,7 +1493,7 @@ open class WheelView @JvmOverloads constructor(
 
         if (abs(item2CenterOffsetY) <= 0) {
             //绘制选中的条目
-            mainTextPaint.color = selectedTextColor
+            centerTextPaint.color = selectedTextColor
             clipAndDrawNormalText(
                 canvas,
                 text,
@@ -1650,7 +1504,7 @@ open class WheelView @JvmOverloads constructor(
             )
         } else if (item2CenterOffsetY in 1 until itemHeight) {
             //绘制与下边界交汇的条目
-            mainTextPaint.color = selectedTextColor
+            centerTextPaint.color = selectedTextColor
             clipAndDrawNormalText(
                 canvas,
                 text,
@@ -1660,10 +1514,10 @@ open class WheelView @JvmOverloads constructor(
                 centerToBaselineY
             )
 
-            mainTextPaint.color = normalTextColor
+            centerTextPaint.color = normalTextColor
             //缩小字体，实现折射效果
-            val textSize = mainTextPaint.textSize
-            mainTextPaint.textSize = textSize * refractRatio
+            val textSize = centerTextPaint.textSize
+            centerTextPaint.textSize = textSize * refractRatio
             //mIsBoldForSelectedItem==true 改变字体
             changeTypefaceIfBoldForSelectedItem()
             clipAndDrawNormalText(
@@ -1674,12 +1528,12 @@ open class WheelView @JvmOverloads constructor(
                 item2CenterOffsetY,
                 centerToBaselineY
             )
-            mainTextPaint.textSize = textSize
+            centerTextPaint.textSize = textSize
             //isBoldForSelectedItem==true 恢复字体
             resetTypefaceIfBoldForSelectedItem()
         } else if (item2CenterOffsetY < 0 && item2CenterOffsetY > -itemHeight) {
             //绘制与上边界交汇的条目
-            mainTextPaint.color = selectedTextColor
+            centerTextPaint.color = selectedTextColor
             clipAndDrawNormalText(
                 canvas,
                 text,
@@ -1689,37 +1543,37 @@ open class WheelView @JvmOverloads constructor(
                 centerToBaselineY
             )
 
-            mainTextPaint.color = normalTextColor
+            centerTextPaint.color = normalTextColor
             //缩小字体，实现折射效果
-            val textSize = mainTextPaint.textSize
-            mainTextPaint.textSize = textSize * refractRatio
+            val textSize = centerTextPaint.textSize
+            centerTextPaint.textSize = textSize * refractRatio
             //isBoldForSelectedItem==true 改变字体
             changeTypefaceIfBoldForSelectedItem()
             clipAndDrawNormalText(
                 canvas, text, clipTop, selectedItemTopLimit, item2CenterOffsetY, centerToBaselineY
             )
-            mainTextPaint.textSize = textSize
+            centerTextPaint.textSize = textSize
             //isBoldForSelectedItem==true 恢复字体
             resetTypefaceIfBoldForSelectedItem()
         } else {
             //绘制其他条目
-            mainTextPaint.color = normalTextColor
+            centerTextPaint.color = normalTextColor
             //缩小字体，实现折射效果
-            val textSize = mainTextPaint.textSize
-            mainTextPaint.textSize = textSize * refractRatio
+            val textSize = centerTextPaint.textSize
+            centerTextPaint.textSize = textSize * refractRatio
             //isBoldForSelectedItem==true 改变字体
             changeTypefaceIfBoldForSelectedItem()
             clipAndDrawNormalText(
                 canvas, text, clipTop, clipBottom, item2CenterOffsetY, centerToBaselineY
             )
-            mainTextPaint.textSize = textSize
+            centerTextPaint.textSize = textSize
             //mIsBoldForSelectedItem==true 恢复字体
             resetTypefaceIfBoldForSelectedItem()
         }
 
         if (isAutoFitTextSize) {
             //恢复重新测量之前的样式
-            mainTextPaint.textSize = textSize.toFloat()
+            centerTextPaint.textSize = textSize.toFloat()
             this.textDrawStartX = startX
         }
     }
@@ -1750,7 +1604,7 @@ open class WheelView @JvmOverloads constructor(
             text.length,
             textDrawStartX.toFloat(),
             (centerY + item2CenterOffsetY - centerToBaselineY).toFloat(),
-            mainTextPaint
+            centerTextPaint
         )
         canvas.restore()
     }
@@ -1794,8 +1648,8 @@ open class WheelView @JvmOverloads constructor(
         val centerToBaselineY = getCenterToBaselineY(index)
         if (abs(item2CenterOffsetY) <= 0) {
             //绘制选中的条目
-            mainTextPaint.color = selectedTextColor
-            mainTextPaint.alpha = 255
+            centerTextPaint.color = selectedTextColor
+            centerTextPaint.alpha = 255
             clipAndDrawCurvedText(
                 canvas,
                 text,
@@ -1808,8 +1662,8 @@ open class WheelView @JvmOverloads constructor(
             )
         } else if (item2CenterOffsetY in 1 until itemHeight) {
             //绘制与下边界交汇的条目
-            mainTextPaint.color = selectedTextColor
-            mainTextPaint.alpha = 255
+            centerTextPaint.color = selectedTextColor
+            centerTextPaint.alpha = 255
             clipAndDrawCurvedText(
                 canvas,
                 text,
@@ -1821,15 +1675,15 @@ open class WheelView @JvmOverloads constructor(
                 centerToBaselineY
             )
 
-            mainTextPaint.color = normalTextColor
-            mainTextPaint.alpha = alpha
+            centerTextPaint.color = normalTextColor
+            centerTextPaint.alpha = alpha
             //缩小字体，实现折射效果
-            val textSize = mainTextPaint.textSize
-            mainTextPaint.textSize = textSize * refractRatio
+            val textSize = centerTextPaint.textSize
+            centerTextPaint.textSize = textSize * refractRatio
             //isBoldForSelectedItem==true 改变字体
             changeTypefaceIfBoldForSelectedItem()
             //字体变化，重新计算距离基线偏移
-            val reCenterToBaselineY = centerToBaselineY(mainTextPaint)
+            val reCenterToBaselineY = centerToBaselineY(centerTextPaint)
             clipAndDrawCurvedText(
                 canvas,
                 text,
@@ -1840,13 +1694,13 @@ open class WheelView @JvmOverloads constructor(
                 translateZ,
                 reCenterToBaselineY
             )
-            mainTextPaint.textSize = textSize
+            centerTextPaint.textSize = textSize
             //isBoldForSelectedItem==true 恢复字体
             resetTypefaceIfBoldForSelectedItem()
         } else if (item2CenterOffsetY < 0 && item2CenterOffsetY > -itemHeight) {
             //绘制与上边界交汇的条目
-            mainTextPaint.color = selectedTextColor
-            mainTextPaint.alpha = 255
+            centerTextPaint.color = selectedTextColor
+            centerTextPaint.alpha = 255
             clipAndDrawCurvedText(
                 canvas,
                 text,
@@ -1858,16 +1712,16 @@ open class WheelView @JvmOverloads constructor(
                 centerToBaselineY
             )
 
-            mainTextPaint.color = normalTextColor
-            mainTextPaint.alpha = alpha
+            centerTextPaint.color = normalTextColor
+            centerTextPaint.alpha = alpha
 
             //缩小字体，实现折射效果
-            val textSize = mainTextPaint.textSize
-            mainTextPaint.textSize = textSize * refractRatio
+            val textSize = centerTextPaint.textSize
+            centerTextPaint.textSize = textSize * refractRatio
             //isBoldForSelectedItem==true 改变字体
             changeTypefaceIfBoldForSelectedItem()
             //字体变化，重新计算距离基线偏移
-            val reCenterToBaselineY = centerToBaselineY(mainTextPaint)
+            val reCenterToBaselineY = centerToBaselineY(centerTextPaint)
             clipAndDrawCurvedText(
                 canvas,
                 text,
@@ -1878,21 +1732,21 @@ open class WheelView @JvmOverloads constructor(
                 translateZ,
                 reCenterToBaselineY
             )
-            mainTextPaint.textSize = textSize
+            centerTextPaint.textSize = textSize
             //isBoldForSelectedItem==true 恢复字体
             resetTypefaceIfBoldForSelectedItem()
         } else {
             //绘制其他条目
-            mainTextPaint.color = normalTextColor
-            mainTextPaint.alpha = alpha
+            centerTextPaint.color = normalTextColor
+            centerTextPaint.alpha = alpha
 
             //缩小字体，实现折射效果
-            val textSize = mainTextPaint.textSize
-            mainTextPaint.textSize = textSize * refractRatio
+            val textSize = centerTextPaint.textSize
+            centerTextPaint.textSize = textSize * refractRatio
             //isBoldForSelectedItem==true 改变字体
             changeTypefaceIfBoldForSelectedItem()
             //字体变化，重新计算距离基线偏移
-            val reCenterToBaselineY = centerToBaselineY(mainTextPaint)
+            val reCenterToBaselineY = centerToBaselineY(centerTextPaint)
             clipAndDrawCurvedText(
                 canvas,
                 text,
@@ -1903,14 +1757,14 @@ open class WheelView @JvmOverloads constructor(
                 translateZ,
                 reCenterToBaselineY
             )
-            mainTextPaint.textSize = textSize
+            centerTextPaint.textSize = textSize
             //isBoldForSelectedItem==true 恢复字体
             resetTypefaceIfBoldForSelectedItem()
         }
 
         if (isAutoFitTextSize) {
             //恢复重新测量之前的样式
-            mainTextPaint.textSize = textSize.toFloat()
+            centerTextPaint.textSize = textSize.toFloat()
             this.textDrawStartX = startX
         }
     }
@@ -1970,7 +1824,7 @@ open class WheelView @JvmOverloads constructor(
 
         // 调节中心点
         //根据弯曲（3d）对齐方式设置系数
-        val textCenterX = mainTextRect.centerX()
+        val textCenterX = centerTextRect.centerX()
         val centerX: Float = when (curvedArcDirection) {
             CurvedArcDirection.LEFT -> textCenterX * (1 + curvedArcDirectionFactor)
             CurvedArcDirection.RIGHT -> textCenterX * (1 - curvedArcDirectionFactor)
@@ -1988,7 +1842,7 @@ open class WheelView @JvmOverloads constructor(
             text.length,
             textDrawStartX.toFloat(),
             centerY - centerToBaselineY,
-            mainTextPaint
+            centerTextPaint
         )
 
     }
@@ -1999,12 +1853,12 @@ open class WheelView @JvmOverloads constructor(
     private fun getCenterToBaselineY(index: Int): Int {
         return if (isAutoFitTextSize) {
             resizeArray.get(index)?.let {
-                mainTextPaint.textSize = it
+                centerTextPaint.textSize = it
                 //高度起点也变了
-                centerToBaselineY(mainTextPaint)
-            } ?: centerToBaselineY(mainTextPaint)
+                centerToBaselineY(centerTextPaint)
+            } ?: centerToBaselineY(centerTextPaint)
         } else {
-            centerToBaselineY(mainTextPaint)
+            centerToBaselineY(centerTextPaint)
         }
     }
 
@@ -2015,19 +1869,16 @@ open class WheelView @JvmOverloads constructor(
 
     private fun changeTypefaceIfBoldForSelectedItem() {
         if (isBoldForSelectedItem) {
-            mainTextPaint.typeface = normalTypeface
+            centerTextPaint.typeface = normalTypeface
         }
     }
 
     private fun resetTypefaceIfBoldForSelectedItem() {
         if (isBoldForSelectedItem) {
-            mainTextPaint.typeface = boldTypeface
+            centerTextPaint.typeface = boldTypeface
         }
     }
 
-    /*
-      --------- 绘制部分 ----------
-     */
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -2106,7 +1957,7 @@ open class WheelView @JvmOverloads constructor(
                 }
 
                 invalidateIfYChanged()
-                ViewCompat.postOnAnimation(this, this)
+                postOnAnimation(this)
                 //回收 VelocityTracker
                 recycleVelocityTracker()
             }
@@ -2139,7 +1990,6 @@ open class WheelView @JvmOverloads constructor(
     /**
      * 使用run方法而不是computeScroll是因为，invalidate也会执行computeScroll导致回调执行不准确
      */
-    @Suppress("DEPRECATION")
     override fun run() {
         var scroller = this.scroller
         if (scroller.isFinished) {
@@ -2150,12 +2000,12 @@ open class WheelView @JvmOverloads constructor(
 
         if (scroller.computeScrollOffset()) {
             updateScrollOffsetY(scroller)
-            ViewCompat.postOnAnimation(this, this)
+            postOnAnimation(this)
         } else if (isFlingScroll) {
             //滚动完成后，根据是否为快速滚动处理是否需要调整最终位置
             isFlingScroll = false
             adjustScrollOffsetY(true)
-            ViewCompat.postOnAnimation(this, this)
+            postOnAnimation(this)
         }
     }
 
@@ -2189,7 +2039,7 @@ open class WheelView @JvmOverloads constructor(
                 }
                 //停止滚动，选中条目回调
                 onItemSelected(it, selectedPosition)
-                itemSelectedListener?.invoke(this, selectedPosition)
+                itemSelectedListener.invoke(selectedPosition)
             }
         }
     }
@@ -2623,7 +2473,7 @@ open class WheelView @JvmOverloads constructor(
     }
 
     private fun notifyTextAlignChanged() {
-        mainTextPaint.textAlign = textAlign
+        centerTextPaint.textAlign = textAlign
         calculateDrawStart()
         invalidate()
     }
@@ -2641,9 +2491,6 @@ open class WheelView @JvmOverloads constructor(
         }
     }
 
-    /*
-      ---------- 属性设置 ----------
-     */
     /**
      * 设置字体大小
      */
@@ -2663,7 +2510,7 @@ open class WheelView @JvmOverloads constructor(
      */
     @JvmOverloads
     fun setTypeface(typeface: Typeface, isBoldForSelectedItem: Boolean = false) {
-        if (typeface == mainTextPaint.typeface && isBoldForSelectedItem == this.isBoldForSelectedItem) {
+        if (typeface == centerTextPaint.typeface && isBoldForSelectedItem == this.isBoldForSelectedItem) {
             return
         }
         this.isBoldForSelectedItem = isBoldForSelectedItem
@@ -2677,9 +2524,9 @@ open class WheelView @JvmOverloads constructor(
                 boldTypeface = Typeface.create(typeface, Typeface.BOLD)
             }
             //测量时 使用加粗字体测量，因为加粗字体比普通字体宽，以大的为准进行测量
-            mainTextPaint.typeface = boldTypeface
+            centerTextPaint.typeface = boldTypeface
         } else {
-            mainTextPaint.typeface = typeface
+            centerTextPaint.typeface = typeface
         }
         notifyChanged()
     }
@@ -2770,10 +2617,6 @@ open class WheelView @JvmOverloads constructor(
         curtainColor = ContextCompat.getColor(context, curtainColorRes)
     }
 
-    /*
-      ---------- 额外文字相关属性 ----------
-     */
-
     /**
      * 设置左侧文字大小 dp
      */
@@ -2838,10 +2681,6 @@ open class WheelView @JvmOverloads constructor(
         this.rightTextMarginLeft = dp2px(marginLeftDp)
     }
 
-    /*
-      ---------- 额外文字相关属性 ----------
-     */
-
     /**
      * 设置选中条目下标
      */
@@ -2897,7 +2736,7 @@ open class WheelView @JvmOverloads constructor(
                 it.selectedPosition = selectedPosition
                 //选中条目回调
                 onItemSelected(it, selectedPosition)
-                itemSelectedListener?.invoke(this, selectedPosition)
+                itemSelectedListener.invoke(selectedPosition)
             }
             invalidateIfYChanged()
         }
@@ -3117,13 +2956,6 @@ open class WheelView @JvmOverloads constructor(
         soundHelper.load(context, soundRes)
     }
 
-    /*
-      ---------- 属性设置 ----------
-     */
-
-    /*
-      ---------- 一些供子类重写的方法 ----------
-     */
     protected open fun onWheelScrollChanged(scrollOffsetY: Int) {
 
     }
@@ -3140,12 +2972,7 @@ open class WheelView @JvmOverloads constructor(
 
     }
 
-    /*
-      ---------- 一些供子类重写的方法 ----------
-     *//*
-      ---------- 设置回调 ----------
-     */
-    fun setOnItemSelectedListener(listener: ((WheelView, Int) -> Unit)?) {
+    fun setOnItemSelectedListener(listener: ((Int) -> Unit)) {
         this.itemSelectedListener = listener
     }
 
@@ -3155,13 +2982,7 @@ open class WheelView @JvmOverloads constructor(
 
     fun setOnScrollChangedListener(scrollChangedListener: OnScrollChangedListener?) {
         this.scrollChangedListener = scrollChangedListener
-    }/*
-      ---------- 设置回调 ----------
-     */
-
-    /*
-      ---------- 一些枚举 ----------
-     */
+    }
 
     /**
      * 自定义左右圆弧效果方向枚举
@@ -3201,10 +3022,6 @@ open class WheelView @JvmOverloads constructor(
      * [HIDE_ITEM]   选中范围外的 item 会被隐藏
      */
     enum class OverRangeMode { NORMAL, CANT_SCROLL, HIDE_ITEM }
-
-    /*
-      ---------- 一些枚举 ----------
-     */
 
     /**
      * from RecyclerView#sQuinticInterpolator

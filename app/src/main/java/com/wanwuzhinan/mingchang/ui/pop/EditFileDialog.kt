@@ -17,6 +17,7 @@ import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.media.MediaManager
 import com.ssm.comm.ui.base.BaseDialogFragment
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.data.GradeData
 import com.wanwuzhinan.mingchang.data.ProvinceListData
 import com.wanwuzhinan.mingchang.databinding.PopEditFileBinding
 import com.wanwuzhinan.mingchang.entity.UserInfoData
@@ -55,12 +56,7 @@ class EditFileDialog constructor(data: UserInfoData.infoBean) : BaseDialogFragme
         mViewModel.getAllGradeLiveData.observeForever {
             if(mActivity!!.isFinishing||mActivity!!.isDestroyed) return@observeForever
             dismissLoadingExt()
-
-            ChooseGradeDialog(it.data!!.listArr,callback = {
-                onSure ={
-                    mDataBinding!!.tvGrade.text=it
-                }
-            }).show(mActivity!!.supportFragmentManager,"CommDialog")
+            showGradeDialog(it.data)
         }
         mViewModel.editUserInfoLiveData.observeForever {
             if(mActivity!!.isFinishing||mActivity!!.isDestroyed) return@observeForever
@@ -243,7 +239,7 @@ class EditFileDialog constructor(data: UserInfoData.infoBean) : BaseDialogFragme
         mDataBinding!!.tvTopName.text=data.nickname
         mDataBinding!!.tvUserName.setText(data.truename)
         mDataBinding!!.tvSchool.setText(data.school_name)
-        mDataBinding!!.tvGrade.setText(data.grade_name)
+        mDataBinding!!.tvGrade.text = data.grade_name
         mDataBinding!!.tvAddress.text = "${data.province_name} ${data.city_name} ${data.area_name}"
         if (data.city_name.contains(data.province_name)){
             mDataBinding!!.tvAddress.text = "${data.province_name} ${data.area_name}"
@@ -264,5 +260,13 @@ class EditFileDialog constructor(data: UserInfoData.infoBean) : BaseDialogFragme
     override fun getLayoutId(): Int {
         return R.layout.pop_edit_file
     }
-
+    fun showGradeDialog(data: GradeData?) {
+        val list = data?.listArr ?: return
+        val dialog = ChooseDialog.newInstance(getString(R.string.choose_title_grade), list).apply {
+            sure = {
+                mDataBinding?.tvGrade?.text = list[it]
+            }
+        }
+        dialog.show(this)
+    }
 }

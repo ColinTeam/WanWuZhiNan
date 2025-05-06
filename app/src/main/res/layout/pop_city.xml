@@ -27,7 +27,7 @@
                 <TextView
                     android:id="@+id/tv_cancel"
                     style="@style/text_333333_16"
-                    android:text="取消"
+                    android:text="@string/cancel"
                     android:textColor="@color/color_bfbfbf" />
 
                 <TextView
@@ -35,12 +35,12 @@
                     style="@style/text_333333_18"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="选择城市" />
+                    android:text="@string/choose_title_area" />
 
                 <TextView
                     android:id="@+id/tv_sure"
                     style="@style/text_white_16"
-                    android:text="确认"
+                    android:text="@string/sure"
                     android:textColor="@color/color_1684FC" />
             </LinearLayout>
 
@@ -58,19 +58,49 @@
                     android:id="@+id/wheel_pro"
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line"
+                    app:wheel_dividerColor="@color/line"
+                    app:wheel_dividerHeight="@dimen/dp_1"
+                    app:wheel_dividerType="fill"
+                    app:wheel_selectedTextColor="@color/black"
+                    app:wheel_showDivider="true"
+                    app:wheel_textSize="" />
 
                 <com.colin.library.android.widget.wheel.WheelView
                     android:id="@+id/wheel_city"
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line"
+                    app:wheel_dividerColor="@color/line"
+                    app:wheel_dividerHeight="@dimen/dp_1"
+                    app:wheel_dividerType="fill"
+                    app:wheel_selectedTextColor="@color/black"
+                    app:wheel_showDivider="true"
+                    app:wheel_textSize="" />
 
                 <com.colin.library.android.widget.wheel.WheelView
                     android:id="@+id/wheel_area"
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line"
+                    app:wheel_dividerColor="@color/line"
+                    app:wheel_dividerHeight="@dimen/dp_1"
+                    app:wheel_dividerType="fill"
+                    app:wheel_selectedTextColor="@color/black"
+                    app:wheel_showDivider="true"
+                    app:wheel_textSize="" />
 
             </LinearLayout>
         </LinearLayout>

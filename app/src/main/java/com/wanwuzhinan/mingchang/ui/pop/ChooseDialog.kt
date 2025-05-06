@@ -45,8 +45,8 @@ class ChooseDialog private constructor(
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
             textTitle.text = title
-            wheel.setAdapter(ArrayWheelAdapter<String>())
-            wheel.setOnItemSelectedListener { _, position ->
+            wheel.setAdapter(ArrayWheelAdapter<String>(array))
+            wheel.setOnItemSelectedListener { position ->
                 selected = position
             }
         }

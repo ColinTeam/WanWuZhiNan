@@ -1,9 +1,7 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
-import android.annotation.SuppressLint
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.wheel.ArrayWheelAdapter
-import com.colin.library.android.widget.wheel.WheelView
 import com.ssm.comm.ui.base.BaseDialogFragment
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.ProvinceListData
@@ -65,7 +63,7 @@ class ChooseCityDialog constructor(
 
     override fun initViews() {
         isCancelable = true
-        mDataBinding!!.tvTitle.text = "选择地区"
+        initWheel()
 
         onClick(mDataBinding!!.tvCancel, mDataBinding!!.tvSure) {
 
@@ -81,15 +79,10 @@ class ChooseCityDialog constructor(
                 }
             }
         }
-        setWheel(mDataBinding!!.wheelPro)
-        setWheel(mDataBinding!!.wheelCity)
-        setWheel(mDataBinding!!.wheelArea)
 
-        initWheel()
     }
 
     private fun initWheel() {
-
         val sexAdapter = ArrayWheelAdapter(options1Items!!)
         proName = options1Items?.get(0)?.label.toString()
         cityName = options2Items[0][0].label.toString()
@@ -137,16 +130,6 @@ class ChooseCityDialog constructor(
 //        }
     }
 
-    @SuppressLint("UseKtx")
-    private fun setWheel(view: WheelView) {
-//        view.setItemsVisibleCount(6)
-//        view.setCyclic(false)
-//        view.setTextColorCenter(Color.BLACK)
-//        view.setTextColorOut("#bfbfbf".toColorInt())
-//        view.setDividerType(WheelView.DividerType.FILL)
-//        view.setDividerColor("#00ffffff".toColorInt())
-//        view.setLineSpacingMultiplier(2f)
-    }
 
     class ViewClickCallBack {
         var onSure: (pro: String, city: String, are: String) -> Unit =
