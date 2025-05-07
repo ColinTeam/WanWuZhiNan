@@ -1,9 +1,19 @@
 package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.findNavController
+import com.colin.library.android.utils.Log
+import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
+import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
+import com.shuyu.gsyvideoplayer.player.PlayerFactory
+import com.shuyu.gsyvideoplayer.utils.GSYVideoType
+import com.wanwuzhinan.mingchang.BuildConfig
+import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.databinding.FragmentSplashBinding
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
+import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
 
 /**
  * Author:ColinLu
@@ -13,13 +23,36 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  * Des   :SplashFragment
  */
 class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
-
+    var playCompleted = false
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.e("handleOnBackPressed:$playCompleted")
+                    if (playCompleted) {
+                        findNavController().popBackStack()
+                    }
+                }
 
+            })
+        val path = "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.raw.splash1
+        PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
+        GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_FULL)
+        GSYVideoType.disableMediaCodec()
+        GSYVideoType.disableMediaCodecTexture()
+        GSYVideoOptionBuilder().setAutoFullWithSize(true).setIsTouchWiget(false).setUrl(path)
+            .setVideoAllCallBack(object : GSYSampleCallBack() {
+                override fun onAutoComplete(url: String?, vararg objects: Any?) {
+                    playCompleted = true
+                }
+
+            }).build(viewBinding.video)
+        viewBinding.video.startPlayLogic()
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
 
     }
+
 
 }

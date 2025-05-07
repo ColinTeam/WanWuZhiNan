@@ -100,7 +100,7 @@
             app:layout_constraintWidth_percent="0.15" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/ivOneTitle"
+            android:id="@+id/tvOneTitle"
             style="@style/Style.Text.Home.Two"
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginBottom="@dimen/margin_default"
@@ -115,10 +115,10 @@
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
             android:layout_marginStart="@dimen/margin_default"
-            app:layout_constraintBottom_toTopOf="@+id/ivOneTitle"
-            app:layout_constraintDimensionRatio="h,4:3"
+            app:layout_constraintTop_toTopOf="@+id/ivOneNumber"
+            app:layout_constraintDimensionRatio="h,1:1"
             app:layout_constraintEnd_toStartOf="@+id/ivTwoBg"
-            app:layout_constraintWidth_percent="0.22" />
+            app:layout_constraintWidth_percent="0.24" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivOneMedia"
@@ -128,6 +128,7 @@
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginBottom="@dimen/margin_default"
             android:src="@mipmap/ic_main_audio_01_stop"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@id/ivOneBg"
             app:layout_constraintEnd_toEndOf="@id/ivOneBg"
             app:layout_constraintStart_toStartOf="@+id/ivAnim" />
@@ -147,7 +148,7 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/ivTwoTitle"
+            android:id="@+id/tvTwoTitle"
             style="@style/Style.Text.Home"
             android:layout_marginStart="@dimen/dp_32"
             android:gravity="center_vertical"
@@ -166,8 +167,8 @@
             android:src="@mipmap/ic_main_02"
             app:layout_constraintBottom_toBottomOf="@+id/ivTwoBg"
             app:layout_constraintDimensionRatio="w,3:2"
-            app:layout_constraintStart_toStartOf="@+id/ivTwoTitle"
-            app:layout_constraintTop_toBottomOf="@+id/ivTwoTitle" />
+            app:layout_constraintStart_toStartOf="@+id/tvTwoTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvTwoTitle" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivTwoMedia"
@@ -177,10 +178,10 @@
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginEnd="@dimen/margin_default"
             android:src="@mipmap/ic_main_audio_02_stop"
-            app:layout_constraintBottom_toBottomOf="@id/ivTwoTitle"
+            app:layout_constraintBottom_toBottomOf="@id/tvTwoTitle"
             app:layout_constraintDimensionRatio="w,1:1"
-            app:layout_constraintStart_toEndOf="@+id/ivTwoTitle"
-            app:layout_constraintTop_toTopOf="@id/ivTwoTitle" />
+            app:layout_constraintStart_toEndOf="@+id/tvTwoTitle"
+            app:layout_constraintTop_toTopOf="@id/tvTwoTitle" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivTwoLogo"
@@ -212,14 +213,14 @@
             android:layout_height="@dimen/dp_0"
             android:layout_marginStart="@dimen/margin_default_half"
             android:src="@mipmap/ic_main_03"
-            app:layout_constraintBottom_toTopOf="@+id/ivThreeTitle"
+            app:layout_constraintBottom_toTopOf="@+id/tvThreeTitle"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintStart_toStartOf="@+id/ivThreeBg"
             app:layout_constraintTop_toTopOf="@+id/ivThreeBg"
             app:layout_constraintVertical_weight="1" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/ivThreeTitle"
+            android:id="@+id/tvThreeTitle"
             style="@style/Style.Text.Home.Two"
             android:layout_marginBottom="@dimen/margin_default"
             android:text="@string/home_three_title"
@@ -236,7 +237,7 @@
             android:src="@mipmap/ic_main_question"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toEndOf="@id/ivThreeBg"
-            app:layout_constraintStart_toEndOf="@+id/ivThreeTitle"
+            app:layout_constraintStart_toEndOf="@+id/tvThreeTitle"
             app:layout_constraintTop_toBottomOf="@+id/ivTwoBg" />
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -256,14 +257,14 @@
             android:layout_height="@dimen/dp_0"
             android:layout_marginStart="@dimen/margin_default"
             android:src="@mipmap/ic_main_04"
-            app:layout_constraintBottom_toTopOf="@+id/ivFourTitle"
+            app:layout_constraintBottom_toTopOf="@+id/tvFourTitle"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintStart_toStartOf="@+id/ivFourBg"
             app:layout_constraintTop_toTopOf="@+id/ivThreeBg"
             app:layout_constraintVertical_weight="1" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/ivFourTitle"
+            android:id="@+id/tvFourTitle"
             style="@style/Style.Text.Home.Two"
             android:layout_marginBottom="@dimen/margin_default"
             android:text="@string/home_four_title"
@@ -281,7 +282,7 @@
             android:src="@mipmap/ic_main_honor"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toEndOf="@id/ivFourBg"
-            app:layout_constraintStart_toEndOf="@+id/ivFourTitle"
+            app:layout_constraintStart_toEndOf="@+id/tvFourTitle"
             app:layout_constraintTop_toBottomOf="@+id/ivTwoBg" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,10 +3,12 @@ package com.wanwuzhinan.mingchang.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.window.OnBackInvokedDispatcher
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
+import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.ext.onClick
@@ -15,9 +17,8 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.ActivityHomeBinding
-import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.ext.visible
-import com.wanwuzhinan.mingchang.utils.MMKVUtils
+import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
 /**
@@ -38,6 +39,11 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         }
     }
 
+    override fun getOnBackInvokedDispatcher(): OnBackInvokedDispatcher {
+        return super.getOnBackInvokedDispatcher()
+
+    }
+
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
@@ -46,10 +52,12 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         viewModel.apply {
             configData.observe {
                 Log.i("configData:$it")
-                showAd()
             }
             userInfo.observe {
                 Log.i("userInfo:$it")
+                ConfigApp.question_count_error = it.question_count_error.toInt()
+                ConfigApp.question_compass = it.question_compass.toInt()
+                setData(Constant.USER_INFO, NetworkConfig.gson.toJson(it))
             }
             showError.observe {
                 Log.i("showError:$it")
@@ -90,26 +98,13 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        MMKVUtils.decodeString(ConfigApp.MMKV_SPLASH_TIME)
-        viewModel.getConfig()
-        viewModel.getUserInfo()
+        findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_toLogin)
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    fun showAd(info: Config? = viewModel.getConfigValue()) {
-        val homeAd = info?.info?.home_ad
-        if (!homeAd.isNullOrEmpty()) {
-            viewBinding.ivAd.visible(true)
-            viewBinding.ivAdclose.visible(true)
-        } else {
-            viewBinding.ivAd.visible(false)
-            viewBinding.ivAdclose.visible(false)
-        }
-    }
 
 }

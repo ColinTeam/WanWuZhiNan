@@ -2,7 +2,11 @@ package com.wanwuzhinan.mingchang.app
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Window
 import androidx.activity.enableEdgeToEdge
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -65,6 +69,18 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
      */
     inline fun <reified OUT : Any> LiveData<out OUT?>.observe(crossinline observer: (OUT) -> Unit) {
         observe(this@AppActivity) { it?.let(observer) }
+    }
+
+    fun showSystemBars(window: Window, show: Boolean = true) {
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+        if (show) {
+            controller.show(WindowInsetsCompat.Type.systemBars())
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+        } else {
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+            controller.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
     }
 }
 
