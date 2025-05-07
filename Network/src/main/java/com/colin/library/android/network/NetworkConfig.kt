@@ -30,29 +30,32 @@ object NetworkConfig {
 
     var timeout: Long = BuildConfig.TIMEOUT
 
-    var interceptors = mutableListOf<Interceptor>(createLoggingInterceptor())
+    var interceptors = mutableListOf<Interceptor>()
+    var networkInterceptors = mutableListOf<Interceptor>(createLoggingInterceptor())
 
     private fun createLoggingInterceptor() = HttpLoggingInterceptor().setLevel(
         if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
     )
 
-    var httpClient = OkHttpClient.Builder().callTimeout(timeout, TimeUnit.MILLISECONDS)
-        .connectTimeout(timeout, TimeUnit.MILLISECONDS).readTimeout(timeout, TimeUnit.MILLISECONDS)
-        .writeTimeout(timeout, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).apply {
-            interceptors.forEach{ this.addInterceptor(it)}
-        }.build()
-
     fun addInterceptor(interceptor: Interceptor) = apply {
         if (!interceptors.contains(interceptor)) interceptors.add(interceptor)
     }
 
-    fun addHeader(key: String, value: String) = apply {
-        headerMap.put(key, value)
+    fun addNetworkInterceptors(interceptor: Interceptor) = apply {
+        if (!networkInterceptors.contains(interceptor)) networkInterceptors.add(interceptor)
     }
 
-    fun addHeader(map: Map<String, String>) = apply {
-        for (entry in map) {
-            headerMap.put(entry.key, entry.value)
+    fun getOkHttpClient(): OkHttpClient {
+        val builder = OkHttpClient.Builder().callTimeout(timeout, TimeUnit.MILLISECONDS)
+            .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+            .readTimeout(timeout, TimeUnit.MILLISECONDS)
+            .writeTimeout(timeout, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true)
+        interceptors.forEach {
+            builder.addInterceptor(it)
         }
+        networkInterceptors.forEach {
+            builder.addNetworkInterceptor(it)
+        }
+        return builder.build()
     }
 }

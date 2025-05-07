@@ -7,7 +7,7 @@ import com.google.android.material.tabs.TabLayout
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
-import com.wanwuzhinan.mingchang.vm.LoginViewModel
+import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
 /**
  * Author:ColinLu
@@ -16,7 +16,7 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModel
  *
  * Des   :HomeFragment
  */
-class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
+class LoginFragment : AppFragment<FragmentLoginBinding, HomeViewModel>() {
     companion object {
         const val TAB_SMS = 0
         const val TAB_PWD = 1

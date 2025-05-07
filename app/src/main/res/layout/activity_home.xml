@@ -16,7 +16,7 @@
         app:navGraph="@navigation/app_navigation" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_ad"
+        android:id="@+id/ivAd"
         android:layout_width="@dimen/dp_108"
         android:layout_height="@dimen/dp_114"
         android:layout_marginStart="@dimen/dp_20"
@@ -26,13 +26,13 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_ad_close"
+        android:id="@+id/ivAdclose"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
         android:padding="@dimen/dp_6"
         android:src="@mipmap/ic_home_ad_close"
-        app:layout_constraintEnd_toEndOf="@+id/iv_ad"
-        app:layout_constraintStart_toStartOf="@+id/iv_ad"
-        app:layout_constraintTop_toBottomOf="@+id/iv_ad" />
+        app:layout_constraintEnd_toEndOf="@+id/ivAd"
+        app:layout_constraintStart_toStartOf="@+id/ivAd"
+        app:layout_constraintTop_toBottomOf="@+id/ivAd" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

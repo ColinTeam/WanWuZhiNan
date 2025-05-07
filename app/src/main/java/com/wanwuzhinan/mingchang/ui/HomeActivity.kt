@@ -3,15 +3,20 @@ package com.wanwuzhinan.mingchang.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
+import com.colin.library.android.utils.ext.onClick
+import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.ActivityHomeBinding
+import com.wanwuzhinan.mingchang.entity.Config
+import com.wanwuzhinan.mingchang.ext.visible
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
@@ -41,6 +46,7 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         viewModel.apply {
             configData.observe {
                 Log.i("configData:$it")
+                showAd()
             }
             userInfo.observe {
                 Log.i("userInfo:$it")
@@ -53,6 +59,34 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
                 }
             }
         }
+        viewBinding.apply {
+            onClick(ivAd, ivAdclose) {
+                when (it) {
+                    ivAd -> {
+                        toWeb(
+                            getString(R.string.home_detail),
+                            viewModel.getConfigValue()?.info?.home_ad_link
+                        )
+                    }
+
+                    ivAdclose -> {
+                        viewBinding.ivAd.visible(false)
+                        viewBinding.ivAdclose.visible(false)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun toWeb(title: String, url: String?) {
+        Log.d("toWeb title$title url:$url")
+        if (url.isNullOrEmpty()) return
+        findNavController(R.id.nav_host_fragment_content_main).navigate(
+            R.id.action_toWeb, Bundle().apply {
+                putInt(Constant.URL_TYPE, Constant.OTHER_TYPE)
+                putString(Constant.H5_URL, url)
+            }, NavOptions.Builder().setLaunchSingleTop(true).setRestoreState(true).build()
+        )
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
@@ -66,4 +100,16 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+    fun showAd(info: Config? = viewModel.getConfigValue()) {
+        val homeAd = info?.info?.home_ad
+        if (!homeAd.isNullOrEmpty()) {
+            viewBinding.ivAd.visible(true)
+            viewBinding.ivAdclose.visible(true)
+        } else {
+            viewBinding.ivAd.visible(false)
+            viewBinding.ivAdclose.visible(false)
+        }
+    }
+
 }

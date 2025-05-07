@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -41,11 +42,12 @@ public class GlideImgManager {
     private static final int IMG_WIDTH = 100;
     private static final int IMG_HEIGHT = 100;
 
+
     private static final class InstanceHolder {
         static final GlideImgManager instance = new GlideImgManager();
     }
 
-    public static GlideImgManager get(){
+    public static GlideImgManager get() {
         return InstanceHolder.instance;
     }
 
@@ -56,74 +58,44 @@ public class GlideImgManager {
 
     //加载图片
     public void loadImg(String url, ImageView img) {
-        if (TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             loadImg(DEFAULT_ICON, img, IMG_WIDTH, IMG_HEIGHT);
-        }else {
+        } else {
             loadImg(url, img, IMG_WIDTH, IMG_HEIGHT);
         }
     }
 
+    public static void loadGif(@NonNull AppCompatImageView view, int res) {
+        Glide.with(view).asGif().load(res).into(view);
+    }
+
     //加载图片
-    public void loadDefaultImg(String url, ImageView img,int error) {
-        Glide.with(img)
-                .load(url)
-                .dontAnimate()
-                .error(error)
-                .placeholder(error)
-                .into(img);
+    public void loadDefaultImg(String url, ImageView img, int error) {
+        Glide.with(img).load(url).dontAnimate().error(error).placeholder(error).into(img);
     }
 
     public void loadBg(String url, ImageView img) {
-        Glide.with(img)
-                .load(url)
-                .placeholder(img.getDrawable())
-                .dontAnimate()
-                .centerCrop()
-                .into(img);
+        Glide.with(img).load(url).placeholder(img.getDrawable()).dontAnimate().centerCrop().into(img);
     }
 
     //加载图片
-    public void loadImg(String url, ImageView img,int error) {
-        Glide.with(img)
-                .load(url)
-                .dontAnimate()
-                .error(error)
-                .placeholder(error)
-                .centerCrop()
-                .into(img);
+    public void loadImg(String url, ImageView img, int error) {
+        Glide.with(img).load(url).dontAnimate().error(error).placeholder(error).centerCrop().into(img);
     }
 
     //加载图片
-    public void loadFitCenterImg(String url, ImageView img,int error) {
-        Glide.with(img)
-                .load(url)
-                .dontAnimate()
-                .error(error)
-                .placeholder(error)
-                .fitCenter()
-                .into(img);
+    public void loadFitCenterImg(String url, ImageView img, int error) {
+        Glide.with(img).load(url).dontAnimate().error(error).placeholder(error).fitCenter().into(img);
     }
 
 
-    public void loadImgFitCenter(String url, ImageView img,int error) {
-        Glide.with(img)
-                .load(url)
-                .dontAnimate()
-                .error(error)
-                .placeholder(error)
-                .fitCenter()
-                .into(img);
+    public void loadImgFitCenter(String url, ImageView img, int error) {
+        Glide.with(img).load(url).dontAnimate().error(error).placeholder(error).fitCenter().into(img);
     }
 
     //加载图片
-    public void loadImg(String url, ImageView img,float topLeft, float topRight, float bottomRight, float bottomLeft,int error) {
-        Glide.with(img)
-                .load(url)
-                .dontAnimate()
-                .error(error)
-                .placeholder(error)
-                .transform(new RoundedTransform(topLeft,topRight,bottomRight,bottomLeft))
-                .into(img);
+    public void loadImg(String url, ImageView img, float topLeft, float topRight, float bottomRight, float bottomLeft, int error) {
+        Glide.with(img).load(url).dontAnimate().error(error).placeholder(error).transform(new RoundedTransform(topLeft, topRight, bottomRight, bottomLeft)).into(img);
     }
 
 
@@ -132,7 +104,7 @@ public class GlideImgManager {
         loadRound(url, img, createOptions().override(width, height));
     }
 
-    public <T>Bitmap loadBitmap(T url, Application app) throws ExecutionException, InterruptedException {
+    public <T> Bitmap loadBitmap(T url, Application app) throws ExecutionException, InterruptedException {
         return Glide.with(app).asBitmap().load(url).submit().get();
     }
 
@@ -143,16 +115,16 @@ public class GlideImgManager {
 
     //加载圆角矩形图片 使用默认的圆角大小 并默认全部圆角
     public void loadRoundImg(String url, ImageView img) {
-        if (TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             loadRound(DEFAULT_ICON, img, createOptions().optionalTransform(new GlideRoundTransform(CornerType.ALL)));
-        }else {
+        } else {
             loadRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(CornerType.ALL)));
         }
     }
 
 
     //模糊处理
-    public  Bitmap blurBitmap(Bitmap srcBitmap, @FloatRange(from = 0.0f,to = 25.0f) float blurRadius) {
+    public Bitmap blurBitmap(Bitmap srcBitmap, @FloatRange(from = 0.0f, to = 25.0f) float blurRadius) {
         // 计算图片缩小后的长宽
         int width = Math.round(srcBitmap.getWidth() * 0.4f);
         int height = Math.round(srcBitmap.getHeight() * 0.4f);
@@ -193,9 +165,9 @@ public class GlideImgManager {
 
     //加载圆角矩形图片 使用指定的圆角大小 默认圆角方向为所有
     public void loadRoundImg(String url, ImageView img, float radius) {
-        if (TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             loadRound(DEFAULT_ICON, img, createOptions().optionalTransform(new GlideRoundTransform(radius)));
-        }else {
+        } else {
             loadRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(radius)));
         }
     }
@@ -216,36 +188,26 @@ public class GlideImgManager {
 
     //加载圆角矩形图片 使用指定的圆角大小 指定圆角方向
     public void loadRoundImg(String url, ImageView img, CornerType type, float radius) {
-        if (TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             loadRound(DEFAULT_ICON, img, createOptions().optionalTransform(new GlideRoundTransform(radius, type)));
-        }else {
+        } else {
             loadRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(radius, type)));
         }
     }
 
     // 图片加载库采用Glide框架
     private <T> void loadScaleRound(T url, ImageView img, RequestOptions options) {
-        Glide.with(img)
-                .asBitmap()
-                .load(url)
-                .apply(options)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        onScaleImage(img,resource);
-                    }
-                });
+        Glide.with(img).asBitmap().load(url).apply(options).into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                onScaleImage(img, resource);
+            }
+        });
     }
 
     // 图片加载库采用Glide框架
     private <T> void loadRound(T url, ImageView img, RequestOptions options) {
-        Glide.with(img)
-                .load(url)
-                .dontAnimate()
-                .error(DEFAULT_ICON)
-                .placeholder(DEFAULT_ICON)
-                .apply(options)
-                .centerCrop()
+        Glide.with(img).load(url).dontAnimate().error(DEFAULT_ICON).placeholder(DEFAULT_ICON).apply(options).centerCrop()
 //                    .listener(new RequestListener<Bitmap>() {
 //                        @Override
 //                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
@@ -269,8 +231,8 @@ public class GlideImgManager {
     }
 
     //缩放图片
-    private void onScaleImage(ImageView img,@NonNull Bitmap resource){
-        if (img == null){
+    private void onScaleImage(ImageView img, @NonNull Bitmap resource) {
+        if (img == null) {
             return;
         }
         img.setImageBitmap(resource);
@@ -299,27 +261,19 @@ public class GlideImgManager {
         return context.getResources().getDisplayMetrics().heightPixels;
     }
 
-    public void load(ImageView img,String url,int width,int height){
-        if (TextUtils.isEmpty(url)){
-            Glide.with(img).load(DEFAULT_ICON)
-                    .apply(createOptions().override(width, height))
-                    .into(img);
-        }else {
-            Glide.with(img).load(url)
-                    .apply(createOptions().override(width, height))
-                    .into(img);
+    public void load(ImageView img, String url, int width, int height) {
+        if (TextUtils.isEmpty(url)) {
+            Glide.with(img).load(DEFAULT_ICON).apply(createOptions().override(width, height)).into(img);
+        } else {
+            Glide.with(img).load(url).apply(createOptions().override(width, height)).into(img);
         }
     }
 
-    public void load(ImageView img,int url,int width,int height){
-        if (url <= 0){
-            Glide.with(img).load(DEFAULT_ICON)
-                    .apply(createOptions().override(width, height))
-                    .into(img);
-        }else {
-            Glide.with(img).load(url)
-                    .apply(createOptions().override(width, height))
-                    .into(img);
+    public void load(ImageView img, int url, int width, int height) {
+        if (url <= 0) {
+            Glide.with(img).load(DEFAULT_ICON).apply(createOptions().override(width, height)).into(img);
+        } else {
+            Glide.with(img).load(url).apply(createOptions().override(width, height)).into(img);
         }
     }
 
@@ -333,11 +287,8 @@ public class GlideImgManager {
                 // 如果没设置fallback，model为空时将显示error的Drawable，
                 // 如果error的Drawable也没设置，就显示placeholder的Drawable
                 .priority(Priority.NORMAL)//指定加载的优先级，优先级越高越优先加载，
-                .error(ERROR)
-                .centerCrop()
-                .skipMemoryCache(false)
-                .placeholder(ERROR);
-                 // 缓存原始数据
+                .error(ERROR).centerCrop().skipMemoryCache(false).placeholder(ERROR);
+        // 缓存原始数据
 //               .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
 //               .optionalTransform(new GlideRoundTransform(CornerType.ALL));
     }
@@ -353,30 +304,23 @@ public class GlideImgManager {
                 // 如果没设置fallback，model为空时将显示error的Drawable，
                 // 如果error的Drawable也没设置，就显示placeholder的Drawable
                 .priority(Priority.NORMAL)//指定加载的优先级，优先级越高越优先加载，
-                .placeholder(null)
-                .error(ERROR)
+                .placeholder(null).error(ERROR)
 //                .centerCrop()
-                .circleCrop()
-                .skipMemoryCache(true)
-                .transform(new GlideCircleTransform());
+                .circleCrop().skipMemoryCache(true).transform(new GlideCircleTransform());
         // 图片加载库采用Glide框架
-        Glide.with(img)
-                .load(url)
-                .apply(options)
-                .transition(new DrawableTransitionOptions().crossFade())
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        if (reference.get() != null){
-                            reference.get().setImageDrawable(resource);
-                        }
-                    }
-                });
+        Glide.with(img).load(url).apply(options).transition(new DrawableTransitionOptions().crossFade()).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                if (reference.get() != null) {
+                    reference.get().setImageDrawable(resource);
+                }
+            }
+        });
     }
 
     public void loadCircleImg(String url, ImageView img) {
         WeakReference<ImageView> reference = new WeakReference(img);
-        if (TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             //RequestOptions 设置请求参数，通过apply方法设置
             RequestOptions options = new RequestOptions()
                     // 但不保证所有图片都按序加载
@@ -385,26 +329,18 @@ public class GlideImgManager {
                     // 如果没设置fallback，model为空时将显示error的Drawable，
                     // 如果error的Drawable也没设置，就显示placeholder的Drawable
                     .priority(Priority.NORMAL)//指定加载的优先级，优先级越高越优先加载，
-                    .placeholder(null)
-                    .error(ERROR)
-                    .circleCrop()
-                    .skipMemoryCache(true)
-                    .transform(new GlideCircleTransform());
+                    .placeholder(null).error(ERROR).circleCrop().skipMemoryCache(true).transform(new GlideCircleTransform());
             // 图片加载库采用Glide框架
-            Glide.with(img)
-                    .load(DEFAULT_ICON)
-                    .apply(options)
-                    .transition(new DrawableTransitionOptions().crossFade())
-                    .into(new SimpleTarget<Drawable>() {
-                        @Override
-                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                            if (reference.get() != null){
-                                reference.get().setImageDrawable(resource);
-                            }
-                            reference.clear();
-                        }
-                    });
-        }else {
+            Glide.with(img).load(DEFAULT_ICON).apply(options).transition(new DrawableTransitionOptions().crossFade()).into(new SimpleTarget<Drawable>() {
+                @Override
+                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                    if (reference.get() != null) {
+                        reference.get().setImageDrawable(resource);
+                    }
+                    reference.clear();
+                }
+            });
+        } else {
             //RequestOptions 设置请求参数，通过apply方法设置
             RequestOptions options = new RequestOptions()
                     // 但不保证所有图片都按序加载
@@ -413,25 +349,17 @@ public class GlideImgManager {
                     // 如果没设置fallback，model为空时将显示error的Drawable，
                     // 如果error的Drawable也没设置，就显示placeholder的Drawable
                     .priority(Priority.NORMAL)//指定加载的优先级，优先级越高越优先加载，
-                    .placeholder(DEFAULT_ICON)
-                    .error(ERROR)
-                    .circleCrop()
-                    .skipMemoryCache(true)
-                    .transform(new GlideCircleTransform());
+                    .placeholder(DEFAULT_ICON).error(ERROR).circleCrop().skipMemoryCache(true).transform(new GlideCircleTransform());
             // 图片加载库采用Glide框架
-            Glide.with(img)
-                    .load(url)
-                    .apply(options)
-                    .transition(new DrawableTransitionOptions().crossFade())
-                    .into(new SimpleTarget<Drawable>() {
-                        @Override
-                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                            if (reference.get() != null){
-                                reference.get().setImageDrawable(resource);
-                            }
-                            reference.clear();
-                        }
-                    });
+            Glide.with(img).load(url).apply(options).transition(new DrawableTransitionOptions().crossFade()).into(new SimpleTarget<Drawable>() {
+                @Override
+                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                    if (reference.get() != null) {
+                        reference.get().setImageDrawable(resource);
+                    }
+                    reference.clear();
+                }
+            });
         }
     }
 
@@ -445,25 +373,18 @@ public class GlideImgManager {
                 // 如果没设置fallback，model为空时将显示error的Drawable，
                 // 如果error的Drawable也没设置，就显示placeholder的Drawable
                 .priority(Priority.NORMAL)//指定加载的优先级，优先级越高越优先加载，
-                .placeholder(null)
-                .error(ERROR)
+                .placeholder(null).error(ERROR)
 //                .centerCrop()
-                .circleCrop()
-                .skipMemoryCache(false)
-                .transform(new GlideCircleTransform(borderWidth, borderColor));
+                .circleCrop().skipMemoryCache(false).transform(new GlideCircleTransform(borderWidth, borderColor));
         // 图片加载库采用Glide框架
-        Glide.with(img)
-                .load(url)
-                .apply(options)
-                .transition(new DrawableTransitionOptions().crossFade())
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        if (img != null){
-                            img.setImageDrawable(resource);
-                        }
-                    }
-                });
+        Glide.with(img).load(url).apply(options).transition(new DrawableTransitionOptions().crossFade()).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                if (img != null) {
+                    img.setImageDrawable(resource);
+                }
+            }
+        });
     }
 
     //加载圆形图片带边框
@@ -476,40 +397,33 @@ public class GlideImgManager {
                 // 如果没设置fallback，model为空时将显示error的Drawable，
                 // 如果error的Drawable也没设置，就显示placeholder的Drawable
                 .priority(Priority.NORMAL)//指定加载的优先级，优先级越高越优先加载，
-                .placeholder(null)
-                .error(ERROR)
+                .placeholder(null).error(ERROR)
 //                .centerCrop()
-                .circleCrop()
-                .skipMemoryCache(false)
-                .transform(new GlideCircleTransform(borderColor));
+                .circleCrop().skipMemoryCache(false).transform(new GlideCircleTransform(borderColor));
         // 图片加载库采用Glide框架
-        Glide.with(img)
-                .load(url)
-                .apply(options)
-                .transition(new DrawableTransitionOptions().crossFade())
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        if (img != null){
-                            img.setImageDrawable(resource);
-                        }
-                    }
-                });
+        Glide.with(img).load(url).apply(options).transition(new DrawableTransitionOptions().crossFade()).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                if (img != null) {
+                    img.setImageDrawable(resource);
+                }
+            }
+        });
     }
 
 
     //暂停加载
-    public void clear(View view){
+    public void clear(View view) {
         //Glide.with(view).clear(view);
     }
 
     //暂停加载
-    public void pauseRequests(View view){
+    public void pauseRequests(View view) {
         Glide.with(view).pauseRequests();
     }
 
     //恢复加载
-    public void resumeRequests(View view){
+    public void resumeRequests(View view) {
         Glide.with(view).resumeRequests();
     }
 }

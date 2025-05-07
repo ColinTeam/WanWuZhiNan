@@ -76,8 +76,7 @@ class BaseApplication : CommApplication() {
     }
 
     private fun initNetwork() {
-        NetworkConfig
-            .addInterceptor(HeaderInterceptor())
+        NetworkConfig.addInterceptor(HeaderInterceptor())
 
     }
 

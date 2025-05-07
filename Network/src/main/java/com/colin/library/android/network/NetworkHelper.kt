@@ -7,10 +7,9 @@ import java.util.concurrent.Executors
 
 object NetworkHelper {
     val retrofit: Retrofit by lazy {
-        Retrofit.Builder().baseUrl(NetworkConfig.baseUrl).client(NetworkConfig.httpClient)
+        Retrofit.Builder().baseUrl(NetworkConfig.baseUrl).client(NetworkConfig.getOkHttpClient())
             .addConverterFactory(GsonConverterFactory.create(NetworkConfig.gson))
-            .callbackExecutor(Executors.newSingleThreadExecutor())
-            .build()
+            .callbackExecutor(Executors.newSingleThreadExecutor()).build()
     }
 
     /**
