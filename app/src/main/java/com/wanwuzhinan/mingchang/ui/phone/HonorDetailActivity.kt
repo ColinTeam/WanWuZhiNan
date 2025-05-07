@@ -3,19 +3,14 @@ package com.wanwuzhinan.mingchang.ui.phone
 import android.util.Log
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.utils.ext.onClick
-import com.wanwuzhinan.mingchang.BuildConfig
 import com.google.gson.Gson
-import com.ssm.comm.app.CommApplication
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ui.base.BaseActivity
-import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
-import com.tencent.mm.opensdk.modelmsg.WXImageObject
-import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.MedalListData
 import com.wanwuzhinan.mingchang.databinding.ActivityHonorDetailBinding
-import com.wanwuzhinan.mingchang.ext.*
+import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ui.pop.SharePop
 import com.wanwuzhinan.mingchang.utils.SaveImageUtils
 import com.wanwuzhinan.mingchang.utils.SaveListener
@@ -62,20 +57,6 @@ class HonorDetailActivity  : BaseActivity<ActivityHonorDetailBinding, UserViewMo
                                     dismissBaseLoading()
                                 }
                             })
-                        }else {
-                            val bmp = SaveImageUtils.getBitmapByView(mDataBinding.llCl)
-
-                            //初始化 WXImageObject 和 WXMediaMessage 对象
-                            val imgObj: WXImageObject = WXImageObject(bmp)
-                            val msg = WXMediaMessage()
-                            msg.mediaObject = imgObj
-                            //构造一个Req
-                            val req = SendMessageToWX.Req()
-                            req.message = msg
-                            req.scene = if (int == 1) SendMessageToWX.Req.WXSceneSession else SendMessageToWX.Req.WXSceneTimeline
-                            req.userOpenId = BuildConfig.WE_CHAT_APP_ID
-                            //调用api接口，发送数据到微信
-                            CommApplication.instance.api!!.sendReq(req)
                         }
                     }
                 }

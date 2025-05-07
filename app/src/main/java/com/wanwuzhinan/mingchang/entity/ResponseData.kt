@@ -118,7 +118,7 @@ data class UserInfo(
 class ConfigDataResponse() : AppResponse<Config>()
 
 data class Config(
-    val info: ConfigData? = null, val user_count: Int = 0, val user_countShow: Int = 0
+    val info: ConfigData = ConfigData(), val user_count: Int = 0, val user_countShow: Int = 0
 )
 
 data class ConfigData(

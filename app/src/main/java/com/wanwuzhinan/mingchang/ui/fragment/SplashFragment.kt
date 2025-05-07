@@ -20,7 +20,6 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
 
-
     }
 
 }

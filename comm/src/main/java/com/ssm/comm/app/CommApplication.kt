@@ -41,8 +41,6 @@ open class CommApplication : MultiDexApplication() {
         instance = this
         AppActivityManager.getInstance().init(appContext)
         ToastUtils.init(appContext)
-        initMMKV(this)
-        initX5Environment()
     }
 
 
@@ -72,14 +70,14 @@ open class CommApplication : MultiDexApplication() {
     }
 
 
-    private fun initMMKV(context: Context) {
+    fun initMMKV(context: Context) {
         //自定义根目录
         val dir = filesDir.absolutePath + "/mmkv"
         val rootDir = MMKV.initialize(context, dir, MMKVLogLevel.LevelInfo)
         LogUtils.d("mmkv root:$rootDir")
     }
 
-    private fun initX5Environment() {/* SDK内核初始化周期回调，包括 下载、安装、加载 */
+    fun initX5Environment() {/* SDK内核初始化周期回调，包括 下载、安装、加载 */
         QbSdk.setTbsListener(object : TbsListener {
             /**
              * @param stateCode 110: 表示当前服务器认为该环境下不需要下载

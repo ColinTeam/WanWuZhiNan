@@ -1,7 +1,10 @@
 package com.wanwuzhinan.mingchang.app
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.colin.library.android.network.NetworkHelper
+import com.colin.library.android.network.data.NetworkResult
 import com.wanwuzhinan.mingchang.net.ApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,10 +23,12 @@ open class AppViewModel : ViewModel() {
     }
 
     /*加载状态*/
-    private val _showLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val _showLoading = MutableStateFlow(false)
 
     /*加载状态*/
     val showLoading: Flow<Boolean> = _showLoading.asStateFlow()
+    private val _showError: MutableLiveData<NetworkResult.Failure?> = MutableLiveData(null)
+    val showError: LiveData<NetworkResult.Failure?> = _showError
 
 
     /*加载状态*/

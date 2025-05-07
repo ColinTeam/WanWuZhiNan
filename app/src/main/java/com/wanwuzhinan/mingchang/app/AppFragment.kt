@@ -5,16 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.colin.library.android.utils.Log
+import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.widget.base.BaseFragment
+import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.receiver.ScreenChangedReceiver
+import com.wanwuzhinan.mingchang.utils.navigate
 import java.lang.reflect.ParameterizedType
 
 
-abstract class AppFragment<VB : ViewBinding, VM : ViewModel> : BaseFragment(),
+abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment(),
     ScreenChangedReceiver.OnScreenChangedListener {
     private var _viewBinding: VB? = null
     internal val viewBinding: VB get() = _viewBinding!!
@@ -32,6 +34,19 @@ abstract class AppFragment<VB : ViewBinding, VM : ViewModel> : BaseFragment(),
         return viewBinding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.apply {
+            showError.observe {
+                Log.e("error state:$it")
+                ToastUtil.show(it.msg)
+                if (it.code == 2 || it.code == 4) {
+                    navigate(R.id.action_toLogin)
+                }
+            }
+        }
+    }
+
     override fun onDestroyView() {
         _viewBinding = null
         super.onDestroyView()
@@ -43,6 +58,7 @@ abstract class AppFragment<VB : ViewBinding, VM : ViewModel> : BaseFragment(),
     override fun screenChanged(action: String) {
         Log.i(TAG, "screenChanged:$action")
     }
+
     /*如果想修改Store 可以重写此方法*/
     open fun bindViewModelStore() = viewModelStore
 
@@ -74,7 +90,7 @@ abstract class AppFragment<VB : ViewBinding, VM : ViewModel> : BaseFragment(),
     }
 
     @Throws(IllegalStateException::class)
-    private fun <VM : ViewModel> reflectViewModel(): VM {
+    private fun <VM : AppViewModel> reflectViewModel(): VM {
         try {
             return ViewModelProvider.create(bindViewModelStore())[getActualClass(1)]
         } catch (e: Exception) {

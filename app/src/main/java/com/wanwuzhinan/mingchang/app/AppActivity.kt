@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewbinding.ViewBinding
@@ -13,7 +12,7 @@ import com.colin.library.android.widget.base.BaseActivity
 import java.lang.reflect.ParameterizedType
 
 
-abstract class AppActivity<VB : ViewBinding, VM : ViewModel> : BaseActivity() {
+abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity() {
     internal lateinit var viewBinding: VB
     internal val viewModel: VM by lazy { reflectViewModel() }
 
@@ -46,7 +45,7 @@ abstract class AppActivity<VB : ViewBinding, VM : ViewModel> : BaseActivity() {
     }
 
     @Throws(IllegalStateException::class)
-    private fun <VM : ViewModel> reflectViewModel(): VM {
+    private fun <VM : AppViewModel> reflectViewModel(): VM {
         try {
             return ViewModelProvider.create(bindViewModelStore())[getActualClass(1)]
         } catch (e: Exception) {

@@ -19,6 +19,7 @@ object Constant {
 
     const val USER_ID = "user_id"
     const val TOKEN = "token"
+    const val VERSION = "version"
     const val IS_SET_PW = "is_set_pw"
     const val USER_MOBILE = "user_mobile"
     const val IS_REAL_NAME = "is_real_name"

@@ -1,5 +1,7 @@
 package com.colin.library.android.network
 
+import com.colin.library.android.network.gson.IntegerTypeAdapter
+import com.colin.library.android.network.gson.StringTypeAdapter
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
@@ -15,9 +17,12 @@ import java.util.concurrent.TimeUnit
  * Des   :NetworkConfig
  */
 object NetworkConfig {
-    var gson: Gson = GsonBuilder().setLenient().create()
+    var gson: Gson =
+        GsonBuilder().setLenient().registerTypeAdapter(Int::class.java, IntegerTypeAdapter())
+            .registerTypeAdapter(String::class.java, StringTypeAdapter()).create()
 
     var baseUrl: String = if (BuildConfig.DEBUG) BuildConfig.URL_DEBUG else BuildConfig.URL_RELEASE
+    private var headerMap = HashMap<String, String>()
 
     var retry: Int = BuildConfig.RETRY
 
@@ -25,7 +30,7 @@ object NetworkConfig {
 
     var timeout: Long = BuildConfig.TIMEOUT
 
-    var interceptor: Interceptor = createLoggingInterceptor();
+    var interceptors = mutableListOf<Interceptor>(createLoggingInterceptor())
 
     private fun createLoggingInterceptor() = HttpLoggingInterceptor().setLevel(
         if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
@@ -33,6 +38,21 @@ object NetworkConfig {
 
     var httpClient = OkHttpClient.Builder().callTimeout(timeout, TimeUnit.MILLISECONDS)
         .connectTimeout(timeout, TimeUnit.MILLISECONDS).readTimeout(timeout, TimeUnit.MILLISECONDS)
-        .writeTimeout(timeout, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true)
-        .addInterceptor(createLoggingInterceptor()).build()
+        .writeTimeout(timeout, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).apply {
+            interceptors.forEach{ this.addInterceptor(it)}
+        }.build()
+
+    fun addInterceptor(interceptor: Interceptor) = apply {
+        if (!interceptors.contains(interceptor)) interceptors.add(interceptor)
+    }
+
+    fun addHeader(key: String, value: String) = apply {
+        headerMap.put(key, value)
+    }
+
+    fun addHeader(map: Map<String, String>) = apply {
+        for (entry in map) {
+            headerMap.put(entry.key, entry.value)
+        }
+    }
 }

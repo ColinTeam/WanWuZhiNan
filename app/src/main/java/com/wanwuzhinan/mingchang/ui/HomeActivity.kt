@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
+import com.colin.library.android.utils.Log
+import com.colin.library.android.utils.ToastUtil
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
@@ -36,10 +38,27 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
+        viewModel.apply {
+            configData.observe {
+                Log.i("configData:$it")
+            }
+            userInfo.observe {
+                Log.i("userInfo:$it")
+            }
+            showError.observe {
+                Log.i("showError:$it")
+                ToastUtil.show(it.msg)
+                if (it.code == 2 || it.code == 4) {
+                    navController.navigate(R.id.action_toLogin)
+                }
+            }
+        }
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         MMKVUtils.decodeString(ConfigApp.MMKV_SPLASH_TIME)
+        viewModel.getConfig()
+        viewModel.getUserInfo()
     }
 
 

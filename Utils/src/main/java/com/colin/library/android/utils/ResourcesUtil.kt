@@ -6,6 +6,7 @@ import android.content.res.Resources
 import androidx.annotation.ArrayRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 
 /**
@@ -31,5 +32,13 @@ object ResourcesUtil {
     @ColorInt
     fun getIntArray(context: Context, @ArrayRes res: Int): IntArray {
         return context.resources.getIntArray(res)
+    }
+
+    fun getString(@StringRes res: Int): String {
+        return getResources().getString(res)
+    }
+
+    fun getString(context: Context, @StringRes res: Int): String {
+        return context.resources.getString(res)
     }
 }

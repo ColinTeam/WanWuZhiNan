@@ -7,7 +7,6 @@ import com.comm.net_work.entity.ApiListResponse
 import com.ssm.comm.data.VersionData
 import com.ssm.comm.ui.base.BaseViewModel
 import com.wanwuzhinan.mingchang.data.CityData
-import com.wanwuzhinan.mingchang.data.ConfigData
 import com.wanwuzhinan.mingchang.data.CourseStudyData
 import com.wanwuzhinan.mingchang.data.ExchangeCodeData
 import com.wanwuzhinan.mingchang.data.ExchangeListData

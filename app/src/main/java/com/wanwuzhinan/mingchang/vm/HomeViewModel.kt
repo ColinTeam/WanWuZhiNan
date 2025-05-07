@@ -6,6 +6,7 @@ import com.colin.library.android.network.request
 import com.colin.library.android.utils.Log
 import com.wanwuzhinan.mingchang.app.AppViewModel
 import com.wanwuzhinan.mingchang.data.RegisterData
+import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,13 +25,13 @@ class HomeViewModel : AppViewModel() {
     private val _userFlow: MutableStateFlow<RegisterData?> = MutableStateFlow(null)
     private val _msg: MutableLiveData<String> = MutableLiveData("")
     private val _userInfo: MutableLiveData<UserInfo?> = MutableLiveData(null)
-    private val _configData: MutableLiveData<ConfigData> = MutableLiveData(ConfigData())
+    private val _configData: MutableLiveData<Config> = MutableLiveData(Config())
 
     val user: LiveData<RegisterData> = _user
     val userFlow = _userFlow.asStateFlow()
     val msg: LiveData<String> = _msg
     val userInfo: LiveData<UserInfo?> = _userInfo
-    val configData: LiveData<ConfigData> = _configData
+    val configData: LiveData<Config> = _configData
 
 
     //获取用户信息
@@ -51,7 +52,7 @@ class HomeViewModel : AppViewModel() {
             service.newConfig()
         }, success = {
             Log.e("http success:$it")
-            if (it.info != null && it.info != configData.value) {
+            if (it.info != configData.value) {
                 _configData.postValue(it.info)
             }
         }, failure = {
