@@ -104,11 +104,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, UserViewModel>(UserViewMo
     override fun initRequest() {
         mViewModel.getUserInfoLiveData.observeState(this){
             onSuccess={data, msg ->
-                setData(Constant.USER_INFO, Gson().toJson(data!!.info))
-                ConfigApp.question_count_error = data.info.question_count_error.toInt()
-                ConfigApp.question_compass = data.info.question_compass.toInt()
-                GlideImgManager.get().loadImg(data.info.headimg, mDataBinding.rivHead,R.mipmap.logo)
-                mDataBinding.tvName.text = data.info.nickname
+                if (data!=null){
+                    setData(Constant.USER_INFO, Gson().toJson(data))
+                    ConfigApp.question_count_error = data.question_count_error
+                    ConfigApp.question_compass = data.question_compass
+                    GlideImgManager.get().loadImg(data.headimg, mDataBinding.rivHead, R.mipmap.logo)
+                    mDataBinding.tvName.text = data.nickname
+                }
             }
         }
     }

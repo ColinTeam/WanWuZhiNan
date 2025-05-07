@@ -43,7 +43,7 @@ fun <T> ViewModel.request(
  *
  * 该函数通过 `requestImpl` 实现具体的请求逻辑，并使用 `lifecycleScope` 确保请求在 ViewModel 的生命周期内执行。
  */
-suspend fun <T> LifecycleOwner.request(
+fun <T> LifecycleOwner.request(
     request: suspend () -> INetworkResponse<T>,
     success: (suspend (T) -> Unit) = { },
     failure: (suspend (NetworkResult.Failure) -> Unit) = { }

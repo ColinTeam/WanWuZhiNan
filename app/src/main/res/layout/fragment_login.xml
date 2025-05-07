@@ -16,6 +16,7 @@
             android:id="@+id/ivContentBg"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/margin_default"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +47,10 @@
             app:layout_constraintStart_toEndOf="@+id/iv_ai"
             app:layout_constraintTop_toTopOf="@+id/ivContentBg"
             app:tabIndicator="@drawable/tab_indicator_login"
+            app:tabIndicatorColor="@color/color_active"
+            app:tabIndicatorAnimationMode="elastic"
             app:tabMode="scrollable"
+            app:tabRippleColor="@color/transparent"
             app:tabSelectedTextAppearance="@style/Text.Tab.Selected"
             app:tabSelectedTextColor="@color/color_active"
             app:tabTextAppearance="@style/Text.Tab">
@@ -131,7 +135,7 @@
             app:layout_constraintTop_toTopOf="@+id/tabLogin"
             tools:visibility="visible" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/rbProtocolTips"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_25"

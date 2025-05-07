@@ -1,35 +1,19 @@
 package com.colin.library.android.image.glide;
 
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.colin.library.android.image.glide.transform.GlideCircleTransform;
-import com.colin.library.android.image.glide.transform.GlideRoundTransform;
 import com.colin.library.android.image.glide.transform.RoundedTransform;
-
-import java.lang.ref.WeakReference;
-import java.util.concurrent.ExecutionException;
 
 
 public class GlideImgManager {
@@ -104,106 +88,6 @@ public class GlideImgManager {
         loadRound(url, img, createOptions().override(width, height));
     }
 
-    public <T> Bitmap loadBitmap(T url, Application app) throws ExecutionException, InterruptedException {
-        return Glide.with(app).asBitmap().load(url).submit().get();
-    }
-
-    //加载圆角矩形图片 使用默认的圆角大小 并默认全部圆角
-    public <T> void loadRoundImg(T url, ImageView img) {
-        loadRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(CornerType.ALL)));
-    }
-
-    //加载圆角矩形图片 使用默认的圆角大小 并默认全部圆角
-    public void loadRoundImg(String url, ImageView img) {
-        if (TextUtils.isEmpty(url)) {
-            loadRound(DEFAULT_ICON, img, createOptions().optionalTransform(new GlideRoundTransform(CornerType.ALL)));
-        } else {
-            loadRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(CornerType.ALL)));
-        }
-    }
-
-
-    //模糊处理
-    public Bitmap blurBitmap(Bitmap srcBitmap, @FloatRange(from = 0.0f, to = 25.0f) float blurRadius) {
-        // 计算图片缩小后的长宽
-        int width = Math.round(srcBitmap.getWidth() * 0.4f);
-        int height = Math.round(srcBitmap.getHeight() * 0.4f);
-        // 将缩小后的图片做为预渲染的图片
-        Bitmap inputBitmap = Bitmap.createScaledBitmap(srcBitmap, width, height, false);
-        // 创建一张渲染后的输出图片
-        Bitmap outputBitmap = Bitmap.createBitmap(inputBitmap);
-        // 创建RenderScript内核对象
-        RenderScript rs = RenderScript.create(null);
-        // 创建一个模糊效果的RenderScript的工具对象
-        ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
-        // 由于RenderScript并没有使用VM来分配内存,所以需要使用Allocation类来创建和分配内存空间
-        // 创建Allocation对象的时候其实内存是空的,需要使用copyTo()将数据填充进去
-        Allocation tmpIn = Allocation.createFromBitmap(rs, inputBitmap);
-        Allocation tmpOut = Allocation.createFromBitmap(rs, outputBitmap);
-        // 设置渲染的模糊程度, 25f是最大模糊度
-        blurScript.setRadius(blurRadius);
-        // 设置blurScript对象的输入内存
-        blurScript.setInput(tmpIn);
-        // 将输出数据保存到输出内存中
-        blurScript.forEach(tmpOut);
-        // 将数据填充到Allocation中
-        tmpOut.copyTo(outputBitmap);
-        rs.destroy();
-        return outputBitmap;
-    }
-
-    //加载圆角矩形图片 使用默认的圆角大小 设置圆角方向
-    public <T> void loadRoundImg(T url, CornerType type, ImageView img) {
-        loadRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(type)));
-    }
-
-
-    //加载圆角矩形图片 使用指定的圆角大小 默认圆角方向为所有
-    public <T> void loadRoundImg(T url, ImageView img, float radius) {
-        loadRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(radius)));
-    }
-
-    //加载圆角矩形图片 使用指定的圆角大小 默认圆角方向为所有
-    public void loadRoundImg(String url, ImageView img, float radius) {
-        if (TextUtils.isEmpty(url)) {
-            loadRound(DEFAULT_ICON, img, createOptions().optionalTransform(new GlideRoundTransform(radius)));
-        } else {
-            loadRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(radius)));
-        }
-    }
-
-    //加载圆角矩形图片 使用指定的圆角大小 默认圆角方向为所有
-//    public static <T> void loadRoundImg(T url, ImageView img, float radius,boolean isScale) {
-//        if (isScale){
-//            loadScaleRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(radius)));
-//        }else {
-//            loadRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(radius)));
-//        }
-//    }
-
-    //加载圆角矩形图片 使用指定的圆角大小 指定圆角方向
-    public <T> void loadRoundImg(T url, ImageView img, CornerType type, float radius) {
-        loadRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(radius, type)));
-    }
-
-    //加载圆角矩形图片 使用指定的圆角大小 指定圆角方向
-    public void loadRoundImg(String url, ImageView img, CornerType type, float radius) {
-        if (TextUtils.isEmpty(url)) {
-            loadRound(DEFAULT_ICON, img, createOptions().optionalTransform(new GlideRoundTransform(radius, type)));
-        } else {
-            loadRound(url, img, createOptions().optionalTransform(new GlideRoundTransform(radius, type)));
-        }
-    }
-
-    // 图片加载库采用Glide框架
-    private <T> void loadScaleRound(T url, ImageView img, RequestOptions options) {
-        Glide.with(img).asBitmap().load(url).apply(options).into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                onScaleImage(img, resource);
-            }
-        });
-    }
 
     // 图片加载库采用Glide框架
     private <T> void loadRound(T url, ImageView img, RequestOptions options) {
@@ -293,123 +177,6 @@ public class GlideImgManager {
 //               .optionalTransform(new GlideRoundTransform(CornerType.ALL));
     }
 
-    //加载圆形图片
-    public <T> void loadCircleImg(T url, ImageView img) {
-        WeakReference<ImageView> reference = new WeakReference<>(img);
-        //RequestOptions 设置请求参数，通过apply方法设置
-        RequestOptions options = new RequestOptions()
-                // 但不保证所有图片都按序加载
-                // 枚举Priority.IMMEDIATE，Priority.HIGH，Priority.NORMAL，Priority.LOW
-                // 默认为Priority.NORMAL
-                // 如果没设置fallback，model为空时将显示error的Drawable，
-                // 如果error的Drawable也没设置，就显示placeholder的Drawable
-                .priority(Priority.NORMAL)//指定加载的优先级，优先级越高越优先加载，
-                .placeholder(null).error(ERROR)
-//                .centerCrop()
-                .circleCrop().skipMemoryCache(true).transform(new GlideCircleTransform());
-        // 图片加载库采用Glide框架
-        Glide.with(img).load(url).apply(options).transition(new DrawableTransitionOptions().crossFade()).into(new SimpleTarget<Drawable>() {
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                if (reference.get() != null) {
-                    reference.get().setImageDrawable(resource);
-                }
-            }
-        });
-    }
-
-    public void loadCircleImg(String url, ImageView img) {
-        WeakReference<ImageView> reference = new WeakReference(img);
-        if (TextUtils.isEmpty(url)) {
-            //RequestOptions 设置请求参数，通过apply方法设置
-            RequestOptions options = new RequestOptions()
-                    // 但不保证所有图片都按序加载
-                    // 枚举Priority.IMMEDIATE，Priority.HIGH，Priority.NORMAL，Priority.LOW
-                    // 默认为Priority.NORMAL
-                    // 如果没设置fallback，model为空时将显示error的Drawable，
-                    // 如果error的Drawable也没设置，就显示placeholder的Drawable
-                    .priority(Priority.NORMAL)//指定加载的优先级，优先级越高越优先加载，
-                    .placeholder(null).error(ERROR).circleCrop().skipMemoryCache(true).transform(new GlideCircleTransform());
-            // 图片加载库采用Glide框架
-            Glide.with(img).load(DEFAULT_ICON).apply(options).transition(new DrawableTransitionOptions().crossFade()).into(new SimpleTarget<Drawable>() {
-                @Override
-                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                    if (reference.get() != null) {
-                        reference.get().setImageDrawable(resource);
-                    }
-                    reference.clear();
-                }
-            });
-        } else {
-            //RequestOptions 设置请求参数，通过apply方法设置
-            RequestOptions options = new RequestOptions()
-                    // 但不保证所有图片都按序加载
-                    // 枚举Priority.IMMEDIATE，Priority.HIGH，Priority.NORMAL，Priority.LOW
-                    // 默认为Priority.NORMAL
-                    // 如果没设置fallback，model为空时将显示error的Drawable，
-                    // 如果error的Drawable也没设置，就显示placeholder的Drawable
-                    .priority(Priority.NORMAL)//指定加载的优先级，优先级越高越优先加载，
-                    .placeholder(DEFAULT_ICON).error(ERROR).circleCrop().skipMemoryCache(true).transform(new GlideCircleTransform());
-            // 图片加载库采用Glide框架
-            Glide.with(img).load(url).apply(options).transition(new DrawableTransitionOptions().crossFade()).into(new SimpleTarget<Drawable>() {
-                @Override
-                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                    if (reference.get() != null) {
-                        reference.get().setImageDrawable(resource);
-                    }
-                    reference.clear();
-                }
-            });
-        }
-    }
-
-    //加载圆形图片带边框
-    public <T> void loadCircleImg(T url, float borderWidth, int borderColor, ImageView img) {
-        //RequestOptions 设置请求参数，通过apply方法设置
-        RequestOptions options = new RequestOptions()
-                // 但不保证所有图片都按序加载
-                // 枚举Priority.IMMEDIATE，Priority.HIGH，Priority.NORMAL，Priority.LOW
-                // 默认为Priority.NORMAL
-                // 如果没设置fallback，model为空时将显示error的Drawable，
-                // 如果error的Drawable也没设置，就显示placeholder的Drawable
-                .priority(Priority.NORMAL)//指定加载的优先级，优先级越高越优先加载，
-                .placeholder(null).error(ERROR)
-//                .centerCrop()
-                .circleCrop().skipMemoryCache(false).transform(new GlideCircleTransform(borderWidth, borderColor));
-        // 图片加载库采用Glide框架
-        Glide.with(img).load(url).apply(options).transition(new DrawableTransitionOptions().crossFade()).into(new SimpleTarget<Drawable>() {
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                if (img != null) {
-                    img.setImageDrawable(resource);
-                }
-            }
-        });
-    }
-
-    //加载圆形图片带边框
-    public <T> void loadCircleImg(T url, int borderColor, ImageView img) {
-        //RequestOptions 设置请求参数，通过apply方法设置
-        RequestOptions options = new RequestOptions()
-                // 但不保证所有图片都按序加载
-                // 枚举Priority.IMMEDIATE，Priority.HIGH，Priority.NORMAL，Priority.LOW
-                // 默认为Priority.NORMAL
-                // 如果没设置fallback，model为空时将显示error的Drawable，
-                // 如果error的Drawable也没设置，就显示placeholder的Drawable
-                .priority(Priority.NORMAL)//指定加载的优先级，优先级越高越优先加载，
-                .placeholder(null).error(ERROR)
-//                .centerCrop()
-                .circleCrop().skipMemoryCache(false).transform(new GlideCircleTransform(borderColor));
-        // 图片加载库采用Glide框架
-        Glide.with(img).load(url).apply(options).transition(new DrawableTransitionOptions().crossFade()).into(new SimpleTarget<Drawable>() {
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                if (img != null) {
-                    img.setImageDrawable(resource);
-                }
-            }
-        });
-    }
 
 
     //暂停加载

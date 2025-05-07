@@ -57,7 +57,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
 
         mViewModel.getUserInfoLiveData.observeState(this) {
             onSuccess = { data, msg ->
-                mInfo = data!!.info
+                mInfo = data!!
                 mProvinceName = mInfo.province_name
                 mCityName = mInfo.city_name
                 mAreaName = mInfo.area_name

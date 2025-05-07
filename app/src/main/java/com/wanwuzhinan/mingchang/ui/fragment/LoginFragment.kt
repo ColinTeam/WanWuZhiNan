@@ -72,7 +72,6 @@ class LoginFragment : AppFragment<FragmentLoginBinding, HomeViewModel>() {
                     tvSmsTips.isVisible = isSms
                     etSMS.isVisible = isSms
                     tvSmsSend.isVisible = isSms
-
                     tvPwdTips.isVisible = !isSms
                     etPassword.isVisible = !isSms
                     tabIndex = if (isSms) TAB_SMS else TAB_PWD
@@ -101,9 +100,9 @@ class LoginFragment : AppFragment<FragmentLoginBinding, HomeViewModel>() {
         viewBinding.apply {
             val basic = rbProtocolTips.isChecked && (etPhone.text?.length ?: 0) > 0
             if (tabIndex == TAB_SMS) {
-                buttonLogin.isEnabled = basic && (etSMS.text?.length ?: 0) > 0
+                buttonLogin.isSelected = basic && (etSMS.text?.length ?: 0) > 0
             } else {
-                buttonLogin.isEnabled =
+                buttonLogin.isSelected =
                     basic && (etPassword.text?.length ?: 0) > PasswordFragment.PWD_LENGTH_MIN
             }
         }

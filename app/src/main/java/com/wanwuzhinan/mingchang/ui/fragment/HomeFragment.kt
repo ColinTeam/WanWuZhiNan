@@ -2,18 +2,17 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelStore
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.utils.Log
 import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
+import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentHomeBinding
 import com.wanwuzhinan.mingchang.entity.ConfigData
+import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
@@ -42,6 +41,9 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
             }
             userInfo.observe {
                 Log.d("userInfo:$it")
+                ConfigApp.question_count_error = it.question_count_error
+                ConfigApp.question_compass = it.question_compass
+                setData(Constant.USER_INFO, NetworkConfig.gson.toJson(it))
                 GlideImgManager.get().loadImg(it.headimg, viewBinding.ivAvatar, R.mipmap.logo)
                 viewBinding.tvUserName.text = it.nickname
             }
@@ -67,27 +69,13 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun onResume() {
+        (requireActivity() as HomeActivity).changeADState(viewModel.getAdStateValue())
         super.onResume()
     }
 
-    companion object{
-        fun navigate(
-            fragment: Fragment,
-            type: Int = Constant.OTHER_TYPE,
-            url: String? = null,
-            title: String? = null,
-            content: String? = null
-        ) {
-            fragment.findNavController().apply {
-                navigate(
-                    R.id.action_toWeb, Bundle().apply {
-                        putInt(Constant.URL_TYPE, type)
-                        url?.let { putString(Constant.H5_URL, it) }
-                        title?.let { putString(Constant.WEB_TITLE, it) }
-                        content?.let { putString(Constant.WEB_CONTENT, it) }
-                    }, NavOptions.Builder().setLaunchSingleTop(true).setRestoreState(true).build()
-                )
-            }
-        }
+    override fun onPause() {
+        super.onPause()
+        (requireActivity() as HomeActivity).changeADState(false)
     }
+
 }

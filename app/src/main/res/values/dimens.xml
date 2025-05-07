@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Your custom size defind by references, can be writted in anywhere, any module, any values/*.xml, for example: -->
-    <item name="margin_top" type="fraction">0.015</item>
-    <item name="margin_bottom" type="fraction">0.985</item>
+    <item name="margin_top" type="fraction">0.05</item>
+    <item name="margin_bottom" type="fraction">0.975</item>
     <item name="margin_start" type="fraction">0.025</item>
     <item name="margin_end" type="fraction">0.975</item>
+    <item name="center" type="fraction">0.5</item>
     <item name="password_length_min" type="integer">6</item>
     <item name="password_length_max" type="integer">20</item>
 
     <fraction name="login_tab_width">0.8362</fraction>
     <fraction name="login_tab_height">0.792</fraction>
-    <dimen name="text_home_title">14sp</dimen>
+    <dimen name="text_home_title">16sp</dimen>
     <dimen name="text_home_min">14sp</dimen>
-    <dimen name="text_home_max">60sp</dimen>
+    <dimen name="text_home_max">40sp</dimen>
     <dimen name="text_home_step">2sp</dimen>
 </resources>

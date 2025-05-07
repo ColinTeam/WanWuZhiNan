@@ -13,14 +13,26 @@
         <item name="android:textSize">@dimen/sp_16</item>
     </style>
 
+    <style name="Text.Tab.Home" parent="Text.Tab">
+        <item name="android:textColor">@color/color_active</item>
+    </style>
+
     <style name="Text.Home" parent="Text">
         <item name="android:fontFamily">@font/misans_bold</item>
         <item name="android:textSize">@dimen/text_home_title</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="Text.Tab.Selected" parent="Text">
+    <style name="Text.Tab.Selected" parent="Text.Tab">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontWeight">600</item>
+        <item name="android:textFontWeight" tools:ignore="NewApi">600</item>
         <item name="android:textColor">@color/color_active</item>
+    </style>
+
+    <style name="Text.Tab.Selected.Home" parent="Text">
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Text.Tips" parent="Text">
@@ -123,10 +135,12 @@
         <item name="autoSizeStepGranularity">@dimen/text_home_step</item>
         <item name="autoSizeMaxTextSize">@dimen/sp_40</item>
         <item name="autoSizeMinTextSize">@dimen/sp_20</item>
+        <item name="android:fontWeight">400</item>
+        <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
     </style>
 
     <style name="Style.Text.Home" parent="Style.Text">
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_home_title</item>
         <item name="android:textAppearance">@style/Text.Home</item>
         <item name="android:autoSizeMaxTextSize">@dimen/text_home_max</item>

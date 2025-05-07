@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewbinding.ViewBinding
 import com.colin.library.android.utils.Log
 import com.colin.library.android.widget.base.BaseActivity
+import com.wanwuzhinan.mingchang.entity.Config
 import java.lang.reflect.ParameterizedType
 
 
@@ -82,6 +83,7 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
+
 }
 
 

@@ -22,7 +22,6 @@ object NetworkConfig {
             .registerTypeAdapter(String::class.java, StringTypeAdapter()).create()
 
     var baseUrl: String = if (BuildConfig.DEBUG) BuildConfig.URL_DEBUG else BuildConfig.URL_RELEASE
-    private var headerMap = HashMap<String, String>()
 
     var retry: Int = BuildConfig.RETRY
 

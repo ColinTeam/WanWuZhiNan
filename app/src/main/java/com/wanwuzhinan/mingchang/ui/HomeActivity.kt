@@ -3,22 +3,23 @@ package com.wanwuzhinan.mingchang.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.window.OnBackInvokedDispatcher
+import androidx.core.view.isVisible
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.ext.onClick
 import com.ssm.comm.config.Constant
+import com.ssm.comm.ext.getCurrentVersionCode
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
-import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.ActivityHomeBinding
-import com.wanwuzhinan.mingchang.ext.visible
-import com.wanwuzhinan.mingchang.utils.setData
+import com.wanwuzhinan.mingchang.entity.Config
+import com.wanwuzhinan.mingchang.entity.ConfigData
+import com.wanwuzhinan.mingchang.ext.getConfigData
+import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
 /**
@@ -39,25 +40,22 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         }
     }
 
-    override fun getOnBackInvokedDispatcher(): OnBackInvokedDispatcher {
-        return super.getOnBackInvokedDispatcher()
-
-    }
-
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         viewModel.apply {
+            closeAD.observe {
+                Log.i("closeAD:$it")
+                changeADState(!it, getConfigValue())
+            }
             configData.observe {
                 Log.i("configData:$it")
+                updateTips(it.info)
             }
             userInfo.observe {
                 Log.i("userInfo:$it")
-                ConfigApp.question_count_error = it.question_count_error.toInt()
-                ConfigApp.question_compass = it.question_compass.toInt()
-                setData(Constant.USER_INFO, NetworkConfig.gson.toJson(it))
             }
             showError.observe {
                 Log.i("showError:$it")
@@ -78,8 +76,7 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
                     }
 
                     ivAdclose -> {
-                        viewBinding.ivAd.visible(false)
-                        viewBinding.ivAdclose.visible(false)
+                        viewModel.updateAD(true)
                     }
                 }
             }
@@ -87,11 +84,11 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     }
 
     private fun toWeb(title: String, url: String?) {
-        Log.d("toWeb title$title url:$url")
         if (url.isNullOrEmpty()) return
         findNavController(R.id.nav_host_fragment_content_main).navigate(
             R.id.action_toWeb, Bundle().apply {
                 putInt(Constant.URL_TYPE, Constant.OTHER_TYPE)
+                putString(Constant.WEB_TITLE, title)
                 putString(Constant.H5_URL, url)
             }, NavOptions.Builder().setLaunchSingleTop(true).setRestoreState(true).build()
         )
@@ -100,7 +97,7 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.getConfig()
         viewModel.getUserInfo()
-        findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_toLogin)
+        findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_toSplash)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -108,5 +105,25 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    fun changeADState(visible: Boolean, config: Config? = viewModel.getConfigValue()) {
+        val isEmpty = config?.info?.home_ad.isNullOrEmpty()
+        val isVisible = visible && !isEmpty
+        viewBinding.ivAd.isVisible = isVisible
+        viewBinding.ivAdclose.isVisible = isVisible
+    }
+
+    var needUpdate = false
+    fun updateTips(data: ConfigData) {
+        if (data.android_code.toInt() > getCurrentVersionCode() && !needUpdate) {
+            window.decorView.post {
+                needUpdate = true
+                NetErrorPop(this@HomeActivity).showUpdate(getConfigData().android_update, onSure = {
+
+                }, onCancel = {
+
+                })
+            }
+        }
+    }
 
 }
