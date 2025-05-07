@@ -3,8 +3,8 @@
     <!-- Your custom size defind by references, can be writted in anywhere, any module, any values/*.xml, for example: -->
     <item name="margin_top" type="fraction">0.015</item>
     <item name="margin_bottom" type="fraction">0.985</item>
-    <item name="margin_start" type="fraction">0.02</item>
-    <item name="margin_end" type="fraction">0.98</item>
+    <item name="margin_start" type="fraction">0.025</item>
+    <item name="margin_end" type="fraction">0.975</item>
     <item name="password_length_min" type="integer">6</item>
     <item name="password_length_max" type="integer">20</item>
 

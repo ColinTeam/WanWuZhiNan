@@ -10,7 +10,6 @@ import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.PopExchangeContactBinding
 import com.wanwuzhinan.mingchang.ext.getConfigData
-import com.wanwuzhinan.mingchang.ext.launchWechatService
 import com.wanwuzhinan.mingchang.utils.SaveImageUtils
 import com.wanwuzhinan.mingchang.utils.SaveListener
 import okhttp3.OkHttpClient
@@ -33,7 +32,6 @@ class ExchangeContactPop(var context: Activity) :BasePop<PopExchangeContactBindi
                 }
                 mDataBinding.tvOpen->{
                     if (getConfigData().qrcode_type.toInt() == 1){
-
                         downloadImageAsBitmap(getConfigData().qrcode_image_download, callback = {
                             if (it != null) {
                                 SaveImageUtils.startSaveBitmap(it, object : SaveListener {
@@ -47,10 +45,6 @@ class ExchangeContactPop(var context: Activity) :BasePop<PopExchangeContactBindi
                                 })
                             }
                         })
-
-
-                    }else {
-                        launchWechatService()
                     }
                 }
             }

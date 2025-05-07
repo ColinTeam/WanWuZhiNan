@@ -19,17 +19,14 @@ import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 import com.kongzue.dialogx.dialogs.CustomDialog
 import com.kongzue.dialogx.interfaces.OnBindView
-import com.ssm.comm.app.CommApplication
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.toastError
 import com.ssm.comm.global.AppActivityManager
 import com.ssm.comm.ui.base.IWrapView
-import com.tencent.mm.opensdk.constants.Build
-import com.tencent.mm.opensdk.modelbiz.WXOpenCustomerServiceChat
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.CodeData
-import com.wanwuzhinan.mingchang.data.ConfigData
 import com.wanwuzhinan.mingchang.data.TextDescriptionData
+import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.wanwuzhinan.mingchang.net.RetrofitClient
 import com.wanwuzhinan.mingchang.net.repository.LoginRepository
@@ -77,23 +74,12 @@ fun convertTimestampToDateTime(timestamp: Long): String {
     return format.format(date)
 }
 
-//跳转企业微信
-fun launchWechatService(){
-    // 判断当前版本是否支持拉起客服会话
-    if (CommApplication.instance.api!!.getWXAppSupportAPI() >= Build.SUPPORT_OPEN_CUSTOMER_SERVICE_CHAT) {
-        val req = WXOpenCustomerServiceChat.Req()
-        req.corpId = getConfigData().enterprise_WeChat_id // 企业ID
-        req.url = getConfigData().enterprise_WeChat_url // 客服URL
-        CommApplication.instance.api!!.sendReq(req)
-    }
-}
-
-fun getUserInfo(): UserInfoData.infoBean {
+fun getUserInfo(): UserInfoData.InfoBean {
     val decodeString = MMKVUtils.decodeString(Constant.USER_INFO)
     return if (decodeString.isEmpty()) {
-        UserInfoData.infoBean()
+        UserInfoData.InfoBean()
     } else {
-        Gson().fromJson(decodeString, UserInfoData.infoBean::class.java)
+        Gson().fromJson(decodeString, UserInfoData.InfoBean::class.java)
     }
 }
 
@@ -106,19 +92,6 @@ fun `getConfigData`(): ConfigData {
     }
 }
 
-fun Int.genderText() = when (this) {
-    2 -> {
-        "女孩"
-    }
-
-    1 -> {
-        "男孩"
-    }
-
-    else -> {
-        "男孩"
-    }
-}
 
 
 /**

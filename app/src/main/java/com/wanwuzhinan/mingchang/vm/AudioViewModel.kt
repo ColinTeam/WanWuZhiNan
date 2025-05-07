@@ -1,6 +1,7 @@
 package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.viewModelScope
+import androidx.media3.common.Player
 import com.comm.net_work.entity.ApiInfoResponse
 import com.comm.net_work.entity.ApiListResponse
 import com.ssm.comm.data.VersionData
@@ -21,12 +22,13 @@ import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfoData
+import com.wanwuzhinan.mingchang.media.MediaHolder
 import com.wanwuzhinan.mingchang.net.repository.UserRepository
 import kotlinx.coroutines.launch
 import java.io.File
 
 
-class UserViewModel : BaseViewModel<UserInfoData, UserRepository>(UserRepository()) {
+class AudioViewModel : BaseViewModel<UserInfoData, UserRepository>(UserRepository()) , Player.Listener{
 
     val getUserInfoLiveData = com.ssm.comm.ext.StateMutableLiveData<UserInfoData>()
     val editUserInfoLiveData = com.ssm.comm.ext.StateMutableLiveData<MutableList<String>>()
@@ -56,6 +58,8 @@ class UserViewModel : BaseViewModel<UserInfoData, UserRepository>(UserRepository
     val exchangeCodeLiveData = com.ssm.comm.ext.StateMutableLiveData<ApiListResponse<ExchangeCodeData>>()
     val rankIndexLiveData = com.ssm.comm.ext.StateMutableLiveData<RankHomeData>()
     val goodsInfoLiveData = com.ssm.comm.ext.StateMutableLiveData<ApiInfoResponse<GoodsInfoData>>()
+
+    private val player = MediaHolder.getPlayer()
 
     //获取用户信息
     fun getUserInfo() {
@@ -181,14 +185,6 @@ class UserViewModel : BaseViewModel<UserInfoData, UserRepository>(UserRepository
         viewModelScope.launch {
             //请求到的数据用livedata包裹
             getLessonInfoLiveData.value = repository.getLessonInfo(info)
-        }
-    }
-
-    //获取配置
-    fun getConfig() {
-        viewModelScope.launch {
-            //请求到的数据用livedata包裹
-            getConfigLiveData.value = repository.getConfig()
         }
     }
 

@@ -11,6 +11,7 @@ import com.ssm.comm.event.MessageEvent
 import com.ssm.comm.ext.getCurrentVersionCode
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.registerBus
+import com.ssm.comm.ext.unregisterBus
 import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
@@ -24,7 +25,6 @@ import com.wanwuzhinan.mingchang.ext.launchRankHomeActivity
 import com.wanwuzhinan.mingchang.ext.launchSettingActivity
 import com.wanwuzhinan.mingchang.ext.launchVideoHomeActivity
 import com.wanwuzhinan.mingchang.ext.performLaunchH5Agreements
-import com.wanwuzhinan.mingchang.ui.pop.EditFileDialog
 import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
 import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.UserViewModel
@@ -121,14 +121,8 @@ class MainIpadActivity :
                 setData(Constant.USER_INFO, Gson().toJson(data!!.info))
                 ConfigApp.question_count_error = data.info.question_count_error.toInt()
                 ConfigApp.question_compass = data.info.question_compass.toInt()
-                GlideImgManager.get()
-                    .loadImg(data.info.headimg, mDataBinding!!.rivHead, R.mipmap.logo)
+                GlideImgManager.get().loadImg(data.info.headimg, mDataBinding!!.rivHead, R.mipmap.logo)
                 mDataBinding.tvName.text = data.info.nickname
-                if (data.info.truename.isEmpty() && getConfigData().android_code.toInt() >= getCurrentVersionCode()) {
-                    EditFileDialog(data.info).show(
-                        getCurrentActivity().supportFragmentManager, "EditFileDialog"
-                    )
-                }
             }
         }
     }
@@ -148,8 +142,8 @@ class MainIpadActivity :
     }
 
     override fun onDestroy() {
+        unregisterBus(this)
         super.onDestroy()
-//        unregisterBus(this)
     }
 
     override fun getLayoutId(): Int {

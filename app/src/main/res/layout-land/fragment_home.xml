@@ -112,8 +112,8 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivOneMedia"
             style="@style/Style.Image.Avatar"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_100"
+            android:layout_width="@dimen/dp_69"
+            android:layout_height="@dimen/dp_69"
             android:layout_marginEnd="@dimen/dp_120"
             android:layout_marginBottom="@dimen/dp_50"
             android:src="@mipmap/ic_main_audio_01_stop"

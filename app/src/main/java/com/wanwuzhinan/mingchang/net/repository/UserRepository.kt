@@ -1,6 +1,5 @@
 package com.wanwuzhinan.mingchang.net.repository
 
-import com.comm.net_work.entity.ApiConfigInfoResponse
 import com.comm.net_work.entity.ApiInfoResponse
 import com.comm.net_work.entity.ApiListResponse
 import com.comm.net_work.entity.ApiResponse
@@ -8,8 +7,6 @@ import com.comm.net_work.gson.GsonManager
 import com.ssm.comm.data.VersionData
 import com.ssm.comm.utils.LogUtils
 import com.wanwuzhinan.mingchang.data.CityData
-import com.wanwuzhinan.mingchang.data.ConfigData
-import com.wanwuzhinan.mingchang.data.CourseInfoData
 import com.wanwuzhinan.mingchang.data.CourseStudyData
 import com.wanwuzhinan.mingchang.data.ExchangeCodeData
 import com.wanwuzhinan.mingchang.data.ExchangeListData
@@ -21,6 +18,8 @@ import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.data.RankHomeData
 import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.data.TextDescriptionData
+import com.wanwuzhinan.mingchang.entity.Config
+import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.wanwuzhinan.mingchang.net.repository.comm.CommRepository
@@ -153,7 +152,7 @@ class UserRepository : CommRepository() {
     }
 
     //获取配置
-    suspend fun getConfig(): ApiResponse<ApiConfigInfoResponse<ConfigData>> {
+    suspend fun getConfig(): ApiResponse<Config> {
         return executeHttp { mService.getConfig() }
     }
 

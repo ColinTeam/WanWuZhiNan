@@ -1,23 +1,22 @@
 package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.viewModelScope
+import com.ssm.comm.ui.base.BaseViewModel
 import com.wanwuzhinan.mingchang.data.AddressData
 import com.wanwuzhinan.mingchang.data.CityListData
 import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.wanwuzhinan.mingchang.net.repository.ShopRepository
-import com.ssm.comm.ext.StateMutableLiveData
-import com.ssm.comm.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 
 class ShopViewModel : BaseViewModel<UserInfoData, ShopRepository>(ShopRepository()) {
 
-    val getAddressListLiveData = StateMutableLiveData<MutableList<AddressData>>()
-    val addAddressLiveData = StateMutableLiveData<MutableList<String>>()
-    val editAddressListData = StateMutableLiveData<MutableList<String>>()
-    val deleteAddressListData = StateMutableLiveData<MutableList<String>>()
-    val getDefaultAddressListData = StateMutableLiveData<AddressData>()
-    val cityListLiveData = StateMutableLiveData<MutableList<CityListData>>()
+    val getAddressListLiveData = com.ssm.comm.ext.StateMutableLiveData<MutableList<AddressData>>()
+    val addAddressLiveData = com.ssm.comm.ext.StateMutableLiveData<MutableList<String>>()
+    val editAddressListData = com.ssm.comm.ext.StateMutableLiveData<MutableList<String>>()
+    val deleteAddressListData = com.ssm.comm.ext.StateMutableLiveData<MutableList<String>>()
+    val getDefaultAddressListData = com.ssm.comm.ext.StateMutableLiveData<AddressData>()
+    val cityListLiveData = com.ssm.comm.ext.StateMutableLiveData<MutableList<CityListData>>()
 
     //获取我的收货地址
     fun getAddressList() {

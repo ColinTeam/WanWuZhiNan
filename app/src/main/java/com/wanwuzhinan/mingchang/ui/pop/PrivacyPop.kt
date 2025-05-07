@@ -37,7 +37,6 @@ class PrivacyPop(var context: Activity):BasePop<PopPrivacyBinding>(context){
 
                 mDataBinding.tvAgree -> {
                     setData(Constant.IS_SHOW_PRIVACY_DIALOG, true)
-                    appContext.registerToWX()
                     appContext.initBugly()
                     onSure(3)
                     dismiss()

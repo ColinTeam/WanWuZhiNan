@@ -7,52 +7,62 @@
 
     </data>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_login">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/bg_login"
             android:visibility="visible">
 
-            <com.wanwuzhinan.mingchang.view.DefaultToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:dt_back_color="#000000"
-                app:layout_constraintLeft_toLeftOf="parent"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/line_margin_top"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="@fraction/margin_top"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/re_list_top"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_19"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/line_margin_bottom"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
                 android:orientation="horizontal"
-                android:visibility="gone"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/toolbar"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:itemCount="3"
-                tools:listitem="@layout/item_answer_practice" />
+                app:layout_constraintGuide_percent="@fraction/margin_bottom" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/line_margin_start"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="@fraction/margin_start"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/line_margin_end"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="@fraction/margin_end" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/re_list"
+                android:id="@+id/rvCard"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_160"
                 android:layout_marginTop="@dimen/dp_20"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/toolbar"
-                app:layout_constraintTop_toBottomOf="@+id/re_list_top"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line_margin_top"
+                tools:itemCount="6"
                 tools:listitem="@layout/item_audio_home_cover" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ll_audio"
+                android:id="@+id/layoutAudio"
                 android:layout_width="@dimen/dp_324"
                 android:layout_height="0dp"
                 android:layout_marginBottom="4dp"
@@ -67,8 +77,8 @@
                     android:layout_width="@dimen/dp_56"
                     android:layout_height="@dimen/dp_56"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:src="@drawable/shape_ffffff_8"
                     android:scaleType="centerCrop"
+                    android:src="@drawable/shape_ffffff_8"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -340,16 +350,8 @@
             android:id="@+id/ll_big"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/iv_bg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="1"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/bg_login" />
-
+            android:visibility="gone"
+            tools:visibility="gone">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_big"
@@ -382,8 +384,8 @@
                         android:id="@+id/riv_image_big"
                         android:layout_width="@dimen/dp_90"
                         android:layout_height="@dimen/dp_90"
-                        android:src="@drawable/img_default_icon"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/img_default_icon"
                         app:layout_constraintBottom_toBottomOf="@+id/iv_file"
                         app:layout_constraintEnd_toEndOf="@+id/iv_file"
                         app:layout_constraintStart_toStartOf="@+id/iv_file"
@@ -396,17 +398,6 @@
                         android:src="@mipmap/ic_audio_dian"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@id/iv_file" />
-
-                    <ImageView
-                        android:id="@+id/iv_gif_3"
-                        android:layout_width="@dimen/dp_11"
-                        android:layout_height="@dimen/dp_17"
-                        android:layout_marginStart="@dimen/dp_20"
-                        android:layout_marginBottom="@dimen/dp_20"
-                        android:src="@mipmap/ic_audio_tmp"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -472,13 +463,6 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/lin_progress_big">
 
-                    <ImageView
-                        android:id="@+id/iv_gif_1"
-                        android:layout_width="@dimen/dp_47"
-                        android:layout_height="@dimen/dp_11"
-                        android:layout_marginEnd="@dimen/dp_10"
-                        android:src="@mipmap/ic_audio_tmp"
-                        android:visibility="gone" />
 
                     <com.wanwuzhinan.mingchang.view.ClickImageView
                         android:id="@+id/iv_volume_big"
@@ -535,27 +519,21 @@
                         android:visibility="visible"
                         app:srcCompat="@mipmap/ic_rate_w_1" />
 
-                    <ImageView
-                        android:id="@+id/iv_gif_2"
-                        android:layout_width="@dimen/dp_47"
-                        android:layout_height="@dimen/dp_11"
-                        android:layout_marginStart="@dimen/dp_10"
-                        android:src="@mipmap/ic_audio_tmp"
-                        android:visibility="gone" />
 
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.wanwuzhinan.mingchang.view.DefaultToolbar
-                android:id="@+id/tool_bar_big"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_back_mian" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

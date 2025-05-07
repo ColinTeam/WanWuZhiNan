@@ -21,6 +21,7 @@ import com.ssm.comm.app.CommApplication
 import com.tencent.rtmp.TXLiveBase
 import com.tencent.rtmp.TXLiveBaseListener
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.media.MediaHolder
 import com.wanwuzhinan.mingchang.utils.setData
 import com.zjh.download.SimpleDownload
 
@@ -40,6 +41,7 @@ class BaseApplication : CommApplication() {
     override fun onCreate() {
         super.onCreate()
         UtilHelper.init(UtilConfig.newBuilder(this, true).build())
+        MediaHolder.initialize(this)
         initImageLoader()
         initDownload()
         DialogX.init(this);
@@ -65,9 +67,7 @@ class BaseApplication : CommApplication() {
     fun enterInApp(){
         Log.e("BaseApplication", "enterInApp: ", )
         initBugly()
-        registerToWX()
         initLive()
-
         TXLiveBase.setListener(object : TXLiveBaseListener() {
             override fun onLicenceLoaded(result: Int, reason: String) {
                 Log.i("TAG", "onLicenceLoaded: result:$result, reason:$reason")
@@ -108,8 +108,6 @@ class BaseApplication : CommApplication() {
         val licenseURL = "https://license.vod2.myqcloud.com/license/v2/1353990201_1/v_cube.license" // 获取到的 license url
         val licenseKey = "d025b928c9f91abb9a3a354cad87af4b" // 获取到的 license key
         TXLiveBase.getInstance().setLicence(this, licenseURL, licenseKey)
-
-
     }
 
 }

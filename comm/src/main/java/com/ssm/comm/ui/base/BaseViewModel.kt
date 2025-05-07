@@ -2,14 +2,9 @@ package com.ssm.comm.ui.base
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.comm.net_work.base.BaseRepository
-import com.ssm.comm.ext.StateMutableLiveData
-import com.ssm.comm.ext.toastNormal
-import com.ssm.comm.utils.LogUtils
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.coroutines.launch
 import org.reactivestreams.Subscription
 import java.util.concurrent.TimeUnit
 

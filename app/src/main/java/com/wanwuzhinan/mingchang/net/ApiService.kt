@@ -1,6 +1,5 @@
 package com.wanwuzhinan.mingchang.net
 
-import com.comm.net_work.entity.ApiConfigInfoResponse
 import com.comm.net_work.entity.ApiInfoResponse
 import com.comm.net_work.entity.ApiListResponse
 import com.comm.net_work.entity.ApiResponse
@@ -8,8 +7,6 @@ import com.ssm.comm.data.VersionData
 import com.wanwuzhinan.mingchang.data.AddressData
 import com.wanwuzhinan.mingchang.data.CityData
 import com.wanwuzhinan.mingchang.data.CityListData
-import com.wanwuzhinan.mingchang.data.ConfigData
-import com.wanwuzhinan.mingchang.data.CourseInfoData
 import com.wanwuzhinan.mingchang.data.CourseStudyData
 import com.wanwuzhinan.mingchang.data.ExchangeCodeData
 import com.wanwuzhinan.mingchang.data.ExchangeListData
@@ -21,9 +18,12 @@ import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.data.RankHomeData
 import com.wanwuzhinan.mingchang.data.RegisterData
 import com.wanwuzhinan.mingchang.data.SubjectListData
-import com.wanwuzhinan.mingchang.data.UserInfoResponse
+import com.wanwuzhinan.mingchang.entity.Config
+import com.wanwuzhinan.mingchang.entity.ConfigDataResponse
+import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfoData
+import com.wanwuzhinan.mingchang.entity.UserInfoResponse
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -58,6 +58,10 @@ interface ApiService {
     //获取用户信息
     @POST("/api/User/info")
     suspend fun newUserInfo(): UserInfoResponse
+
+    //获取配置
+    @POST("/api/Systems/index")
+    suspend fun newConfig(): ConfigDataResponse
 
     //修改用户信息
     @FormUrlEncoded
@@ -181,7 +185,8 @@ interface ApiService {
 
     //获取配置
     @POST("/api/Systems/index")
-    suspend fun getConfig(): ApiResponse<ApiConfigInfoResponse<ConfigData>>
+    suspend fun getConfig(): ApiResponse<Config>
+
 
     //课程兑换记录
     @FormUrlEncoded

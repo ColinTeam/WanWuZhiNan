@@ -33,7 +33,6 @@ import androidx.annotation.Px
 import androidx.annotation.RawRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
-import androidx.core.view.ViewCompat
 import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.dp
@@ -2722,7 +2721,7 @@ open class WheelView @JvmOverloads constructor(
                 if (smoothDuration > 0) smoothDuration else DEFAULT_SCROLL_DURATION
             )
             invalidateIfYChanged()
-            ViewCompat.postOnAnimation(this, this)
+            postOnAnimation(this)
         } else {
             if (isScrollYInvalid()) {
                 //没测量结束时，等待测量完成后再执行

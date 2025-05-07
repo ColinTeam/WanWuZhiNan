@@ -5,12 +5,9 @@ package com.ssm.comm.app
 import android.content.Context
 import androidx.multidex.MultiDexApplication
 import com.hjq.toast.ToastUtils
-import com.ssm.comm.BuildConfig
 import com.ssm.comm.global.AppActivityManager
 import com.ssm.comm.utils.LogUtils
 import com.tencent.bugly.crashreport.CrashReport
-import com.tencent.mm.opensdk.openapi.IWXAPI
-import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.tencent.mmkv.MMKV
 import com.tencent.mmkv.MMKVLogLevel
 import com.tencent.smtt.sdk.QbSdk
@@ -34,8 +31,6 @@ val appContext: CommApplication by lazy {
 }
 
 open class CommApplication : MultiDexApplication() {
-
-    var api: IWXAPI? = null
 
     companion object {
         var instance: CommApplication by Delegates.notNull()
@@ -76,12 +71,6 @@ open class CommApplication : MultiDexApplication() {
 //        Bugly.init(appContext, BuildConfig.BUGLY_APP_ID, com.comm.net_work.BuildConfig.IS_ENABLE_LOG)
     }
 
-    fun registerToWX() {
-        // 通过 WXAPIFactory 工厂，获取 IWXAPI 的实例
-        this.api = WXAPIFactory.createWXAPI(this, BuildConfig.WE_CHAT_APP_ID)
-        // 将应用的 appId 注册到微信
-        this.api?.registerApp(BuildConfig.WE_CHAT_APP_ID)
-    }
 
     private fun initMMKV(context: Context) {
         //自定义根目录

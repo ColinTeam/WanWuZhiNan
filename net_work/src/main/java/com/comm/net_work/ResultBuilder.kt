@@ -12,20 +12,20 @@ import com.comm.net_work.entity.ApiResponse
  * Email:shiming024@163.com
  * Description:
  */
-fun <T> ApiResponse<T>.parseData(listenerBuilder: ResultBuilder<T>.() -> Unit) {
+fun <T> ApiResponse<T>.parseData(result: ResultBuilder<T>.() -> Unit) {
 
-    val listener = ResultBuilder<T>().also(listenerBuilder)
+    val builder = ResultBuilder<T>().also(result)
     when (this) {
-        is ApiResponse.ApiDataEmptyResponse -> listener.onDataEmpty2(this.msg)
-        is ApiResponse.ApiSuccessResponse -> listener.onSuccess(this.response,this.msg)
+        is ApiResponse.ApiDataEmptyResponse -> builder.onDataEmpty2(this.msg)
+        is ApiResponse.ApiSuccessResponse -> builder.onSuccess(this.response,this.msg)
         is ApiResponse.ApiEmptyResponse -> {
-            listener.onDataEmpty()
-            listener.onDataEmpty2(this.msg)
+            builder.onDataEmpty()
+            builder.onDataEmpty2(this.msg)
         }
-        is ApiResponse.ApiFailedResponse -> listener.onFailed(this.code, this.msg)
-        is ApiResponse.ApiErrorResponse -> listener.onError(this.throwable)
+        is ApiResponse.ApiFailedResponse -> builder.onFailed(this.code, this.msg)
+        is ApiResponse.ApiErrorResponse -> builder.onError(this.throwable)
     }
-    listener.onComplete
+    builder.onComplete
 }
 
 

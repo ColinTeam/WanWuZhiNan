@@ -31,19 +31,3 @@ open class AppResponse<T>(
 
 }
 
-class UserInfoResponse() : AppResponse<UserInfo>()
-
-data class UserInfo(
-    val id: String = "",//
-    val headimg: String = "",//
-    val account: String = "",//
-    val truename: String = "",//
-    val nickname: String = "",//
-    val sex: String = "",//
-    val province_name: String = "",//
-    val city_name: String = "",//
-    val area_name: String = "",//
-    val school_name: String = "",//
-    val grade_name: String = "",//
-    val question_count_error: String = "", val question_compass: String = ""
-)

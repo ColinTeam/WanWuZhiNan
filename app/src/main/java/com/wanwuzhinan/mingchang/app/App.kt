@@ -11,8 +11,6 @@ import com.colin.library.android.utils.config.UtilConfig
 import com.colin.library.android.utils.helper.UtilHelper
 import com.kongzue.dialogx.DialogX
 import com.ssm.comm.global.AppActivityManager
-import com.tencent.mm.opensdk.openapi.IWXAPI
-import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.tencent.mmkv.MMKV
 import com.tencent.mmkv.MMKVLogLevel
 import com.tencent.smtt.sdk.QbSdk
@@ -40,7 +38,6 @@ class App : MultiDexApplication() {
         initMMKV(this)
         initX5(this)
         DialogX.init(this);
-
         ProcessLifecycleOwner.get().lifecycle.addObserver(AppLifeObserver())
     }
 
@@ -91,14 +88,6 @@ class App : MultiDexApplication() {
         })
         // 设置非wifi下也进行下载X5WebView
         QbSdk.setDownloadWithoutWifi(true)
-    }
-
-    var api: IWXAPI? = null
-    fun registerWXPay() {
-        // 通过 WXAPIFactory 工厂，获取 IWXAPI 的实例
-        this.api = WXAPIFactory.createWXAPI(this, BuildConfig.WE_CHAT_APP_ID)
-        // 将应用的 appId 注册到微信
-        this.api?.registerApp(BuildConfig.WE_CHAT_APP_ID)
     }
 
 

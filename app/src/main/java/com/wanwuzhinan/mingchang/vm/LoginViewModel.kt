@@ -1,11 +1,11 @@
 package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.viewModelScope
+import com.ssm.comm.ext.StateMutableLiveData
+import com.ssm.comm.ui.base.BaseViewModel
 import com.wanwuzhinan.mingchang.data.RegisterData
 import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.wanwuzhinan.mingchang.net.repository.LoginRepository
-import com.ssm.comm.ext.StateMutableLiveData
-import com.ssm.comm.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 

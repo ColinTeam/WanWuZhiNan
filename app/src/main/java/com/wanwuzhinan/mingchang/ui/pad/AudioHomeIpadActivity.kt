@@ -28,10 +28,10 @@ import com.wanwuzhinan.mingchang.adapter.AudioHomeCoverPadAdapter
 import com.wanwuzhinan.mingchang.adapter.AudioHomeListPadAdapter
 import com.wanwuzhinan.mingchang.adapter.CatePhoneAdapter
 import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.CourseInfoData
 import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.data.UploadProgressEvent
 import com.wanwuzhinan.mingchang.databinding.ActivityAudioHomePadBinding
+import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.ext.launchAudioPlayInfoActivity
 import com.wanwuzhinan.mingchang.ext.launchExchangeActivity
 import com.wanwuzhinan.mingchang.ext.showCardImage

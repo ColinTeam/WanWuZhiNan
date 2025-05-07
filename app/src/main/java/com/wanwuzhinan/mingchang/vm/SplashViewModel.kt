@@ -1,8 +1,8 @@
 package com.wanwuzhinan.mingchang.vm
 
+import com.ssm.comm.ui.base.BaseViewModel
 import com.wanwuzhinan.mingchang.entity.UserInfoData
 import com.wanwuzhinan.mingchang.net.repository.SplashRepository
-import com.ssm.comm.ui.base.BaseViewModel
 
 /**
  * Company:AD

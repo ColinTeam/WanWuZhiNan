@@ -26,7 +26,7 @@ import java.net.SocketException
  *
  * 该函数通过 `requestImpl` 实现具体的请求逻辑，并使用 `viewModelScope` 确保请求在 ViewModel 的生命周期内执行。
  */
-suspend fun <T> ViewModel.request(
+fun <T> ViewModel.request(
     request: suspend () -> INetworkResponse<T>,
     success: (suspend (T) -> Unit) = { },
     failure: (suspend (NetworkResult.Failure) -> Unit) = { }
@@ -74,7 +74,7 @@ suspend fun <T> CoroutineScope.request(
  * @param success 挂起函数，当请求成功时调用，接收请求结果[T]作为参数。
  * @param failure 挂起函数，当请求失败时调用，接收[NetworkResult.Failure]作为参数。
  */
-suspend fun <T> requestImpl(
+fun <T> requestImpl(
     scope: CoroutineScope,
     request: suspend () -> INetworkResponse<T>,
     success: (suspend (T) -> Unit) = {},
@@ -129,7 +129,12 @@ suspend fun <T> requestImpl(
     if (response == null) throw exception ?: SocketException("Request failed after $delay retries")
     // 根据请求结果调用相应的回调函数
     when {
-        !response.isSuccess() -> failure.invoke(NetworkResult.failure(response.getCode(), response.getMsg()))
+        !response.isSuccess() -> failure.invoke(
+            NetworkResult.failure(
+                response.getCode(), response.getMsg()
+            )
+        )
+
         response.getData() == null -> failure.invoke(NetworkResult.empty())
         else -> success.invoke(response.getData()!!)
     }

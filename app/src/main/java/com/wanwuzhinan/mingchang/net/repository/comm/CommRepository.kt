@@ -2,9 +2,9 @@ package com.wanwuzhinan.mingchang.net.repository.comm
 
 import com.comm.net_work.base.BaseRepository
 import com.comm.net_work.sign.ParameterSign
-import com.wanwuzhinan.mingchang.net.RetrofitClient
 import com.ssm.comm.config.Constant
 import com.ssm.comm.utils.LogUtils
+import com.wanwuzhinan.mingchang.net.RetrofitClient
 
 /**
  * Company:AD
@@ -41,13 +41,10 @@ open class CommRepository : BaseRepository() {
     }
 
     fun setSignStr(map: MutableMap<String,Any>): String{
-        //val signature = ParameterSign.signMd5(map)
-        //addOkHttpCommBuilder("signature",signature)
         return ParameterSign.signMd5(map)
     }
 
     fun setSignStr(): String{
-        //val signature = ParameterSign.signMd5()
         return ParameterSign.signMd5()
     }
 }

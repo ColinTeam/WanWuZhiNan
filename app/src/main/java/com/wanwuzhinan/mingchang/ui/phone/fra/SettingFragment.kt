@@ -37,7 +37,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
     var mAreaName = ""
     var mHeadImg = ""
 
-    lateinit var mInfo: UserInfoData.infoBean
+    lateinit var mInfo: UserInfoData.InfoBean
 
     companion object {
         val instance: SettingFragment by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
