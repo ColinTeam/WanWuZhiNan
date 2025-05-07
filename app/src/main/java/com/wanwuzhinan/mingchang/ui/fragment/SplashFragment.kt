@@ -44,6 +44,7 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
             .setVideoAllCallBack(object : GSYSampleCallBack() {
                 override fun onAutoComplete(url: String?, vararg objects: Any?) {
                     playCompleted = true
+                    findNavController().popBackStack()
                 }
 
             }).build(viewBinding.video)

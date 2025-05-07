@@ -1,7 +1,7 @@
 package com.wanwuzhinan.mingchang.vm
 
 import com.ssm.comm.ui.base.BaseViewModel
-import com.wanwuzhinan.mingchang.entity.UserInfoData
+import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.repository.SplashRepository
 
 /**
@@ -14,7 +14,7 @@ import com.wanwuzhinan.mingchang.net.repository.SplashRepository
  * Email:shiming024@163.com
  * Description:
  */
-class SplashViewModel : BaseViewModel<UserInfoData, SplashRepository>(SplashRepository()) {
+class SplashViewModel : BaseViewModel<UserInfo, SplashRepository>(SplashRepository()) {
 
 
 

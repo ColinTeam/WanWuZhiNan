@@ -126,6 +126,7 @@
     </style>
 
     <style name="Style.Text.Home" parent="Style.Text">
+        <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/text_home_title</item>
         <item name="android:textAppearance">@style/Text.Home</item>
         <item name="android:autoSizeMaxTextSize">@dimen/text_home_max</item>

@@ -27,7 +27,7 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.CodeData
 import com.wanwuzhinan.mingchang.data.TextDescriptionData
 import com.wanwuzhinan.mingchang.entity.ConfigData
-import com.wanwuzhinan.mingchang.entity.UserInfoData
+import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.RetrofitClient
 import com.wanwuzhinan.mingchang.net.repository.LoginRepository
 import com.wanwuzhinan.mingchang.net.repository.UserRepository
@@ -45,41 +45,38 @@ import java.util.Locale
 
 
 //打开h5链接
-fun IWrapView.performLaunchH5Agreements(url: String , title: String) {
+fun IWrapView.performLaunchH5Agreements(url: String, title: String) {
     launchActivity(
         WebViewActivity::class.java,
         Pair(Constant.URL_TYPE, Constant.OTHER_TYPE),
         Pair(Constant.H5_URL, url),
         Pair(
-            Constant.WEB_TITLE,
-            title
+            Constant.WEB_TITLE, title
         ),
     )
 }
 
-fun IWrapView.performLaunchGoodsDetail( goodsId: String) {
+fun IWrapView.performLaunchGoodsDetail(goodsId: String) {
     launchActivity(
-        WebGoodsViewActivity::class.java,
-        Pair(
-            Constant.GOODS_ID,
-            goodsId
+        WebGoodsViewActivity::class.java, Pair(
+            Constant.GOODS_ID, goodsId
         )
     )
 }
 
 
 fun convertTimestampToDateTime(timestamp: Long): String {
-    val date = Date(timestamp*1000)
+    val date = Date(timestamp * 1000)
     val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     return format.format(date)
 }
 
-fun getUserInfo(): UserInfoData.InfoBean {
+fun getUserInfo(): UserInfo {
     val decodeString = MMKVUtils.decodeString(Constant.USER_INFO)
     return if (decodeString.isEmpty()) {
-        UserInfoData.InfoBean()
+        UserInfo()
     } else {
-        Gson().fromJson(decodeString, UserInfoData.InfoBean::class.java)
+        Gson().fromJson(decodeString, UserInfo::class.java)
     }
 }
 
@@ -91,7 +88,6 @@ fun `getConfigData`(): ConfigData {
         Gson().fromJson(decodeString, ConfigData::class.java)
     }
 }
-
 
 
 /**
@@ -155,10 +151,8 @@ fun createQRCodeBitmap(
 //打开隐私政策
 fun IWrapView.performLaunchPrivacy() {
     launchActivity(
-        WebViewActivity::class.java,
-        Pair(
-            Constant.URL_TYPE,
-            Constant.PRIVACY_POLICY_TYPE
+        WebViewActivity::class.java, Pair(
+            Constant.URL_TYPE, Constant.PRIVACY_POLICY_TYPE
         )
     )
 }
@@ -166,24 +160,17 @@ fun IWrapView.performLaunchPrivacy() {
 
 //获取说明
 fun IWrapView.getTextDescription(
-    key: String,
-    repository: UserRepository,
-    success: (data: TextDescriptionData.Result) -> Unit
+    key: String, repository: UserRepository, success: (data: TextDescriptionData.Result) -> Unit
 ) {
-    repository.getTextDescription(key,
-        showLoading = {
-            showBaseLoading()
-        },
-        hideLoading = {
-            dismissBaseLoading()
-        },
-        onSuccess = {
-            success(it)
-        },
-        onFailure = {
-            toastError(it)
-        }
-    )
+    repository.getTextDescription(key, showLoading = {
+        showBaseLoading()
+    }, hideLoading = {
+        dismissBaseLoading()
+    }, onSuccess = {
+        success(it)
+    }, onFailure = {
+        toastError(it)
+    })
 }
 
 fun IWrapView.jumpLoginActivity(isClear: Boolean = true) {
@@ -204,7 +191,7 @@ fun editTips(vararg edit: TextView?): Boolean {
     edit.forEach {
         val text = it?.text.toString()
         val hint = it?.hint.toString()
-        if(TextUtils.isEmpty(text)){
+        if (TextUtils.isEmpty(text)) {
             toastError(hint)
             return false
         }
@@ -213,31 +200,44 @@ fun editTips(vararg edit: TextView?): Boolean {
     return true
 }
 
-fun showSurePop(context: Activity, content:String,title:String="提示",cancel:String="取消",sure:String="确定",is_show:Boolean=true,onSure: () -> Unit){
+fun showSurePop(
+    context: Activity,
+    content: String,
+    title: String = "提示",
+    cancel: String = "取消",
+    sure: String = "确定",
+    is_show: Boolean = true,
+    onSure: () -> Unit
+) {
     var pop = SurePop(context)
-    pop.showPop(content,title,cancel,sure,is_show){
+    pop.showPop(content, title, cancel, sure, is_show) {
         onSure()
     }
 }
 
-fun showCancelPop(context: Activity, content:String,is_show:Boolean=true,title:String="提示",cancel:String="取消",sure:String="确定",onSure: () -> Unit,onCancel: () -> Unit){
+fun showCancelPop(
+    context: Activity,
+    content: String,
+    is_show: Boolean = true,
+    title: String = "提示",
+    cancel: String = "取消",
+    sure: String = "确定",
+    onSure: () -> Unit,
+    onCancel: () -> Unit
+) {
     var pop = SurePop(context)
-    pop.showCancelPop(content,title,cancel,sure,is_show,
-        onSure = {
-            onSure()
-        },
-        onCancel = {
-            onCancel()
-        })
+    pop.showCancelPop(content, title, cancel, sure, is_show, onSure = {
+        onSure()
+    }, onCancel = {
+        onCancel()
+    })
 }
 
 //打开用户协议
 fun IWrapView.performLaunchUserAgreement() {
     launchActivity(
-        WebViewActivity::class.java,
-        Pair(
-            Constant.URL_TYPE,
-            Constant.USER_AGREEMENT_TYPE
+        WebViewActivity::class.java, Pair(
+            Constant.URL_TYPE, Constant.USER_AGREEMENT_TYPE
         )
     )
 }
@@ -253,7 +253,7 @@ fun IWrapView.performLaunchH5Agreements(url: String) {
 
 //打开h5链接
 fun Activity.performLaunchH5Agreement(url: String, title: String) {
-    var intent= Intent(this,WebViewActivity::class.java)
+    var intent = Intent(this, WebViewActivity::class.java)
     intent.putExtra(Constant.URL_TYPE, Constant.OTHER_TYPE)
     intent.putExtra(Constant.H5_URL, url)
     if (title.isNotEmpty()) {
@@ -264,45 +264,40 @@ fun Activity.performLaunchH5Agreement(url: String, title: String) {
 
 
 //获取验证码
-fun IWrapView.getCode(mobile: String, sendTv: TextView, repository: LoginRepository, success: (data: CodeData?) -> Unit = {}) {
-    repository.getCode(mobile,
-        showLoading = {
-            showBaseLoading()
-        },
-        hideLoading = {
-            dismissBaseLoading()
-        },
-        onSuccess = {
-            success(it)
-            getCurrentActivity().startCountDowntime(sendTv)
-        },
-        onFailure = {
-            toastError(it)
-        }
-    )
+fun IWrapView.getCode(
+    mobile: String,
+    sendTv: TextView,
+    repository: LoginRepository,
+    success: (data: CodeData?) -> Unit = {}
+) {
+    repository.getCode(mobile, showLoading = {
+        showBaseLoading()
+    }, hideLoading = {
+        dismissBaseLoading()
+    }, onSuccess = {
+        success(it)
+        getCurrentActivity().startCountDowntime(sendTv)
+    }, onFailure = {
+        toastError(it)
+    })
 }
 
 fun AppCompatActivity.startCountDowntime(sendTv: TextView) {
     val time = Constant.SMS_TIME.toInt()
-    countDown(time,
-        start = {
-            sendTv.text = String.format("获取验证码(%s)", time)
-            sendTv.alpha = 0.3f
-            sendTv.isEnabled = false
-        },
-        end = {
-            sendTv.text = "获取验证码"
-            sendTv.alpha = 1.0f
-            sendTv.isEnabled = true
-        },
-        next = {
-            sendTv.text = String.format("获取验证码(%s)", it.toString())
-            sendTv.alpha = 0.3f
-            sendTv.isEnabled = false
-        }
-    )
+    countDown(time, start = {
+        sendTv.text = String.format("获取验证码(%s)", time)
+        sendTv.alpha = 0.3f
+        sendTv.isEnabled = false
+    }, end = {
+        sendTv.text = "获取验证码"
+        sendTv.alpha = 1.0f
+        sendTv.isEnabled = true
+    }, next = {
+        sendTv.text = String.format("获取验证码(%s)", it.toString())
+        sendTv.alpha = 0.3f
+        sendTv.isEnabled = false
+    })
 }
-
 
 
 /*fun IWrapView.getCode(
@@ -328,8 +323,8 @@ fun AppCompatActivity.startCountDowntime(sendTv: TextView) {
 }*/
 
 
-fun showCardImage(image:String,complete: () -> Unit){
-    EaseThreadManager.getInstance().runOnMainThread{
+fun showCardImage(image: String, complete: () -> Unit) {
+    EaseThreadManager.getInstance().runOnMainThread {
         val dialog = CustomDialog.build()
             .setCustomView(object : OnBindView<CustomDialog>(R.layout.pop_card_medal) {
                 override fun onBind(dialog: CustomDialog, v: View) {
@@ -339,9 +334,8 @@ fun showCardImage(image:String,complete: () -> Unit){
                         complete()
                         dialog.dismiss()
                     }
-                    GlideImgManager.get().loadFitCenterImg(image,imageView,R.mipmap.default_icon)
+                    GlideImgManager.get().loadFitCenterImg(image, imageView, R.mipmap.default_icon)
                 }
-            })
-            .show()
+            }).show()
     }
 }

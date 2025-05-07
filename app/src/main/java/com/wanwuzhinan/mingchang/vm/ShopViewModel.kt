@@ -4,12 +4,12 @@ import androidx.lifecycle.viewModelScope
 import com.ssm.comm.ui.base.BaseViewModel
 import com.wanwuzhinan.mingchang.data.AddressData
 import com.wanwuzhinan.mingchang.data.CityListData
-import com.wanwuzhinan.mingchang.entity.UserInfoData
+import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.repository.ShopRepository
 import kotlinx.coroutines.launch
 
 
-class ShopViewModel : BaseViewModel<UserInfoData, ShopRepository>(ShopRepository()) {
+class ShopViewModel : BaseViewModel<UserInfo, ShopRepository>(ShopRepository()) {
 
     val getAddressListLiveData = com.ssm.comm.ext.StateMutableLiveData<MutableList<AddressData>>()
     val addAddressLiveData = com.ssm.comm.ext.StateMutableLiveData<MutableList<String>>()

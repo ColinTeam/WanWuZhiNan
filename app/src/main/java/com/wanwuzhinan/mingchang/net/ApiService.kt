@@ -22,7 +22,7 @@ import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigDataResponse
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.entity.UploadImgData
-import com.wanwuzhinan.mingchang.entity.UserInfoData
+import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.entity.UserInfoResponse
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
@@ -53,7 +53,7 @@ interface ApiService {
 
     //获取用户信息
     @POST("/api/User/info")
-    suspend fun getUserInfo(): ApiResponse<UserInfoData>
+    suspend fun getUserInfo(): ApiResponse<UserInfo>
 
     //获取用户信息
     @POST("/api/User/info")

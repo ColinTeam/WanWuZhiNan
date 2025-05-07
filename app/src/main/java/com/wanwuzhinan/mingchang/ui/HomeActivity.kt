@@ -98,6 +98,8 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
+        viewModel.getConfig()
+        viewModel.getUserInfo()
         findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_toLogin)
     }
 

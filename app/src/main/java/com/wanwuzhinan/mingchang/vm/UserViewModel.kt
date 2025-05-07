@@ -19,15 +19,15 @@ import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.entity.UploadImgData
-import com.wanwuzhinan.mingchang.entity.UserInfoData
+import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.repository.UserRepository
 import kotlinx.coroutines.launch
 import java.io.File
 
 
-class UserViewModel : BaseViewModel<UserInfoData, UserRepository>(UserRepository()) {
+class UserViewModel : BaseViewModel<UserInfo, UserRepository>(UserRepository()) {
 
-    val getUserInfoLiveData = com.ssm.comm.ext.StateMutableLiveData<UserInfoData>()
+    val getUserInfoLiveData = com.ssm.comm.ext.StateMutableLiveData<UserInfo>()
     val editUserInfoLiveData = com.ssm.comm.ext.StateMutableLiveData<MutableList<String>>()
     val getVersionLiveData = com.ssm.comm.ext.StateMutableLiveData<VersionData>()
     val uploadImgLiveData = com.ssm.comm.ext.StateMutableLiveData<UploadImgData>()

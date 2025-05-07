@@ -78,24 +78,8 @@ data class PhotosInfo(
 
 
 data class UserInfoData(
-    var info: InfoBean
-) : BaseModel() {
-
-    data class InfoBean(
-        var id: String = "",//
-        var headimg: String = "",//
-        var account: String = "",//
-        var truename: String = "",//
-        var nickname: String = "",//
-        var sex: String = "",//
-        var province_name: String = "",//
-        var city_name: String = "",//
-        var area_name: String = "",//
-        var school_name: String = "",//
-        var grade_name: String = "",//
-        var question_count_error: String = "", var question_compass: String = ""
-    ) : BaseModel()
-}
+    var info: UserInfo
+) : BaseModel()
 
 class UserInfoResponse() : AppResponse<UserInfo>()
 
@@ -111,8 +95,8 @@ data class UserInfo(
     val area_name: String = "",//
     val school_name: String = "",//
     val grade_name: String = "",//
-    val question_count_error: String = "", val question_compass: String = ""
-)
+    val question_count_error: Int = 0, val question_compass: Int = 0
+) : BaseModel()
 
 
 class ConfigDataResponse() : AppResponse<Config>()

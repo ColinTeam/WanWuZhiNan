@@ -21,7 +21,7 @@ import com.wanwuzhinan.mingchang.data.TextDescriptionData
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.entity.UploadImgData
-import com.wanwuzhinan.mingchang.entity.UserInfoData
+import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.repository.comm.CommRepository
 import com.wanwuzhinan.mingchang.thread.EaseThreadManager
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -45,7 +45,7 @@ import java.io.File
 class UserRepository : CommRepository() {
 
     //获取用户信息
-    suspend fun getUserInfo(): ApiResponse<UserInfoData> {
+    suspend fun getUserInfo(): ApiResponse<UserInfo> {
         return executeHttp { mService.getUserInfo() }
     }
 

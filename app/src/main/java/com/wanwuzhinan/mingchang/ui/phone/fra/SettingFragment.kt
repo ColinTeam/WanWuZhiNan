@@ -20,7 +20,7 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.GradeData
 import com.wanwuzhinan.mingchang.data.ProvinceListData
 import com.wanwuzhinan.mingchang.databinding.FragmentEditFileBinding
-import com.wanwuzhinan.mingchang.entity.UserInfoData
+import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseDialog
 import com.wanwuzhinan.mingchang.view.GlideEngine
@@ -37,7 +37,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
     var mAreaName = ""
     var mHeadImg = ""
 
-    lateinit var mInfo: UserInfoData.InfoBean
+    lateinit var mInfo: UserInfo
 
     companion object {
         val instance: SettingFragment by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
