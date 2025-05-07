@@ -21,6 +21,8 @@ import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigDataResponse
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
+import com.wanwuzhinan.mingchang.entity.RegisterResponse
+import com.wanwuzhinan.mingchang.entity.SmsCodeResponse
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.entity.UserInfoResponse
@@ -36,6 +38,20 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 
 interface ApiService {
+    //获取验证码
+    @FormUrlEncoded
+    @POST("/api/SmsCode/send")
+    fun newCode(@Field("phone") phone: String): SmsCodeResponse
+
+    //登录
+    @FormUrlEncoded
+    @POST("/api/UserLogin/index")
+    suspend fun newLogin(
+        @Field("phone") phone: String,
+        @Field("phone_code") phone_code: String,
+        @Field("device_type") device_type: String
+    ): RegisterResponse
+
 
     //获取验证码
     @FormUrlEncoded

@@ -63,22 +63,22 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutAudio"
-                android:layout_width="@dimen/dp_324"
-                android:layout_height="0dp"
-                android:layout_marginBottom="4dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
                 android:background="@drawable/bg_audio_home_view"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/line_margin_top"
-                app:layout_constraintStart_toEndOf="@+id/toolbar"
-                app:layout_constraintStart_toStartOf="@+id/line_margin_start">
+                app:layout_constraintBottom_toTopOf="@+id/line_margin_bottom"
+                app:layout_constraintEnd_toStartOf="@+id/rvAudioList"
+                app:layout_constraintHorizontal_weight="4"
+                app:layout_constraintStart_toStartOf="@+id/line_margin_start"
+                app:layout_constraintTop_toBottomOf="@+id/rvCard">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/riv_image"
+                    android:id="@+id/ivImage"
                     android:layout_width="@dimen/dp_56"
                     android:layout_height="@dimen/dp_56"
                     android:layout_marginTop="@dimen/dp_10"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/shape_ffffff_8"
+                    android:src="@mipmap/logo"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -96,7 +96,7 @@
                     android:text=""
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/sp_12"
-                    app:layout_constraintTop_toBottomOf="@+id/riv_image" />
+                    app:layout_constraintTop_toBottomOf="@+id/ivImage" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/lin_progress"
@@ -206,11 +206,11 @@
 
                 <com.wanwuzhinan.mingchang.view.ClickImageView
                     android:id="@+id/iv_volume"
-                    android:layout_width="@dimen/dp_24"
-                    android:layout_height="@dimen/dp_24"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
                     android:layout_marginStart="@dimen/dp_34"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:padding="@dimen/dp_6"
+                    android:padding="@dimen/margin_default_half"
                     android:visibility="visible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -219,20 +219,19 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/re_audio_list"
+                android:id="@+id/rvAudioList"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="0dp"
-                android:layout_marginStart="@dimen/dp_8"
-                android:layout_marginEnd="@dimen/dp_24"
-                android:layout_marginBottom="@dimen/dp_4"
+                android:layout_marginStart="@dimen/margin_default_half"
                 android:background="@drawable/bg_audio_home_view"
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ll_audio"
-                app:layout_constraintTop_toBottomOf="@+id/re_list"
+                app:layout_constraintBottom_toTopOf="@id/line_margin_bottom"
+                app:layout_constraintEnd_toStartOf="@+id/line_margin_end"
+                app:layout_constraintHorizontal_weight="6"
+                app:layout_constraintStart_toEndOf="@+id/layoutAudio"
+                app:layout_constraintTop_toBottomOf="@+id/rvCard"
                 tools:listitem="@layout/item_audio_home_list" />
 
 
@@ -256,7 +255,8 @@
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -351,7 +351,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_big"

@@ -11,6 +11,10 @@ import com.wanwuzhinan.mingchang.data.QuestionListData
  *
  * Des   :ResponseData
  */
+class SmsCodeResponse() : AppResponse<SmsCode>()
+class RegisterResponse() : AppResponse<RegisterData>()
+class UserInfoResponse() : AppResponse<UserInfo>()
+class ConfigDataResponse() : AppResponse<Config>()
 
 data class CourseInfoData(
     val info: MediaInfo
@@ -76,13 +80,6 @@ data class PhotosInfo(
     val path: String = "", val sort: String = "", var isShow: Boolean = false
 ) : BaseModel()
 
-
-data class UserInfoData(
-    var info: UserInfo
-) : BaseModel()
-
-class UserInfoResponse() : AppResponse<UserInfo>()
-
 data class UserInfo(
     val id: String = "",//
     val headimg: String = "",//
@@ -98,8 +95,6 @@ data class UserInfo(
     val question_count_error: Int = 0, val question_compass: Int = 0
 ) : BaseModel()
 
-
-class ConfigDataResponse() : AppResponse<Config>()
 
 data class Config(
     val info: ConfigData = ConfigData(), val user_count: Int = 0, val user_countShow: Int = 0
@@ -136,3 +131,7 @@ data class ConfigData(
     var android_code: String = "",//1审核模式
     var android_update: String = "",//1强制更新
 )
+
+
+data class SmsCode(var code: String = "")
+data class RegisterData(val token: String = "", val user_id: String = "")
