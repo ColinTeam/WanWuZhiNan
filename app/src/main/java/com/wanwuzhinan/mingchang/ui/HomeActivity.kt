@@ -114,7 +114,7 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
 
     var needUpdate = false
     fun updateTips(data: ConfigData) {
-        if (data.android_code.toInt() > getCurrentVersionCode() && !needUpdate) {
+        if (data.android_code > getCurrentVersionCode() && !needUpdate) {
             window.decorView.post {
                 needUpdate = true
                 NetErrorPop(this@HomeActivity).showUpdate(getConfigData().android_update, onSure = {

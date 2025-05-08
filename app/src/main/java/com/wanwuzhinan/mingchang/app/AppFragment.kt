@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
@@ -21,10 +23,26 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
     private var _viewBinding: VB? = null
     internal val viewBinding: VB get() = _viewBinding!!
     internal val viewModel: VM by lazy { reflectViewModel() }
+    internal val backPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ScreenChangedReceiver.bind(this)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.e("handleOnBackPressed:$playCompleted")
+                    if (playCompleted) {
+                        findNavController().popBackStack()
+                    }
+                }
+
+            })
     }
 
     override fun onCreateView(

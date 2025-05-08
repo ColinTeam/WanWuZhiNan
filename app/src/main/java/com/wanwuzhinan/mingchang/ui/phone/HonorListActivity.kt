@@ -11,7 +11,6 @@ import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.TabViewpagerAdapter
 import com.wanwuzhinan.mingchang.databinding.ActivityHonorListBinding
-import com.wanwuzhinan.mingchang.view.ClickImageView
 import com.wanwuzhinan.mingchang.vm.SplashViewModel
 
 //我的荣誉墙
@@ -22,7 +21,6 @@ class HonorListActivity :
         fun start(activity: Activity) {
             val starter = Intent(activity, HonorListActivity::class.java)
             activity.startActivity(starter)
-            ClickImageView
         }
     }
 

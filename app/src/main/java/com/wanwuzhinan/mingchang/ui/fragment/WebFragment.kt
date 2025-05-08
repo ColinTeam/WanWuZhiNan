@@ -2,20 +2,21 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.Log
+import com.colin.library.android.widget.web.IWebViewCallback
 import com.ssm.comm.config.Constant
-import com.ssm.comm.ext.isEmpty
 import com.ssm.comm.ext.toastError
-import com.ssm.comm.ui.widget.webview.DefWebViewClient
-import com.ssm.comm.ui.widget.webview.SafeWebChromeClient
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest
 import com.tencent.smtt.sdk.WebView
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentWebBinding
+import com.wanwuzhinan.mingchang.ext.visible
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
 /**
@@ -36,6 +37,55 @@ class WebFragment() : AppFragment<FragmentWebBinding, HomeViewModel>() {
         title = bundle?.getString(Constant.WEB_TITLE)
         content = bundle?.getString(Constant.WEB_CONTENT)
         Log.i("webType:$webType url:$url title:$title content:$content")
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (viewBinding.web.canGoBack()) {
+                        viewBinding.web.goBack()
+                    } else findNavController().popBackStack()
+                }
+            })
+
+        viewBinding.apply {
+            this.tvTitle.text = title ?: ""
+            this.web.bind(lifecycle)
+            this.web.initWebClient(callback)
+        }
+    }
+
+    val callback = object : IWebViewCallback {
+        override fun pageStarted(url: String?) {
+            viewBinding.progressbar.visible(true)
+        }
+
+        override fun pageProgress(progress: Int) {
+            viewBinding.progressbar.progress = progress
+        }
+
+        override fun pageFinished(url: String?) {
+            viewBinding.progressbar.visible(false)
+            viewBinding.web.loadUrl(
+                "javascript:(function(){" + "var objs = document.getElementsByTagName('img'); " + "for(var i=0;i<objs.length;i++) " + "{" + "var img = objs[i]; " + " img.style.maxWidth = '100%'; img.style.height = 'auto'; " + "}" + "})()"
+            );
+        }
+
+        override fun pageError(url: String, error: String) {
+            Log.e("url:$url error:$error")
+        }
+
+
+        override fun updateTitle(title: String?) {
+            viewBinding.tvTitle.text = title ?: ""
+        }
+
+        override fun overrideUrlLoading(
+            view: WebView, url: WebResourceRequest?
+        ): Boolean {
+            Log.i("url:$url")
+            return false
+        }
+
     }
 
     @Suppress("DEPRECATION")
@@ -43,48 +93,12 @@ class WebFragment() : AppFragment<FragmentWebBinding, HomeViewModel>() {
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         val url = getWebUrl()
         Log.i("url:$url")
-        if (isEmpty(url)) {
+        if (url.isNullOrEmpty()) {
             toastError("h5地址不能为空")
             findNavController().popBackStack()
             return
         }
-        viewBinding.webView.apply {
-            settings.javaScriptEnabled = true
-            webChromeClient = SafeWebChromeClient(viewBinding.toolbar, viewBinding.progressbar)
-            webViewClient =
-                DefWebViewClient(viewBinding.progressbar, object : DefWebViewClient.OnCallback {
-                    override fun onInterceptUrl(
-                        webView: WebView?, url: String?
-                    ): Boolean {
-                        return false
-                    }
-
-                    override fun onFinished(
-                        webView: WebView?, url: String?
-                    ) {
-                        this@apply.loadUrl(
-                            "javascript:(function(){" + "var objs = document.getElementsByTagName('img'); " + "for(var i=0;i<objs.length;i++) " + "{" + "var img = objs[i]; " + " img.style.maxWidth = '100%'; img.style.height = 'auto'; " + "}" + "})()"
-                        );
-                    }
-
-                })
-            loadUrl(url)
-        }
-    }
-
-    override fun onPause() {
-        viewBinding.webView.webViewOnPause()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewBinding.webView.webViewOnResume()
-    }
-
-    override fun onDestroyView() {
-        viewBinding.webView.webViewOnDestroy()
-        super.onDestroyView()
+        viewBinding.web.loadUrl(url)
     }
 
     private fun getWebUrl(): String? {

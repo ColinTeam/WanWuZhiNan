@@ -24,6 +24,7 @@ android {
         }
     }
     buildFeatures {
+        aidl = true
         viewBinding = true
     }
     compileOptions {
@@ -35,9 +36,9 @@ android {
     }
     sourceSets {
         getByName("main") {
-            res {
-                srcDirs("src/main/res")
-            }
+            java.srcDirs("src/main/java")
+            kotlin.srcDirs("src/main/kotlin")
+            aidl.srcDirs("src/main/aidl","com.colin.library.android.widget")
             jniLibs.srcDirs(PATH_LIBS)
         }
     }
@@ -48,5 +49,6 @@ dependencies {
     compileOnly(fileTree(mapOf("dir" to PATH_LIBS, "include" to listOf("*.aar", "*.jar"))))
     compileOnly(project(":Utils"))
     compileOnly(libs.tbssdk)
+    compileOnly(libs.gson)
     implementation(libs.bundles.androidCommon)
 }

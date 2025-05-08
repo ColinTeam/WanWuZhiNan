@@ -128,7 +128,7 @@ data class ConfigData(
     var code_verification: String = "",
     var apple_is_audit: Int = 0,//1审核模式
     var home_all_number: String = "",//总人数
-    var android_code: String = "",//1审核模式
+    var android_code: Int = 0,//1审核模式
     var android_update: String = "",//1强制更新
 )
 
