@@ -1,5 +1,6 @@
 package com.wanwuzhinan.mingchang.ui
 
+import android.app.ComponentCaller
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
+import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.ext.onClick
@@ -32,15 +34,25 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
 class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     companion object {
         @JvmStatic
-        fun start(context: Context) {
+        fun start(context: Context, actionId: Int = Constants.INVALID) {
             val starter = Intent(
                 context, HomeActivity::class.java
             ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra(Constant.EXTRAS_ACTION_ID, actionId)
             context.startActivity(starter)
         }
     }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    override fun onNewIntent(intent: Intent, caller: ComponentCaller) {
+        super.onNewIntent(intent, caller)
+        Log.d("onNewIntent:$intent")
+        toAction(intent.getIntExtra(Constant.EXTRAS_ACTION_ID, Constants.INVALID))
+    }
+
+    private fun toAction(action: Int) {
+        findNavController(R.id.nav_host_fragment_content_main).navigate(action)
+    }
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -97,7 +109,9 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.getConfig()
         viewModel.getUserInfo()
-        findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_toSplash)
+        Log.d("initData:$bundle")
+        val action = bundle?.getInt(Constant.EXTRAS_ACTION_ID, R.id.action_toSplash) ?: R.id.action_toSplash
+        toAction(action)
     }
 
     override fun onSupportNavigateUp(): Boolean {

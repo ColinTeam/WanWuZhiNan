@@ -53,8 +53,8 @@ class ChooseDialog private constructor(
         onClick(viewBinding.textCancel, viewBinding.textSure) {
             when (it) {
                 viewBinding.textCancel -> {
-                    cancel.invoke(it)
                     dismiss()
+                    cancel.invoke(it)
                 }
 
                 viewBinding.textSure -> {

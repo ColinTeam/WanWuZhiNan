@@ -243,12 +243,12 @@
         </service>
         <service
             android:name="com.colin.library.android.widget.web.service.WebProcessService"
-            android:exported="false"
-            android:process="wwzn_web" />
+            android:exported="false" />
 
         <activity
             android:name=".ui.HomeActivity"
             android:exported="true"
+            android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

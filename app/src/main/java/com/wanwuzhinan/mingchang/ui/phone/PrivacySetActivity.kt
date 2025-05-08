@@ -3,7 +3,6 @@ package com.wanwuzhinan.mingchang.ui.phone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.chad.library.adapter.base.util.setOnDebouncedItemClick
-import com.ssm.comm.ext.getCurrentVersionCode
 import com.ssm.comm.ext.getCurrentVersionName
 import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.global.AppActivityManager
@@ -13,14 +12,13 @@ import com.wanwuzhinan.mingchang.adapter.SettingPrivacyAdapter
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.SettingData
 import com.wanwuzhinan.mingchang.databinding.ActivitySettingPrivacyBinding
-import com.wanwuzhinan.mingchang.ext.getConfigData
-import com.wanwuzhinan.mingchang.ext.launchLoginActivity
 import com.wanwuzhinan.mingchang.ext.performLaunchH5Agreement
-import com.wanwuzhinan.mingchang.ext.showCancelPop
+import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.fra.ExchangeCourseFragment
 import com.wanwuzhinan.mingchang.ui.phone.fra.ReportFragment
 import com.wanwuzhinan.mingchang.ui.phone.fra.SettingFragment
-import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
+import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
+import com.wanwuzhinan.mingchang.ui.pop.TipsDialog
 import com.wanwuzhinan.mingchang.utils.clearAllData
 import com.wanwuzhinan.mingchang.vm.UserViewModel
 import kotlinx.coroutines.delay
@@ -93,42 +91,26 @@ class PrivacySetActivity :
                 }
 
                 "注销账户" -> {
-                    showCancelPop(
-                        this,
-                        "确定要注销账号吗？注销后您将无法使用该账号，并且个人信息将无法找回。",
-                        true,
-                        onSure = {
-                            lifecycleScope.launch {
-                                showBaseLoading()
-                                delay(1000)
-                                toastSuccess("注销成功")
-                                dismissBaseLoading()
-                                clearAllData()
-                                launchLoginActivity()
-                                AppActivityManager.getInstance().finishAllActivities()
-                            }
-                        },
-                        onCancel = {
-
-                        })
+                    TipsDialog.newInstance(TipsDialog.TYPE_UNREGISTER).apply {
+                        sure = { unregister() }
+                    }.show(this@PrivacySetActivity)
                 }
 
                 "退出登录" -> {
-                    NetErrorPop(mActivity).showLogout(onSure = {
-                        clearAllData()
-                        launchLoginActivity()
-                        AppActivityManager.getInstance().finishAllActivities()
-                    })
+                    ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_LOGOUT).apply {
+                        sure = {logout()}
+                    }.show(this@PrivacySetActivity)
                 }
 
                 "当前版本" -> {
-                    if (getConfigData().android_code > getCurrentVersionCode()) {
-                        NetErrorPop(mActivity).showUpdate(getConfigData().android_update, onSure = {
-
-                        }, onCancel = {
-
-                        })
-                    }
+                    ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_UPGRADE).show(this@PrivacySetActivity)
+//                    if (getConfigData().android_code > getCurrentVersionCode()) {
+//                        NetErrorPop(mActivity).showUpdate(getConfigData().android_update, onSure = {
+//
+//                        }, onCancel = {
+//
+//                        })
+//                    }
                 }
             }
         }
@@ -137,6 +119,23 @@ class PrivacySetActivity :
 
     override fun getLayoutId(): Int {
         return R.layout.activity_setting_privacy
+    }
+
+    fun unregister() {
+        lifecycleScope.launch {
+            showBaseLoading()
+            delay(1000)
+            toastSuccess("注销成功")
+            dismissBaseLoading()
+            clearAllData()
+            AppActivityManager.getInstance().finishAllActivities()
+            HomeActivity.start(this@PrivacySetActivity, R.id.action_toLogin)
+        }
+    }
+    fun logout() {
+        clearAllData()
+        AppActivityManager.getInstance().finishAllActivities()
+        HomeActivity.start(this@PrivacySetActivity, R.id.action_toLogin)
     }
 
 }

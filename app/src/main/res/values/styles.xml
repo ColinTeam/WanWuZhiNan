@@ -38,7 +38,9 @@
     <style name="Text.Tips" parent="Text">
         <item name="android:textSize">@dimen/sp_12</item>
     </style>
-
+    <style name="Text.Tips.Dialog" parent="Text">
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
     <style name="Text.Tips.Protocol" parent="Text">
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
@@ -57,6 +59,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Text.Title.Tips" parent="Text">
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:color">@color/color_4B4B4B</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.Title.Tips.Sub" parent="Text">
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    403210
     <style name="Text.Button" parent="Text">
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:textColor">@color/tab_honor</item>
@@ -65,7 +77,9 @@
     <style name="Text.Button.Cancel" parent="Text.Button">
         <item name="android:textColor">@color/button_text_cancel</item>
     </style>
-
+    <style name="Text.Button.Cancel.Dialog" parent="Text.Button">
+        <item name="android:textColor">@color/button_text_cancel</item>
+    </style>
     <style name="Text.Button.Sure" parent="Text.Button">
         <item name="android:textColor">@color/button_text_sure</item>
     </style>

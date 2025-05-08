@@ -17,6 +17,7 @@ import java.io.File
  */
 object Constant {
 
+    const val EXTRAS_ACTION_ID = "EXTRAS_ACTION_ID"
     const val USER_ID = "user_id"
     const val TOKEN = "token"
     const val VERSION = "version"

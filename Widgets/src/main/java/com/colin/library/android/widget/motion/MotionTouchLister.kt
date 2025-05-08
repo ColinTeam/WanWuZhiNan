@@ -31,13 +31,15 @@ class MotionTouchLister() : View.OnTouchListener {
         }
         return false
     }
+
     private fun motionStart(view: View) {
         val drawable = if (view is ImageView) {
             view.drawable ?: view.background
         } else view.background
-        val color = ResourcesUtil.getColor(view.context, R.color.color_FFCCCCCC)
-        drawable.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
-
+        drawable?.let {
+            val color = ResourcesUtil.getColor(view.context, R.color.color_FFCCCCCC)
+            it.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
+        }
         view.animate().scaleX(MOTION_SCALE_MIN).scaleY(MOTION_SCALE_MIN)
             .setDuration(MOTION_DURATION).start()
     }
@@ -46,7 +48,7 @@ class MotionTouchLister() : View.OnTouchListener {
         val drawable = if (view is ImageView) {
             view.drawable ?: view.background
         } else view.background
-        drawable.clearColorFilter()
+        drawable?.clearColorFilter()
         view.animate().scaleX(MOTION_SCALE_MAX).scaleY(MOTION_SCALE_MAX)
             .setDuration(MOTION_DURATION).start()
     }
