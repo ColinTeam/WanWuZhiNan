@@ -1,5 +1,7 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
+import android.app.Activity
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.colin.library.android.utils.ResourcesUtil
 import com.colin.library.android.utils.ext.onClick
@@ -14,7 +16,13 @@ import com.wanwuzhinan.mingchang.ui.phone.fra.RankFragment
 import com.wanwuzhinan.mingchang.vm.UserViewModel
 
 class RankActivity : BaseActivity<ActivityRankBinding, UserViewModel>(UserViewModel()) {
-
+    companion object {
+        @JvmStatic
+        fun start(activity: Activity) {
+            val starter = Intent(activity, RankActivity::class.java)
+            activity.startActivity(starter)
+        }
+    }
     var mFragmentList: MutableList<Fragment> = mutableListOf()
 
     override fun initView() {

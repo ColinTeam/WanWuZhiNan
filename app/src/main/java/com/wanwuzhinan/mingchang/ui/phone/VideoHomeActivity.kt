@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Point
 import android.graphics.Rect
 import android.view.View
@@ -32,12 +34,19 @@ import kotlinx.coroutines.launch
 
 //视频主页
 class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(UserViewModel()) {
+    companion object {
+        @JvmStatic
+        fun start(activity: Activity) {
+            val starter = Intent(activity, VideoHomeActivity::class.java)
+            activity.startActivity(starter)
+        }
+    }
 
     var mList: MutableList<SubjectListData>? = null
     var mPosition = 0
     var mScrollPosition = 0
     lateinit var mAdapter: VideoHomeAdapter
-    private var mData : MutableList<SubjectListData.dataBean> = mutableListOf()
+    private var mData: MutableList<SubjectListData.dataBean> = mutableListOf()
     private var previousFullScreenView: ImageView? = null
 
     //动画的持续时间
@@ -46,7 +55,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
     //当前正在进行的动画
     private var mCurrentAnimation: AnimatorSet? = null
 
-    private var mapMap = mutableMapOf<String,MutableList<SubjectListData.dataBean>>()
+    private var mapMap = mutableMapOf<String, MutableList<SubjectListData.dataBean>>()
 
     override fun initView() {
         initList()
@@ -67,34 +76,33 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
             if (mList == null) return@setOnDebouncedItemClick
 
             launchVideoListActivity(
-                ConfigApp.TYPE_VIDEO,
-                mList!!.get(mPosition).id,
-                mAdapter.items.get(position).id)
+                ConfigApp.TYPE_VIDEO, mList!!.get(mPosition).id, mAdapter.items.get(position).id
+            )
         }
     }
 
     override fun initClick() {
         onClick(
-            mDataBinding.ivNext,
-            mDataBinding.ivPro,
-            mDataBinding.llShowBig
-        ){
-            when(it){
-                mDataBinding.ivNext ->{
-                    mPosition ++
-                    if (mPosition >= mList!!.size){
+            mDataBinding.ivNext, mDataBinding.ivPro, mDataBinding.llShowBig
+        ) {
+            when (it) {
+                mDataBinding.ivNext -> {
+                    mPosition++
+                    if (mPosition >= mList!!.size) {
                         mPosition = 0
                     }
                     setSelectList()
                 }
-                mDataBinding.ivPro ->{
-                    mPosition --
-                    if (mPosition < 0){
-                        mPosition = mList!!.size-1
+
+                mDataBinding.ivPro -> {
+                    mPosition--
+                    if (mPosition < 0) {
+                        mPosition = mList!!.size - 1
                     }
                     setSelectList()
                 }
-                mDataBinding.llShowBig ->{
+
+                mDataBinding.llShowBig -> {
                     if (mAdapter.items.isNotEmpty()) {
                         val index = mAdapter.items.size - 1
                         launchVideoListActivity(
@@ -113,10 +121,10 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
             onSuccess = { data, msg ->
                 if (!data!!.list.isNullOrEmpty()) {
                     mList = data.list!!
-                    if (mList!!.size > 1){
+                    if (mList!!.size > 1) {
                         mDataBinding.llTools.visibility = View.VISIBLE
                         mDataBinding.progress.max = mList!!.size
-                    }else{
+                    } else {
                         mDataBinding.llTools.visibility = View.GONE
                     }
                     mPosition = 0
@@ -134,7 +142,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
                 for ((index, value) in mData.withIndex()) {
                     mData[index].index = index
                 }
-                data.info?.let { mapMap.put(it.id,mData) }
+                data.info?.let { mapMap.put(it.id, mData) }
                 mAdapter.submitList(mData)
                 startRepeatedTask()
             }
@@ -142,17 +150,15 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
     }
 
     override fun onResume() {
-        super.onResume()
-       /* if(mData.isNotEmpty()){
-            doSomeTask()
-        }*/
+        super.onResume()/* if(mData.isNotEmpty()){
+             doSomeTask()
+         }*/
     }
 
     private fun setSelectList() {
-        mDataBinding.progress.progress = mPosition+1
-        mDataBinding.tvPosition.text = "${mPosition+1}"
-        GlideImgManager.get()
-            .loadImg(mList!!.get(mPosition).image, mDataBinding.currentImage, 0)
+        mDataBinding.progress.progress = mPosition + 1
+        mDataBinding.tvPosition.text = "${mPosition + 1}"
+        GlideImgManager.get().loadImg(mList!!.get(mPosition).image, mDataBinding.currentImage, 0)
         mDataBinding.tvTitle.text = mList!![mPosition].name
         mDataBinding.tvSubtitle.text = ""
         mCurrentAnimation?.cancel()
@@ -160,7 +166,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
         job = null
         mDataBinding.ivBig.visibility = View.GONE
         mDataBinding.ivBg.visibility = View.GONE
-        if (mapMap[mList!![mPosition].id] != null){
+        if (mapMap[mList!![mPosition].id] != null) {
             mData = mapMap[mList!![mPosition].id]!!
             for ((index, value) in mData.withIndex()) {
                 mData[index].index = index
@@ -168,7 +174,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
             mAdapter.submitList(mData)
             startRepeatedTask()
 
-        }else {
+        } else {
             mViewModel.courseSubjectList(mList!![mPosition].id)
         }
     }
@@ -177,9 +183,9 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
         return R.layout.activity_video_home
     }
 
-    var job : Job? = null
+    var job: Job? = null
     private fun startRepeatedTask() {
-        if (job != null){
+        if (job != null) {
             return
         }
         doSomeTask()
@@ -213,7 +219,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
             val viewHolder = mDataBinding.reList.findViewHolderForAdapterPosition(0)
             // showItemFullscreen(viewHolder!!.itemView, dataBean , dataBean)
             zoomImageFromThumb(mDataBinding.image, dataBean.image, dataBean.name)
-        }else{
+        } else {
             mDataBinding.ivBig.visibility = View.GONE
             mDataBinding.ivBg.visibility = View.GONE
 //            setSelectList()
@@ -221,13 +227,19 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
     }
 
     //文字动画
-    private fun translateText(title:String){
-        mDataBinding.tvTitle.alpha=1f
-        mDataBinding.tvSubtitle.alpha=1f
+    private fun translateText(title: String) {
+        mDataBinding.tvTitle.alpha = 1f
+        mDataBinding.tvSubtitle.alpha = 1f
         //设置动画，从自身位置的最下端向上滑动了自身的高度，持续时间为500ms
         val ctrlAnimation = TranslateAnimation(
-            TranslateAnimation.RELATIVE_TO_SELF, 0f, TranslateAnimation.RELATIVE_TO_SELF, 0f,
-            TranslateAnimation.RELATIVE_TO_SELF, 1f, TranslateAnimation.RELATIVE_TO_SELF, 0f
+            TranslateAnimation.RELATIVE_TO_SELF,
+            0f,
+            TranslateAnimation.RELATIVE_TO_SELF,
+            0f,
+            TranslateAnimation.RELATIVE_TO_SELF,
+            1f,
+            TranslateAnimation.RELATIVE_TO_SELF,
+            0f
         )
         ctrlAnimation.duration = 200L //设置动画的过渡时间
 
@@ -235,7 +247,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
         mDataBinding.tvTitle.text = mList!!.get(mPosition).name
 
         mDataBinding.tvSubtitle.startAnimation(ctrlAnimation)
-        mDataBinding.tvSubtitle.text=title
+        mDataBinding.tvSubtitle.text = title
 
     }
 
@@ -245,7 +257,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
      * @param thumbView  缩略图
      * @param imageResId 图片资源ID
      */
-    private fun zoomImageFromThumb(thumbView: View, imageResId: String,name:String) {
+    private fun zoomImageFromThumb(thumbView: View, imageResId: String, name: String) {
         //如果当前有动画就取消，并执行当前的动画
         if (mCurrentAnimation != null) {
             mCurrentAnimation!!.cancel()
@@ -257,8 +269,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
         )
 
 //        expandedImageView.setImageDrawable(imageResId)
-        GlideImgManager.get()
-            .loadImg(imageResId, expandedImageView, 0)
+        GlideImgManager.get().loadImg(imageResId, expandedImageView, 0)
         //计算放大图像的起始边界和结束边界
         val startBounds = Rect()
         val finalBounds = Rect()
@@ -267,16 +278,15 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
         //起始边界是缩略图的全局可见矩形，最后的边界是容器container的全局可见矩形
         //将容器视图container的偏移量设置为区域的起源，因为定位动画的起源属性是（X，Y）
         thumbView.getGlobalVisibleRect(startBounds)
-        findViewById<View>(R.id.cl)
-            .getGlobalVisibleRect(finalBounds, globalOffset)
+        findViewById<View>(R.id.cl).getGlobalVisibleRect(finalBounds, globalOffset)
         startBounds.offset(-globalOffset.x, -globalOffset.y)
         finalBounds.offset(-globalOffset.x, -globalOffset.y)
 
         //使用center_crop将起始边界调整为与最终边界相同的纵横比边界
         //这可以防止在动画期间的不良拉伸。还计算开始缩放比例
         val startScale: Float
-        if (finalBounds.width().toFloat() / finalBounds.height()
-            > startBounds.width().toFloat() / startBounds.height()
+        if (finalBounds.width().toFloat() / finalBounds.height() > startBounds.width()
+                .toFloat() / startBounds.height()
         ) {
             //横向放大
             startScale = startBounds.height().toFloat() / finalBounds.height()
@@ -302,7 +312,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
         expandedImageView.pivotX = 0f
         expandedImageView.pivotY = 0f
 
-        var alpha=AlphaAnimation(1f,0f)
+        var alpha = AlphaAnimation(1f, 0f)
         alpha.duration = mShortAnimationDuration.toLong()
         mDataBinding.tvTitle.startAnimation(alpha)
         mDataBinding.tvSubtitle.startAnimation(alpha)
@@ -310,29 +320,24 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
 
         //四种动画同时播放
         val set = AnimatorSet()
-        set
-            .play(
-                ObjectAnimator.ofFloat(
-                    expandedImageView, View.X,
-                    startBounds.left.toFloat(), finalBounds.left.toFloat()
-                )
-            )
-            .with(
-                ObjectAnimator.ofFloat(
-                    expandedImageView, View.Y,
-                    startBounds.top.toFloat(), finalBounds.top.toFloat()
-                )
-            )
-            .with(
-                ObjectAnimator.ofFloat(
-                    expandedImageView, View.SCALE_X,
-                    startScale, 1f
-                )
-            )
-            .with(
+        set.play(
                 ObjectAnimator.ofFloat(
                     expandedImageView,
-                    View.SCALE_Y, startScale, 1f
+                    View.X,
+                    startBounds.left.toFloat(),
+                    finalBounds.left.toFloat()
+                )
+            ).with(
+                ObjectAnimator.ofFloat(
+                    expandedImageView, View.Y, startBounds.top.toFloat(), finalBounds.top.toFloat()
+                )
+            ).with(
+                ObjectAnimator.ofFloat(
+                    expandedImageView, View.SCALE_X, startScale, 1f
+                )
+            ).with(
+                ObjectAnimator.ofFloat(
+                    expandedImageView, View.SCALE_Y, startScale, 1f
                 )
             )
         set.duration = mShortAnimationDuration.toLong()
@@ -342,12 +347,10 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
                 mCurrentAnimation = null
 //                mDataBinding.currentImage.setImageDrawable(imageResId)
                 if (expandedImageView.isAttachedToWindow) {
-                    GlideImgManager.get()
-                        .loadImg(imageResId, expandedImageView, 0)
+                    GlideImgManager.get().loadImg(imageResId, expandedImageView, 0)
                 }
 
-                GlideImgManager.get()
-                    .loadImg(imageResId,mDataBinding.ivBg,0)
+                GlideImgManager.get().loadImg(imageResId, mDataBinding.ivBg, 0)
 
                 translateText(name)
             }
@@ -355,10 +358,8 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
             override fun onAnimationCancel(animation: Animator) {
                 mCurrentAnimation = null
 //                mDataBinding.currentImage.setImageDrawable(imageResId)
-                GlideImgManager.get()
-                    .loadImg(imageResId, expandedImageView,0)
-                GlideImgManager.get()
-                    .loadImg(imageResId,mDataBinding.ivBg,0)
+                GlideImgManager.get().loadImg(imageResId, expandedImageView, 0)
+                GlideImgManager.get().loadImg(imageResId, mDataBinding.ivBg, 0)
             }
         })
         set.start()

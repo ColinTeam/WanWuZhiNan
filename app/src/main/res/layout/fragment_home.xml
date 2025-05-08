@@ -97,6 +97,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ivAvatar">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivTabBg"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_60"
                 android:layout_marginTop="@dimen/dp_6"
@@ -115,8 +116,9 @@
                 android:layout_height="@dimen/dp_0"
                 android:layout_marginVertical="@dimen/dp_5"
                 android:layout_marginEnd="@dimen/margin_default"
+                android:clickable="false"
                 android:gravity="center"
-                android:text="@string/home_tab_class"
+                android:text="@string/home_tab_0"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tab_1"
@@ -132,7 +134,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/shape_ff9424_22_line_1"
                 android:gravity="center"
-                android:text="@string/home_tab_class"
+                android:text="@string/home_tab_1"
                 android:textColor="@color/color_active"
                 app:layout_constraintBottom_toBottomOf="@+id/tab_0"
                 app:layout_constraintEnd_toStartOf="@+id/tab_2"
@@ -148,7 +150,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/shape_ff9424_22_line_1"
                 android:gravity="center"
-                android:text="@string/home_tab_class"
+                android:text="@string/home_tab_2"
                 android:textColor="@color/color_active"
                 app:layout_constraintBottom_toBottomOf="@+id/tab_0"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -1,5 +1,7 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import com.colin.library.android.utils.ext.onClick
 import com.ssm.comm.event.MessageEvent
@@ -18,6 +20,13 @@ import com.wanwuzhinan.mingchang.vm.UserViewModel
 
 //课程兑换
 class ExchangeActivity : BaseActivity<ActivityExchangeBinding, UserViewModel>(UserViewModel()) {
+    companion object {
+        @JvmStatic
+        fun start(activity: Activity) {
+            val starter = Intent(activity, ExchangeActivity::class.java)
+            activity.startActivity(starter)
+        }
+    }
 
     override fun initView() {
 

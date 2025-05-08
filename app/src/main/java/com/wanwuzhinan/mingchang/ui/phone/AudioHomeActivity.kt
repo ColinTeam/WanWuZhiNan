@@ -1,12 +1,62 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
-import com.ssm.comm.ui.base.BaseActivity
+import android.animation.ObjectAnimator
+import android.app.Activity
+import android.content.Intent
+import android.media.MediaPlayer
+import android.util.Log
+import android.view.View
+import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.SeekBar
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import com.bumptech.glide.Glide
+import com.chad.library.adapter.base.util.setOnDebouncedItemClick
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.countDown
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.databinding.ActivityAudioHomeBinding
-import com.wanwuzhinan.mingchang.vm.AudioViewModel
+import com.wanwuzhinan.mingchang.utils.SkeletonUtils
+import com.wanwuzhinan.mingchang.vm.UserViewModel
+import com.comm.net_work.sign.AESDecryptor
+import com.ssm.comm.config.Constant
+import com.ssm.comm.event.MessageEvent
+import com.ssm.comm.ext.dismissLoadingExt
+import com.ssm.comm.ext.getAllScreenHeight
+import com.ssm.comm.ext.getAllScreenWidth
+import com.ssm.comm.ext.observeState
+import com.ssm.comm.ext.post
+import com.ssm.comm.ext.setOnClickNoRepeat
+import com.ssm.comm.global.AppActivityManager
+import com.ssm.comm.ui.base.BaseActivity
+import com.wanwuzhinan.mingchang.adapter.AudioHomeCoverAdapter
+import com.wanwuzhinan.mingchang.adapter.AudioHomeListAdapter
+import com.wanwuzhinan.mingchang.adapter.CatePhoneAdapter
+import com.wanwuzhinan.mingchang.data.UploadProgressEvent
+import com.wanwuzhinan.mingchang.entity.CourseInfoData
+import com.wanwuzhinan.mingchang.ext.launchAudioPlayInfoActivity
+import com.wanwuzhinan.mingchang.ext.launchExchangeActivity
+import com.wanwuzhinan.mingchang.ext.showCardImage
+import com.wanwuzhinan.mingchang.ui.pop.AudioCardPop
+import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
+import com.wanwuzhinan.mingchang.ui.pop.ExchangeCoursePop
+import com.wanwuzhinan.mingchang.utils.AnimationUtils
+import com.wanwuzhinan.mingchang.utils.getAudioData
+import com.wanwuzhinan.mingchang.utils.setData
+import java.text.SimpleDateFormat
 
 //音频主页
-class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, AudioViewModel>(AudioViewModel()) {
+class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, UserViewModel>(UserViewModel()) {
+    companion object {
+        @JvmStatic
+        fun start(activity: Activity) {
+            val starter = Intent(activity, AudioHomeActivity::class.java)
+            activity.startActivity(starter)
+        }
+    }
 
     var mList: MutableList<SubjectListData>? = null
     var mPosition = 0
@@ -15,26 +65,48 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, AudioViewModel>
     lateinit var mAdapter: AudioHomeCoverAdapter
     lateinit var mListAdapter: AudioHomeListAdapter
 
-    //    var mAudioList: MutableList<SubjectListData>? = null
-//    var mPlayAudioList: MutableList<SubjectListData.lessonBean>? = null
+    var mAudioList: MutableList<SubjectListData>? = null
+    var mPlayAudioList: MutableList<SubjectListData.lessonBean>? = null
     var mPlayPage = 0
     var mPlayData: CourseInfoData? = null
 
     var mIsSeekbarChange = false //互斥变量，防止进度条和定时器冲突。
     var mIsOpen = true//播放or暂停歌曲
     var mIsMute = false//静音
+    var mMediaPlayer: MediaPlayer? = null
     var speed = 1.0f //播放速率
     lateinit var mAnimater: ObjectAnimator
 
+
     override fun initView() {
         initList()
+
+        // 获取窗口的布局参数
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         showBaseLoading()
         mViewModel.courseSubject(ConfigApp.TYPE_AUDIO)
+
+        mMediaPlayer = MediaPlayer()
         mAnimater = AnimationUtils.rotationAnimation(mDataBinding.ivFile)
+        countDown(86400, start = {
+
+        }, end = {
+
+        }, next = {
+            if (!mIsSeekbarChange && mMediaPlayer != null && mMediaPlayer!!.isPlaying) {
+                mDataBinding.seekPaint.progress = mMediaPlayer!!.currentPosition
+                mDataBinding.seekPaintBig.progress = mMediaPlayer!!.currentPosition
+            }
+        })
+        Glide.with(this).asGif().load(R.raw.audio_1).into(mDataBinding.ivGif1)
+        Glide.with(this).asGif().load(R.raw.audio_1).into(mDataBinding.ivGif2)
+        Glide.with(this).asGif().load(R.raw.audio_2).into(mDataBinding.ivGif3)
 
     }
 
     private fun initList() {
+
         //右侧 科目
         mCateAdapter = CatePhoneAdapter()
         mDataBinding.reCateList.adapter = mCateAdapter
@@ -48,6 +120,7 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, AudioViewModel>
         mDataBinding.reList.adapter = mAdapter
         mAdapter.setOnDebouncedItemClick { adapter, view, position ->
             if (mAudioList == null) return@setOnDebouncedItemClick
+            Log.e("TAG", "initList: " + position)
             mPosition = position
             mAdapter.selectIndex = mPosition
             mAdapter.notifyDataSetChanged()
@@ -164,19 +237,19 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, AudioViewModel>
         }
 
         mViewModel.courseStudyLiveData.observeForever {
-            if (mActivity.isFinishing || mActivity.isDestroyed) return@observeForever
+            if (mActivity!!.isFinishing || mActivity!!.isDestroyed) return@observeForever
             dismissLoadingExt()
             if (it.data != null) {
                 var data = it.data
                 if (data != null) {
-                    if (data.medalCardList.isNotEmpty()) {
+                    if (data.medalCardList.size > 0) {
 
-                        showCardImage(data.medalCardList.get(index = 0).image_selected, complete = {
+                        showCardImage(data.medalCardList.get(0).image_selected, complete = {
                             post(MessageEvent.UPDATE_NIGHT)
                             nextPlay()
                         })
                     } else {
-                        if (data.medalList.isNotEmpty()) {
+                        if (data.medalList.size > 0) {
                             showCardImage(data.medalList.get(0).image, complete = {
                                 post(MessageEvent.UPDATE_NIGHT)
                                 nextPlay()
@@ -264,7 +337,7 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, AudioViewModel>
             mDataBinding.llBig.visibility = View.GONE
         }
 
-        onClick(
+        setOnClickNoRepeat(
             mDataBinding.ivVolume,
             mDataBinding.ivPrevious,
             mDataBinding.ivStart,
@@ -289,8 +362,9 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, AudioViewModel>
             ) {
             when (it) {
                 mDataBinding.rivImageBig, mDataBinding.clBig -> {
-                    launchAudioPlayInfoActivity(mPlayData!!.info.content, mPlayData!!.info.name)
-
+                    if (mPlayData!!.info.content != null) {
+                        launchAudioPlayInfoActivity(mPlayData!!.info.content, mPlayData!!.info.name)
+                    }
                 }
 
                 mDataBinding.rivImage, mDataBinding.llAudio -> {
@@ -410,14 +484,14 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, AudioViewModel>
     }
 
     private fun getLessonInfo() {
-        if (mPlayAudioList!![mPlayPage].has_power.toInt() != 1) {
+        if (mPlayAudioList!!.get(mPlayPage).has_power.toInt() != 1) {
             ExchangeCoursePop(AppActivityManager.getInstance().topActivity).showPop(onSure = {
                 launchExchangeActivity()
             }, onContact = {
                 ExchangeContactPop(AppActivityManager.getInstance().topActivity).showHeightPop()
             })
         } else {
-            mViewModel.getLessonInfo(mPlayAudioList!![mPlayPage].id)
+            mViewModel.getLessonInfo(mPlayAudioList!!.get(mPlayPage).id)
         }
     }
 
@@ -441,7 +515,9 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, AudioViewModel>
         }
         mMediaPlayer!!.reset()
         mMediaPlayer!!.setDataSource(
-            AESDecryptor.decryptAES(data.info.videoAes, "W1a2n3W4u5Z6h7i8N9a0n")
+            AESDecryptor.decryptAES(
+                data.info.videoAes, "W1a2n3W4u5Z6h7i8N9a0n"
+            )
         )
         mMediaPlayer!!.isLooping = false
         mMediaPlayer!!.prepareAsync() //异步准备
@@ -514,6 +590,5 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, AudioViewModel>
     override fun getLayoutId(): Int {
         return R.layout.activity_audio_home
     }
-
 
 }

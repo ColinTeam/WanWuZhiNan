@@ -1,40 +1,55 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.TabViewpagerAdapter
 import com.wanwuzhinan.mingchang.databinding.ActivityHonorListBinding
+import com.wanwuzhinan.mingchang.view.ClickImageView
 import com.wanwuzhinan.mingchang.vm.SplashViewModel
-import com.ssm.comm.ui.base.BaseActivity
 
 //我的荣誉墙
-class HonorListActivity : BaseActivity<ActivityHonorListBinding, SplashViewModel>(SplashViewModel()){
+class HonorListActivity :
+    BaseActivity<ActivityHonorListBinding, SplashViewModel>(SplashViewModel()) {
+    companion object {
+        @JvmStatic
+        fun start(activity: Activity) {
+            val starter = Intent(activity, HonorListActivity::class.java)
+            activity.startActivity(starter)
+            ClickImageView
+        }
+    }
 
     var mFragmentList = mutableListOf<Fragment>(
-        HonorListFragment.instance(0),
-        HonorListFragment.instance(1)
+        HonorListFragment.instance(0), HonorListFragment.instance(1)
     )
-    var mStringList = mutableListOf("知识勋章","卡牌")
+    var mStringList = mutableListOf("知识勋章", "卡牌")
 
     override fun initView() {
         initTab()
     }
 
     private fun initTab() {
-        mDataBinding.viewPager.adapter= TabViewpagerAdapter(this, mFragmentList)
+        mDataBinding.viewPager.adapter = TabViewpagerAdapter(this, mFragmentList)
 
         mDataBinding.tabLayout.setupWithViewPager(mDataBinding.viewPager)
 
-        for(i in mStringList.indices){
-            mDataBinding.tabLayout.getTabAt(i)?.setCustomView(getTabFocus(mStringList.get(i),this,R.layout.tab_honor,R.id.text))
+        for (i in mStringList.indices) {
+            mDataBinding.tabLayout.getTabAt(i)?.setCustomView(
+                getTabFocus(
+                    mStringList.get(i), this, R.layout.tab_honor, R.id.text
+                )
+            )
         }
     }
 
-    fun getTabFocus(name: String, context: Context, layout:Int, id:Int): View? {
+    fun getTabFocus(name: String, context: Context, layout: Int, id: Int): View? {
         val inflate = LayoutInflater.from(context).inflate(layout, null)
         val centerText = inflate.findViewById<TextView>(id)
         centerText.text = name

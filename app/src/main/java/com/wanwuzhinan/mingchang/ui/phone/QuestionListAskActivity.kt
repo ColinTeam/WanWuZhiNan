@@ -1,5 +1,7 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
+import android.app.Activity
+import android.content.Intent
 import com.colin.library.android.utils.ext.onClick
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ui.base.BaseActivity
@@ -21,6 +23,16 @@ import java.text.SimpleDateFormat
 //物理万问
 class QuestionListAskActivity :
     BaseActivity<ActivityQuestionListAskBinding, UserViewModel>(UserViewModel()) {
+    companion object {
+        @JvmStatic
+        fun start(activity: Activity, type: Int = ConfigApp.TYPE_ASK) {
+            val starter = Intent(
+                activity,
+                QuestionListAskActivity::class.java
+            ).putExtra(ConfigApp.INTENT_TYPE, type)
+            activity.startActivity(starter)
+        }
+    }
 
     var mType = 0
     var list: MutableList<QuestionListData> = mutableListOf()
@@ -115,8 +127,8 @@ class QuestionListAskActivity :
 
         mViewModel.getUserInfoLiveData.observeState(this) {
             onSuccess = { data, msg ->
-                ConfigApp.question_count_error = data!!.info.question_count_error.toInt()
-                mDataBinding.tvErrorNum.text = "${data!!.info.question_count_error}"
+                ConfigApp.question_count_error = data?.question_count_error ?: 0
+                mDataBinding.tvErrorNum.text = "${ConfigApp.question_count_error}"
             }
         }
     }
