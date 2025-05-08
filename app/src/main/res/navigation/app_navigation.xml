@@ -31,6 +31,11 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_home" />
     <fragment
+        android:id="@+id/fragment_video"
+        android:name="com.wanwuzhinan.mingchang.ui.fragment.VideoFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_video" />
+    <fragment
         android:id="@+id/fragment_audio"
         android:name="com.wanwuzhinan.mingchang.ui.fragment.AudioFragment"
         android:label="@string/app_name"
@@ -75,4 +80,7 @@
     <action
         android:id="@+id/action_toAudio"
         app:destination="@+id/fragment_audio" />
+    <action
+        android:id="@+id/action_toVideo"
+        app:destination="@+id/fragment_video" />
 </navigation>

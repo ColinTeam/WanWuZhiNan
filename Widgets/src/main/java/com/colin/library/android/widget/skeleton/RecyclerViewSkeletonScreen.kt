@@ -40,7 +40,7 @@ class RecyclerViewSkeletonScreen private constructor(builder: Builder) : ISkelet
 
     override fun show() {
         val recyclerView = actualViewRef.get() ?: return
-        recyclerView.setAdapter(skeletonAdapter)
+        recyclerView.adapter = skeletonAdapter
         if (!recyclerView.isComputingLayout && frozen) {
             recyclerView.suppressLayout(true)
         }
@@ -48,7 +48,7 @@ class RecyclerViewSkeletonScreen private constructor(builder: Builder) : ISkelet
 
     override fun hide() {
         val recyclerView = actualViewRef.get() ?: return
-        recyclerView.setAdapter(actualAdapter)
+        recyclerView.adapter = actualAdapter
     }
 
     class Builder(val view: RecyclerView) {

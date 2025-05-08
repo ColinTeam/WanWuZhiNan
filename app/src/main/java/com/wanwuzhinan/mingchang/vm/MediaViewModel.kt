@@ -14,7 +14,7 @@ import com.wanwuzhinan.mingchang.entity.UserInfo
  *
  * Des   :AudioViewModel
  */
-class AudioViewModel : AppViewModel() {
+class MediaViewModel : AppViewModel() {
 
     private val _closeAD: MutableLiveData<Boolean> = MutableLiveData(false)
     private val _userInfo: MutableLiveData<UserInfo?> = MutableLiveData(null)

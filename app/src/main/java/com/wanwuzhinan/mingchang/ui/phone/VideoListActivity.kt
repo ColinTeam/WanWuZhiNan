@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.util.addOnDebouncedChildClick
 import com.chad.library.adapter.base.util.setOnDebouncedItemClick
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
+import com.colin.library.android.widget.skeleton.RecyclerViewSkeletonScreen
 import com.ssm.comm.event.EntityDataEvent
 import com.ssm.comm.event.MessageEvent
 import com.ssm.comm.ext.clickNoRepeat
@@ -50,21 +51,21 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
     var mPosition = 0
     var mChildPosition = 0
     var mSelectId = ""
-    var mList:MutableList<SubjectListData>?=null
+    var mList: MutableList<SubjectListData>? = null
     lateinit var mCateAdapter: CatePhoneAdapter
     lateinit var mLeftAdapter: VideoListLeftAdapter
     lateinit var mRightAdapter: VideoQuestionAdapter
-//    var mSkeletonLeft: RecyclerViewSkeletonScreen? = null
-//    var mSkeletonRight: RecyclerViewSkeletonScreen? = null
-    lateinit var mLightPop:LightPop
+    var mSkeletonLeft: RecyclerViewSkeletonScreen? = null
+    var mSkeletonRight: RecyclerViewSkeletonScreen? = null
+    lateinit var mLightPop: LightPop
 
     @SuppressLint("UseKtx")
     override fun initView() {
-        if(getConfigData().apple_is_audit == 1){
+        if (getConfigData().apple_is_audit == 1) {
             mDataBinding.llReport.visibility = View.VISIBLE
         }
         registerBus(this)
-        mLightPop= LightPop(this)
+        mLightPop = LightPop(this)
         mType = intent.getIntExtra(ConfigApp.INTENT_TYPE, mType)
         mId = intent.getStringExtra(ConfigApp.INTENT_ID).toString()
         mSelectId = intent.getStringExtra(ConfigApp.INTENT_NUMBER).toString()
@@ -72,22 +73,20 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
         initLeftList()
         initRightList()
         initRightCate()
+        mSkeletonLeft =
+            RecyclerViewSkeletonScreen.Builder(mDataBinding.reLeft).adapter(mLeftAdapter)
+                .frozen(false).color(R.color.shimmer_color)
+                .itemResId(R.layout.item_video_list_left_skeleton).build()
 
-//        mSkeletonLeft = Skeleton.bind(mDataBinding.reLeft)
-//            .adapter(mLeftAdapter)
-//            .frozen(false)
-//            .color(R.color.shimmer_color)
-//            .load(R.layout.item_video_list_left_skeleton)
-//            .show()
-//        mSkeletonRight = Skeleton.bind(mDataBinding.reRight)
-//            .adapter(mRightAdapter)
-//            .frozen(false)
-//            .color(R.color.shimmer_color)
-//            .load(R.layout.item_video_list_right_skeleton)
-//            .show()
+        mSkeletonRight =
+            RecyclerViewSkeletonScreen.Builder(mDataBinding.reRight).adapter(mRightAdapter)
+                .frozen(false).color(R.color.shimmer_color)
+                .itemResId(R.layout.item_video_list_right_skeleton).build()
+        mSkeletonLeft!!.show()
+        mSkeletonRight!!.show()
         mViewModel.courseQuarterList(mId)
         mDataBinding.llReport.onClick {
-            ReportPop(this@VideoListActivity).showPop(){
+            ReportPop(this@VideoListActivity).showPop() {
                 lifecycleScope.launch {
                     showBaseLoading()
                     delay(1000)
@@ -97,9 +96,9 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
             }
         }
         mDataBinding.ivChange.clickNoRepeat {
-            if (mDataBinding.sclCateList.isVisible){
+            if (mDataBinding.sclCateList.isVisible) {
                 mDataBinding.sclCateList.visibility = View.GONE
-            }else{
+            } else {
                 mDataBinding.sclCateList.visibility = View.VISIBLE
             }
         }
@@ -128,8 +127,8 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
         mDataBinding.reRight.adapter = mRightAdapter
 
         mRightAdapter.setOnDebouncedItemClick { adapter, view, position ->
-            if (mRightAdapter.getItem(position)!!.is_video.toInt() == 0){
-                NetErrorPop(mActivity).showVideoPop("你好","敬请期待","课程正在更新中")
+            if (mRightAdapter.getItem(position)!!.is_video.toInt() == 0) {
+                NetErrorPop(mActivity).showVideoPop("你好", "敬请期待", "课程正在更新中")
                 return@setOnDebouncedItemClick
             }
 
@@ -152,49 +151,49 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
         }
     }
 
-    private fun initRightCate(){
+    private fun initRightCate() {
         //右侧 科目
         mCateAdapter = CatePhoneAdapter()
         mDataBinding.reCateList.adapter = mCateAdapter
-        mCateAdapter.setOnDebouncedItemClick{adapter, view, position ->
+        mCateAdapter.setOnDebouncedItemClick { adapter, view, position ->
             mChildPosition = position
             mDataBinding.sclCateList.visibility = View.GONE
             setSelectList()
         }
         mViewModel.courseSubject(ConfigApp.TYPE_VIDEO)
-        mViewModel.courseSubjectLiveData.observeState(this,false){
-            onSuccess={data, msg ->
-                if(!data!!.list.isNullOrEmpty()){
+        mViewModel.courseSubjectLiveData.observeState(this, false) {
+            onSuccess = { data, msg ->
+                if (!data!!.list.isNullOrEmpty()) {
                     mList = data.list!!
                     mCateAdapter.submitList(mList)
 
-                    if (mList!!.size > 0){
+                    if (mList!!.size > 0) {
                         mChildPosition = 0
 
-                        for (obj in mList!!){
-                            if (mId == obj.id){
+                        for (obj in mList!!) {
+                            if (mId == obj.id) {
                                 mChildPosition = mList!!.indexOf(obj)
                             }
                         }
 
                         setSelectList()
-                        if (mList!!.size == 1){
+                        if (mList!!.size == 1) {
                             mDataBinding.clChange.visibility = View.GONE
                         }
-                    }else{
+                    } else {
                         finish()
                     }
                 }
             }
-            onFailed={code, msg ->
+            onFailed = { code, msg ->
                 dismissBaseLoading()
             }
         }
     }
 
-    private fun setSelectList(){
+    private fun setSelectList() {
         if (mList!!.size > 0) {
-            mViewModel.courseQuarterList(mList!!.get(mChildPosition).id,1)
+            mViewModel.courseQuarterList(mList!!.get(mChildPosition).id, 1)
             mCateAdapter.curPage = mChildPosition
             mCateAdapter.notifyDataSetChanged()
 
@@ -206,15 +205,15 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
             // 修改具体视图的约束
             val imageView = findViewById<ImageView>(R.id.iv_ding_top_1)
             Log.e("TAG", "${getAllScreenHeight()} ${getAllScreenWidth()} ")
-            val top = ((60+(56*mChildPosition))/375.0* getAllScreenHeight()).toInt()
-            Log.e("TAG", "mChildPosition : ${mChildPosition} --- ${top}" )
-            constraintSet.connect(imageView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP,
-                top
+            val top = ((60 + (56 * mChildPosition)) / 375.0 * getAllScreenHeight()).toInt()
+            Log.e("TAG", "mChildPosition : ${mChildPosition} --- ${top}")
+            constraintSet.connect(
+                imageView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, top
             )  // 设置距离父布局顶部 100px
             // 应用新的约束
             constraintSet.applyTo(constraintLayout)
 
-        }else{
+        } else {
             finish()
         }
     }
@@ -233,11 +232,11 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
 
     override fun initRequest() {
         mViewModel.courseQuarterListLiveData.observeState(this) {
-//            mSkeletonLeft!!.hide()
-//            mSkeletonRight!!.hide()
+            mSkeletonLeft!!.hide()
+            mSkeletonRight!!.hide()
             onSuccess = { data, msg ->
-                for (obj in data!!.list!!){
-                    if (obj.id == mSelectId){
+                for (obj in data!!.list!!) {
+                    if (obj.id == mSelectId) {
                         mPosition = data.list!!.indexOf(obj)
                     }
                 }
@@ -260,7 +259,7 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: EntityDataEvent) {
-        Log.e( "onMessageEvent: ${event.type}")
+        Log.e("onMessageEvent: ${event.type}")
         when (event.type) {
             MessageEvent.UPDATE_PROGRESS -> {
                 val uploadProgressEvent = event.data as UploadProgressEvent
@@ -270,9 +269,11 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
                     uploadProgressEvent.end_second
                 )
             }
+
             MessageEvent.UPDATE_NIGHT -> {
                 mViewModel.courseQuarterList(mId)
             }
+
             MessageEvent.EXCHANGE_COURSE -> {
                 mViewModel.courseQuarterList(mId)
             }
