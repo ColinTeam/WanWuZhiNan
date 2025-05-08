@@ -131,6 +131,9 @@ abstract class BaseDialogFragment(
         }
     }
 
+    fun isShowing(): Boolean = dialog?.isShowing == true
+
+
     override fun show(manager: FragmentManager, tag: String?) {
         val show = isRepeatedShow(tag)
         Log.d(TAG, "show manager:${manager.isDestroyed} isRepeatedShow:$show")

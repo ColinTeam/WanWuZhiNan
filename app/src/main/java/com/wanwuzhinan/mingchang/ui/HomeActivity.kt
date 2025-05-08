@@ -112,8 +112,7 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         viewModel.getConfig()
         viewModel.getUserInfo()
         Log.d("initData:$bundle")
-        val action =
-            bundle?.getInt(Constant.EXTRAS_ACTION_ID, R.id.action_toSplash) ?: R.id.action_toSplash
+        val action = bundle?.getInt(Constant.EXTRAS_ACTION_ID, R.id.action_toSplash) ?: R.id.action_toSplash
         toAction(action)
     }
 
@@ -135,7 +134,6 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
             window.decorView.post {
                 needUpdate = true
                 NetErrorPop(this@HomeActivity).showUpdate(getConfigData().android_update, onSure = {
-
                 }, onCancel = {
 
                 })

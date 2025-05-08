@@ -15,28 +15,19 @@ import com.tencent.smtt.sdk.WebViewClient
 class DefaultWebViewClient(private val callback: IWebViewCallback) : WebViewClient() {
 
 
-    override fun onPageFinished(view: WebView?, url: String?) {
-        callback.pageFinished(url)
+    override fun onPageFinished(view: WebView, url: String?) {
+        callback.finished(url)
     }
 
-    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-        callback.pageStarted(url)
+    override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
+        callback.start(url)
     }
-
-
-//    override fun onReceivedError(
-//        view: WebView?,
-//        request: WebResourceRequest?,
-//        error: WebResourceError?
-//    ) {
-//        webViewCallBack.pageError()
-//    }
 
     override fun onReceivedError(
         view: WebView, request: WebResourceRequest?, error: WebResourceError?
     ) {
         super.onReceivedError(view, request, error)
-        callback.pageError("${request?.url}", "$error")
+        callback.error("${request?.url}", "$error")
     }
 
     /**
@@ -48,7 +39,12 @@ class DefaultWebViewClient(private val callback: IWebViewCallback) : WebViewClie
     override fun shouldOverrideUrlLoading(
         view: WebView, request: WebResourceRequest?
     ): Boolean {
-        return callback.overrideUrlLoading(view, request)
+        return callback.intercept(view, request?.url?.toString()) ||
+                super.shouldOverrideUrlLoading(view, request)
+    }
+
+    override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
+        return callback.intercept(view, url) || super.shouldOverrideUrlLoading(view, url)
     }
 
     // WebView发生改变时调用

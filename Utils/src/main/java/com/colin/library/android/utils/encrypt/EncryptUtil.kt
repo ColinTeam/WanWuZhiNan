@@ -19,47 +19,46 @@ class EncryptUtil {
     companion object {
         @JvmStatic
         fun md5(value: String?): String {
-            return if (value.isNullOrEmpty()) "" else md5(value.toByteArray())
+            return if (value.isNullOrEmpty()) "" else md5(value.toByteArray(StandardCharsets.UTF_8))
         }
 
         @JvmStatic
         fun md5(bytes: ByteArray): String {
-            try {
-                val bytes = MessageDigest.getInstance("MD5").digest(bytes)
-                val result = StringBuilder()
-                for (b in bytes) {
-                    var hex = Integer.toHexString(b.toInt() and 0xff)
-                    if (hex.length == 1) hex = "0$hex"
-                    result.append(hex)
-                }
-                return result.toString()
+            return try {
+                val digest = MessageDigest.getInstance("MD5").digest(bytes)
+                digest.joinToString(separator = "") { "%02x".format(it) }
             } catch (e: NoSuchAlgorithmException) {
                 e.printStackTrace()
+                ""
             }
-            return ""
         }
 
 
         @JvmStatic
-        fun aes(value: String?, transformation: String, key: String, iv: String): String {
+        fun aes(
+            value: String?, key: String, iv: String, transformation: String = TRANSFORMATION_AES
+        ): String {
             return if (value.isNullOrEmpty()) ""
-            else aes(value.toByteArray(StandardCharsets.UTF_8), transformation, key, iv)
+            else aes(value.toByteArray(StandardCharsets.UTF_8), key, iv, transformation)
         }
 
         @JvmStatic
-        fun aes(value: ByteArray, transformation: String, key: String, iv: String): String {
-            try {
+        fun aes(
+            bytes: ByteArray, key: String, iv: String, transformation: String = TRANSFORMATION_AES
+        ): String {
+            return try {
                 val cipher = Cipher.getInstance(transformation)
-                val raw: ByteArray = key.toByteArray()
-                val spec = SecretKeySpec(raw, "AES")
-                val iv = IvParameterSpec(iv.toByteArray())
-                cipher.init(Cipher.ENCRYPT_MODE, spec, iv)
-                val encrypted = cipher.doFinal(value)
-                return String(Base64.encode(encrypted, Base64.DEFAULT))
+                val rawKey = key.toByteArray(StandardCharsets.UTF_8)
+                val rawIV = iv.toByteArray(StandardCharsets.UTF_8)
+                val secretKey = SecretKeySpec(rawKey, "AES")
+                val ivParam = IvParameterSpec(rawIV)
+                cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParam)
+                val encrypted = cipher.doFinal(bytes)
+                Base64.encodeToString(encrypted, Base64.DEFAULT)
             } catch (e: Exception) {
                 e.printStackTrace()
+                ""
             }
-            return ""
         }
     }
 }

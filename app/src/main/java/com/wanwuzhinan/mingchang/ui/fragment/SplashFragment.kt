@@ -48,6 +48,7 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
                 }
 
             }).build(viewBinding.video)
+
         viewBinding.video.startPlayLogic()
     }
 

@@ -3,9 +3,11 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelStore
 import androidx.navigation.fragment.findNavController
+import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.ext.onClick
 import com.google.android.material.tabs.TabLayout
@@ -14,6 +16,7 @@ import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
 import com.wanwuzhinan.mingchang.ext.getConfigData
+import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.vm.LoginViewModelV2
 
 /**
@@ -27,6 +30,8 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
     companion object {
         const val TAB_SMS = 0
         const val TAB_PWD = 1
+
+
     }
 
     override fun bindViewModelStore(): ViewModelStore {
@@ -36,6 +41,12 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
     private var tabIndex = TAB_SMS
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+
+                }
+            })
         viewBinding.apply {
             etPhone.addTextChangedListener(textWatcher)
             etSMS.addTextChangedListener(textWatcher)
@@ -120,8 +131,16 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-
-
+        viewModel.apply {
+            configData.observe {
+                Log.d("configData:$it")
+            }
+            showLoading.observe {
+                Log.d("showLoading:$it")
+                showLoading(it)
+            }
+        }
+        viewModel.getConfig()
     }
 
     private fun updateButton() {
@@ -171,24 +190,21 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             ToastUtil.show("请输入对应内容")
             return
         }
+        val type = if(isPhone()) "1" else "2"
         if (tabIndex == TAB_SMS) {
-
+            viewModel.loginBySms(phone, text, type)
         } else {
-
+            viewModel.loginByPassword(phone, text, type)
         }
 
     }
 
-    val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(
-            s: CharSequence?, start: Int, count: Int, after: Int
-        ) {
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
         }
 
-        override fun onTextChanged(
-            s: CharSequence?, start: Int, before: Int, count: Int
-        ) {
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
         }
 
@@ -197,4 +213,5 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
         }
 
     }
+
 }

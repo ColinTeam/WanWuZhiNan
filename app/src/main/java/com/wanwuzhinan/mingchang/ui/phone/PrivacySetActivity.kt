@@ -3,6 +3,7 @@ package com.wanwuzhinan.mingchang.ui.phone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.chad.library.adapter.base.util.setOnDebouncedItemClick
+import com.ssm.comm.ext.getCurrentVersionCode
 import com.ssm.comm.ext.getCurrentVersionName
 import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.global.AppActivityManager
@@ -12,12 +13,14 @@ import com.wanwuzhinan.mingchang.adapter.SettingPrivacyAdapter
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.SettingData
 import com.wanwuzhinan.mingchang.databinding.ActivitySettingPrivacyBinding
+import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.performLaunchH5Agreement
 import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.fra.ExchangeCourseFragment
 import com.wanwuzhinan.mingchang.ui.phone.fra.ReportFragment
 import com.wanwuzhinan.mingchang.ui.phone.fra.SettingFragment
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
+import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
 import com.wanwuzhinan.mingchang.ui.pop.TipsDialog
 import com.wanwuzhinan.mingchang.utils.clearAllData
 import com.wanwuzhinan.mingchang.vm.UserViewModel
@@ -103,14 +106,16 @@ class PrivacySetActivity :
                 }
 
                 "当前版本" -> {
-                    ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_UPGRADE).show(this@PrivacySetActivity)
-//                    if (getConfigData().android_code > getCurrentVersionCode()) {
-//                        NetErrorPop(mActivity).showUpdate(getConfigData().android_update, onSure = {
-//
-//                        }, onCancel = {
-//
-//                        })
-//                    }
+//                    ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_UPGRADE).apply {
+//                        sure = {logout()}
+//                    }.show(this@PrivacySetActivity)
+                    if (getConfigData().android_code > getCurrentVersionCode()) {
+                        NetErrorPop(mActivity).showUpdate(getConfigData().android_update, onSure = {
+
+                        }, onCancel = {
+
+                        })
+                    }
                 }
             }
         }

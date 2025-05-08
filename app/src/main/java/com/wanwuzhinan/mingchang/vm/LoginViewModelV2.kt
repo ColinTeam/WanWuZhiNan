@@ -35,27 +35,49 @@ class LoginViewModelV2 : AppViewModel() {
 
     //获取用户信息
     fun getUserInfo() {
+        _showLoading.postValue(true)
         request({
             service.newUserInfo()
         }, success = {
             _userInfo.postValue(it)
+            _showLoading.postValue(false)
         }, failure = {
             _showError.postValue(it)
+            _showLoading.postValue(false)
         })
     }
 
     fun getSms(phone: String) {
+        _showLoading.postValue(true)
         request({
             service.newCode(phone)
         }, success = {
             Log.e("newCode:$it")
+            _showLoading.postValue(false)
         }, failure = {
             _showError.postValue(it)
+            _showLoading.postValue(false)
         })
     }
 
+    fun loginBySms(phone: String, code: String, type: String) {
+        _showLoading.postValue(true)
+        request({
+            service.newLogin(phone, code, type)
+        }, success = {
+            Log.e("newCode:$it")
+            _showLoading.postValue(false)
+        }, failure = {
+            _showError.postValue(it)
+            _showLoading.postValue(false)
+        })
+    }
 
+    fun loginByPassword(phone: String, password: String, type: String) {
+
+    }
 
     fun getConfigValue() = configData.value
-    fun getAdStateValue() = closeAD.value == true
+
+
 }

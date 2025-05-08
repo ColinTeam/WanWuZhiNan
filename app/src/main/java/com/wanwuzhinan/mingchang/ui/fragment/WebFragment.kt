@@ -1,16 +1,16 @@
 package com.wanwuzhinan.mingchang.ui.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.Log
+import com.colin.library.android.utils.ToastUtil
+import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.web.IWebViewCallback
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.toastError
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest
 import com.tencent.smtt.sdk.WebView
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
@@ -41,9 +41,7 @@ class WebFragment() : AppFragment<FragmentWebBinding, HomeViewModel>() {
         requireActivity().onBackPressedDispatcher.addCallback(
             this, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (viewBinding.web.canGoBack()) {
-                        viewBinding.web.goBack()
-                    } else findNavController().popBackStack()
+                    goBack()
                 }
             })
 
@@ -51,45 +49,49 @@ class WebFragment() : AppFragment<FragmentWebBinding, HomeViewModel>() {
             this.tvTitle.text = title ?: ""
             this.web.bind(lifecycle)
             this.web.initWebClient(callback)
+            this.ivBack.onClick { goBack() }
         }
     }
 
+    private fun goBack() {
+        if (viewBinding.web.canGoBack()) {
+            viewBinding.web.goBack()
+        } else findNavController().popBackStack()
+    }
+
     val callback = object : IWebViewCallback {
-        override fun pageStarted(url: String?) {
+        override fun start(url: String?) {
             viewBinding.progressbar.visible(true)
         }
 
-        override fun pageProgress(progress: Int) {
+        override fun progress(progress: Int) {
             viewBinding.progressbar.progress = progress
         }
 
-        override fun pageFinished(url: String?) {
+        override fun finished(url: String?) {
             viewBinding.progressbar.visible(false)
             viewBinding.web.loadUrl(
                 "javascript:(function(){" + "var objs = document.getElementsByTagName('img'); " + "for(var i=0;i<objs.length;i++) " + "{" + "var img = objs[i]; " + " img.style.maxWidth = '100%'; img.style.height = 'auto'; " + "}" + "})()"
             );
         }
 
-        override fun pageError(url: String, error: String) {
+        override fun error(url: String, error: String) {
             Log.e("url:$url error:$error")
+            ToastUtil.show(error)
         }
 
 
-        override fun updateTitle(title: String?) {
+        override fun title(title: String?) {
             viewBinding.tvTitle.text = title ?: ""
         }
 
-        override fun overrideUrlLoading(
-            view: WebView, url: WebResourceRequest?
-        ): Boolean {
+        override fun intercept(view: WebView, url: String?): Boolean {
             Log.i("url:$url")
             return false
         }
 
     }
 
-    @Suppress("DEPRECATION")
-    @SuppressLint("SetJavaScriptEnabled")
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         val url = getWebUrl()
         Log.i("url:$url")

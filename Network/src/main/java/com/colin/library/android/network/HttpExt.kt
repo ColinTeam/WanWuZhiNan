@@ -11,6 +11,7 @@ import com.colin.library.android.network.data.NetworkResult
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.net.SocketException
@@ -81,8 +82,8 @@ fun <T> requestImpl(
     failure: (suspend (NetworkResult.Failure) -> Unit) = {},
     retry: Int = NetworkConfig.retry,
     delay: Long = 2000
-) {
-    scope.launch(Dispatchers.IO) {
+): Job {
+    return scope.launch(Dispatchers.IO) {
         try {
             requestImpl(request, success, failure, retry, delay)
         } catch (e: Exception) {

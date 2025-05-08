@@ -35,3 +35,5 @@ fun Context.getRatio(): Float {
     }
     return point.x.toFloat() / point.y.toFloat()
 }
+
+

@@ -1,6 +1,5 @@
 package com.colin.library.android.widget.web
 
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest
 import com.tencent.smtt.sdk.WebView
 
 /**
@@ -11,15 +10,15 @@ import com.tencent.smtt.sdk.WebView
  * Des   :WebViewCallback
  */
 interface IWebViewCallback {
-    fun pageStarted(url: String?)
+    fun start(url: String?)
 
-    fun pageProgress(progress: Int)
+    fun progress(progress: Int)
 
-    fun pageFinished(url: String?)
+    fun finished(url: String?)
 
-    fun pageError(url: String, error: String)
+    fun error(url: String, error: String)
 
-    fun updateTitle(title: String?)
+    fun title(title: String?)
 
-    fun overrideUrlLoading(view: WebView, url: WebResourceRequest?): Boolean
+    fun intercept(view: WebView, url: String?): Boolean
 }

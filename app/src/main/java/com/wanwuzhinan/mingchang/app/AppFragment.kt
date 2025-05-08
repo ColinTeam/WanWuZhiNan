@@ -9,10 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
+import com.colin.library.android.utils.helper.ThreadHelper
 import com.colin.library.android.widget.base.BaseFragment
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.receiver.ScreenChangedReceiver
+import com.wanwuzhinan.mingchang.ui.pop.LoadingDialog
 import com.wanwuzhinan.mingchang.utils.navigate
+import kotlinx.coroutines.Runnable
 import java.lang.reflect.ParameterizedType
 
 
@@ -21,7 +24,7 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
     private var _viewBinding: VB? = null
     internal val viewBinding: VB get() = _viewBinding!!
     internal val viewModel: VM by lazy { reflectViewModel() }
-
+    private var loadingDialog: LoadingDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ScreenChangedReceiver.bind(this)
@@ -48,6 +51,8 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
     }
 
     override fun onDestroyView() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
         _viewBinding = null
         super.onDestroyView()
     }
@@ -57,6 +62,16 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
 
     override fun screenChanged(action: String) {
         Log.i(TAG, "screenChanged:$action")
+    }
+
+    fun showLoading(show: Boolean = false) {
+        if (loadingDialog?.isShowing() == show) return
+        if (!show) {
+            loadingDialog?.dismiss()
+            return
+        }
+        loadingDialog = loadingDialog ?: LoadingDialog.newInstance()
+        ThreadHelper.post(Runnable { loadingDialog!!.show(this) })
     }
 
     /*如果想修改Store 可以重写此方法*/
