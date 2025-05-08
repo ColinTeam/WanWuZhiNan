@@ -13,16 +13,13 @@ import com.wanwuzhinan.mingchang.entity.UserInfo
  * E-mail:945919945@qq.com
  * Create:2025-04-23 22:10
  *
- * Des   :HomeViewModel
+ * Des   :LoginViewModelV2
  */
-class HomeViewModel : AppViewModel() {
+class LoginViewModelV2 : AppViewModel() {
 
-    private val _closeAD: MutableLiveData<Boolean> = MutableLiveData(false)
     private val _userInfo: MutableLiveData<UserInfo?> = MutableLiveData(null)
     private val _configData: MutableLiveData<Config> = MutableLiveData(Config())
 
-    val closeAD: LiveData<Boolean> = _closeAD
-    val userInfo: LiveData<UserInfo?> = _userInfo
     val configData: LiveData<Config> = _configData
     fun getConfig() {
         request({
@@ -57,11 +54,7 @@ class HomeViewModel : AppViewModel() {
         })
     }
 
-    fun updateAD(close: Boolean) {
-        if (_closeAD.value != close) {
-            _closeAD.value = close
-        }
-    }
+
 
     fun getConfigValue() = configData.value
     fun getAdStateValue() = closeAD.value == true

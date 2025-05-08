@@ -16,8 +16,8 @@
     <string name="login_sms_action">发送验证码</string>
     <string name="login_password_hint">输入密码</string>
     <string name="login_protocol_tips">我已阅读并同意</string>
-    <string name="login_protocol_link_1">《用户服务协议》</string>
-    <string name="login_protocol_link_2">《用户隐私政策》</string>
+    <string name="login_protocol_link_1">《用户协议》</string>
+    <string name="login_protocol_link_2">《隐私政策》</string>
     <string name="login_protocol_link_3">《儿童隐私政策》</string>
     <!--主页-->
     <string name="home_detail">详情</string>

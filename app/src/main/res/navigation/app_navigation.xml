@@ -11,6 +11,9 @@
         android:id="@+id/action_toLogin"
         app:destination="@+id/fragment_login" />
     <action
+        android:id="@+id/action_toPassword"
+        app:destination="@+id/fragment_password" />
+    <action
         android:id="@+id/action_toHome"
         app:destination="@+id/fragment_home" />
     <action

@@ -1,6 +1,5 @@
 package com.wanwuzhinan.mingchang.ui
 
-import android.app.ComponentCaller
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -44,10 +43,13 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    override fun onNewIntent(intent: Intent, caller: ComponentCaller) {
-        super.onNewIntent(intent, caller)
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
         Log.d("onNewIntent:$intent")
-        toAction(intent.getIntExtra(Constant.EXTRAS_ACTION_ID, Constants.INVALID))
+        intent?.let {
+            toAction(it.getIntExtra(Constant.EXTRAS_ACTION_ID, Constants.INVALID))
+        }
+
     }
 
     private fun toAction(action: Int) {
@@ -110,7 +112,8 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         viewModel.getConfig()
         viewModel.getUserInfo()
         Log.d("initData:$bundle")
-        val action = bundle?.getInt(Constant.EXTRAS_ACTION_ID, R.id.action_toSplash) ?: R.id.action_toSplash
+        val action =
+            bundle?.getInt(Constant.EXTRAS_ACTION_ID, R.id.action_toSplash) ?: R.id.action_toSplash
         toAction(action)
     }
 

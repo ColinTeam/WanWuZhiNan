@@ -1,13 +1,20 @@
 package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelStore
+import androidx.navigation.fragment.findNavController
+import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.ext.onClick
 import com.google.android.material.tabs.TabLayout
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
+import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
-import com.wanwuzhinan.mingchang.vm.HomeViewModel
+import com.wanwuzhinan.mingchang.ext.getConfigData
+import com.wanwuzhinan.mingchang.vm.LoginViewModelV2
 
 /**
  * Author:ColinLu
@@ -16,16 +23,23 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  *
  * Des   :HomeFragment
  */
-class LoginFragment : AppFragment<FragmentLoginBinding, HomeViewModel>() {
+class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
     companion object {
         const val TAB_SMS = 0
         const val TAB_PWD = 1
+    }
+
+    override fun bindViewModelStore(): ViewModelStore {
+        return requireActivity().viewModelStore
     }
 
     private var tabIndex = TAB_SMS
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
+            etPhone.addTextChangedListener(textWatcher)
+            etSMS.addTextChangedListener(textWatcher)
+            etPassword.addTextChangedListener(textWatcher)
             onClick(
                 tvSmsTips,
                 tvPwdTips,
@@ -37,31 +51,45 @@ class LoginFragment : AppFragment<FragmentLoginBinding, HomeViewModel>() {
             ) {
                 when (it) {
                     tvSmsTips -> {
-                        // TODO:
+                        WebFragment.navigate(
+                            this@LoginFragment, url = getConfigData().code_verification
+                        )
                     }
 
                     tvPwdTips -> {
-                        // TODO:
+                        findNavController().navigate(R.id.action_toPassword)
                     }
 
                     tvSmsSend -> {
-                        // TODO:
+                        startSendSms(etPhone.text.toString().trim())
                     }
 
                     buttonLogin -> {
-                        // TODO:
+                        startLogin()
                     }
 
                     tvProtocolLink1 -> {
-                        // TODO:USER_AGREEMENT
+                        WebFragment.navigate(
+                            this@LoginFragment,
+                            url = ConfigApp.USER_AGREEMENT,
+                            title = getString(R.string.login_protocol_link_1)
+                        )
                     }
 
                     tvProtocolLink2 -> {
-                        // TODO:PRIVACY_POLICY
+                        WebFragment.navigate(
+                            this@LoginFragment,
+                            url = ConfigApp.PRIVACY_POLICY,
+                            title = getString(R.string.login_protocol_link_2)
+                        )
                     }
 
                     tvProtocolLink3 -> {
-                        // TODO:PRIVACY_CHILD
+                        WebFragment.navigate(
+                            this@LoginFragment,
+                            url = ConfigApp.PRIVACY_CHILD,
+                            title = getString(R.string.login_protocol_link_3)
+                        )
                     }
                 }
             }
@@ -100,11 +128,73 @@ class LoginFragment : AppFragment<FragmentLoginBinding, HomeViewModel>() {
         viewBinding.apply {
             val basic = rbProtocolTips.isChecked && (etPhone.text?.length ?: 0) > 0
             if (tabIndex == TAB_SMS) {
+                tvSmsSend.isEnabled = (etSMS.text?.length ?: 0) > 0
                 buttonLogin.isSelected = basic && (etSMS.text?.length ?: 0) > 0
             } else {
                 buttonLogin.isSelected =
                     basic && (etPassword.text?.length ?: 0) > PasswordFragment.PWD_LENGTH_MIN
             }
         }
+    }
+
+    private fun startSendSms(phone: String) {
+        if (phone.isEmpty()) {
+            ToastUtil.show("请输入手机号码")
+            return
+        }
+        if (phone.length < 11) {
+            ToastUtil.show("请输入正确手机号码")
+            return
+        }
+        viewModel.getSms(phone)
+    }
+
+    private fun startLogin() {
+        val phone = viewBinding.etPhone.text.toString().trim()
+        if (phone.isEmpty()) {
+            ToastUtil.show("请输入手机号码")
+            return
+        }
+        if (phone.length < 11) {
+            ToastUtil.show("请输入正确手机号码")
+            return
+        }
+
+        if (!viewBinding.rbProtocolTips.isChecked) {
+            ToastUtil.show("请阅读并同意《用户协议》和《隐私协议》")
+            return
+        }
+        val text = if (tabIndex == TAB_SMS) {
+            viewBinding.etSMS.text.toString().trim()
+        } else viewBinding.etPassword.text.toString().trim()
+        if (text.isEmpty()) {
+            ToastUtil.show("请输入对应内容")
+            return
+        }
+        if (tabIndex == TAB_SMS) {
+
+        } else {
+
+        }
+
+    }
+
+    val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(
+            s: CharSequence?, start: Int, count: Int, after: Int
+        ) {
+
+        }
+
+        override fun onTextChanged(
+            s: CharSequence?, start: Int, before: Int, count: Int
+        ) {
+
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            updateButton()
+        }
+
     }
 }
