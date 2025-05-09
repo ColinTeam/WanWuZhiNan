@@ -2,12 +2,12 @@ package com.colin.library.android.utils
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.content.res.Resources
 import androidx.annotation.ArrayRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
+import com.colin.library.android.utils.helper.UtilHelper
 
 /**
  * Author:ColinLu
@@ -17,7 +17,7 @@ import androidx.core.content.res.ResourcesCompat
  * Des   :ResourcesUtil
  */
 object ResourcesUtil {
-    fun getResources() = Resources.getSystem()
+    fun getResources() = getResources(UtilHelper.getApplication())
     fun getResources(context: Context) = context.resources
 
     @ColorInt
@@ -35,7 +35,7 @@ object ResourcesUtil {
     }
 
     fun getString(@StringRes res: Int): String {
-        return getResources().getString(res)
+        return getString(UtilHelper.getApplication(), res)
     }
 
     fun getString(context: Context, @StringRes res: Int): String {

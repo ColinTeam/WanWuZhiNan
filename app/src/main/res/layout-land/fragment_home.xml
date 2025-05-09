@@ -55,14 +55,16 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSetting"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_20"
+            android:layout_height="@dimen/dp_22"
             android:layout_marginStart="@dimen/margin_default_half"
             android:background="@drawable/shape_ff9424_4"
+            android:drawablePadding="@dimen/dp_4"
+            android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/margin_default_half"
             android:text="@string/home_setting"
             android:textAppearance="@style/Text.Tips"
             android:textColor="@color/white"
-            app:drawableEndCompat="@drawable/ps_ic_default_arrow"
+            app:drawableEndCompat="@drawable/ic_arrow_right_home"
             app:layout_constraintBottom_toTopOf="@+id/tvUserName"
             app:layout_constraintStart_toEndOf="@+id/ivAvatar"
             app:layout_constraintTop_toTopOf="@+id/ivAvatar"
@@ -82,14 +84,19 @@
             app:layout_constraintTop_toBottomOf="@+id/tvSetting"
             tools:text="@string/app_name" />
 
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivTabBg"
-            android:layout_width="@dimen/dp_153"
-            android:layout_height="@dimen/dp_68"
-            android:layout_marginStart="-12dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_60"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_2"
+            android:scaleType="centerCrop"
             android:src="@mipmap/ic_main_exchange_bg"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="@+id/tabHome"
-            app:layout_constraintTop_toTopOf="@+id/tabHome" />
+            app:layout_constraintTop_toTopOf="@+id/tabHome"
+            app:layout_constraintWidth_percent="0.175" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tabHome"
@@ -98,7 +105,6 @@
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginTop="@dimen/margin_default"
             android:clickable="false"
-            android:clipChildren="false"
             android:orientation="horizontal"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
@@ -106,13 +112,12 @@
             app:layout_constraintTop_toTopOf="@+id/ivAvatar"
             app:layout_constraintWidth_percent="0.6">
 
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tab_0"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_0"
                 android:layout_marginVertical="@dimen/dp_5"
-                android:layout_marginEnd="@dimen/margin_default"
+                android:layout_marginStart="@dimen/margin_default"
                 android:clickable="false"
                 android:gravity="center"
                 android:text="@string/home_tab_0"
@@ -127,7 +132,8 @@
                 android:id="@+id/tab_1"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_0"
-                android:layout_marginHorizontal="@dimen/margin_default"
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginVertical="@dimen/dp_3"
                 android:layout_weight="1"
                 android:background="@drawable/shape_ff9424_22_line_1"
                 android:gravity="center"
@@ -143,6 +149,7 @@
                 android:id="@+id/tab_2"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_0"
+                android:layout_marginVertical="@dimen/dp_3"
                 android:layout_marginStart="@dimen/margin_default"
                 android:layout_weight="1"
                 android:background="@drawable/shape_ff9424_22_line_1"
@@ -190,7 +197,7 @@
             android:gravity="center_vertical"
             android:text="@string/home_one_title"
             app:layout_constraintBottom_toBottomOf="@+id/ivOneBg"
-            app:layout_constraintEnd_toStartOf="@+id/ivAnim"
+            app:layout_constraintEnd_toEndOf="@+id/ivOneNumber"
             app:layout_constraintStart_toStartOf="@+id/ivOneNumber"
             app:layout_constraintTop_toBottomOf="@+id/ivOneNumber" />
 
@@ -203,8 +210,8 @@
             android:clickable="false"
             app:layout_constraintDimensionRatio="h,1:1"
             app:layout_constraintEnd_toStartOf="@+id/ivTwoBg"
-            app:layout_constraintTop_toBottomOf="@+id/tabHome"
-            app:layout_constraintWidth_percent="0.3" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.4" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivOneMedia"
@@ -214,11 +221,11 @@
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginBottom="@dimen/margin_default"
             android:clickable="false"
-            android:scaleType="centerCrop"
             android:src="@mipmap/ic_main_audio_01_stop"
             app:layout_constraintBottom_toBottomOf="@id/ivOneBg"
             app:layout_constraintEnd_toEndOf="@id/ivOneBg"
-            app:layout_constraintStart_toStartOf="@+id/ivAnim" />
+            app:layout_constraintStart_toStartOf="@+id/ivAnim"
+            app:shapeAppearanceOverlay="@style/ImageCircle" />
 
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -237,7 +244,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTwoTitle"
             style="@style/Style.Text.Home"
-            android:layout_marginStart="@dimen/dp_32"
+            android:layout_marginStart="@dimen/margin_default"
             android:clickable="false"
             android:gravity="center_vertical"
             android:text="@string/home_two_title"
@@ -246,7 +253,7 @@
             app:layout_constraintDimensionRatio="h,5:2"
             app:layout_constraintStart_toStartOf="@+id/ivTwoBg"
             app:layout_constraintTop_toTopOf="@+id/ivTwoBg"
-            app:layout_constraintWidth_percent="0.15"
+            app:layout_constraintWidth_percent="0.175"
             tools:ignore="UnusedAttribute" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -264,7 +271,6 @@
             style="@style/Style.Image.Avatar"
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
-            android:layout_marginStart="@dimen/margin_default"
             android:layout_marginEnd="@dimen/margin_default"
             android:clickable="false"
             android:src="@mipmap/ic_main_audio_02_stop"
@@ -328,10 +334,11 @@
             android:id="@+id/ivThreeLogo"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
+            android:layout_marginBottom="@dimen/margin_default"
             android:clickable="false"
             android:src="@mipmap/ic_main_question"
-            app:layout_constraintDimensionRatio="w,1:1"
-            app:layout_constraintEnd_toStartOf="@id/ivFourBg"
+            app:layout_constraintDimensionRatio="h,4:3"
+            app:layout_constraintEnd_toStartOf="@+id/ivFourBg"
             app:layout_constraintStart_toEndOf="@+id/tvThreeTitle"
             app:layout_constraintTop_toBottomOf="@+id/ivTwoBg" />
 

@@ -78,7 +78,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
                 tvSmsTips,
                 tvPwdTips,
                 tvSmsSend,
-                buttonLogin,
+                btLogin,
                 tvProtocolLink1,
                 tvProtocolLink2,
                 tvProtocolLink3
@@ -98,7 +98,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
                         startSendSms(etPhone.text.toString().trim())
                     }
 
-                    buttonLogin -> {
+                    btLogin -> {
                         startLogin()
                     }
 
@@ -194,9 +194,9 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             if (tabIndex == TAB_SMS) {
                 val enable = etPhone.text.toString().trim().isNotEmpty()
                 tvSmsSend.isEnabled = enable
-                buttonLogin.isSelected = basic && enable
+                btLogin.isSelected = basic && enable
             } else {
-                buttonLogin.isSelected = basic && etPassword.text.toString()
+                btLogin.isSelected = basic && etPassword.text.toString()
                     .trim().length > PasswordFragment.PWD_LENGTH_MIN
             }
         }

@@ -16,7 +16,7 @@ android {
         //网络请求超时时长限制
         buildConfigField("long", "TIMEOUT", "10000L")
         //*测试服务器地址
-        buildConfigField("String", "URL_DEBUG", "\"https://app.wanwuzhinan.top\"")
+        buildConfigField("String", "URL_DEBUG", "\"http://14.103.238.200\"")
         //发布服务器地址
         buildConfigField("String", "URL_RELEASE", "\"https://app.wanwuzhinan.top\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

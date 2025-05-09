@@ -25,9 +25,7 @@ class ScrollWebView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : com.tencent.smtt.sdk.WebView(context, attrs, defStyleAttr), LifecycleEventObserver {
     init {
-        WebServiceConnection.instance.initAidlConnection(context)
         DefaultWebSetting.getSetting(this)
-        addJavascriptInterface(this, "mywebview")
     }
 
     fun bind(lifecycle: Lifecycle) {

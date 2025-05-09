@@ -46,7 +46,7 @@
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@+id/iv_ai"
             app:layout_constraintTop_toTopOf="@+id/ivContentBg"
-            app:tabBackground="@null"
+            app:tabBackground="@color/white"
             app:tabIndicator="@drawable/tab_indicator_login"
             app:tabIndicatorAnimationMode="elastic"
             app:tabIndicatorColor="@color/color_active"
@@ -54,7 +54,8 @@
             app:tabRippleColor="@null"
             app:tabSelectedTextAppearance="@style/Text.Tab.Selected"
             app:tabSelectedTextColor="@color/color_active"
-            app:tabTextAppearance="@style/Text.Tab">
+            app:tabTextAppearance="@style/Text.Tab"
+            app:tabTextColor="@color/text_color_default">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -66,49 +67,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login_by_password" />
         </com.google.android.material.tabs.TabLayout>
-
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etPhone"
-            style="@style/Style.Edit.Phone"
-            android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLogin"
-            app:layout_constraintWidth_percent="0.55" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etSMS"
-            style="@style/Style.Edit.SMS"
-            android:layout_marginTop="@dimen/margin_default_half"
-            app:layout_constraintEnd_toEndOf="@+id/etPhone"
-            app:layout_constraintStart_toStartOf="@+id/etPhone"
-            app:layout_constraintTop_toBottomOf="@+id/etPhone" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSmsSend"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_0"
-            android:gravity="center_vertical|end"
-            android:minWidth="@dimen/dp_110"
-            android:paddingHorizontal="@dimen/margin_default"
-            android:text="@string/login_sms_action"
-            android:textAppearance="@style/Text"
-            android:textSize="@dimen/sp_16"
-            app:layout_constraintBottom_toBottomOf="@id/etSMS"
-            app:layout_constraintEnd_toEndOf="@+id/etSMS"
-            app:layout_constraintTop_toTopOf="@+id/etSMS" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etPassword"
-            style="@style/Style.Edit.Password"
-            android:layout_marginTop="@dimen/margin_default_half"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/etPhone"
-            app:layout_constraintStart_toStartOf="@+id/etPhone"
-            app:layout_constraintTop_toBottomOf="@+id/etPhone"
-            tools:visibility="gone" />
-
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSmsTips"
@@ -136,6 +94,75 @@
             app:layout_constraintTop_toTopOf="@+id/tabLogin"
             tools:visibility="visible" />
 
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etPhone"
+            style="@style/Style.Edit.Phone"
+            android:layout_marginTop="@dimen/margin_default"
+            android:textColor="@color/text_color_default"
+            android:textColorHint="@color/text_color_hint"
+            app:layout_constraintBottom_toTopOf="@+id/etSMS"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLogin"
+            app:layout_constraintVertical_weight="3"
+            app:layout_constraintWidth_percent="0.55" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etSMS"
+            style="@style/Style.Edit.SMS"
+            android:layout_marginTop="@dimen/margin_default_half"
+            android:textColor="@color/text_color_default"
+            android:textColorHint="@color/text_color_hint"
+            app:layout_constraintBottom_toTopOf="@+id/etPassword"
+            app:layout_constraintEnd_toEndOf="@+id/etPhone"
+            app:layout_constraintStart_toStartOf="@+id/etPhone"
+            app:layout_constraintTop_toBottomOf="@+id/etPhone"
+            app:layout_constraintVertical_weight="3" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSmsSend"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_0"
+            android:gravity="center_vertical|end"
+            android:minWidth="@dimen/dp_110"
+            android:paddingHorizontal="@dimen/margin_default"
+            android:text="@string/login_sms_action"
+            android:textAppearance="@style/Text"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintBottom_toBottomOf="@id/etSMS"
+            app:layout_constraintEnd_toEndOf="@+id/etSMS"
+            app:layout_constraintTop_toTopOf="@+id/etSMS" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etPassword"
+            style="@style/Style.Edit.Password"
+            android:layout_marginTop="@dimen/margin_default_half"
+            android:textColor="@color/text_color_default"
+            android:textColorHint="@color/text_color_hint"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/btLogin"
+            app:layout_constraintEnd_toEndOf="@+id/etPhone"
+            app:layout_constraintStart_toStartOf="@+id/etPhone"
+            app:layout_constraintTop_toBottomOf="@+id/etSMS"
+            app:layout_constraintVertical_weight="3" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btLogin"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_default"
+            android:background="@drawable/bg_button"
+            android:text="@string/login"
+            android:textAppearance="@style/Text.Button"
+            app:layout_constraintBottom_toTopOf="@id/rbProtocolTips"
+            app:layout_constraintEnd_toEndOf="@id/ivContentBg"
+            app:layout_constraintStart_toStartOf="@id/ivContentBg"
+            app:layout_constraintTop_toBottomOf="@+id/etPassword"
+            app:layout_constraintVertical_weight="4" />
+
+
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/rbProtocolTips"
             android:layout_width="wrap_content"
@@ -145,6 +172,7 @@
             android:gravity="center_vertical"
             android:text="@string/login_protocol_tips"
             android:textAppearance="@style/Text.Tips"
+            android:textColor="@color/text_color_default"
             app:layout_constraintBottom_toBottomOf="@+id/ivContentBg"
             app:layout_constraintEnd_toStartOf="@+id/tvProtocolLink1"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -185,18 +213,6 @@
             app:layout_constraintEnd_toEndOf="@+id/ivContentBg"
             app:layout_constraintStart_toEndOf="@+id/tvProtocolLink2"
             app:layout_constraintTop_toTopOf="@+id/rbProtocolTips" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonLogin"
-            android:layout_width="@dimen/dp_200"
-            android:layout_height="@dimen/dp_48"
-            android:layout_marginBottom="@dimen/margin_default"
-            android:background="@drawable/bg_button"
-            android:text="@string/login"
-            android:textAppearance="@style/Text.Button"
-            app:layout_constraintBottom_toTopOf="@id/rbProtocolTips"
-            app:layout_constraintEnd_toEndOf="@id/ivContentBg"
-            app:layout_constraintStart_toStartOf="@id/ivContentBg" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

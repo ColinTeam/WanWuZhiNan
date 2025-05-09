@@ -18,6 +18,8 @@ lifecycle = "2.8.7"
 navigation = "2.7.7"
 compileSdk = "34"
 namespace = "com.wanwuzhinan.mingchang"
+url_release = "https://app.wanwuzhinan.top"
+url_debug = "http://14.103.238.200"
 minSdk = "27"
 targetSdk = "34"
 versionCode = "1400"
@@ -42,7 +44,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-liteavsdk_player_premium = { module = "com.tencent.liteav:LiteAVSDK_Player_Premium", version.ref = "liteavsdk_player_premium" }
+liteavsdk-player-premium = { module = "com.tencent.liteav:LiteAVSDK_Player_Premium", version.ref = "liteavsdk_player_premium" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycle" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }

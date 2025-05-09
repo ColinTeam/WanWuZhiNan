@@ -20,14 +20,15 @@ android {
     buildTypes {
         release {
             minifyEnabled = false
-            buildConfigField("String", "APP_HOST", "\"https://app.wanwuzhinan.top\"")
+//            buildConfigField("String", "APP_HOST", "\"https://app.wanwuzhinan.top\"")
+            buildConfigField("String", "APP_HOST", "\"http://14.103.238.200/ \"")
             proguardFiles(
                     getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
         debug {
             minifyEnabled = false
-            buildConfigField("String", "APP_HOST", "\"https://app.wanwuzhinan.top\"")
+            buildConfigField("String", "APP_HOST", "\"http://14.103.238.200\"")
             proguardFiles(
                     getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )

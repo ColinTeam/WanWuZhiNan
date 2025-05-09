@@ -26,13 +26,13 @@ class ImageTipsDialog private constructor(
         viewBinding.apply {
             if (type == TYPE_LOGOUT) {
                 tvTitle.text = getString(R.string.dialog_logout_title)
-                tvSubTitle.text = getString(R.string.dialog_logout_subtitle)
-                tvTips.text = getString(R.string.dialog_logout_tips)
+                tvSubTitle.text = getString(R.string.dialog_logout_tips)
+                tvTips.text = getString(R.string.dialog_logout_subtitle)
                 btSure.text = getString(R.string.confirm)
             } else {
                 tvTitle.text = getString(R.string.dialog_upgrade_title)
-                tvSubTitle.text = getString(R.string.dialog_upgrade_subtitle)
-                tvTips.text = getString(R.string.dialog_upgrade_tips)
+                tvSubTitle.text = getString(R.string.dialog_upgrade_tips)
+                tvTips.text = getString(R.string.dialog_upgrade_subtitle)
                 btSure.text = getString(R.string.dialog_i_know)
                 val hide = extra == 1
                 ivCancel.visible(!hide)

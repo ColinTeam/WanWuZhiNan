@@ -46,7 +46,7 @@ abstract class BaseRetrofitBuilder {
             builder!!.addInterceptor(it)
         }
 
-        this.mInterceptorBuilder = initHttpComBuilder()
+//        this.mInterceptorBuilder = initHttpComBuilder()
         addBuilderInterceptor(mInterceptorBuilder?.mInterceptor!!)
         handleOkHttpClientBuilder(builder!!)
         builder!!.build()

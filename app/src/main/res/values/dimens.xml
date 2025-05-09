@@ -11,8 +11,8 @@
 
     <fraction name="login_tab_width">0.8362</fraction>
     <fraction name="login_tab_height">0.792</fraction>
-    <dimen name="text_home_title">16sp</dimen>
-    <dimen name="text_home_min">14sp</dimen>
-    <dimen name="text_home_max">40sp</dimen>
+    <dimen name="text_home_title">10sp</dimen>
+    <dimen name="text_home_min">10sp</dimen>
+    <dimen name="text_home_max">26sp</dimen>
     <dimen name="text_home_step">2sp</dimen>
 </resources>

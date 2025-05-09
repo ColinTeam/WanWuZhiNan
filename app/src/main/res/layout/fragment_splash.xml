@@ -11,10 +11,23 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-
         <com.wanwuzhinan.mingchang.view.EmptyControlVideo
             android:id="@+id/video"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvJump"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_24"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginEnd="@dimen/dp_50"
+            android:background="@drawable/shape_d2d2d2_22"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/margin_default"
+            android:text="@string/splash_jump"
+            android:textAppearance="@style/Text.Tips" />
+
     </FrameLayout>
 </layout>

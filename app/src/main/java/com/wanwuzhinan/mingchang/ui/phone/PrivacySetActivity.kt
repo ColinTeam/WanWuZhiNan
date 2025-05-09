@@ -29,17 +29,12 @@ import kotlinx.coroutines.launch
 
 class PrivacySetActivity :
     BaseActivity<ActivitySettingPrivacyBinding, UserViewModel>(UserViewModel()) {
-
     lateinit var mAdapter: SettingPrivacyAdapter
-
     var mFragmentList: MutableList<Fragment> = mutableListOf()
-
     var mType = 0
 
     override fun initView() {
-
         mType = intent.getIntExtra(ConfigApp.INTENT_TYPE, mType)
-
         initList()
         initChildView()
 
@@ -56,7 +51,6 @@ class PrivacySetActivity :
 
     private fun initList() {
         mAdapter = SettingPrivacyAdapter()
-
         mAdapter.add(SettingData(R.drawable.icon_privacy_policy, "用户协议"))
         mAdapter.add(SettingData(R.drawable.icon_privacy_policy, "隐私协议"))
         mAdapter.add(SettingData(R.drawable.icon_privacy_policy, "儿童隐私政策"))

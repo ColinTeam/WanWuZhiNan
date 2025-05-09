@@ -2,6 +2,8 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
+import com.colin.library.android.utils.ext.onClick
+import com.colin.library.android.widget.motion.MotionTouchLister
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.player.PlayerFactory
@@ -30,8 +32,15 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
                         HomeFragment.navigate(this@SplashFragment)
                     }
                 }
-
             })
+
+        viewBinding.tvJump.setOnTouchListener(MotionTouchLister())
+
+        onClick(viewBinding.tvJump) {
+            if (playCompleted) {
+                HomeFragment.navigate(this@SplashFragment)
+            }
+        }
         val path = "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.raw.splash1
         PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_FULL)

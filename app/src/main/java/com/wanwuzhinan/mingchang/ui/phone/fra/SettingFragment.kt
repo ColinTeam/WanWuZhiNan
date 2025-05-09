@@ -29,8 +29,6 @@ import java.io.File
 
 //
 class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(UserViewModel()) {
-    private var TAG = "SettingFragment"
-
     var mAddressList: List<ProvinceListData>? = null
     var mProvinceName = ""
     var mCityName = ""

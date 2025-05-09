@@ -21,9 +21,11 @@ import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
+import com.wanwuzhinan.mingchang.ui.phone.RankActivity
 import com.wanwuzhinan.mingchang.ui.phone.SettingActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
-import com.wanwuzhinan.mingchang.utils.ANDROID_ASSET_URI
 import com.wanwuzhinan.mingchang.utils.RATIO_16_9
 import com.wanwuzhinan.mingchang.utils.getRatio
 import com.wanwuzhinan.mingchang.utils.setData
@@ -64,14 +66,7 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
                     }
 
                     tab1 -> {
-//                        activity?.let { RankActivity.start(it) }
-
-                        WebFragment.navigate(
-                            this@HomeFragment,
-                            type = Constant.OTHER_TYPE,
-                            url = "${ANDROID_ASSET_URI}demo.html",
-                            title = "demo.html"
-                        )
+                        activity?.let { RankActivity.start(it) }
                     }
 
                     tab2 -> {
@@ -99,15 +94,13 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
 
                     ivThreeBg -> {
                         activity?.let {
-//                            QuestionListAskActivity.start(it)
-                            findNavController().navigate(R.id.action_toAudio)
+                            QuestionListAskActivity.start(it)
                         }
                     }
 
                     ivFourBg -> {
                         activity?.let {
-//                            QuestionListPracticeActivity.start(it)
-                            findNavController().navigate(R.id.action_toVideo)
+                            QuestionListPracticeActivity.start(it)
                         }
                     }
                 }

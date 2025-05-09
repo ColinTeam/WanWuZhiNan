@@ -67,11 +67,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line"
+            app:wheel_autoSizeText="true"
             app:wheel_dividerColor="@color/line"
             app:wheel_dividerHeight="@dimen/dp_1"
             app:wheel_dividerType="fill"
+            app:wheel_normalTextColor="@color/line"
             app:wheel_selectedTextColor="@color/black"
-            app:wheel_showDivider="true" />
+            app:wheel_showDivider="true"
+            app:wheel_textSize="@dimen/wheel_text_size_max"
+            app:wheel_textSizeMin="@dimen/wheel_text_size_min" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
