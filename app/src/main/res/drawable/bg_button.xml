@@ -21,7 +21,6 @@
                 android:state_enabled="false">
                 <shape android:shape="rectangle">
                     <corners android:radius="@dimen/edit_height" />
-
                     <solid android:color="@color/bt_bg_disable" />
                 </shape>
             </item>

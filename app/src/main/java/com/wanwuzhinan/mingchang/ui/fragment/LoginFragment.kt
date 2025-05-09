@@ -1,5 +1,6 @@
 package com.wanwuzhinan.mingchang.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,14 +9,17 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
+import com.colin.library.android.utils.countDown
 import com.colin.library.android.utils.ext.onClick
 import com.google.android.material.tabs.TabLayout
+import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.isPhone
+import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.LoginViewModelV2
 
 /**
@@ -29,6 +33,9 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
     companion object {
         const val TAB_SMS = 0
         const val TAB_PWD = 1
+        const val PHONE_LENGTH = 11
+        const val DEVICE_PHONE = "1"
+        const val DEVICE_OTHER = "2"
     }
 
     private var tabIndex = TAB_SMS
@@ -65,7 +72,6 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
                     }
 
                     tvSmsSend -> {
-                        Log.e("click tvSmsSend:${etPhone.text.toString().trim()}")
                         startSendSms(etPhone.text.toString().trim())
                     }
 
@@ -121,31 +127,47 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             })
 
         }
-        updateButton()
-    }
-
-    override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
             configData.observe {
                 Log.d("configData:$it")
             }
             showLoading.observe {
                 Log.d("showLoading:$it")
-//                showLoading(it)
+                showLoading(it)
             }
+            smsSuccess.observe {
+                Log.d("smsSuccess:$it")
+                if (it) {
+                    viewBinding.tvSmsSend.isEnabled = false
+                    startCountDown()
+                } else viewBinding.tvSmsSend.isEnabled = true
+            }
+            registerData.observe {
+                setData(Constant.USER_MOBILE,viewBinding.etPhone.text.toString().trim())
+                setData(Constant.TOKEN,it.token)
+                findNavController().navigate(R.id.action_toHome)
+            }
+
         }
+
+        updateButton()
+    }
+
+
+    override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.getConfig()
     }
 
     private fun updateButton() {
         viewBinding.apply {
-            val basic = rbProtocolTips.isChecked && (etPhone.text?.length ?: 0) > 0
+            val basic = rbProtocolTips.isChecked && etPhone.text.toString().trim().isNotEmpty()
             if (tabIndex == TAB_SMS) {
-                tvSmsSend.isEnabled = (etSMS.text?.length ?: 0) > 0
-                buttonLogin.isSelected = basic && (etSMS.text?.length ?: 0) > 0
+                val enable = etSMS.text.toString().trim().isNotEmpty()
+                tvSmsSend.isEnabled = enable
+                buttonLogin.isSelected = basic && enable
             } else {
-                buttonLogin.isSelected =
-                    basic && (etPassword.text?.length ?: 0) > PasswordFragment.PWD_LENGTH_MIN
+                buttonLogin.isSelected = basic && etPassword.text.toString()
+                    .trim().length > PasswordFragment.PWD_LENGTH_MIN
             }
         }
     }
@@ -155,8 +177,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             ToastUtil.show(R.string.login_toast_phone)
             return
         }
-        if (phone.length < 11) {
-            Log.e("startSendSms phone:${phone.length}")
+        if (phone.length < PHONE_LENGTH) {
             ToastUtil.show(R.string.login_toast_short)
             return
         }
@@ -169,7 +190,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             ToastUtil.show(R.string.login_toast_phone)
             return
         }
-        if (phone.length < 11) {
+        if (phone.length < PHONE_LENGTH) {
             ToastUtil.show(R.string.login_toast_short)
             return
         }
@@ -185,7 +206,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             ToastUtil.show(if (tabIndex == TAB_SMS) R.string.login_toast_sms else R.string.login_toast_pwd)
             return
         }
-        val type = if (isPhone()) "1" else "2"
+        val type = if (isPhone()) DEVICE_PHONE else DEVICE_OTHER
         if (tabIndex == TAB_SMS) {
             viewModel.loginBySms(phone, text, type)
         } else {
@@ -206,7 +227,15 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
         override fun afterTextChanged(s: Editable?) {
             updateButton()
         }
-
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun startCountDown() {
+        countDown(60, onNext = {
+            viewBinding.tvSmsSend.text = "重新发送（$it）s"
+        }, onFinish = {
+            viewBinding.tvSmsSend.text = getString(R.string.login_sms_action)
+            viewModel.updateSuccess(false)
+        })
+    }
 }

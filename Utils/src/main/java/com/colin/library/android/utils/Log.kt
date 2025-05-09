@@ -116,7 +116,7 @@ object Log {
 
     private fun getTag(traces: Array<StackTraceElement>): String {
         val index = if (traces.getOrNull(0)?.fileName == VM_STACK) 4 else 3
-        return classInfo(traces.getOrElse(index) { traces[4] })
+        return classInfo(traces.getOrElse(index) { traces[3] })
     }
 
     private fun classInfo(element: StackTraceElement): String {

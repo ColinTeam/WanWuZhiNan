@@ -43,7 +43,7 @@ interface ApiService {
     //获取验证码
     @FormUrlEncoded
     @POST("/api/SmsCode/send")
-    fun newCode(@Field("phone") phone: String): SmsCodeResponse
+    suspend fun newCode(@Field("phone") phone: String): SmsCodeResponse
 
     //登录
     @FormUrlEncoded

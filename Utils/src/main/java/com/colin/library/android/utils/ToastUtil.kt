@@ -16,7 +16,7 @@ import com.colin.library.android.utils.helper.UtilHelper
 object ToastUtil {
     private var lastToastTime = 0L
     fun show(@StringRes res: Int, duration: Int = Toast.LENGTH_SHORT) {
-        show(UtilHelper.getApplication(), ResourcesUtil.getString(res), duration)
+        show(UtilHelper.getApplication(), ResourcesUtil.getString(UtilHelper.getApplication(),res), duration)
     }
 
     fun show(text: CharSequence?, duration: Int = Toast.LENGTH_SHORT) {

@@ -28,35 +28,38 @@ import kotlinx.coroutines.launch
 fun LifecycleOwner.countDown(
     time: Int = 5,
     start: (scope: CoroutineScope) -> Unit,
-    end: () -> Unit,
-    next: (time: Int) -> Unit
-) = countDown(lifecycleScope, time, start, end, next)
+    next: (time: Int) -> Unit,
+    end: () -> Unit
+) = countDown(lifecycleScope, time, start, next, end)
 
 fun countDown(
-    lifeScope: CoroutineScope,
+    scope: CoroutineScope,
     time: Int = 5,
     start: (scope: CoroutineScope) -> Unit,
-    finish: () -> Unit,
-    next: (time: Int) -> Unit
+    next: (time: Int) -> Unit,
+    finish: () -> Unit
 ) {
-    lifeScope.launch {
+    scope.launch {
         flow {
             (time downTo 0).forEach {
+                Log.e("countDown downTo:${it}")
                 delay(Constants.ONE_SECOND.toLong())
                 emit(it)
             }
         }.onStart {
+            Log.e("countDown onStart:$this")
             // 倒计时开始 ，在这里可以让Button 禁止点击状态
             start(this@launch)
         }.onCompletion {
             // 倒计时结束 ，在这里可以让Button 恢复点击状态
-            Log.d("countDown finish:${it}")
+            Log.e("countDown finish:${it}")
             finish()
         }.catch {
             // 处理异常，例如记录日志
-            Log.d("countDown catch:${it}")
+            Log.e("countDown catch:${it}")
         }.collect {
             // 在这里 更新值来显示到UI
+            Log.e("countDown collect:$it")
             next(it)
         }
     }
@@ -65,22 +68,26 @@ fun countDown(
 /**
  * 倒计时
  */
+fun LifecycleOwner.countDown(
+    total: Int, onNext: (Int) -> Unit, onStart: (() -> Unit) = {}, onFinish: (() -> Unit) = {}
+): Job {
+    return countDown(
+        this.lifecycleScope, total, onNext, onStart, onFinish
+    )
+}
+
 fun countDown(
-    total: Int,
     scope: CoroutineScope,
-    onTick: (Int) -> Unit,
-    onStart: (() -> Unit)? = null,
-    onFinish: (() -> Unit)? = null,
+    total: Int,
+    onNext: (Int) -> Unit,
+    onStart: (() -> Unit) = {},
+    onFinish: (() -> Unit)? = {},
 ): Job {
     return flow {
         for (i in total downTo 0) {
             emit(i)
             delay(1000)
         }
-    }
-        .flowOn(Dispatchers.Main)
-        .onStart { onStart?.invoke() }
-        .onCompletion { onFinish?.invoke() }//like java finally
-        .onEach { onTick.invoke(it) }
-        .launchIn(scope)
+    }.flowOn(Dispatchers.Main).onStart { onStart.invoke() }.onCompletion { onFinish?.invoke() }
+        .onEach { onNext.invoke(it) }.launchIn(scope)
 }

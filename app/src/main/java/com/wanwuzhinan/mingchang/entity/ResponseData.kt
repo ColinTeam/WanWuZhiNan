@@ -13,7 +13,7 @@ import kotlinx.parcelize.Parcelize
  *
  * Des   :ResponseData
  */
-class SmsCodeResponse() : AppResponse<SmsCode>()
+class SmsCodeResponse() : AppResponse<String>()
 class RegisterResponse() : AppResponse<RegisterData>()
 class UserInfoResponse() : AppResponse<UserInfo>()
 class ConfigDataResponse() : AppResponse<Config>()
