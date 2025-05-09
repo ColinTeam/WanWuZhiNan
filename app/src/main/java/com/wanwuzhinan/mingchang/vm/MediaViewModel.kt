@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.colin.library.android.network.request
 import com.wanwuzhinan.mingchang.app.AppViewModel
-import com.wanwuzhinan.mingchang.entity.Config
-import com.wanwuzhinan.mingchang.entity.UserInfo
+import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.entity.LessonInfo
+import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
 
 /**
  * Author:ColinLu
@@ -16,44 +17,53 @@ import com.wanwuzhinan.mingchang.entity.UserInfo
  */
 class MediaViewModel : AppViewModel() {
 
-    private val _closeAD: MutableLiveData<Boolean> = MutableLiveData(false)
-    private val _userInfo: MutableLiveData<UserInfo?> = MutableLiveData(null)
-    private val _configData: MutableLiveData<Config> = MutableLiveData(Config())
+    private val _AudioLessonSubjectGroup: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
+    val audioLessonSubjectGroup: LiveData<LessonSubjectGroup> = _AudioLessonSubjectGroup
 
-    val closeAD: LiveData<Boolean> = _closeAD
-    val userInfo: LiveData<UserInfo?> = _userInfo
-    val configData: LiveData<Config> = _configData
+    private val _AudioLessonQuarter: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
+    val audioLessonQuarter: LiveData<LessonSubjectGroup> = _AudioLessonQuarter
 
-    //获取用户信息
-    fun getUserInfo() {
+    private val _LessonInfo: MutableLiveData<LessonInfo> = MutableLiveData()
+    val lessonInfo: LiveData<LessonInfo> = _LessonInfo
+
+    private val _GroupPosition: MutableLiveData<Int> = MutableLiveData(0)
+    val groupPosition: LiveData<Int> = _GroupPosition
+
+    fun getAudioLessonSubjectGroup(groupID: Int = ConfigApp.TYPE_AUDIO) {
         request({
-            service.newUserInfo()
+            service.newAudioLessonSubjectGroup(groupID)
         }, success = {
-            _userInfo.postValue(it)
+            _AudioLessonSubjectGroup.postValue(it)
         }, failure = {
             _showError.postValue(it)
         })
     }
 
-    fun getConfig() {
+    fun getAudioLessonQuarter(subjectID: Int, need: Int = 1) {
         request({
-            service.newConfig()
+            service.newAudioLessonQuarter(subjectID, need)
         }, success = {
-            if (it != configData.value) {
-                _configData.postValue(it)
-            }
+            _AudioLessonQuarter.postValue(it)
         }, failure = {
             _showError.postValue(it)
         })
     }
 
+    fun getLessonInfo(lessonID: Int) {
+        request({
+            service.newLessonInfo(lessonID)
+        }, success = {
+            _LessonInfo.postValue(it)
+        }, failure = {
+            _showError.postValue(it)
+        })
+    }
 
-    fun updateAD(close: Boolean) {
-        if (_closeAD.value != close) {
-            _closeAD.value = close
+    fun setGroupPosition(position: Int) {
+        if (position != getGroupPositionValue()) {
+            _GroupPosition.value = position
         }
     }
 
-    fun getConfigValue() = configData.value
-    fun getAdStateValue() = closeAD.value == true
+    fun getGroupPositionValue() = _GroupPosition.value ?: 0
 }

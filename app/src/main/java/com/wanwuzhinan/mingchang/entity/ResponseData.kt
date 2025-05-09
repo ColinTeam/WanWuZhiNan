@@ -1,8 +1,10 @@
 package com.wanwuzhinan.mingchang.entity
 
+import android.os.Parcelable
 import com.ssm.comm.ui.base.BaseModel
 import com.wanwuzhinan.mingchang.data.AppResponse
 import com.wanwuzhinan.mingchang.data.QuestionListData
+import kotlinx.parcelize.Parcelize
 
 /**
  * Author:ColinLu
@@ -15,11 +17,46 @@ class SmsCodeResponse() : AppResponse<SmsCode>()
 class RegisterResponse() : AppResponse<RegisterData>()
 class UserInfoResponse() : AppResponse<UserInfo>()
 class ConfigDataResponse() : AppResponse<Config>()
+class LessonSubjectGroupResponse() : AppResponse<LessonSubjectGroup>()
+class LessonInfoResponse() : AppResponse<LessonInfo>()
 
+data class LessonInfo(
+    val info: MediaInfo
+)
+
+/*后期替换成LessonInfo*/
 data class CourseInfoData(
     val info: MediaInfo
 ) : BaseModel()
 
+data class LessonStudyLog(
+    var medalList: List<StudyLogInfo>, var medalCardList: List<StudyLogInfo>
+) : BaseModel()
+
+data class StudyLogInfo(
+    val id: String,//
+    val name: String,//
+    val image: String,
+    val image_show: String,
+    val image_selected: String,
+    val desc: String,
+    val lesson_study_number_min: String,
+    val lesson_study_hours_min: String,
+    val question_number_min: String,
+    val sort: String,
+    val is_open: String,
+    val update_time: String,
+    val create_time: String,
+    val del: String,
+    val delName: String,
+    val delColor: String,
+    val is_has: Int,
+    val is_has_new: String,
+    val has_time: String,
+    val needMsg: String,
+    val needMin: Double,//任务数量
+    val needHas: Double,//完成数量
+)
 
 data class MediaInfo(
     val create_time: Int,
@@ -130,6 +167,82 @@ data class ConfigData(
     var home_all_number: String = "",//总人数
     var android_code: Int = 0,//1审核模式
     var android_update: String = "",//1强制更新
+)
+
+data class LessonSubjectGroup(
+    val list: List<LessonSubject>? = null
+)
+
+data class LessonSubject(
+    val id: String,//
+    val select: Boolean,//
+    val group_id: String,
+    val type_id: String,
+    val name: String,
+    val image: String,
+    val photos: String,
+    val content: String,
+    val sort: String,
+    val is_open: String,
+    val update_time: String,
+    val create_time: String,
+    val del: String,
+    val delName: String,
+    val delColor: String,
+    val photosArr: List<PhotosBean>,
+    val lessonList: List<Lesson>,
+    val group_idName: String,
+    val group_idColor: String,
+    val type_idName: String,
+    val lesson_quarterCount: String,
+    val lesson_subject_name: String,
+    val lessonCount: String,
+    val lessonCountStar: Int,
+    val lesson_quarterList: List<DataBean>
+)
+
+@Parcelize
+data class Lesson(
+    val id: String,//
+    val lesson_quarter_id: String,//
+    val name: String,//
+    val image: String,
+    val video: String,
+    val video_duration: String,
+    val is_video: String,
+    val sort: String,
+    val is_open: String,
+    val update_time: String,
+    val create_time: String,
+    val del: String,
+    val has_power: String,
+    val has_power_msg: String,
+    val study_is_success: Int,
+    val answerAccuracy: Int,
+    val questionsCount: Int
+) : Parcelable
+
+data class PhotosBean(
+    var path: String,//
+    var title: String,//
+    var desc: String,//
+    var sort: String
+)
+
+data class DataBean(
+    var id: String,//
+    var lesson_subject_id: String,//
+    var name: String,//
+    var image: String,//
+    var photos: String,//
+    var content: String,//
+    var sort: String,//
+    var is_open: Int,//
+    var lessonCount: String,//
+    var update_time: String,//
+    var create_time: String,//
+    var del: String,//
+    var index: Int,//
 )
 
 

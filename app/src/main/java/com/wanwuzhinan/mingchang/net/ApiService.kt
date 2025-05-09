@@ -21,6 +21,8 @@ import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigDataResponse
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
+import com.wanwuzhinan.mingchang.entity.LessonInfoResponse
+import com.wanwuzhinan.mingchang.entity.LessonSubjectGroupResponse
 import com.wanwuzhinan.mingchang.entity.RegisterResponse
 import com.wanwuzhinan.mingchang.entity.SmsCodeResponse
 import com.wanwuzhinan.mingchang.entity.UploadImgData
@@ -52,6 +54,34 @@ interface ApiService {
         @Field("device_type") device_type: String
     ): RegisterResponse
 
+    //音频视频科目
+    @FormUrlEncoded
+    @POST("/api/LessonSubject/index")
+    suspend fun newAudioLessonSubjectGroup(
+        @Field("group_id") group_id: Int
+    ): LessonSubjectGroupResponse
+
+    //音频视频科目季度列表
+    @FormUrlEncoded
+    @POST("/api/LessonQuarter/index")
+    suspend fun newAudioLessonQuarter(
+        @Field("lesson_subject_id") lesson_subject_id: Int, @Field("need_lesson") need_lesson: Int
+    ): LessonSubjectGroupResponse
+
+    @FormUrlEncoded
+    @POST("/api/Lesson/infoV2")
+    suspend fun newLessonInfo(
+        @Field("id") id: Int,
+    ): LessonInfoResponse
+
+    //学习课程 记录
+    @FormUrlEncoded
+    @POST("/api/LessonStudyLog/add")
+    suspend fun newLessonStudyLog(
+        @Field("lesson_id") lesson_id: String,
+        @Field("video_duration") start_second: Int,
+        @Field("end_second") end_second: Int
+    ): ApiResponse<CourseStudyData>
 
     //获取验证码
     @FormUrlEncoded

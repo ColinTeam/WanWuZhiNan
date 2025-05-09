@@ -3,6 +3,7 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.os.Build
 import android.os.Bundle
 import androidx.lifecycle.ViewModelStore
+import androidx.navigation.fragment.findNavController
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.utils.Log
@@ -18,8 +19,6 @@ import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
-import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
-import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
 import com.wanwuzhinan.mingchang.ui.phone.SettingActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.utils.ANDROID_ASSET_URI
@@ -97,11 +96,17 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
                     }
 
                     ivThreeBg -> {
-                        activity?.let { QuestionListAskActivity.start(it) }
+                        activity?.let {
+//                            QuestionListAskActivity.start(it)
+                            findNavController().navigate(R.id.action_toAudio)
+                        }
                     }
 
                     ivThreeBg -> {
-                        activity?.let { QuestionListPracticeActivity.start(it) }
+                        activity?.let {
+//                            QuestionListPracticeActivity.start(it)
+                            findNavController().navigate(R.id.action_toVideo)
+                        }
                     }
                 }
             }
