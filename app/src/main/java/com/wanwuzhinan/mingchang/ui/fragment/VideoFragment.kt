@@ -43,6 +43,7 @@ class VideoFragment : AppFragment<FragmentVideoBinding, MediaViewModel>() {
             getAudioLessonSubjectGroup(ConfigApp.TYPE_VIDEO)
             getAudioLessonQuarter(getGroupPositionValue(), 1)
         }
+        play(ConfigApp.VIDEO_DEMO_2)
     }
 
     override fun onResume() {

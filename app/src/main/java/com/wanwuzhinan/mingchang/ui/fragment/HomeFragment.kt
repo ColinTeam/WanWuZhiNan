@@ -102,7 +102,7 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
                         }
                     }
 
-                    ivThreeBg -> {
+                    ivFourBg -> {
                         activity?.let {
 //                            QuestionListPracticeActivity.start(it)
                             findNavController().navigate(R.id.action_toVideo)

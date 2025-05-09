@@ -19,6 +19,11 @@
     <string name="login_protocol_link_1">《用户协议》</string>
     <string name="login_protocol_link_2">《隐私政策》</string>
     <string name="login_protocol_link_3">《儿童隐私政策》</string>
+    <string name="login_toast_phone">请输入手机号码</string>
+    <string name="login_toast_short">请正确输入手机号码</string>
+    <string name="login_toast_sms">请输入验证码</string>
+    <string name="login_toast_pwd">请输入密码</string>
+    <string name="login_toast_protocol">请阅读并同意《用户协议》《隐私协议》和《儿童隐私政策》</string>
     <!--主页-->
     <string name="home_detail">详情</string>
     <string name="home_setting">个人中心</string>

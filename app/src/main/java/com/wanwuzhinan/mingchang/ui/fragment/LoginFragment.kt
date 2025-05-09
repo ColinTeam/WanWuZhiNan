@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelStore
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
@@ -30,12 +29,6 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
     companion object {
         const val TAB_SMS = 0
         const val TAB_PWD = 1
-
-
-    }
-
-    override fun bindViewModelStore(): ViewModelStore {
-        return requireActivity().viewModelStore
     }
 
     private var tabIndex = TAB_SMS
@@ -44,7 +37,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
         requireActivity().onBackPressedDispatcher.addCallback(
             this, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-
+                    activity?.finish()
                 }
             })
         viewBinding.apply {
@@ -72,6 +65,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
                     }
 
                     tvSmsSend -> {
+                        Log.e("click tvSmsSend:${etPhone.text.toString().trim()}")
                         startSendSms(etPhone.text.toString().trim())
                     }
 
@@ -137,7 +131,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             }
             showLoading.observe {
                 Log.d("showLoading:$it")
-                showLoading(it)
+//                showLoading(it)
             }
         }
         viewModel.getConfig()
@@ -158,11 +152,12 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
 
     private fun startSendSms(phone: String) {
         if (phone.isEmpty()) {
-            ToastUtil.show("请输入手机号码")
+            ToastUtil.show(R.string.login_toast_phone)
             return
         }
         if (phone.length < 11) {
-            ToastUtil.show("请输入正确手机号码")
+            Log.e("startSendSms phone:${phone.length}")
+            ToastUtil.show(R.string.login_toast_short)
             return
         }
         viewModel.getSms(phone)
@@ -171,26 +166,26 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
     private fun startLogin() {
         val phone = viewBinding.etPhone.text.toString().trim()
         if (phone.isEmpty()) {
-            ToastUtil.show("请输入手机号码")
+            ToastUtil.show(R.string.login_toast_phone)
             return
         }
         if (phone.length < 11) {
-            ToastUtil.show("请输入正确手机号码")
+            ToastUtil.show(R.string.login_toast_short)
             return
         }
 
         if (!viewBinding.rbProtocolTips.isChecked) {
-            ToastUtil.show("请阅读并同意《用户协议》和《隐私协议》")
+            ToastUtil.show(R.string.login_toast_protocol)
             return
         }
         val text = if (tabIndex == TAB_SMS) {
             viewBinding.etSMS.text.toString().trim()
         } else viewBinding.etPassword.text.toString().trim()
         if (text.isEmpty()) {
-            ToastUtil.show("请输入对应内容")
+            ToastUtil.show(if (tabIndex == TAB_SMS) R.string.login_toast_sms else R.string.login_toast_pwd)
             return
         }
-        val type = if(isPhone()) "1" else "2"
+        val type = if (isPhone()) "1" else "2"
         if (tabIndex == TAB_SMS) {
             viewModel.loginBySms(phone, text, type)
         } else {

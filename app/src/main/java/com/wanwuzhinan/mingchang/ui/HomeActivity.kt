@@ -53,7 +53,11 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     }
 
     private fun toAction(action: Int) {
-        findNavController(R.id.nav_host_fragment_content_main).navigate(action)
+        val controller = findNavController(R.id.nav_host_fragment_content_main)
+        val option =
+            NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, false)
+                .setLaunchSingleTop(true).build()
+        controller.navigate(action, null, option)
     }
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
@@ -112,7 +116,8 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         viewModel.getConfig()
         viewModel.getUserInfo()
         Log.d("initData:$bundle")
-        val action = bundle?.getInt(Constant.EXTRAS_ACTION_ID, R.id.action_toSplash) ?: R.id.action_toSplash
+        val action =
+            bundle?.getInt(Constant.EXTRAS_ACTION_ID, R.id.action_toSplash) ?: R.id.action_toSplash
         toAction(action)
     }
 
@@ -133,10 +138,12 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         if (data.android_code > getCurrentVersionCode() && !needUpdate) {
             window.decorView.post {
                 needUpdate = true
-                NetErrorPop(this@HomeActivity).showUpdate(getConfigData().android_update, onSure = {
-                }, onCancel = {
+                NetErrorPop(this@HomeActivity).showUpdate(
+                    getConfigData().android_update,
+                    onSure = {},
+                    onCancel = {
 
-                })
+                    })
             }
         }
     }

@@ -16,12 +16,12 @@ class DefaultWebChromeClient(private val webViewCallBack: IWebViewCallback) : We
 
 
     override fun onReceivedTitle(view: WebView, title: String?) {
-        webViewCallBack.updateTitle(title)
+        webViewCallBack.title(title)
     }
 
     override fun onProgressChanged(view: WebView?, newProgress: Int) {
         super.onProgressChanged(view, newProgress)
-        webViewCallBack.pageProgress(newProgress)
+        webViewCallBack.progress(newProgress)
     }
 
     override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
