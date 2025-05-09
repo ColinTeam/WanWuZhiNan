@@ -2,7 +2,6 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
-import androidx.navigation.fragment.findNavController
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.player.PlayerFactory
@@ -28,7 +27,7 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
             this, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (playCompleted) {
-                        findNavController().navigate(R.id.action_toHome)
+                        HomeFragment.navigate(this@SplashFragment)
                     }
                 }
 
@@ -42,7 +41,7 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
             .setVideoAllCallBack(object : GSYSampleCallBack() {
                 override fun onAutoComplete(url: String?, vararg objects: Any?) {
                     playCompleted = true
-                    findNavController().navigate(R.id.action_toHome)
+                    HomeFragment.navigate(this@SplashFragment)
                 }
 
             }).build(viewBinding.video)
@@ -53,4 +52,5 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
 
     }
+
 }

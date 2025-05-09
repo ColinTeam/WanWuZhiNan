@@ -46,7 +46,7 @@
             android:layout_width="?android:attr/actionBarSize"
             android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="center_vertical"
-            android:padding="@dimen/margin_default_half"
+            android:padding="@dimen/margin_default"
             android:scaleType="centerCrop"
             android:src="@drawable/base_title_back"
             app:layout_constraintStart_toStartOf="@+id/line_margin_start"
@@ -80,7 +80,7 @@
             app:layout_constraintStart_toStartOf="@+id/line_margin_start"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
-        <com.colin.library.android.widget.web.ScrollWebView
+        <com.ssm.comm.ui.widget.webview.ScrollWebView
             android:id="@+id/web"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"

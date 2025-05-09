@@ -1,11 +1,14 @@
 package com.wanwuzhinan.mingchang.ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.colin.library.android.utils.Constants
@@ -20,6 +23,7 @@ import com.wanwuzhinan.mingchang.databinding.ActivityHomeBinding
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.ext.getConfigData
+import com.wanwuzhinan.mingchang.ui.fragment.LoginFragment
 import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
@@ -36,32 +40,38 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         fun start(context: Context, actionId: Int = Constants.INVALID) {
             val starter = Intent(
                 context, HomeActivity::class.java
-            ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                .putExtra(Constant.EXTRAS_ACTION_ID, actionId)
+            ).putExtra(Constant.EXTRAS_ACTION_ID, actionId)
+            if (context !is Activity) {
+                starter.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
             context.startActivity(starter)
         }
     }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    /**
+     * 重新启动 一般需要跳转到制定界面如Login
+     */
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        Log.d("onNewIntent:$intent")
+        intent?.getIntExtra(Constant.EXTRAS_ACTION_ID, Constants.INVALID)
         intent?.let {
-            toAction(it.getIntExtra(Constant.EXTRAS_ACTION_ID, Constants.INVALID))
+            val action = it.getIntExtra(Constant.EXTRAS_ACTION_ID, Constants.INVALID)
+            if (action == R.id.action_toLogin) {
+                LoginFragment.navigate(this@HomeActivity)
+                return
+            }
+            if (action == Constants.INVALID) {
+                return
+            }
+            findNavController(R.id.nav_host).navigate(action)
         }
 
     }
 
-    private fun toAction(action: Int) {
-        val controller = findNavController(R.id.nav_host_fragment_content_main)
-        val option =
-            NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, false)
-                .setLaunchSingleTop(true).build()
-        controller.navigate(action, null, option)
-    }
-
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        val navController = findNavController(R.id.nav_host)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         viewModel.apply {
             closeAD.observe {
@@ -79,7 +89,7 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
                 Log.i("showError:$it")
                 ToastUtil.show(it.msg)
                 if (it.code == 2 || it.code == 4) {
-                    navController.navigate(R.id.action_toLogin)
+                    LoginFragment.navigate(this@HomeActivity)
                 }
             }
         }
@@ -103,7 +113,7 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
 
     private fun toWeb(title: String, url: String?) {
         if (url.isNullOrEmpty()) return
-        findNavController(R.id.nav_host_fragment_content_main).navigate(
+        findNavController(R.id.nav_host).navigate(
             R.id.action_toWeb, Bundle().apply {
                 putInt(Constant.URL_TYPE, Constant.OTHER_TYPE)
                 putString(Constant.WEB_TITLE, title)
@@ -114,15 +124,23 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.getConfig()
-        viewModel.getUserInfo()
         Log.d("initData:$bundle")
+        //存在第一次启动，可能需要跳转到Splash 界面
+        if (bundle == null) {
+            val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+            val controller = navHost.navController
+            controller.navigate(R.id.action_toSplash, null, navOptions {
+                launchSingleTop = true
+                restoreState = true
+            })
+        }
         val action =
             bundle?.getInt(Constant.EXTRAS_ACTION_ID, R.id.action_toSplash) ?: R.id.action_toSplash
-        toAction(action)
+        findNavController(R.id.nav_host).navigate(action)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        val navController = findNavController(R.id.nav_host)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 

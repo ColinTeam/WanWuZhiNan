@@ -14,6 +14,7 @@
     <string name="login_digits_phone">1234567890</string>
     <string name="login_sms_hint">输入验证码</string>
     <string name="login_sms_action">发送验证码</string>
+    <string name="login_sms_countdown">获取验证码(%d)</string>
     <string name="login_password_hint">输入密码</string>
     <string name="login_protocol_tips">我已阅读并同意</string>
     <string name="login_protocol_link_1">《用户协议》</string>

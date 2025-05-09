@@ -18,7 +18,6 @@ import kotlinx.coroutines.delay
  * Des   :LoginViewModelV2
  */
 class LoginViewModelV2 : AppViewModel() {
-
     private val _userInfo: MutableLiveData<UserInfo?> = MutableLiveData(null)
     private val _configData: MutableLiveData<Config> = MutableLiveData(Config())
     val configData: LiveData<Config> = _configData
@@ -57,9 +56,11 @@ class LoginViewModelV2 : AppViewModel() {
             service.newCode(phone)
         }, success = {
             _showLoading.postValue(false)
+            _smsSuccess.postValue(true)
         }, failure = {
             _showError.postValue(it)
             _showLoading.postValue(false)
+            _smsSuccess.postValue(false)
         })
     }
 
@@ -84,8 +85,5 @@ class LoginViewModelV2 : AppViewModel() {
     fun updateSuccess(state: Boolean = false) {
         if (_smsSuccess.value != state) _smsSuccess.value = state
     }
-
-    fun getConfigValue() = configData.value
-
 
 }

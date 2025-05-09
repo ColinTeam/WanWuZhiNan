@@ -2,7 +2,9 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Build
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelStore
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.network.NetworkConfig
@@ -160,4 +162,14 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
         (requireActivity() as HomeActivity).changeADState(false)
     }
 
+    companion object {
+        @JvmStatic
+        fun navigate(fragment: Fragment) {
+            val controller = fragment.findNavController()
+            val option =
+                NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, false)
+                    .setLaunchSingleTop(true).build()
+            controller.navigate(R.id.action_toHome, null, option)
+        }
+    }
 }
