@@ -255,8 +255,13 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-
+            <meta-data
+                android:name="android.enableJetifier"
+                android:value="true" />
         </activity>
+        <meta-data
+            android:name="android.enableJetifier"
+            android:value="true" />
     </application>
 
 </manifest>

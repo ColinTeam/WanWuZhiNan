@@ -1,6 +1,8 @@
 package com.colin.library.android.network
 
+import com.colin.library.android.network.data.AppResponse
 import com.colin.library.android.network.gson.IntegerTypeAdapter
+import com.colin.library.android.network.gson.ObjectTypeAdapterFactory
 import com.colin.library.android.network.gson.StringTypeAdapter
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -19,7 +21,9 @@ import java.util.concurrent.TimeUnit
 object NetworkConfig {
     var gson: Gson =
         GsonBuilder().setLenient().registerTypeAdapter(Int::class.java, IntegerTypeAdapter())
-            .registerTypeAdapter(String::class.java, StringTypeAdapter()).create()
+            .registerTypeAdapter(String::class.java, StringTypeAdapter())
+            .registerTypeAdapter(AppResponse::class.java, ObjectTypeAdapterFactory())
+            .create()
 
     var baseUrl: String = if (BuildConfig.DEBUG) BuildConfig.URL_DEBUG else BuildConfig.URL_RELEASE
 

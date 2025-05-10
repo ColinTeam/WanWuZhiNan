@@ -254,4 +254,5 @@ data class DataBean(
 
 
 data class SmsCode(var code: String = "")
+
 data class RegisterData(val token: String = "", val user_id: String = "")

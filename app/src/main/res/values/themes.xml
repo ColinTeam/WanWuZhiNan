@@ -15,6 +15,9 @@
         <!-- Customize your theme here. -->
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:windowSplashScreenIconBackgroundColor" tools:ignore="NewApi">
+            @color/bg_color
+        </item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowBackground">@color/bg_color</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>

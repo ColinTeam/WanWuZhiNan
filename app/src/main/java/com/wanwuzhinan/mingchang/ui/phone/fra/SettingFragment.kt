@@ -222,7 +222,6 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                     map["nickname"] = name
                     map["school_name"] = school
                     map["grade_name"] = grade
-
                     mViewModel.editUserInfo(map)
                 }
             }

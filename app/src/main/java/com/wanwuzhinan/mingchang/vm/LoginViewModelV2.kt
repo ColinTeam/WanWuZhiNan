@@ -4,12 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.colin.library.android.network.request
 import com.colin.library.android.utils.Constants
+import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.app.AppViewModel
+import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
 import com.wanwuzhinan.mingchang.entity.RegisterData
 import com.wanwuzhinan.mingchang.entity.UserInfo
+import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import kotlinx.coroutines.delay
 
 /**
@@ -72,6 +75,12 @@ class LoginViewModelV2 : AppViewModel() {
             delay(Constants.ONE_SECOND.toLong())
             service.newLogin(phone, code, type, action)
         }, success = {
+            if (it.token.isEmpty()) {
+                ConfigApp.token = it.token
+                MMKVUtils.encode(Constant.TOKEN, it.token)
+                MMKVUtils.encode(Constant.USER_MOBILE, phone)
+                delay(Constants.TIMEOUT_CLICK.toLong())
+            }
             _RegisterData.postValue(it)
             _showLoading.postValue(false)
         }, failure = {
@@ -81,13 +90,25 @@ class LoginViewModelV2 : AppViewModel() {
     }
 
     fun loginByPassword(
-        phone: String, pwd: String, pwds: String, type: Int, action: Int = HTTP_ACTION_LOGIN_PWD
+        phone: String,
+        sms: String?,
+        pwd: String,
+        pwds: String,
+        action: Int = HTTP_ACTION_LOGIN_PWD,
+        type: Int,
+        confirm: Int
     ) {
         _showLoading.postValue(true)
         request({
             delay(Constants.ONE_SECOND.toLong())
-            service.newLoginPwd(phone, pwd, pwds, type, action)
+            service.newLoginPwd(phone, sms, pwd, pwds, action, type, confirm)
         }, success = {
+            if (it.token.isEmpty()) {
+                ConfigApp.token = it.token
+                MMKVUtils.encode(Constant.TOKEN, it.token)
+                MMKVUtils.encode(Constant.USER_MOBILE, phone)
+                delay(Constants.TIMEOUT_CLICK.toLong())
+            }
             _RegisterData.postValue(it)
             _showLoading.postValue(false)
         }, failure = {
@@ -99,5 +120,6 @@ class LoginViewModelV2 : AppViewModel() {
     fun updateSuccess(state: Boolean = false) {
         if (_smsSuccess.value != state) _smsSuccess.value = state
     }
+
 
 }

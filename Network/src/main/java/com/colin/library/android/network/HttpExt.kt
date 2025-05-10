@@ -136,7 +136,12 @@ suspend fun <T> requestImpl(
             )
         )
 
-        response.getData() == null -> failure.invoke(NetworkResult.empty())
+        response.getData() == null -> failure.invoke(
+            NetworkResult.failure(
+                response.getCode(), response.getMsg()
+            )
+        )
+
         else -> success.invoke(response.getData()!!)
     }
 }

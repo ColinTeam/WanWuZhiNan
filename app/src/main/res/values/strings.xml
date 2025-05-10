@@ -25,6 +25,7 @@
     <string name="login_toast_short">请正确输入手机号码</string>
     <string name="login_toast_sms">请输入验证码</string>
     <string name="login_toast_pwd">请输入密码</string>
+    <string name="login_toast_same">两次输入密码不一致</string>
     <string name="login_toast_protocol">请阅读并同意《用户协议》《隐私协议》和《儿童隐私政策》</string>
     <!--主页-->
     <string name="home_detail">详情</string>
@@ -65,8 +66,8 @@
     <string name="setting_area_label">地区</string>
     <string name="setting_school_label">学校</string>
     <string name="setting_grade_label">年级</string>
-    <string name="setting_pwd_label">密码设置</string>
-    <string name="setting_pwd">密码设置</string>
+    <string name="setting_pwd_label">登录密码</string>
+    <string name="setting_pwd">设置/修改密码</string>
     <string name="setting_account">用户账号：%s</string>
 
     <string name="input_address_details_hint">请填写街道、楼牌号等</string>

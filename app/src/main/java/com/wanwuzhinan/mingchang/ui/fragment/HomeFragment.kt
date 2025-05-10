@@ -3,6 +3,7 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelStore
 import androidx.navigation.NavOptions
@@ -49,6 +50,12 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    activity?.finish()
+                }
+            })
         viewBinding.apply {
             GlideImgManager.loadGif(ivAnim, R.raw.diqu)
             ivOneBg.setOnTouchListener(MotionTouchLister())
@@ -60,7 +67,7 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
             tab2.setOnTouchListener(MotionTouchLister())
             ivTabBg.setOnTouchListener(MotionTouchLister())
             onClick(ivOneBg, ivTwoBg, ivThreeBg, ivFourBg, ivTabBg, tab0, tab1, tab2, tvSetting) {
-                viewModel.getConfigValue()?:return@onClick
+                viewModel.getConfigValue() ?: return@onClick
                 when (it) {
                     tvSetting -> {
                         activity?.let { SettingActivity.start(it) }

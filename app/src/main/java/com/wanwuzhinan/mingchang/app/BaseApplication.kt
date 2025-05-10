@@ -76,6 +76,19 @@ class BaseApplication : CommApplication() {
     }
 
     private fun initNetwork() {
+//        val gson =
+//            GsonBuilder().setLenient().registerTypeAdapter(Int::class.java, IntegerTypeAdapter())
+//                .registerTypeAdapter(String::class.java, StringTypeAdapter())
+//                .registerTypeAdapter(
+//                    RegisterData::class.java,
+//                    ObjectTypeAdapter(Gson(), RegisterData::class.java)
+//                )
+//                .registerTypeAdapter(
+//                    AppResponse::class.java,
+//                    ObjectTypeAdapter(Gson(), AppResponse::class.java)
+//                )
+//                .create()
+//        NetworkConfig.gson = gson
         NetworkConfig.addInterceptor(HeaderInterceptor())
 
     }

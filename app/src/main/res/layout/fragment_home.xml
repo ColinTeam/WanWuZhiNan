@@ -211,16 +211,16 @@
             app:layout_constraintTop_toBottomOf="@+id/tabHome"
             app:layout_constraintWidth_percent="0.3" />
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivOneMedia"
             style="@style/Style.Image.Avatar"
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginBottom="@dimen/margin_default"
+            android:background="@drawable/ic_home_player"
             android:clickable="false"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_home_player"
             app:layout_constraintBottom_toBottomOf="@id/ivOneBg"
             app:layout_constraintEnd_toEndOf="@id/ivOneBg"
             app:layout_constraintStart_toStartOf="@+id/ivAnim" />
@@ -267,8 +267,8 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivTwoMedia"
             style="@style/Style.Image.Avatar"
-            android:layout_width="@dimen/dp_50"
-            android:layout_height="@dimen/dp_50"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginEnd="@dimen/margin_default"
             android:background="@drawable/ic_home_player"

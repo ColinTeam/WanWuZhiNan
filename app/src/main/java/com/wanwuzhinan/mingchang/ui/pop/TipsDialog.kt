@@ -64,6 +64,17 @@ class TipsDialog private constructor(
         }
 
         @JvmStatic
+        fun newInstance(title: String, smg: String): TipsDialog {
+            val bundle = Bundle().apply {
+                putCharSequence(EXTRAS_TITLE, title)
+                putCharSequence(EXTRAS_TIPS, smg)
+            }
+            val fragment = TipsDialog(title, smg)
+            fragment.arguments = bundle
+            return fragment
+        }
+
+        @JvmStatic
         private fun getTips(type: Int): Pair<CharSequence, CharSequence> {
             return Pair(
                 ResourcesUtil.getString(R.string.dialog_tips_title),

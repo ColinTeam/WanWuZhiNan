@@ -59,10 +59,12 @@ interface ApiService {
     @POST("/api/UserLogin/index")
     suspend fun newLoginPwd(
         @Field("phone") phone: String,
+        @Field("phone_code") sms: String?,
         @Field("pwd") pwd: String,
         @Field("pwds") pwds: String,
         @Field("action") action: Int,
-        @Field("confirm") confirm: Int,
+        @Field("device_type") device_type: Int,
+        @Field("confirm") confirm: Int
     ): RegisterResponse
 
     //音频视频科目

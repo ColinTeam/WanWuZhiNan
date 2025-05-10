@@ -20,6 +20,7 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
+import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.ext.getConfigData
@@ -150,7 +151,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
                 }
 
             })
-
+            rbProtocolTips.setOnCheckedChangeListener { _, _ -> updateButton() }
         }
         viewModel.apply {
             configData.observe {
@@ -175,6 +176,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
                 }
             }
             registerData.observe {
+                Log.e("registerData:$it")
                 if (it.token.isNotEmpty()) {
                     ConfigApp.token = it.token
                     setData(Constant.USER_MOBILE, viewBinding.etPhone.text.toString().trim())
@@ -193,14 +195,14 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
 
     private fun updateButton() {
         viewBinding.apply {
-            val basic = rbProtocolTips.isChecked && etPhone.text.toString().trim().isNotEmpty()
+            val phoneNotEmpty = etPhone.text.toString().trim().isNotEmpty()
             if (tabIndex == TAB_SMS) {
-                val enable = etPhone.text.toString().trim().isNotEmpty()
-                tvSmsSend.isEnabled = enable
-                btLogin.isSelected = basic && enable
+                tvSmsSend.isEnabled = phoneNotEmpty
+                btLogin.isSelected = phoneNotEmpty && etSMS.text.toString().trim()
+                    .isNotEmpty() && rbProtocolTips.isChecked
             } else {
-                btLogin.isSelected = basic && etPassword.text.toString()
-                    .trim().length > PasswordFragment.PWD_LENGTH_MIN
+                btLogin.isSelected = phoneNotEmpty && etPassword.text.toString().trim()
+                    .isNotEmpty() && rbProtocolTips.isChecked
             }
         }
     }
@@ -243,7 +245,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
         if (tabIndex == TAB_SMS) {
             viewModel.loginBySms(phone, text, type)
         } else {
-            viewModel.loginByPassword(phone, text, text, type)
+            viewModel.loginByPassword(phone, null, text, text, HTTP_ACTION_LOGIN_SMS, type, 0)
         }
 
     }

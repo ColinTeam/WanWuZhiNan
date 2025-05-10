@@ -2,7 +2,10 @@ package com.wanwuzhinan.mingchang.ui
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsets
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -56,7 +59,9 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+        window.insetsController?.hide(WindowInsets.Type.statusBars());
         val navController = findNavController(R.id.nav_host)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         viewModel.apply {

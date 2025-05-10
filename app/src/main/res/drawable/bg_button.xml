@@ -3,25 +3,22 @@
     android:color="@color/bt_ripple">
     <item>
         <selector>
+            <item android:state_selected="false">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/edit_height" />
+                    <solid android:color="@color/bt_bg_disable" />
+                </shape>
+            </item>
+            <item android:state_enabled="false">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/edit_height" />
+                    <solid android:color="@color/bt_bg_disable" />
+                </shape>
+            </item>
             <item android:state_pressed="true">
                 <shape android:shape="rectangle">
                     <corners android:radius="@dimen/edit_height" />
                     <solid android:color="@color/bt_bg_pressed" />
-                </shape>
-            </item>
-            <item
-                android:state_checked="true"
-                android:state_selected="true">
-                <shape android:shape="rectangle">
-                    <corners android:radius="@dimen/edit_height" />
-                    <solid android:color="@color/bt_bg_checked" />
-                </shape>
-            </item>
-            <item
-                android:state_enabled="false">
-                <shape android:shape="rectangle">
-                    <corners android:radius="@dimen/edit_height" />
-                    <solid android:color="@color/bt_bg_disable" />
                 </shape>
             </item>
 

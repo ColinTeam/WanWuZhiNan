@@ -139,6 +139,9 @@
             android:layout_height="@dimen/dp_0"
             android:layout_marginHorizontal="@dimen/dp_35"
             android:layout_marginVertical="@dimen/margin_default"
+            android:descendantFocusability="beforeDescendants"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -147,8 +150,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/margin_default"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_default">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvNickLabel"
@@ -253,7 +256,7 @@
                     android:id="@+id/tvPassword"
                     style="@style/Style.Item.Text"
                     android:drawablePadding="@dimen/margin_default_half"
-                    android:hint="@string/setting_pwd_label"
+                    android:text="@string/setting_pwd"
                     app:drawableEndCompat="@drawable/ic_arrow_right_home"
                     app:drawableTint="@color/color_active"
                     app:layout_constraintBottom_toBottomOf="@+id/tvPasswordLabel"
