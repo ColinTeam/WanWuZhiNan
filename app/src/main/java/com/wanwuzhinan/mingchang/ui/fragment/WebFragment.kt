@@ -1,13 +1,11 @@
 package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
-import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.web.IWebViewCallback
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.toastError
@@ -38,25 +36,19 @@ class WebFragment() : AppFragment<FragmentWebBinding, HomeViewModel>() {
         content = bundle?.getString(Constant.WEB_CONTENT)
         Log.i("webType:$webType url:$url title:$title content:$content")
 
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    goBack()
-                }
-            })
-
         viewBinding.apply {
             this.tvTitle.text = title ?: ""
             this.web.bind(lifecycle)
             this.web.initWebClient(callback)
-            this.ivBack.onClick { goBack() }
         }
     }
 
-    private fun goBack() {
+    override fun onBackPressed(): Boolean {
         if (viewBinding.web.canGoBack()) {
             viewBinding.web.goBack()
-        } else findNavController().popBackStack()
+            return true
+        }
+        return super.onBackPressed()
     }
 
     val callback = object : IWebViewCallback {

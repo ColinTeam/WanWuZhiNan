@@ -46,15 +46,12 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
 
     override fun initView() {
         super.initView()
-
-
         mViewModel.getUserInfo()
         mViewModel.getAllRegion()
     }
 
     @SuppressLint("SetTextI18n")
     override fun initRequest() {
-
         mViewModel.getUserInfoLiveData.observeState(this) {
             onSuccess = { data, msg ->
                 mInfo = data!!

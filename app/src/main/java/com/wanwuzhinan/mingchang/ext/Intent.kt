@@ -10,6 +10,8 @@ import com.ssm.comm.ext.toastError
 import com.ssm.comm.ui.base.IWrapView
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.ui.HomeActivity
+import com.wanwuzhinan.mingchang.ui.HomeActivity.Companion.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.pad.MainIpadActivity
 import com.wanwuzhinan.mingchang.ui.pad.MainIpadWidthActivity
@@ -29,7 +31,6 @@ import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionVideoActivity
 import com.wanwuzhinan.mingchang.ui.phone.RankActivity
-import com.wanwuzhinan.mingchang.ui.phone.SettingActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoAnswerActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoListActivity
@@ -181,7 +182,8 @@ fun IWrapView.launchHonorListActivity() {
 
 //设置
 fun IWrapView.launchSettingActivity(index: Int) {
-    launchActivity(SettingActivity::class.java, Pair(ConfigApp.INTENT_TYPE, index))
+//    launchActivity(SettingActivity::class.java, Pair(ConfigApp.INTENT_TYPE, index))
+    launchActivity(HomeActivity::class.java, Pair(EXTRAS_POSITION, index))
 }
 
 //课程兑换

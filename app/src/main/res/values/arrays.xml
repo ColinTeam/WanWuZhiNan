@@ -4,4 +4,20 @@
         <item>@string/man</item>
         <item>@string/woman</item>
     </string-array>
+
+    <string-array name="setting_tab_title">
+        <item>个人信息</item>
+        <item>兑换记录</item>
+        <item>企业介绍</item>
+        <item>用户反馈</item>
+        <item>设置</item>
+    </string-array>
+
+    <array name="setting_tab_icon">
+        <item>@drawable/tab_setting_file_selector</item>
+        <item>@drawable/tab_exchage_selector</item>
+        <item>@drawable/tab_video_selector</item>
+        <item>@drawable/tab_report_selector</item>
+        <item>@drawable/tab_person_icon_selector</item>
+    </array>
 </resources>

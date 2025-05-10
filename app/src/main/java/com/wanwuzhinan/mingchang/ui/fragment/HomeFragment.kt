@@ -3,7 +3,6 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelStore
 import androidx.navigation.NavOptions
@@ -26,7 +25,6 @@ import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
 import com.wanwuzhinan.mingchang.ui.phone.RankActivity
-import com.wanwuzhinan.mingchang.ui.phone.SettingActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.PrivacyPop
 import com.wanwuzhinan.mingchang.utils.RATIO_16_9
@@ -50,12 +48,6 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    activity?.finish()
-                }
-            })
         viewBinding.apply {
             GlideImgManager.loadGif(ivAnim, R.raw.diqu)
             ivOneBg.setOnTouchListener(MotionTouchLister())
@@ -70,7 +62,10 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
                 viewModel.getConfigValue() ?: return@onClick
                 when (it) {
                     tvSetting -> {
-                        activity?.let { SettingActivity.start(it) }
+                        activity?.let {
+//                            SettingActivity.start(it)
+                            SettingTabFragment.navigate(this@HomeFragment)
+                        }
                     }
 
                     ivTabBg, tab0 -> {
@@ -137,7 +132,6 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
             }
         }
 
-        viewModel.getUserInfo()
     }
 
     fun updateConfigData(data: ConfigData) {
@@ -162,6 +156,7 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
     override fun onResume() {
         (requireActivity() as HomeActivity).changeADState(viewModel.getAdStateValue())
         super.onResume()
+        viewModel.getUserInfo()
         showPrivacyPop()
     }
 
@@ -192,6 +187,11 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
                 }
             }
         }
+    }
+
+    override fun onBackPressed(): Boolean {
+        activity?.finish()
+        return false
     }
 
     companion object {

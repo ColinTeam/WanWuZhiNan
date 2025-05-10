@@ -18,7 +18,8 @@
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
             android:layout_marginStart="@dimen/dp_50"
-            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginTop="@dimen/margin_default"
+            android:elevation="@dimen/dp_2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/ic_back_mian" />
@@ -32,7 +33,7 @@
             android:background="@drawable/shape_dd770a_20_5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.768"
+            app:layout_constraintHeight_percent="0.8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ivBack"
             app:layout_constraintWidth_percent="0.836" />

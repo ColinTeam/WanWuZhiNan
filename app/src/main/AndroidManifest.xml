@@ -244,6 +244,7 @@
 
         <activity
             android:name=".ui.HomeActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape">

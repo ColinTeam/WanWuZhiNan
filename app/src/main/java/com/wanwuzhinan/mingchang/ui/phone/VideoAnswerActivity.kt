@@ -18,8 +18,8 @@ import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.databinding.ActivityAnswerPracticeBinding
 import com.wanwuzhinan.mingchang.ext.invisible
-import com.wanwuzhinan.mingchang.ext.launchSettingActivity
 import com.wanwuzhinan.mingchang.ext.visible
+import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.AnswerExplainPop
 import com.wanwuzhinan.mingchang.ui.pop.AudioCardPop
 import com.wanwuzhinan.mingchang.ui.pop.CompassNumPop
@@ -123,7 +123,7 @@ class VideoAnswerActivity :
                 }
 
                 mDataBinding.tvReport -> {
-                    launchSettingActivity(2)
+                    HomeActivity.start(this@VideoAnswerActivity,R.id.action_toSettingTab, 3)
                 }
             }
         }

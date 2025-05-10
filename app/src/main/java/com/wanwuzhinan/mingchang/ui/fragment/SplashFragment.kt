@@ -1,11 +1,9 @@
 package com.wanwuzhinan.mingchang.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
-import com.colin.library.android.utils.ext.onClick
+import androidx.navigation.fragment.findNavController
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
@@ -27,23 +25,19 @@ import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
  */
 class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
     var playCompleted = false
-    override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (playCompleted) {
-                        HomeFragment.navigate(this@SplashFragment)
-                    }
-                }
-            })
-
-        viewBinding.tvJump.setOnTouchListener(MotionTouchLister())
-
-        onClick(viewBinding.tvJump) {
-            if (playCompleted) {
-                HomeFragment.navigate(this@SplashFragment)
-            }
+    override fun onBackPressed(): Boolean {
+        if (playCompleted) {
+            toHome()
+            return true
+        } else {
+            return false
         }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+
+        viewBinding.ivBack.setOnTouchListener(MotionTouchLister())
         val path = "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.raw.splash1
         PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_FULL)
@@ -53,7 +47,7 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
             .setVideoAllCallBack(object : GSYSampleCallBack() {
                 override fun onAutoComplete(url: String?, vararg objects: Any?) {
                     playCompleted = true
-                    HomeFragment.navigate(this@SplashFragment)
+                    toHome()
                 }
 
             }).build(viewBinding.video)
@@ -65,13 +59,10 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
 
     }
 
-    companion object {
-        @JvmStatic
-        fun navigate(activity: AppCompatActivity) {
-            val controller = activity.findNavController(R.id.nav_host)
-            val option =
-                NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, false).build()
-            controller.navigate(R.id.action_toSplash, null, option)
-        }
+    private fun toHome() {
+        val option = NavOptions.Builder().setPopUpTo(R.id.fragment_splash, inclusive = true)
+            .setLaunchSingleTop(true).setRestoreState(false).build()
+        findNavController().navigate(R.id.fragment_home, null, option)
     }
+
 }

@@ -187,9 +187,14 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModelV2>(
 
     private fun startCountDown() {
         countDown(60, onNext = {
-            viewBinding.tvSmsSend.text = getString(R.string.login_sms_countdown, it)
+            if (isAdded && !isDetached && isVisible) {
+                viewBinding.tvSmsSend.text = getString(R.string.login_sms_countdown, it)
+            }
+
         }, onFinish = {
-            viewModel.updateSuccess(false)
+            if (isAdded && !isDetached && isVisible) {
+                viewModel.updateSuccess(false)
+            }
         })
     }
 

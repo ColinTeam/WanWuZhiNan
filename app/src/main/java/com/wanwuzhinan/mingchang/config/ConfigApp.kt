@@ -1,5 +1,6 @@
 package com.wanwuzhinan.mingchang.config
 
+import com.colin.library.android.utils.Log
 import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 
@@ -63,5 +64,8 @@ object ConfigApp {
             }
             return field
         }
-        @Synchronized set
+        @Synchronized set(value: String) {
+            field = value
+            Log.e("save token Synchronized")
+        }
 }

@@ -12,40 +12,42 @@
         android:layout_height="match_parent"
         android:background="@mipmap/bg_login">
 
-        <com.wanwuzhinan.mingchang.view.DefaultToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:dt_back_color="#000000"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_50"
+            android:elevation="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_back_mian" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/re_list"
+            android:id="@+id/list"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_33"
-            android:layout_marginStart="@dimen/dp_50"
-            android:layout_marginTop="@dimen/dp_40"
-            android:layout_marginEnd="@dimen/dp_50"
+            android:layout_marginHorizontal="@dimen/margin_default"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/toolbar"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/pager"
+            app:layout_constraintEnd_toEndOf="@+id/pager"
+            app:layout_constraintStart_toStartOf="@+id/pager"
+            app:layout_constraintTop_toTopOf="@+id/ivBack"
             tools:itemCount="3"
             tools:listitem="@layout/item_setting" />
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
+            android:id="@+id/pager"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_0"
-            android:layout_marginStart="@dimen/dp_25"
-            android:layout_marginEnd="@dimen/dp_25"
+            android:layout_marginStart="@dimen/dp_30"
             android:background="@drawable/shape_fffef4_top_20"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/toolbar"
-            app:layout_constraintTop_toBottomOf="@+id/re_list" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/list"
+            app:layout_constraintWidth_percent="0.82" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

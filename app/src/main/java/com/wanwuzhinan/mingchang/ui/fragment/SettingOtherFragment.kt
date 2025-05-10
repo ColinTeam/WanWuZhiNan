@@ -2,7 +2,6 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.motion.MotionTouchLister
@@ -25,30 +24,22 @@ class SettingOtherFragment : AppFragment<FragmentSettingOtherBinding, HomeViewMo
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().popBackStack()
-                }
-            })
 
         viewBinding.apply {
             ivBack.setOnTouchListener(MotionTouchLister())
             viewUserBg.setOnTouchListener(MotionTouchLister())
             viewPrivacyBg.setOnTouchListener(MotionTouchLister())
             viewPwdBg.setOnTouchListener(MotionTouchLister())
+            viewChildBg.setOnTouchListener(MotionTouchLister())
             btLogout.setOnTouchListener(MotionTouchLister())
-            onClick(ivBack, viewUserBg, viewPrivacyBg, viewChildBg, viewPwdBg, btLogout) {
+            onClick(viewUserBg, viewPrivacyBg, viewChildBg, viewPwdBg, btLogout) {
                 when (it) {
-                    ivBack -> findNavController().popBackStack()
                     viewUserBg -> {
                         WebFragment.navigate(
                             this@SettingOtherFragment,
                             url = ConfigApp.USER_AGREEMENT,
                             title = getString(R.string.login_protocol_link_1)
                         )
-
-
                     }
 
                     viewPrivacyBg -> {
@@ -87,6 +78,6 @@ class SettingOtherFragment : AppFragment<FragmentSettingOtherBinding, HomeViewMo
 
     fun logout() {
         clearAllData()
-        HomeFragment.navigate(this)
+        LoginFragment.navigate(this)
     }
 }

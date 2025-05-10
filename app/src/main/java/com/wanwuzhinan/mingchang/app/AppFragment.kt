@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
+import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.utils.helper.ThreadHelper
 import com.colin.library.android.widget.base.BaseFragment
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.receiver.ScreenChangedReceiver
 import com.wanwuzhinan.mingchang.ui.pop.LoadingDialog
 import com.wanwuzhinan.mingchang.utils.navigate
@@ -37,11 +41,27 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
         return viewBinding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewBinding.root.findViewById<View>(R.id.ivBack)?.onClick {
+            onBackPressed()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    isEnabled = onBackPressed()
+                }
+            })
+    }
+
     override fun onStart() {
         super.onStart()
         viewModel.apply {
             showError.observe {
-                Log.e("error state:$it")
+                if ((it.code == 2 || it.code == 4) && !ConfigApp.token.isEmpty()) {
+                    Log.e("$it ${ConfigApp.token}")
+                    return@observe
+                }
                 ToastUtil.show(it.msg)
                 if (it.code == 2 || it.code == 4) {
                     navigate(R.id.action_toLogin)
@@ -62,6 +82,11 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
 
     override fun screenChanged(action: String) {
         Log.i(TAG, "screenChanged:$action")
+    }
+
+    open fun onBackPressed(): Boolean {
+        Log.e("onBackPressed-->>$TAG")
+        return findNavController().popBackStack()
     }
 
     fun showLoading(show: Boolean = false) {

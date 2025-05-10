@@ -2,9 +2,10 @@ package com.wanwuzhinan.mingchang.ui
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.view.WindowInsets
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.navigation.NavOptions
@@ -24,7 +25,7 @@ import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ui.fragment.LoginFragment
-import com.wanwuzhinan.mingchang.ui.fragment.SplashFragment
+import com.wanwuzhinan.mingchang.ui.fragment.SettingTabFragment
 import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
@@ -37,11 +38,13 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  */
 class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     companion object {
+        const val EXTRAS_POSITION = "position"
+
         @JvmStatic
-        fun start(context: Context, actionId: Int = Constants.INVALID) {
+        fun start(context: Context, actionId: Int = Constants.INVALID, position: Int = 0) {
             val starter = Intent(
                 context, HomeActivity::class.java
-            ).putExtra(Constant.EXTRAS_ACTION_ID, actionId)
+            ).putExtra(Constant.EXTRAS_ACTION_ID, actionId).putExtra(EXTRAS_POSITION, position)
             context.startActivity(starter)
         }
     }
@@ -54,14 +57,22 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         intent?.let {
-            toAction(it.getIntExtra(Constant.EXTRAS_ACTION_ID, Constants.INVALID))
+            val position = it.getIntExtra(EXTRAS_POSITION, 0)
+            toAction(it.getIntExtra(Constant.EXTRAS_ACTION_ID, Constants.INVALID), position)
         }
     }
 
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        window.insetsController?.hide(WindowInsets.Type.statusBars());
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (!onSupportNavigateUp()) {
+                    finish()
+                }
+            }
+
+        })
         val navController = findNavController(R.id.nav_host)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         viewModel.apply {
@@ -118,7 +129,8 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         if (bundle == null) {
             toAction(R.id.action_toSplash)
         } else {
-            toAction(bundle.getInt(Constant.EXTRAS_ACTION_ID, Constants.INVALID))
+            val position = bundle.getInt(EXTRAS_POSITION, 0)
+            toAction(bundle.getInt(Constant.EXTRAS_ACTION_ID, Constants.INVALID), position)
         }
     }
 
@@ -149,7 +161,7 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         }
     }
 
-    private fun toAction(action: Int) {
+    private fun toAction(action: Int, extra: Int = 0) {
         if (action == Constants.INVALID) {
             return
         }
@@ -157,10 +169,15 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
             LoginFragment.navigate(this)
             return
         }
-        if (action == R.id.action_toSplash) {
-            SplashFragment.navigate(this)
+        if (action == R.id.action_toSettingTab) {
+            SettingTabFragment.navigate(this, extra)
             return
         }
         findNavController(R.id.nav_host).navigate(action)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // 自定义处理逻辑，避免 Activity 被重建
     }
 }

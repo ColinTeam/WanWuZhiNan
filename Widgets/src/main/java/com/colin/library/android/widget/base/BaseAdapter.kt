@@ -21,7 +21,7 @@ import java.util.Collections
 
 
 abstract class BaseAdapter<ITEM>(
-    private val items: ArrayList<ITEM> = arrayListOf(), @LayoutRes private val layoutRes: Int
+    val items: ArrayList<ITEM> = arrayListOf(), @LayoutRes private val layoutRes: Int
 ) : RecyclerView.Adapter<BaseViewHolder>() {
 
     constructor(@LayoutRes layoutRes: Int) : this(arrayListOf(), layoutRes)

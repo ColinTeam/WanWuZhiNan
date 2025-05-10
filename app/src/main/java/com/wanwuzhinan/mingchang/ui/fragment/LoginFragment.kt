@@ -3,10 +3,10 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -20,13 +20,13 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
-import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
+import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.isPhone
+import com.wanwuzhinan.mingchang.ui.HomeActivity.Companion.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
-import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.LoginViewModelV2
 
 /**
@@ -41,23 +41,21 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
         const val TAB_SMS = 0
         const val TAB_PWD = 1
         const val PHONE_LENGTH = 11
-        const val DEVICE_PHONE = "1"
-        const val DEVICE_OTHER = "2"
 
         @JvmStatic
         fun navigate(fragment: Fragment) {
-            val controller = fragment.findNavController()
-            val option =
-                NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, false)
-                    .setLaunchSingleTop(true).build()
-            controller.navigate(R.id.action_toLogin, null, option)
+            navigate(fragment.findNavController())
         }
 
         @JvmStatic
         fun navigate(activity: AppCompatActivity) {
-            val controller = activity.findNavController(R.id.nav_host)
+            navigate(activity.findNavController(R.id.nav_host))
+        }
+
+        @JvmStatic
+        fun navigate(controller: NavController) {
             val option =
-                NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, false)
+                NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, true)
                     .setLaunchSingleTop(true).build()
             controller.navigate(R.id.action_toLogin, null, option)
         }
@@ -66,12 +64,6 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
     private var tabIndex = TAB_SMS
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    activity?.finish()
-                }
-            })
         viewBinding.apply {
             etPhone.setText(MMKVUtils.decodeString(Constant.USER_MOBILE).toString())
             etPhone.addTextChangedListener(textWatcher)
@@ -134,13 +126,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             tabLogin.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     val isSms = tab?.text == getString(R.string.login_by_sms)
-                    tabIndex = if (isSms) TAB_SMS else TAB_PWD
-                    tvSmsTips.isVisible = isSms
-                    etSMS.isVisible = isSms
-                    tvSmsSend.isVisible = isSms
-                    tvPwdTips.isVisible = !isSms
-                    etPassword.isVisible = !isSms
-                    updateButton()
+                    updateTab(if (isSms) TAB_SMS else TAB_PWD)
                 }
 
 
@@ -177,20 +163,44 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             }
             registerData.observe {
                 Log.e("registerData:$it")
-                if (it.token.isNotEmpty()) {
-                    ConfigApp.token = it.token
-                    setData(Constant.USER_MOBILE, viewBinding.etPhone.text.toString().trim())
-                    setData(Constant.TOKEN, it.token)
-                    HomeFragment.navigate(this@LoginFragment)
-                }
+                ConfigApp.token = it.token
+                MMKVUtils.encode(Constant.TOKEN, it.token)
+                MMKVUtils.encode(
+                    Constant.USER_MOBILE, viewBinding.etPhone.text.toString().toString()
+                )
+                HomeFragment.navigate(this@LoginFragment)
             }
         }
-        updateButton()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(EXTRAS_POSITION, tabIndex)
+    }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        viewModel.getConfig()
+        if (savedInstanceState != null) {
+            updateTab(savedInstanceState.getInt(EXTRAS_POSITION, tabIndex))
+        } else {
+            updateTab(tabIndex)
+            viewModel.getConfig()
+        }
+    }
+
+    override fun onBackPressed(): Boolean {
+        return false
+    }
+
+    private fun updateTab(index: Int) {
+        this.tabIndex = index
+        val isSms = index == TAB_SMS
+        viewBinding.tvSmsTips.isVisible = isSms
+        viewBinding.etSMS.isVisible = isSms
+        viewBinding.tvSmsSend.isVisible = isSms
+        viewBinding.tvPwdTips.isVisible = !isSms
+        viewBinding.etPassword.isVisible = !isSms
+        viewBinding.tabLogin.getTabAt(tabIndex)?.select()
+        updateButton()
     }
 
     private fun updateButton() {
@@ -245,7 +255,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
         if (tabIndex == TAB_SMS) {
             viewModel.loginBySms(phone, text, type)
         } else {
-            viewModel.loginByPassword(phone, null, text, text, HTTP_ACTION_LOGIN_SMS, type, 0)
+            viewModel.loginByPassword(phone, null, text, text, HTTP_ACTION_LOGIN_PWD, type, 0)
         }
 
     }
@@ -266,9 +276,15 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
 
     private fun startCountDown() {
         countDown(60, onNext = {
-            viewBinding.tvSmsSend.text = getString(R.string.login_sms_countdown, it)
+            if (isAdded && !isDetached && isVisible) {
+                viewBinding.tvSmsSend.text = getString(R.string.login_sms_countdown, it)
+            }
         }, onFinish = {
-            viewModel.updateSuccess(false)
+            if (isAdded && !isDetached && isVisible) {
+                viewModel.updateSuccess(false)
+            }
         })
     }
+
+
 }
