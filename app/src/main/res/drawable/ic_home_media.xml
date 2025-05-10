@@ -1,0 +1,19 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 底层：一个圆形背景 -->
+    <item
+        android:width="@dimen/dp_50"
+        android:height="@dimen/dp_50">
+        <shape android:shape="oval">
+            <solid android:color="#22ffffff" />
+        </shape>
+    </item>
+
+    <!-- 上层：一张圆形图片 -->
+    <item
+        android:width="@dimen/dp_50"
+        android:height="@dimen/dp_50">
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/ic_player_arrow" />
+    </item>
+</layer-list>

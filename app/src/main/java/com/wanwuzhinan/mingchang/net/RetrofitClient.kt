@@ -5,6 +5,7 @@ import com.comm.net_work.base.BaseRetrofitBuilder
 import com.comm.net_work.interceptor.HttpCommonInterceptor
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.getCurrentVersionName
+import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.utils.getToken
 import okhttp3.OkHttpClient
 
@@ -29,8 +30,9 @@ object RetrofitClient : BaseRetrofitBuilder() {
     }
 
     override fun handleOkHttpCommBuilder(builder: HttpCommonInterceptor.Builder) {
-        if (getToken().isNotEmpty()) {
-            builder.addHeaderParams(Constant.TOKEN, getToken())
+        val token = ConfigApp.token
+        if (token.isNotEmpty()) {
+            builder.addHeaderParams(Constant.TOKEN, token)
         }
         builder.addHeaderParams("version", getCurrentVersionName())
         Log.e("okhttp_request_token", getToken())

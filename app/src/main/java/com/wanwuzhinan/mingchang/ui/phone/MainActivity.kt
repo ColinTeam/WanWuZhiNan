@@ -6,7 +6,6 @@ import com.bumptech.glide.Glide
 import com.colin.library.android.image.glide.GlideImgManager
 import com.google.gson.Gson
 import com.ssm.comm.config.Constant
-import com.ssm.comm.event.MessageEvent
 import com.ssm.comm.ext.getCurrentVersionCode
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.registerBus
@@ -17,7 +16,6 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.ActivityMainBinding
 import com.wanwuzhinan.mingchang.ext.getConfigData
-import com.wanwuzhinan.mingchang.ext.jumpLoginActivity
 import com.wanwuzhinan.mingchang.ext.launchAudioHomeActivity
 import com.wanwuzhinan.mingchang.ext.launchExchangeActivity
 import com.wanwuzhinan.mingchang.ext.launchQuestionListActivity
@@ -29,8 +27,6 @@ import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
 import com.wanwuzhinan.mingchang.utils.getToken
 import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.UserViewModel
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : BaseActivity<ActivityMainBinding, UserViewModel>(UserViewModel()) {
 
@@ -115,19 +111,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, UserViewModel>(UserViewMo
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: MessageEvent) {
-        Log.e("TAG", "onMessageEvent: "+event.type )
-        if (event.type == MessageEvent.LOGIN_EXPIRED) {
-            if(mLogin==0){
-                mLogin=1
-                jumpLoginActivity(true)
-            }
-        }
-        if (event.type == MessageEvent.UPDATE_USERINFO){
-            mViewModel.getUserInfo()
-        }
-    }
+
 
     override fun onDestroy() {
         unregisterBus(this)

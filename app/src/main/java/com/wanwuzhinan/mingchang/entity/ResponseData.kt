@@ -13,6 +13,13 @@ import kotlinx.parcelize.Parcelize
  *
  * Des   :ResponseData
  */
+//1验证码登录，2密码登录，3找回密码 默认1
+const val HTTP_ACTION_LOGIN_SMS = 1
+const val HTTP_ACTION_LOGIN_PWD = 2
+const val HTTP_ACTION_LOGIN_FIND_PWD = 3
+const val HTTP_LOGIN_DEVICE_PHONE = 1
+const val HTTP_LOGIN_DEVICE_TABLET = 2
+
 class SmsCodeResponse() : AppResponse<String>()
 class RegisterResponse() : AppResponse<RegisterData>()
 class UserInfoResponse() : AppResponse<UserInfo>()

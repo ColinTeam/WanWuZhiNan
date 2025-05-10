@@ -3,7 +3,7 @@ package com.wanwuzhinan.mingchang.net
 import com.colin.library.android.utils.encrypt.EncryptUtil
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.getCurrentVersionName
-import com.wanwuzhinan.mingchang.utils.getToken
+import com.wanwuzhinan.mingchang.config.ConfigApp
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -19,10 +19,10 @@ class HeaderInterceptor : Interceptor {
         val request = chain.request()
         val builder = request.newBuilder()
         builder.method(request.method, request.body)
-        val token = getToken()
+        val token = ConfigApp.token
         if (token.isNotEmpty()) {
             val time = System.currentTimeMillis() / 1000
-            builder.header(Constant.TOKEN,token)
+            builder.header(Constant.TOKEN, token)
             builder.header("token_time", "$time")
             builder.header("token_verify", EncryptUtil.md5("$token${time}wwzn"))
         }

@@ -12,26 +12,30 @@ import com.wanwuzhinan.mingchang.utils.setData
 import kotlin.system.exitProcess
 
 //隐私政策弹窗
-class PrivacyPop(var context: Activity):BasePop<PopPrivacyBinding>(context){
+class PrivacyPop(var context: Activity) : BasePop<PopPrivacyBinding>(context) {
 
     override fun initClick() {
-        isFocusable=false
-        onClick(mDataBinding.tvRefuse){
+        isFocusable = false
+        onClick(mDataBinding.tvRefuse) {
             dismiss()
             AppActivityManager.getInstance().finishAllActivities()
             exitProcess(0)
         }
     }
 
-    fun showPrivacyPop(onSure: (type:Int) -> Unit) {
+    fun showPrivacyPop(onSure: (type: Int) -> Unit) {
         showHeightPop()
-        setOnClickNoRepeat(mDataBinding.tvUserAgreement,mDataBinding.tvPrivacyAgreement,mDataBinding.tvAgree){
+        setOnClickNoRepeat(
+            mDataBinding.tvUserAgreement, mDataBinding.tvPrivacyAgreement, mDataBinding.tvAgree
+        ) {
             when (it) {
                 mDataBinding.tvUserAgreement -> {
+                    dismiss()
                     onSure(1)
                 }
 
                 mDataBinding.tvPrivacyAgreement -> {
+                    dismiss()
                     onSure(2)
                 }
 

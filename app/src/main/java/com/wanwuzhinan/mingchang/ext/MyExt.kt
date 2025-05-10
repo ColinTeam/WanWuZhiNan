@@ -3,8 +3,6 @@ package com.wanwuzhinan.mingchang.ext
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.os.Handler
-import android.os.Looper
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
@@ -21,23 +19,19 @@ import com.kongzue.dialogx.dialogs.CustomDialog
 import com.kongzue.dialogx.interfaces.OnBindView
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.toastError
-import com.ssm.comm.global.AppActivityManager
 import com.ssm.comm.ui.base.IWrapView
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.CodeData
 import com.wanwuzhinan.mingchang.data.TextDescriptionData
 import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.entity.UserInfo
-import com.wanwuzhinan.mingchang.net.RetrofitClient
 import com.wanwuzhinan.mingchang.net.repository.LoginRepository
 import com.wanwuzhinan.mingchang.net.repository.UserRepository
 import com.wanwuzhinan.mingchang.thread.EaseThreadManager
-import com.wanwuzhinan.mingchang.ui.phone.LoginActivity
 import com.wanwuzhinan.mingchang.ui.pop.SurePop
 import com.wanwuzhinan.mingchang.ui.publics.WebGoodsViewActivity
 import com.wanwuzhinan.mingchang.ui.publics.WebViewActivity
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
-import com.wanwuzhinan.mingchang.utils.clearAllData
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Hashtable
@@ -171,19 +165,6 @@ fun IWrapView.getTextDescription(
     }, onFailure = {
         toastError(it)
     })
-}
-
-fun IWrapView.jumpLoginActivity(isClear: Boolean = true) {
-    if (isClear) {
-        clearAllData()
-        RetrofitClient.addOkHttpCommBuilder(Constant.TOKEN, "")
-    }
-    val mH = Handler(Looper.getMainLooper())
-    mH.postDelayed({
-        // 进行内存优化，销毁掉所有的界面
-        launchActivity(LoginActivity::class.java)
-        AppActivityManager.getInstance().finishAllActivities()
-    }, 300)
 }
 
 

@@ -24,8 +24,7 @@ class SettingAdapter : BaseQuickAdapter<SettingData, QuickViewHolder>() {
             val color = if (it.select) R.color.white else R.color.black
             holder.setTextColor(R.id.tv_title, ResourcesUtil.getColor(context, color))
             holder.setBackgroundResource(
-                R.id.lin,
-                if (it.select) R.drawable.shape_ff6e29_top_10 else R.drawable.shape_ffddb9_top_10
+                R.id.lin, if (it.select) R.drawable.shape_ff6e29_top_10 else R.drawable.shape_ffddb9_top_10
             )
         }
     }

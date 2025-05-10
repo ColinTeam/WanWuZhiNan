@@ -6,8 +6,6 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.navOptions
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.colin.library.android.utils.Constants
@@ -23,6 +21,7 @@ import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ui.fragment.LoginFragment
+import com.wanwuzhinan.mingchang.ui.fragment.SplashFragment
 import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
@@ -51,20 +50,11 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
      */
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        Log.e("onNewIntent action_toLogin:$intent")
         intent?.let {
-            val action = it.getIntExtra(Constant.EXTRAS_ACTION_ID, Constants.INVALID)
-            if (action == Constants.INVALID) {
-                return
-            }
-            if (action == R.id.action_toLogin) {
-                LoginFragment.navigate(this@HomeActivity)
-                return
-            }
-            findNavController(R.id.nav_host).navigate(action)
+            toAction(it.getIntExtra(Constant.EXTRAS_ACTION_ID, Constants.INVALID))
         }
-
     }
+
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         val navController = findNavController(R.id.nav_host)
@@ -120,21 +110,10 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.getConfig()
-        val action =
-            bundle?.getInt(Constant.EXTRAS_ACTION_ID, Constants.INVALID) ?: Constants.INVALID
-        Log.e("initData action :$action")
-        Log.e("initData action_toLogin :${R.id.action_toLogin}")
-        Log.e("initData action_toSplash :${R.id.action_toSplash}")
-        //存在第一次启动，可能需要跳转到Splash 界面
-        if (action == Constants.INVALID) {
-            val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
-            val controller = navHost.navController
-            controller.navigate(R.id.action_toSplash, null, navOptions {
-                launchSingleTop = true
-                restoreState = true
-            })
-        } else if (action == R.id.action_toLogin) {
-            LoginFragment.navigate(this)
+        if (bundle == null) {
+            toAction(R.id.action_toSplash)
+        } else {
+            toAction(bundle.getInt(Constant.EXTRAS_ACTION_ID, Constants.INVALID))
         }
     }
 
@@ -165,4 +144,18 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         }
     }
 
+    private fun toAction(action: Int) {
+        if (action == Constants.INVALID) {
+            return
+        }
+        if (action == R.id.action_toLogin) {
+            LoginFragment.navigate(this)
+            return
+        }
+        if (action == R.id.action_toSplash) {
+            SplashFragment.navigate(this)
+            return
+        }
+        findNavController(R.id.nav_host).navigate(action)
+    }
 }

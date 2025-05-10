@@ -41,6 +41,11 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_audio" />
     <fragment
+        android:id="@+id/fragment_setting_tab"
+        android:name="com.wanwuzhinan.mingchang.ui.fragment.SettingTabFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_setting_tab" />
+    <fragment
         android:id="@+id/fragment_web"
         android:name="com.wanwuzhinan.mingchang.ui.fragment.WebFragment"
         android:label="@string/app_name"
@@ -83,4 +88,7 @@
     <action
         android:id="@+id/action_toVideo"
         app:destination="@+id/fragment_video" />
+    <action
+        android:id="@+id/action_toSettingTab"
+        app:destination="@+id/fragment_setting_tab" />
 </navigation>

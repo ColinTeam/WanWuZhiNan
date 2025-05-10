@@ -137,7 +137,6 @@
             android:layout_width="168dp"
             android:layout_height="40dp"/>
     </RelativeLayout>
-x
     <View
         android:id="@+id/view_divide_two"
         android:layout_below="@id/subtitle_setting_outline_color_rv"

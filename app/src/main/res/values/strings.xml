@@ -56,6 +56,19 @@
     <string name="choose_title_area">选择地区</string>
     <string name="man">男</string>
     <string name="woman">女</string>
+
+    <string name="setting_sex">性别</string>
+    <string name="setting_man">男生</string>
+    <string name="setting_women">女生</string>
+    <string name="setting_nick_label">昵称</string>
+    <string name="setting_nick">取一个独一无二的昵称吧</string>
+    <string name="setting_area_label">地区</string>
+    <string name="setting_school_label">学校</string>
+    <string name="setting_grade_label">年级</string>
+    <string name="setting_pwd_label">密码设置</string>
+    <string name="setting_pwd">密码设置</string>
+    <string name="setting_account">用户账号：%s</string>
+
     <string name="input_address_details_hint">请填写街道、楼牌号等</string>
     <string name="input_consignee_hint">请输入收货人姓名</string>
     <string name="input_consignee_phone_hint">请输入收货人手机号</string>

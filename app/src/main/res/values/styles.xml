@@ -9,6 +9,11 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="Text.Label" parent="Text">
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textColor">@color/color_active</item>
+    </style>
+
     <style name="Text.Tab" parent="Text">
         <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:textColor">@color/text_color_default</item>
@@ -137,6 +142,45 @@
         <item name="android:background">@drawable/shape_2c2d66_22</item>
         <item name="android:imeOptions">flagNoExtractUi</item>
         <item name="android:maxLines">1</item>
+        <item name="android:paddingHorizontal">@dimen/margin_default</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">@style/Text.Edit</item>
+    </style>
+
+    <style name="Style.Item" parent="Style">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">@dimen/item_height</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+    </style>
+
+    <style name="Style.Item.Label" parent="Style.Item">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">@dimen/item_height</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">@style/Text.Label</item>
+    </style>
+
+    <style name="Style.Item.Edit" parent="Style.Item">
+        <item name="android:gravity">end|center_vertical</item>
+        <item name="android:background">@drawable/shape_sex_n</item>
+        <item name="android:textColor">@color/text_color_default</item>
+        <item name="android:textColorHint">@color/text_color_hint</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
+        <item name="android:imeOptions">flagNoExtractUi</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingHorizontal">@dimen/margin_default</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">@style/Text.Edit</item>
+    </style>
+
+    <style name="Style.Item.Text" parent="Style.Item">
+        <item name="android:gravity">end|center_vertical</item>
+        <item name="android:textColor">@color/text_color_default</item>
+        <item name="android:textColorHint">@color/text_color_hint</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
+        <item name="android:background">@drawable/shape_sex_n</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:paddingHorizontal">@dimen/margin_default</item>
         <item name="android:singleLine">true</item>
         <item name="android:textAppearance">@style/Text.Edit</item>

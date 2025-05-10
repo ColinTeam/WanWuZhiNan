@@ -2,10 +2,10 @@ package com.wanwuzhinan.mingchang.view
 
 import android.content.Context
 import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatImageView
-import com.colin.library.android.utils.ResourcesUtil
 import com.wanwuzhinan.mingchang.R
 
 
@@ -23,9 +23,7 @@ class ClickImageView : AppCompatImageView {
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
+        context, attrs, defStyleAttr
     ) {
         initAttrs(context, attrs)
     }
@@ -61,10 +59,10 @@ class ClickImageView : AppCompatImageView {
         if (drawable == null) {
             drawable = background
         }
-        drawable?.setColorFilter(
-            ResourcesUtil.getColor(context, R.color.color_cccccc),
-            PorterDuff.Mode.MULTIPLY
-        )
+        drawable?.let {
+            val color = context.getColor(R.color.color_cccccc)
+            it.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
+        }
     }
 
     /**

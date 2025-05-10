@@ -15,12 +15,6 @@ import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.util.setOnDebouncedItemClick
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.utils.countDown
-import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.SubjectListData
-import com.wanwuzhinan.mingchang.databinding.ActivityAudioHomeBinding
-import com.wanwuzhinan.mingchang.utils.SkeletonUtils
-import com.wanwuzhinan.mingchang.vm.UserViewModel
 import com.comm.net_work.sign.AESDecryptor
 import com.ssm.comm.config.Constant
 import com.ssm.comm.event.MessageEvent
@@ -32,20 +26,25 @@ import com.ssm.comm.ext.post
 import com.ssm.comm.ext.setOnClickNoRepeat
 import com.ssm.comm.global.AppActivityManager
 import com.ssm.comm.ui.base.BaseActivity
+import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.AudioHomeCoverAdapter
 import com.wanwuzhinan.mingchang.adapter.AudioHomeListAdapter
 import com.wanwuzhinan.mingchang.adapter.CatePhoneAdapter
+import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.data.UploadProgressEvent
+import com.wanwuzhinan.mingchang.databinding.ActivityAudioHomeBinding
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.ext.launchAudioPlayInfoActivity
 import com.wanwuzhinan.mingchang.ext.launchExchangeActivity
 import com.wanwuzhinan.mingchang.ext.showCardImage
-import com.wanwuzhinan.mingchang.ui.pop.AudioCardPop
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeCoursePop
 import com.wanwuzhinan.mingchang.utils.AnimationUtils
+import com.wanwuzhinan.mingchang.utils.SkeletonUtils
 import com.wanwuzhinan.mingchang.utils.getAudioData
 import com.wanwuzhinan.mingchang.utils.setData
+import com.wanwuzhinan.mingchang.vm.UserViewModel
 import java.text.SimpleDateFormat
 
 //音频主页
@@ -362,7 +361,7 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, UserViewModel>(
             ) {
             when (it) {
                 mDataBinding.rivImageBig, mDataBinding.clBig -> {
-                    if (mPlayData!!.info.content != null) {
+                    if (!mPlayData?.info?.content.isNullOrEmpty()) {
                         launchAudioPlayInfoActivity(mPlayData!!.info.content, mPlayData!!.info.name)
                     }
                 }

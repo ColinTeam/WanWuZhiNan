@@ -8,22 +8,17 @@ import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.player.PlayerFactory
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType
 import com.ssm.comm.config.Constant
-import com.ssm.comm.ext.isEmpty
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ui.base.BaseActivity
 import com.ssm.comm.utils.NavigationBarUtil
 import com.ssm.comm.utils.StatusBarUtils
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.app.BaseApplication
 import com.wanwuzhinan.mingchang.databinding.ActivityViewSplashBinding
-import com.wanwuzhinan.mingchang.ext.launchLoginActivity
-import com.wanwuzhinan.mingchang.ext.launchMainActivity
 import com.wanwuzhinan.mingchang.ext.performLaunchPrivacy
 import com.wanwuzhinan.mingchang.ext.performLaunchUserAgreement
 import com.wanwuzhinan.mingchang.net.RetrofitClient
 import com.wanwuzhinan.mingchang.ui.pop.PrivacyPop
 import com.wanwuzhinan.mingchang.utils.clearAllData
-import com.wanwuzhinan.mingchang.utils.getToken
 import com.wanwuzhinan.mingchang.utils.isShowPrivacy
 import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.UserViewModel
@@ -111,7 +106,7 @@ class SplashActivity : BaseActivity<ActivityViewSplashBinding, UserViewModel>(Us
 
     private fun jumpActivity() {
 
-        enterApp()
+//        enterApp()
 //        if (getConfigData().android_code.toInt() > getCurrentVersionCode()) {
 //            NetErrorPop(mActivity).showUpdate(getConfigData().android_update,onSure = {
 //                enterApp()
@@ -123,15 +118,7 @@ class SplashActivity : BaseActivity<ActivityViewSplashBinding, UserViewModel>(Us
 //        }
     }
 
-    private fun enterApp(){
-        (application as BaseApplication).enterInApp()
-        if (!isEmpty(getToken())) {
-            launchMainActivity()
-        } else {
-            launchLoginActivity()
-        }
-        this@SplashActivity.finish()
-    }
+
 
     override fun getLayoutId(): Int {
         return R.layout.activity_view_splash

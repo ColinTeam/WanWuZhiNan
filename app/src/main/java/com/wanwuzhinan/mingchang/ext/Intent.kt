@@ -23,7 +23,6 @@ import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeCourseActivity
 import com.wanwuzhinan.mingchang.ui.phone.HonorHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.HonorListActivity
-import com.wanwuzhinan.mingchang.ui.phone.LoginActivity
 import com.wanwuzhinan.mingchang.ui.phone.MainActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
@@ -43,20 +42,16 @@ fun isPhone(): Boolean {
     return !(config.smallestScreenWidthDp >= 600)
 }
 
-//登录页
-fun IWrapView.launchLoginActivity() {
-    launchActivity(LoginActivity::class.java)
-}
 
 //首页
 fun IWrapView.launchMainActivity() {
-    val dd = getScreenWidth2()/ (getScreenHeight2()*1.0f)
-    Log.e("TAG", "getScreenWidth2()/ getScreenHeight2(): "+dd )
+    val dd = getScreenWidth2() / (getScreenHeight2() * 1.0f)
+    Log.e("TAG", "getScreenWidth2()/ getScreenHeight2(): " + dd)
     if (dd > 2.0) {
         launchActivity(MainActivity::class.java)
-    }else if (dd >= (16/9.0)) {
+    } else if (dd >= (16 / 9.0)) {
         launchActivity(MainIpadWidthActivity::class.java)
-    }else{
+    } else {
         launchActivity(MainIpadActivity::class.java)
     }
 }
@@ -68,15 +63,15 @@ fun IWrapView.launchVideoHomeActivity() {
 
 //视频列表
 fun IWrapView.launchVideoListActivity(type: Int, id: String, selectId: String) {
-    val dd = getScreenWidth2()/ (getScreenHeight2()*1.0f)
-    if (dd >= (16/9.0)) {
+    val dd = getScreenWidth2() / (getScreenHeight2() * 1.0f)
+    if (dd >= (16 / 9.0)) {
         launchActivity(
             VideoListActivity::class.java,
             Pair(ConfigApp.INTENT_TYPE, type),
             Pair(ConfigApp.INTENT_ID, id),
             Pair(ConfigApp.INTENT_NUMBER, selectId)
         )
-    }else{
+    } else {
         launchActivity(
             VideoListPadActivity::class.java,
             Pair(ConfigApp.INTENT_TYPE, type),
@@ -89,32 +84,33 @@ fun IWrapView.launchVideoListActivity(type: Int, id: String, selectId: String) {
 //音频主页
 fun IWrapView.launchAudioHomeActivity() {
 
-    val dd = getScreenWidth2()/ (getScreenHeight2()*1.0f)
-    if (dd >= (16/9.0)) {
+    val dd = getScreenWidth2() / (getScreenHeight2() * 1.0f)
+    if (dd >= (16 / 9.0)) {
         launchActivity(AudioHomeActivity::class.java)
-    }else{
+    } else {
         launchActivity(AudioHomeIpadActivity::class.java)
     }
 }
 
 
 //音频播放
-fun IWrapView.launchAudioPlayInfoActivity(data: String,title:String) {
+fun IWrapView.launchAudioPlayInfoActivity(data: String, title: String) {
     launchActivity(
         AudioPlayInfoActivity::class.java,
         Pair(ConfigApp.INTENT_DATA, data),
-        Pair(ConfigApp.INTENT_ID,title)
+        Pair(ConfigApp.INTENT_ID, title)
     )
 }
+
 //视频播放
 fun IWrapView.launchVideoPlayActivity(list: ArrayList<SubjectListData.lessonBean>, id: String) {
-    if (getAudioData("TXLiveBaseLicence") == 1){
+    if (getAudioData("TXLiveBaseLicence") == 1) {
         launchActivity(
             VideoPlayActivity::class.java,
             Pair(ConfigApp.INTENT_DATA, Gson().toJson(list)),
             Pair(ConfigApp.INTENT_ID, id)
         )
-    }else{
+    } else {
         toastError("网络未连接，请检查网络后重试")
     }
 
@@ -127,8 +123,6 @@ fun IWrapView.launchVideoAnswerActivity(id: String) {
         Pair(ConfigApp.INTENT_ID, id)
     )
 }
-
-
 
 
 //答题主页
@@ -161,11 +155,13 @@ fun IWrapView.launchAnswerErrorAskActivity() {
 }
 
 
-
-
 //答题 观看视频
-fun IWrapView.launchQuestionVideoActivity(name: String,url:String) {
-    launchActivity(QuestionVideoActivity::class.java, Pair(ConfigApp.INTENT_ID, name), Pair(ConfigApp.INTENT_DATA, url))
+fun IWrapView.launchQuestionVideoActivity(name: String, url: String) {
+    launchActivity(
+        QuestionVideoActivity::class.java,
+        Pair(ConfigApp.INTENT_ID, name),
+        Pair(ConfigApp.INTENT_DATA, url)
+    )
 }
 
 //荣誉墙主页
@@ -184,7 +180,7 @@ fun IWrapView.launchHonorListActivity() {
 }
 
 //设置
-fun IWrapView.launchSettingActivity(index:Int) {
+fun IWrapView.launchSettingActivity(index: Int) {
     launchActivity(SettingActivity::class.java, Pair(ConfigApp.INTENT_TYPE, index))
 }
 

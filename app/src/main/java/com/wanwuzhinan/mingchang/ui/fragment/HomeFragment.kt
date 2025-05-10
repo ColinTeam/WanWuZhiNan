@@ -1,5 +1,6 @@
 package com.wanwuzhinan.mingchang.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -26,8 +27,10 @@ import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
 import com.wanwuzhinan.mingchang.ui.phone.RankActivity
 import com.wanwuzhinan.mingchang.ui.phone.SettingActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
+import com.wanwuzhinan.mingchang.ui.pop.PrivacyPop
 import com.wanwuzhinan.mingchang.utils.RATIO_16_9
 import com.wanwuzhinan.mingchang.utils.getRatio
+import com.wanwuzhinan.mingchang.utils.isShowPrivacy
 import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
@@ -44,6 +47,7 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
         return requireActivity().viewModelStore
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
             GlideImgManager.loadGif(ivAnim, R.raw.diqu)
@@ -56,6 +60,7 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
             tab2.setOnTouchListener(MotionTouchLister())
             ivTabBg.setOnTouchListener(MotionTouchLister())
             onClick(ivOneBg, ivTwoBg, ivThreeBg, ivFourBg, ivTabBg, tab0, tab1, tab2, tvSetting) {
+                viewModel.getConfigValue()?:return@onClick
                 when (it) {
                     tvSetting -> {
                         activity?.let { SettingActivity.start(it) }
@@ -124,6 +129,8 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
                 viewBinding.tvUserName.text = it.nickname
             }
         }
+
+        viewModel.getUserInfo()
     }
 
     fun updateConfigData(data: ConfigData) {
@@ -148,11 +155,36 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
     override fun onResume() {
         (requireActivity() as HomeActivity).changeADState(viewModel.getAdStateValue())
         super.onResume()
+        showPrivacyPop()
     }
+
 
     override fun onPause() {
         super.onPause()
         (requireActivity() as HomeActivity).changeADState(false)
+    }
+
+    private fun showPrivacyPop() {
+        if (isShowPrivacy()) return
+        PrivacyPop(requireActivity()).showPrivacyPop {
+            when (it) {
+                1 -> {
+                    WebFragment.navigate(
+                        this@HomeFragment,
+                        url = ConfigApp.USER_AGREEMENT,
+                        title = getString(R.string.login_protocol_link_1)
+                    )
+                }
+
+                2 -> {
+                    WebFragment.navigate(
+                        this@HomeFragment,
+                        url = ConfigApp.PRIVACY_POLICY,
+                        title = getString(R.string.login_protocol_link_2)
+                    )
+                }
+            }
+        }
     }
 
     companion object {

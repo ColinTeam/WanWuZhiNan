@@ -13,21 +13,21 @@
 
         <LinearLayout
             android:layout_width="@dimen/dp_0"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:background="@drawable/shape_ffffff_8"
+            android:gravity="center"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginVertical="@dimen/dp_30"
-            android:orientation="vertical"
-            android:layout_height="@dimen/dp_0"
-            android:gravity="center"
-            app:layout_constraintDimensionRatio="w,1:1"
-            android:background="@drawable/shape_ffffff_8">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 style="@style/text_black_18"
                 android:layout_marginTop="@dimen/dp_12"
-                android:text="平台使用规则"/>
+                android:text="平台使用规则" />
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -54,20 +54,20 @@
                 <TextView
                     android:id="@+id/tv_user_agreement"
                     style="@style/text_black_12"
-                    android:textColor="#F17800"
                     android:background="@drawable/login_text_agreement_bg"
-                    android:text="《用户协议》"/>
+                    android:text="《用户协议》"
+                    android:textColor="#F17800" />
 
                 <TextView
                     style="@style/text_999999_12"
-                    android:text="和"/>
+                    android:text="和" />
 
                 <TextView
                     android:id="@+id/tv_privacy_agreement"
                     style="@style/text_black_12"
-                    android:textColor="#F17800"
                     android:background="@drawable/login_text_agreement_bg"
-                    android:text="《隐私政策》"/>
+                    android:text="《隐私政策》"
+                    android:textColor="#F17800" />
             </LinearLayout>
 
             <LinearLayout
@@ -78,24 +78,24 @@
                 <TextView
                     android:id="@+id/tv_refuse"
                     style="@style/default_button"
-                    android:textColor="@color/black"
+                    android:layout_height="@dimen/dp_44"
+                    android:layout_marginHorizontal="@dimen/dp_0"
                     android:layout_weight="1"
                     android:text="不同意"
-                    android:textStyle="normal"
-                    android:layout_height="@dimen/dp_44"
-                    android:layout_marginHorizontal="@dimen/dp_0"/>
+                    android:textColor="@color/black"
+                    android:textStyle="normal" />
 
                 <TextView
                     android:layout_width="@dimen/dp_10"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_agree"
                     style="@style/default_button"
-                    android:layout_weight="1"
-                    android:text="同意并继续"
                     android:layout_height="@dimen/dp_44"
-                    android:layout_marginHorizontal="@dimen/dp_0"/>
+                    android:layout_marginHorizontal="@dimen/dp_0"
+                    android:layout_weight="1"
+                    android:text="同意并继续" />
             </LinearLayout>
         </LinearLayout>
 

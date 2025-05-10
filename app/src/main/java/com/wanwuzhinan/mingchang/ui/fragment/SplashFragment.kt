@@ -2,6 +2,9 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
@@ -62,4 +65,13 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
 
     }
 
+    companion object {
+        @JvmStatic
+        fun navigate(activity: AppCompatActivity) {
+            val controller = activity.findNavController(R.id.nav_host)
+            val option =
+                NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, false).build()
+            controller.navigate(R.id.action_toSplash, null, option)
+        }
+    }
 }

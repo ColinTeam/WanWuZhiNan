@@ -180,10 +180,7 @@
             android:name=".ui.phone.HonorDetailActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".ui.phone.LoginActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape" />
+
 
         <activity
             android:name=".ui.phone.RankActivity"

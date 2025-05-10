@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.util.setOnDebouncedItemClick
 import com.ssm.comm.ext.getCurrentVersionCode
 import com.ssm.comm.ext.getCurrentVersionName
 import com.ssm.comm.ext.toastSuccess
-import com.ssm.comm.global.AppActivityManager
 import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.SettingPrivacyAdapter
@@ -95,7 +94,7 @@ class PrivacySetActivity :
 
                 "退出登录" -> {
                     ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_LOGOUT).apply {
-                        sure = {logout()}
+                        sure = { logout() }
                     }.show(this@PrivacySetActivity)
                 }
 
@@ -127,13 +126,12 @@ class PrivacySetActivity :
             toastSuccess("注销成功")
             dismissBaseLoading()
             clearAllData()
-            AppActivityManager.getInstance().finishAllActivities()
             HomeActivity.start(this@PrivacySetActivity, R.id.action_toLogin)
         }
     }
+
     fun logout() {
         clearAllData()
-        AppActivityManager.getInstance().finishAllActivities()
         HomeActivity.start(this@PrivacySetActivity, R.id.action_toLogin)
     }
 

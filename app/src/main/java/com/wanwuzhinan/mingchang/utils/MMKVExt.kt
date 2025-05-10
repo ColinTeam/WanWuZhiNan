@@ -1,6 +1,7 @@
 package com.wanwuzhinan.mingchang.utils
 
 import com.ssm.comm.config.Constant
+import com.wanwuzhinan.mingchang.config.ConfigApp
 
 fun getToken(): String {
     return MMKVUtils.decodeString(Constant.TOKEN)
@@ -48,8 +49,8 @@ fun removeKey(key: String = "") {
 fun clearAllData() {
     MMKVUtils.removeKey(Constant.TOKEN)
     MMKVUtils.removeKey(Constant.USER_ID)
-    MMKVUtils.removeKey(Constant.USER_MOBILE)
     MMKVUtils.removeKey(Constant.USER_IS_VIP)
     MMKVUtils.removeKey(Constant.IS_SET_PW)
     MMKVUtils.removeKey(Constant.IS_REAL_NAME)
+    ConfigApp.token = ""
 }

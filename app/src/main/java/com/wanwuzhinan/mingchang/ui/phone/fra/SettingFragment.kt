@@ -4,6 +4,7 @@ package com.wanwuzhinan.mingchang.ui.phone.fra
 import android.annotation.SuppressLint
 import android.text.TextUtils
 import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.utils.ext.onClick
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.ssm.comm.event.MessageEvent
@@ -11,7 +12,6 @@ import com.ssm.comm.ext.editChange
 import com.ssm.comm.ext.initEditChange
 import com.ssm.comm.ext.observeState
 import com.ssm.comm.ext.post
-import com.ssm.comm.ext.setOnClickNoRepeat
 import com.ssm.comm.ext.showLoadingExt
 import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.media.MediaManager
@@ -21,6 +21,7 @@ import com.wanwuzhinan.mingchang.data.GradeData
 import com.wanwuzhinan.mingchang.data.ProvinceListData
 import com.wanwuzhinan.mingchang.databinding.FragmentEditFileBinding
 import com.wanwuzhinan.mingchang.entity.UserInfo
+import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseDialog
 import com.wanwuzhinan.mingchang.view.GlideEngine
@@ -51,6 +52,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
         mViewModel.getAllRegion()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun initRequest() {
 
         mViewModel.getUserInfoLiveData.observeState(this) {
@@ -60,33 +62,19 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                 mCityName = mInfo.city_name
                 mAreaName = mInfo.area_name
                 mHeadImg = mInfo.headimg
-                GlideImgManager.get().loadImg(mHeadImg, mDataBinding.rivHead, R.mipmap.default_icon)
-//                mDataBinding.tvIdT.text = (mInfo.id.toInt()+ getConfigData().home_all_number.toInt()).toString()
-                mDataBinding.tvIdT.text = "用户账号：${maskPhoneNumber(mInfo.account)}"
-                mDataBinding.tvUserName.setText(mInfo.truename)
-                mDataBinding.tvSchool.setText(mInfo.school_name)
-                mDataBinding.tvAddress.setText("${mInfo.province_name} ${mInfo.city_name} ${mInfo.area_name}")
+                GlideImgManager.get()
+                    .loadImg(mHeadImg, mDataBinding.ivAvatar, R.mipmap.default_icon)
+                mDataBinding.tvPhone.text = getString(R.string.setting_account, mInfo.account)
+                mDataBinding.tvNickLabel.text = mInfo.truename
+                mDataBinding.tvSchool.text = mInfo.school_name
+                mDataBinding.tvArea.text =
+                    "${mInfo.province_name} ${mInfo.city_name} ${mInfo.area_name}"
                 if (mInfo.city_name.contains(mInfo.province_name)) {
-                    mDataBinding.tvAddress.setText("${mInfo.province_name} ${mInfo.area_name}")
+                    mDataBinding.tvArea.text = "${mInfo.province_name} ${mInfo.area_name}"
                 }
-                mDataBinding.tvGrade.setText(mInfo.grade_name)
-                if (mInfo.sex == "男") {
-                    mDataBinding.llNv.isSelected = false
-                    mDataBinding.ivNv.isSelected = false
-                    mDataBinding.tvSexNv.isSelected = false
-
-                    mDataBinding.llNan.isSelected = true
-                    mDataBinding.ivNan.isSelected = true
-                    mDataBinding.tvSexNan.isSelected = true
-                } else if (mInfo.sex == "女") {
-                    mDataBinding.llNv.isSelected = true
-                    mDataBinding.ivNv.isSelected = true
-                    mDataBinding.tvSexNv.isSelected = true
-
-                    mDataBinding.llNan.isSelected = false
-                    mDataBinding.ivNan.isSelected = false
-                    mDataBinding.tvSexNan.isSelected = false
-                }
+                mDataBinding.tvGrade.text = mInfo.grade_name
+                selectSex(mInfo.sex)
+                mDataBinding.tvMan.isSelected
                 changeButtonBackground()
             }
         }
@@ -127,20 +115,20 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
 
     @SuppressLint("SetTextI18n")
     override fun initClick() {
-
-        initEditChange(mDataBinding.tvUserName) {
+        initEditChange(mDataBinding.etNick) {
             changeButtonBackground()
         }
-
-        setOnClickNoRepeat(
-            mDataBinding.llNv,
-            mDataBinding.llNan,
-            mDataBinding.llAddress,
-            mDataBinding.llYear,
-            mDataBinding.tvSave
+        onClick(
+            mDataBinding.ivAvatar,
+            mDataBinding.tvMan,
+            mDataBinding.tvWoman,
+            mDataBinding.tvArea,
+            mDataBinding.tvGrade,
+            mDataBinding.tvPassword,
+            mDataBinding.btSave
         ) {
             when (it) {
-                mDataBinding.rivHead -> {//修改头像
+                mDataBinding.ivAvatar -> {//修改头像
                     MediaManager.selectSinglePhoto(
                         mActivity,
                         GlideEngine.createGlideEngine(),
@@ -151,7 +139,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                                     val path = MediaManager.getSinglePhotoUri(localMedia) ?: ""
 
                                     GlideImgManager.get()
-                                        .loadImg(path, mDataBinding.rivHead, R.mipmap.default_icon)
+                                        .loadImg(path, mDataBinding.ivAvatar, R.mipmap.default_icon)
                                     mActivity.showLoadingExt()
                                     mViewModel.uploadImage(File(path))
                                 }
@@ -162,10 +150,10 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                         })
                 }
 
-                mDataBinding.llAddress -> {//选择城市
+                mDataBinding.tvArea -> {//选择城市
                     if (mAddressList == null) {
                         toastSuccess("网络不佳，请退出重试")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
                     ChooseAreaDialog.newInstance(
                         mAddressList!!, mProvinceName, mCityName, mAreaName
@@ -174,99 +162,54 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                             mProvinceName = province
                             mCityName = city
                             mAreaName = area
-                            mDataBinding.tvAddress.text = "$province $city $area"
+                            mDataBinding.tvArea.text = "$province $city $area"
                             if (city.contains(province)) {
-                                mDataBinding.tvAddress.text = "$province $area"
+                                mDataBinding.tvArea.text = "$province $area"
                             }
                         }
                     }.show(this@SettingFragment)
-//                    ChooseCityDialog(mAddressList!!, callback = {
-//                        onSure = { s1, s2, s3 ->
-//                            mProvinceName = s1
-//                            mCityName = s2
-//                            mAreaName = s3
-//                            mDataBinding.tvAddress.text = "${s1} ${s2} ${s3}"
-//                            if (s2.contains(s1)) {
-//                                mDataBinding.tvAddress.text = "${s1} ${s3}"
-//                            }
-//                        }
-//                    }).show(mActivity.supportFragmentManager, "CommDialog")
-
-//                    ChooseCityUtils.showCityPickerView(context,"",mAddressList!!){
-//                            province,city,area ->
-//                        mProvinceName=province.label
-//                        mCityName=city.label
-//                        mAreaName=area.label
-//                        mDataBinding!!.tvAddress.text = "${mProvinceName} ${mCityName} ${mAreaName}"
-//                    }
                 }
 
-                mDataBinding.llNv -> {//性别
-                    mDataBinding.llNv.isSelected = true
-                    mDataBinding.ivNv.isSelected = true
-                    mDataBinding.tvSexNv.isSelected = true
-
-                    mDataBinding.llNan.isSelected = false
-                    mDataBinding.ivNan.isSelected = false
-                    mDataBinding.tvSexNan.isSelected = false
+                mDataBinding.tvWoman -> {//性别
+                    selectSex(getString(R.string.setting_women))
 
                 }
 
-                mDataBinding.llNan -> {//性别
-
-                    mDataBinding.llNv.isSelected = false
-                    mDataBinding.ivNv.isSelected = false
-                    mDataBinding.tvSexNv.isSelected = false
-
-                    mDataBinding.llNan.isSelected = true
-                    mDataBinding.ivNan.isSelected = true
-                    mDataBinding.tvSexNan.isSelected = true
-
+                mDataBinding.tvMan -> {//性别
+                    selectSex(getString(R.string.setting_man))
                 }
 
-                mDataBinding.llYear -> {//年级
+                mDataBinding.tvGrade -> {//年级
                     mActivity.showLoadingExt()
                     mViewModel.getAllGrade()
                 }
 
-                mDataBinding.tvSave -> {
-                    var name = mDataBinding.tvUserName.text.toString().trim()
-                    var sex = if (mDataBinding.llNan.isSelected) "男" else "女"
+                mDataBinding.tvPassword -> {//年级
+                    HomeActivity.start(requireActivity(), R.id.action_toPassword)
+                }
+
+                mDataBinding.btSave -> {
+                    var name = mDataBinding.etNick.text.toString().trim()
+                    var sex =
+                        if (mDataBinding.tvWoman.isSelected) getString(R.string.setting_man) else getString(
+                            R.string.setting_women
+                        )
                     var school = mDataBinding.tvSchool.text.toString().trim()
                     var grade = mDataBinding.tvGrade.text.toString().trim()
 
                     if (TextUtils.isEmpty(mHeadImg)) {
                         toastSuccess("请上传头像")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
-
-//                    if(TextUtils.isEmpty(mCityName)){
-//                        toastSuccess("请选择地区")
-//                        return@setOnClickNoRepeat
-//                    }
 
                     if (TextUtils.isEmpty(name)) {
                         toastSuccess("请填写真实姓名")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
                     if (name.length > 6) {
                         toastSuccess("姓名最多6个字")
-                        return@setOnClickNoRepeat
+                        return@onClick
                     }
-
-//                    if(TextUtils.isEmpty(sex)){
-//                        toastSuccess("请选择性别")
-//                        return@setOnClickNoRepeat
-//                    }
-//                    if(TextUtils.isEmpty(school)){
-//                        toastSuccess("请填写学校")
-//                        return@setOnClickNoRepeat
-//                    }
-
-//                    if(TextUtils.isEmpty(grade)){
-//                        toastSuccess("请选择年级")
-//                        return@setOnClickNoRepeat
-//                    }
 
                     showBaseLoading()
                     val map = HashMap<String, Any>()
@@ -287,9 +230,8 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
     }
 
     private fun changeButtonBackground() {
-        var editTips = editChange(mDataBinding.tvUserName)
-
-        mDataBinding.tvSave.setBackgroundResource(if (editTips && !TextUtils.isEmpty(mHeadImg)) R.drawable.bg_default22_click else R.drawable.shape_ffd8b0_23)
+        var editTips = editChange(mDataBinding.etNick)
+        mDataBinding.btSave.setBackgroundResource(if (editTips && !TextUtils.isEmpty(mHeadImg)) R.drawable.bg_default22_click else R.drawable.shape_ffd8b0_23)
     }
 
     override fun getLayoutId(): Int {
@@ -319,6 +261,25 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                 mDataBinding.tvGrade.text = list[it]
             }
         }.show(this)
+    }
+
+    private fun selectSex(sex: String?) {
+        if (sex == getString(R.string.man) || sex == getString(R.string.setting_man)) {
+            mDataBinding.tvMan.isSelected = true
+            mDataBinding.ivMan.isSelected = true
+            mDataBinding.tvWoman.isSelected = false
+            mDataBinding.ivWoman.isSelected = false
+        } else if (sex == getString(R.string.woman) || sex == getString(R.string.setting_women)) {
+            mDataBinding.tvMan.isSelected = false
+            mDataBinding.ivMan.isSelected = false
+            mDataBinding.tvWoman.isSelected = true
+            mDataBinding.ivWoman.isSelected = true
+        } else {
+            mDataBinding.tvMan.isSelected = false
+            mDataBinding.ivMan.isSelected = false
+            mDataBinding.tvWoman.isSelected = false
+            mDataBinding.ivWoman.isSelected = false
+        }
     }
 
 }

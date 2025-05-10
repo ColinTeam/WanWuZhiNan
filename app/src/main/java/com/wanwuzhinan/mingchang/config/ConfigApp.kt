@@ -1,12 +1,17 @@
 package com.wanwuzhinan.mingchang.config
 
+import com.ssm.comm.config.Constant
+import com.wanwuzhinan.mingchang.utils.MMKVUtils
+
 object ConfigApp {
 
     //保留两位小数
     const val KEEP_TWO_DIGITS = 2
 
-    const val VIDEO_DEMO_1 = "https://s.wanwuzhinan.top/m3u8/1080p/1.1/100001/6fc6453a46e22186d989a50306c588a8.m3u8"//用户协议
-    const val VIDEO_DEMO_2 = "https://s.wanwuzhinan.top/m3u8/1080p/1.2/100001/6fc6453a46e22186d989a50306c588a8.m3u8"//用户协议
+    const val VIDEO_DEMO_1 =
+        "https://s.wanwuzhinan.top/m3u8/1080p/1.1/100001/6fc6453a46e22186d989a50306c588a8.m3u8"//用户协议
+    const val VIDEO_DEMO_2 =
+        "https://s.wanwuzhinan.top/m3u8/1080p/1.2/100001/6fc6453a46e22186d989a50306c588a8.m3u8"//用户协议
     const val USER_AGREEMENT = "https://app.wanwuzhinan.top/common/Content/info?cat_id=1"//用户协议
     const val PRIVACY_POLICY = "https://app.wanwuzhinan.top/common/Content/info?cat_id=2"//隐私政策
     const val PRIVACY_CHILD = "https://app.wanwuzhinan.top/common/Content/info?cat_id=7"//隐私政策
@@ -49,4 +54,14 @@ object ConfigApp {
 
     var question_count_error = 0
     var question_compass = 0
+
+    //为了解决mmkv 异步存储的方案，本地缓存
+    var token: String = ""
+        @Synchronized get() {
+            if (field.isEmpty()) {
+                field = MMKVUtils.decodeString(Constant.TOKEN)
+            }
+            return field
+        }
+        @Synchronized set
 }

@@ -51,7 +51,18 @@ interface ApiService {
     suspend fun newLogin(
         @Field("phone") phone: String,
         @Field("phone_code") phone_code: String,
-        @Field("device_type") device_type: String
+        @Field("device_type") device_type: Int,
+        @Field("action") action: Int
+    ): RegisterResponse
+
+    @FormUrlEncoded
+    @POST("/api/UserLogin/index")
+    suspend fun newLoginPwd(
+        @Field("phone") phone: String,
+        @Field("pwd") pwd: String,
+        @Field("pwds") pwds: String,
+        @Field("action") action: Int,
+        @Field("confirm") confirm: Int,
     ): RegisterResponse
 
     //音频视频科目
@@ -108,6 +119,11 @@ interface ApiService {
     //获取配置
     @POST("/api/Systems/index")
     suspend fun newConfig(): ConfigDataResponse
+
+
+    //获取配置
+    @POST("api/Video/errorlog")
+    suspend fun newErrorLog(@Field("error") error: String): ConfigDataResponse
 
     //修改用户信息
     @FormUrlEncoded

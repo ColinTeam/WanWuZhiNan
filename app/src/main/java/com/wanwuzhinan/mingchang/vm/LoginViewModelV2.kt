@@ -6,6 +6,8 @@ import com.colin.library.android.network.request
 import com.colin.library.android.utils.Constants
 import com.wanwuzhinan.mingchang.app.AppViewModel
 import com.wanwuzhinan.mingchang.entity.Config
+import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
+import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
 import com.wanwuzhinan.mingchang.entity.RegisterData
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import kotlinx.coroutines.delay
@@ -64,11 +66,11 @@ class LoginViewModelV2 : AppViewModel() {
         })
     }
 
-    fun loginBySms(phone: String, code: String, type: String) {
+    fun loginBySms(phone: String, code: String, type: Int, action: Int = HTTP_ACTION_LOGIN_SMS) {
         _showLoading.postValue(true)
         request({
             delay(Constants.ONE_SECOND.toLong())
-            service.newLogin(phone, code, type)
+            service.newLogin(phone, code, type, action)
         }, success = {
             _RegisterData.postValue(it)
             _showLoading.postValue(false)
@@ -78,8 +80,20 @@ class LoginViewModelV2 : AppViewModel() {
         })
     }
 
-    fun loginByPassword(phone: String, password: String, type: String) {
-
+    fun loginByPassword(
+        phone: String, pwd: String, pwds: String, type: Int, action: Int = HTTP_ACTION_LOGIN_PWD
+    ) {
+        _showLoading.postValue(true)
+        request({
+            delay(Constants.ONE_SECOND.toLong())
+            service.newLoginPwd(phone, pwd, pwds, type, action)
+        }, success = {
+            _RegisterData.postValue(it)
+            _showLoading.postValue(false)
+        }, failure = {
+            _showError.postValue(it)
+            _showLoading.postValue(false)
+        })
     }
 
     fun updateSuccess(state: Boolean = false) {

@@ -20,6 +20,8 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
+import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
+import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
@@ -31,7 +33,7 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModelV2
  * E-mail:945919945@qq.com
  * Create:2025-04-23 22:34
  *
- * Des   :HomeFragment
+ * Des   :LoginFragment
  */
 class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
     companion object {
@@ -131,12 +133,12 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             tabLogin.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     val isSms = tab?.text == getString(R.string.login_by_sms)
+                    tabIndex = if (isSms) TAB_SMS else TAB_PWD
                     tvSmsTips.isVisible = isSms
                     etSMS.isVisible = isSms
                     tvSmsSend.isVisible = isSms
                     tvPwdTips.isVisible = !isSms
                     etPassword.isVisible = !isSms
-                    tabIndex = if (isSms) TAB_SMS else TAB_PWD
                     updateButton()
                 }
 
@@ -174,6 +176,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             }
             registerData.observe {
                 if (it.token.isNotEmpty()) {
+                    ConfigApp.token = it.token
                     setData(Constant.USER_MOBILE, viewBinding.etPhone.text.toString().trim())
                     setData(Constant.TOKEN, it.token)
                     HomeFragment.navigate(this@LoginFragment)
@@ -236,11 +239,11 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             ToastUtil.show(if (tabIndex == TAB_SMS) R.string.login_toast_sms else R.string.login_toast_pwd)
             return
         }
-        val type = if (isPhone()) DEVICE_PHONE else DEVICE_OTHER
+        val type = if (isPhone()) HTTP_LOGIN_DEVICE_PHONE else HTTP_LOGIN_DEVICE_TABLET
         if (tabIndex == TAB_SMS) {
             viewModel.loginBySms(phone, text, type)
         } else {
-            viewModel.loginByPassword(phone, text, type)
+            viewModel.loginByPassword(phone, text, text, type)
         }
 
     }

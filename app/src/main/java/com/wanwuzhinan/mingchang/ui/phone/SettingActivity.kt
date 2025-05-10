@@ -3,10 +3,7 @@ package com.wanwuzhinan.mingchang.ui.phone
 import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.chad.library.adapter.base.util.setOnDebouncedItemClick
-import com.ssm.comm.ext.toastSuccess
-import com.ssm.comm.global.AppActivityManager
 import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.SettingAdapter
@@ -14,25 +11,18 @@ import com.wanwuzhinan.mingchang.adapter.Viewpager2Adapter
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.SettingData
 import com.wanwuzhinan.mingchang.databinding.ActivitySettingBinding
-import com.wanwuzhinan.mingchang.ext.launchLoginActivity
-import com.wanwuzhinan.mingchang.ext.performLaunchH5Agreement
 import com.wanwuzhinan.mingchang.ext.performLaunchH5Agreements
-import com.wanwuzhinan.mingchang.ext.showCancelPop
 import com.wanwuzhinan.mingchang.ui.phone.fra.ExchangeCourseFragment
 import com.wanwuzhinan.mingchang.ui.phone.fra.ReportFragment
 import com.wanwuzhinan.mingchang.ui.phone.fra.SettingFragment
-import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
-import com.wanwuzhinan.mingchang.utils.clearAllData
 import com.wanwuzhinan.mingchang.vm.UserViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class SettingActivity : BaseActivity<ActivitySettingBinding, UserViewModel>(UserViewModel()) {
     companion object {
         @JvmStatic
         fun start(activity: Activity, index: Int = 0) {
-            val starter = Intent(activity, SettingActivity::class.java)
-                .putExtra(ConfigApp.INTENT_TYPE, index)
+            val starter =
+                Intent(activity, SettingActivity::class.java).putExtra(ConfigApp.INTENT_TYPE, index)
             activity.startActivity(starter)
         }
     }
@@ -86,16 +76,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding, UserViewModel>(User
         mAdapter.add(SettingData(R.mipmap.ic_setting_video, "企业介绍"))
         mAdapter.add(SettingData(R.mipmap.ic_user_report, "用户反馈"))
         mAdapter.add(SettingData(R.mipmap.ic_setting_logout, "设置"))
-//        if(getCurrentVersionCode() > getConfigData().android_code.toInt()){
-//            mAdapter.add(SettingData(R.mipmap.ic_setting_logout,"注销账户"))
-//        }
-//        mAdapter.add(SettingData(R.mipmap.ic_setting_logout,"退出登录"))
-
-
         mDataBinding.reList.adapter = mAdapter
 
         mAdapter.setOnDebouncedItemClick { adapter, view, position ->
-
 
             when (adapter.getItem(position)!!.title) {
                 "个人信息" -> {
@@ -116,29 +99,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding, UserViewModel>(User
                     mDataBinding.viewPager.setCurrentItem(1, true)
                 }
 
-                "注销账户" -> {
-                    mAdapter.notifyDataSetChanged()
-                    showCancelPop(
-                        this,
-                        "确定要注销账号吗？注销后您将无法使用该账号，并且个人信息将无法找回。",
-                        true,
-                        onSure = {
-                            lifecycleScope.launch {
-                                showBaseLoading()
-                                delay(1000)
-                                toastSuccess("注销成功")
-                                dismissBaseLoading()
-                                clearAllData()
-                                launchLoginActivity()
-                                AppActivityManager.getInstance().finishAllActivities()
-                            }
-                        },
-                        onCancel = {
-                            mAdapter.getItem(currentPost)!!.select = true
-                            mAdapter.getItem(position)!!.select = false
-                            mAdapter.notifyDataSetChanged()
-                        })
-                }
 
                 "企业介绍" -> {
                     performLaunchH5Agreements(ConfigApp.VIDEO_INTRODUCTION, "企业介绍")
@@ -157,39 +117,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding, UserViewModel>(User
                     launchActivity(PrivacySetActivity::class.java)
                 }
 
-                "隐私协议" -> {
-                    performLaunchH5Agreement(
-                        ConfigApp.PRIVACY_POLICY, getString(R.string.privacy_policy)
-                    )
-                }
-
-                "用户协议" -> {
-                    performLaunchH5Agreement(
-                        ConfigApp.USER_AGREEMENT, getString(R.string.user_privacy)
-                    )
-                }
-
-                "退出登录" -> {
-                    mAdapter.getItem(currentPost)!!.select = false
-                    mAdapter.getItem(position)!!.select = true
-                    mAdapter.notifyDataSetChanged()
-
-                    NetErrorPop(mActivity).showLogout(onSure = {
-                        clearAllData()
-                        launchLoginActivity()
-                        AppActivityManager.getInstance().finishAllActivities()
-                    })
-//
-//                    showCancelPop(this,"确定要退出登录吗？您的数据随账号保存",true,
-//                        onSure = {
-//
-//                        },
-//                        onCancel = {
-//                            mAdapter.getItem(currentPost)!!.select=true
-//                            mAdapter.getItem(position)!!.select=false
-//                            mAdapter.notifyDataSetChanged()
-//                        })
-                }
             }
         }
 
