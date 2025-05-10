@@ -46,6 +46,11 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_setting_tab" />
     <fragment
+        android:id="@+id/fragment_setting_other"
+        android:name="com.wanwuzhinan.mingchang.ui.fragment.SettingOtherFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_setting_other" />
+    <fragment
         android:id="@+id/fragment_web"
         android:name="com.wanwuzhinan.mingchang.ui.fragment.WebFragment"
         android:label="@string/app_name"
@@ -91,4 +96,7 @@
     <action
         android:id="@+id/action_toSettingTab"
         app:destination="@+id/fragment_setting_tab" />
+    <action
+        android:id="@+id/action_toSettingOther"
+        app:destination="@+id/fragment_setting_other" />
 </navigation>

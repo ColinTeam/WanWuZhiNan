@@ -12,6 +12,7 @@ import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.SettingData
 import com.wanwuzhinan.mingchang.databinding.ActivitySettingBinding
 import com.wanwuzhinan.mingchang.ext.performLaunchH5Agreements
+import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.fra.ExchangeCourseFragment
 import com.wanwuzhinan.mingchang.ui.phone.fra.ReportFragment
 import com.wanwuzhinan.mingchang.ui.phone.fra.SettingFragment
@@ -114,7 +115,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding, UserViewModel>(User
                 }
 
                 "设置" -> {
-                    launchActivity(PrivacySetActivity::class.java)
+                    HomeActivity.start(this@SettingActivity, R.id.action_toSettingOther)
                 }
 
             }

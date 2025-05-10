@@ -79,6 +79,8 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModelV2>(
                 Log.d("showError:$it")
                 if (it.code == 9) {
                     showConfirmDialog(it.msg)
+                } else if (it.code == 0) {
+                    HomeFragment.navigate(this@PasswordFragment)
                 }
             }
             smsSuccess.observe {

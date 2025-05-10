@@ -4,9 +4,15 @@ import android.content.Context
 import android.util.Log
 import com.colin.library.android.image.glide.GlideImageLoader
 import com.colin.library.android.network.NetworkConfig
+import com.colin.library.android.network.data.AppResponse
+import com.colin.library.android.network.gson.IntegerTypeAdapter
+import com.colin.library.android.network.gson.ObjectTypeAdapter
+import com.colin.library.android.network.gson.StringTypeAdapter
 import com.colin.library.android.utils.config.UtilConfig
 import com.colin.library.android.utils.helper.UtilHelper
 import com.comm.net_work.BuildConfig
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.kongzue.dialogx.DialogX
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator
@@ -24,6 +30,7 @@ import com.ssm.comm.global.AppActivityManager
 import com.tencent.rtmp.TXLiveBase
 import com.tencent.rtmp.TXLiveBaseListener
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.entity.RegisterData
 import com.wanwuzhinan.mingchang.net.HeaderInterceptor
 import com.wanwuzhinan.mingchang.utils.setData
 import com.zjh.download.SimpleDownload
@@ -46,12 +53,13 @@ class BaseApplication : CommApplication() {
         UtilHelper.init(UtilConfig.newBuilder(this, true).build())
         AppActivityManager.getInstance().init(appContext)
         initMMKV(this)
-        initNetwork()
 //        MediaHolder.initialize(this)
         initImageLoader()
         initDownload()
         DialogX.init(this);
         initX5Environment()
+        enterInApp()
+        initNetwork()
         Log.e("BaseApplication", "onCreate: ")
 
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(object : DefaultRefreshHeaderCreator {
@@ -76,19 +84,19 @@ class BaseApplication : CommApplication() {
     }
 
     private fun initNetwork() {
-//        val gson =
-//            GsonBuilder().setLenient().registerTypeAdapter(Int::class.java, IntegerTypeAdapter())
-//                .registerTypeAdapter(String::class.java, StringTypeAdapter())
-//                .registerTypeAdapter(
-//                    RegisterData::class.java,
-//                    ObjectTypeAdapter(Gson(), RegisterData::class.java)
-//                )
-//                .registerTypeAdapter(
-//                    AppResponse::class.java,
-//                    ObjectTypeAdapter(Gson(), AppResponse::class.java)
-//                )
-//                .create()
-//        NetworkConfig.gson = gson
+        val gson =
+            GsonBuilder().setLenient().registerTypeAdapter(Int::class.java, IntegerTypeAdapter())
+                .registerTypeAdapter(String::class.java, StringTypeAdapter())
+                .registerTypeAdapter(
+                    RegisterData::class.java,
+                    ObjectTypeAdapter(Gson(), RegisterData::class.java)
+                )
+                .registerTypeAdapter(
+                    AppResponse::class.java,
+                    ObjectTypeAdapter(Gson(), AppResponse::class.java)
+                )
+                .create()
+        NetworkConfig.gson = gson
         NetworkConfig.addInterceptor(HeaderInterceptor())
 
     }

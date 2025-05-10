@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_login">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_50"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_back_mian" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@id/ivBg"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginBottom="@dimen/margin_default"
+            android:background="@drawable/shape_dd770a_20_5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.768"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivBack"
+            app:layout_constraintWidth_percent="0.836" />
+
+
+        <View
+            android:id="@+id/viewUserBg"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginHorizontal="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/shape_sex_n"
+            android:minHeight="@dimen/dp_40"
+            app:layout_constraintBottom_toTopOf="@+id/viewPrivacyBg"
+            app:layout_constraintEnd_toEndOf="@+id/ivBg"
+            app:layout_constraintStart_toStartOf="@+id/ivBg"
+            app:layout_constraintTop_toTopOf="@+id/ivBg"
+            app:layout_constraintVertical_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUserLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:text="@string/setting_protocol_user"
+            android:textAppearance="@style/Text"
+            app:layout_constraintBottom_toBottomOf="@+id/viewUserBg"
+            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
+            app:layout_constraintTop_toTopOf="@+id/viewUserBg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUser"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:drawablePadding="@dimen/margin_default_half"
+            android:gravity="center_vertical|end"
+            android:text="@string/setting_look"
+            android:textAppearance="@style/Text"
+            app:drawableEndCompat="@drawable/ic_arrow_right_home"
+            app:drawableTint="@color/color_active"
+            app:layout_constraintBottom_toBottomOf="@+id/viewUserBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
+            app:layout_constraintTop_toTopOf="@+id/viewUserBg" />
+
+        <View
+            android:id="@+id/viewPrivacyBg"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/margin_default"
+            android:background="@drawable/shape_sex_n"
+            android:minHeight="@dimen/dp_40"
+            app:layout_constraintBottom_toTopOf="@+id/viewChildBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
+            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewUserBg"
+            app:layout_constraintVertical_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrivacyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:text="@string/setting_protocol_privacy"
+            android:textAppearance="@style/Text"
+            app:layout_constraintBottom_toBottomOf="@+id/viewPrivacyBg"
+            app:layout_constraintStart_toStartOf="@+id/viewPrivacyBg"
+            app:layout_constraintTop_toTopOf="@+id/viewPrivacyBg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrivacy"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:drawablePadding="@dimen/margin_default_half"
+            android:gravity="center_vertical|end"
+            android:text="@string/setting_look"
+            android:textAppearance="@style/Text"
+            app:drawableEndCompat="@drawable/ic_arrow_right_home"
+            app:drawableTint="@color/color_active"
+            app:layout_constraintBottom_toBottomOf="@+id/viewPrivacyBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewPrivacyBg"
+            app:layout_constraintTop_toTopOf="@+id/viewPrivacyBg" />
+
+        <View
+            android:id="@+id/viewChildBg"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/margin_default"
+            android:background="@drawable/shape_sex_n"
+            android:minHeight="@dimen/dp_40"
+            app:layout_constraintBottom_toTopOf="@+id/viewPwdBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
+            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewPrivacyBg"
+            app:layout_constraintVertical_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvChildLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:text="@string/setting_protocol_child"
+            android:textAppearance="@style/Text"
+            app:layout_constraintBottom_toBottomOf="@+id/viewChildBg"
+            app:layout_constraintStart_toStartOf="@+id/viewChildBg"
+            app:layout_constraintTop_toTopOf="@+id/viewChildBg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvChild"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:drawablePadding="@dimen/margin_default_half"
+            android:gravity="center_vertical|end"
+            android:text="@string/setting_look"
+            android:textAppearance="@style/Text"
+            app:drawableEndCompat="@drawable/ic_arrow_right_home"
+            app:drawableTint="@color/color_active"
+            app:layout_constraintBottom_toBottomOf="@+id/viewChildBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewChildBg"
+            app:layout_constraintTop_toTopOf="@+id/viewChildBg" />
+
+        <View
+            android:id="@+id/viewPwdBg"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/margin_default"
+            android:background="@drawable/shape_sex_n"
+            android:minHeight="@dimen/dp_40"
+            app:layout_constraintBottom_toTopOf="@+id/btLogout"
+            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
+            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewChildBg"
+            app:layout_constraintVertical_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPwdLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:text="@string/setting_login_pwd"
+            android:textAppearance="@style/Text"
+            app:layout_constraintBottom_toBottomOf="@+id/viewPwdBg"
+            app:layout_constraintStart_toStartOf="@+id/viewPwdBg"
+            app:layout_constraintTop_toTopOf="@+id/viewPwdBg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPwd"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:drawablePadding="@dimen/margin_default_half"
+            android:gravity="center_vertical|end"
+            android:text="@string/setting_look"
+            android:textAppearance="@style/Text"
+            app:drawableEndCompat="@drawable/ic_arrow_right_home"
+            app:drawableTint="@color/color_active"
+            app:layout_constraintBottom_toBottomOf="@+id/viewPwdBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewPwdBg"
+            app:layout_constraintTop_toTopOf="@+id/viewPwdBg" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btLogout"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@drawable/bg_fff9f2_s_1_ff9424"
+            android:text="@string/setting_logout"
+            android:textAppearance="@style/Text.Button"
+            android:textColor="@color/color_active"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="@id/ivBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
+            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewPwdBg"
+            app:layout_constraintVertical_weight="1.2" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
