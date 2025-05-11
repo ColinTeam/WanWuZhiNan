@@ -36,7 +36,7 @@
             app:layout_constraintHeight_percent="0.8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ivBack"
-            app:layout_constraintWidth_percent="0.836" />
+            app:layout_constraintWidth_percent="0.82" />
 
 
         <View

@@ -15,10 +15,12 @@ import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.utils.helper.ThreadHelper
 import com.colin.library.android.widget.base.BaseFragment
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_EMPTY
+import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_ERROR
 import com.wanwuzhinan.mingchang.receiver.ScreenChangedReceiver
 import com.wanwuzhinan.mingchang.ui.pop.LoadingDialog
 import com.wanwuzhinan.mingchang.utils.navigate
+import com.colin.library.android.widget.skeleton.ShimmerLayout
 import kotlinx.coroutines.Runnable
 import java.lang.reflect.ParameterizedType
 
@@ -57,13 +59,13 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
     override fun onStart() {
         super.onStart()
         viewModel.apply {
-            showError.observe {
-                if ((it.code == 2 || it.code == 4) && !ConfigApp.token.isEmpty()) {
-                    Log.e("$it ${ConfigApp.token}")
-                    return@observe
-                }
+            showToast.observe {
+//                if ((it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) && !ConfigApp.token.isEmpty()) {
+//                    Log.e("$it ${ConfigApp.token}")
+//                    return@observe
+//                }
                 ToastUtil.show(it.msg)
-                if (it.code == 2 || it.code == 4) {
+                if (it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) {
                     navigate(R.id.action_toLogin)
                 }
             }
@@ -81,11 +83,9 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
     }
 
     override fun screenChanged(action: String) {
-        Log.i(TAG, "screenChanged:$action")
     }
 
     open fun onBackPressed(): Boolean {
-        Log.e("onBackPressed-->>$TAG")
         return findNavController().popBackStack()
     }
 
@@ -115,6 +115,7 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
         inflater: LayoutInflater, container: ViewGroup?
     ): VB {
         try {
+            ShimmerLayout
             val clazz = getActualClass<VB>(0)
             val inflate = clazz.getDeclaredMethod(
                 "inflate",

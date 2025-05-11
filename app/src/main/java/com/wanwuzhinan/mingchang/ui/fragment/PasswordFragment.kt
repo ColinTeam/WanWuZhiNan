@@ -14,8 +14,10 @@ import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentPasswordBinding
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_FIND_PWD
+import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
+import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.ui.fragment.LoginFragment.Companion.PHONE_LENGTH
 import com.wanwuzhinan.mingchang.ui.pop.TipsDialog
@@ -75,11 +77,11 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModelV2>(
                 Log.d("showLoading:$it")
                 showLoading(it)
             }
-            showError.observe {
-                Log.d("showError:$it")
-                if (it.code == 9) {
+            showToast.observe {
+                Log.d("showToast:$it")
+                if (it.code == HTTP_CONFIRM) {
                     showConfirmDialog(it.msg)
-                } else if (it.code == 0) {
+                } else if (it.code == HTTP_SUCCESS) {
                     HomeFragment.navigate(this@PasswordFragment)
                 }
             }

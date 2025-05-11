@@ -4,9 +4,12 @@ import android.content.Context
 import android.graphics.Point
 import android.os.Build
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.colin.library.android.image.glide.GlideImgManager
+import com.wanwuzhinan.mingchang.R
 
 /**
  * Author:ColinLu
@@ -18,6 +21,10 @@ import androidx.navigation.fragment.findNavController
 const val RATIO_16_9 = 16.0F / 9.0F
 const val RATIO_4_3 = 4.0F / 3.0F
 const val ANDROID_ASSET_URI = "file:///android_asset/"
+
+fun ImageView.load(url: String, res: Int = R.mipmap.default_icon) {
+    GlideImgManager.get().loadImg(url, this, res)
+}
 
 fun Fragment.navigate(action: Int): NavController {
     return findNavController().apply {

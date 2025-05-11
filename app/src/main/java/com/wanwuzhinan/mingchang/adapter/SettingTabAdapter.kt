@@ -40,6 +40,7 @@ class SettingTabAdapter(layoutRes: Int = R.layout.item_setting) : BaseAdapter<Ta
             }
             onClick(holder.getView<View>(R.id.lin)) {
                 Log.e("onItemClickListener$it")
+                it.tag = position
                 onItemClickListener?.invoke(it, items[position])
             }
         }

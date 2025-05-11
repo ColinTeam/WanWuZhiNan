@@ -8,6 +8,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/bg_login">
@@ -17,8 +18,8 @@
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
             android:layout_marginStart="@dimen/dp_50"
-            android:layout_marginTop="@dimen/dp_50"
-            android:elevation="2dp"
+            android:layout_marginTop="@dimen/margin_default"
+            android:elevation="@dimen/dp_2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/ic_back_mian" />

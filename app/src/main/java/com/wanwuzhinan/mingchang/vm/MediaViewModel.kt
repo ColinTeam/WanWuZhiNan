@@ -35,7 +35,7 @@ class MediaViewModel : AppViewModel() {
         }, success = {
             _AudioLessonSubjectGroup.postValue(it)
         }, failure = {
-            _showError.postValue(it)
+            _showToast.postValue(it)
         })
     }
 
@@ -45,7 +45,7 @@ class MediaViewModel : AppViewModel() {
         }, success = {
             _AudioLessonQuarter.postValue(it)
         }, failure = {
-            _showError.postValue(it)
+            _showToast.postValue(it)
         })
     }
 
@@ -55,7 +55,7 @@ class MediaViewModel : AppViewModel() {
         }, success = {
             _LessonInfo.postValue(it)
         }, failure = {
-            _showError.postValue(it)
+            _showToast.postValue(it)
         })
     }
 

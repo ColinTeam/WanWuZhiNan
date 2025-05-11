@@ -14,7 +14,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
-import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.ext.onClick
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.getCurrentVersionCode
@@ -87,12 +86,8 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
             userInfo.observe {
                 Log.i("userInfo:$it")
             }
-            showError.observe {
-                Log.i("showError:$it")
-                ToastUtil.show(it.msg)
-                if (it.code == 2 || it.code == 4) {
-                    LoginFragment.navigate(this@HomeActivity)
-                }
+            showToast.observe {
+                Log.i("showToast:$it")
             }
         }
         viewBinding.apply {

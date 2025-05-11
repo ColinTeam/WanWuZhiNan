@@ -36,7 +36,7 @@ class SkeletonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (shimmer) {
             val layout: ShimmerLayout = holder.itemView as ShimmerLayout
-            layout.setAnimationDuration(shimmerDuration.toLong())
+            layout.setShimmerAnimationDuration(shimmerDuration)
             layout.setShimmerAngle(shimmerAngle)
             layout.setShimmerColor(shimmerColor)
             layout.startShimmerAnimation()

@@ -27,4 +27,12 @@ class TabFragmentAdapter : FragmentStateAdapter {
     override fun getItemCount(): Int {
         return list.size
     }
+
+    override fun getItemId(position: Int): Long {
+        return list[position].hashCode().toLong()
+    }
+
+    override fun containsItem(itemId: Long): Boolean {
+        return list.any { it.hashCode().toLong() == itemId }
+    }
 }

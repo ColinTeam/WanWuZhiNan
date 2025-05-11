@@ -58,7 +58,7 @@ class ChooseDialog private constructor(
                 }
 
                 viewBinding.textSure -> {
-                    sure.invoke(selected)
+                    sure.invoke(if (selected == Constants.INVALID) viewBinding.wheel.getSelectedPosition() else selected)
                     dismiss()
                 }
             }

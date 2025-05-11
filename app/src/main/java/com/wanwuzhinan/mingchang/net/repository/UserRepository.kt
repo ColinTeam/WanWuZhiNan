@@ -6,20 +6,20 @@ import com.comm.net_work.entity.ApiResponse
 import com.comm.net_work.gson.GsonManager
 import com.ssm.comm.data.VersionData
 import com.ssm.comm.utils.LogUtils
-import com.wanwuzhinan.mingchang.data.CityData
 import com.wanwuzhinan.mingchang.data.CourseStudyData
 import com.wanwuzhinan.mingchang.data.ExchangeCodeData
 import com.wanwuzhinan.mingchang.data.ExchangeListData
 import com.wanwuzhinan.mingchang.data.GoodsInfoData
-import com.wanwuzhinan.mingchang.data.GradeData
 import com.wanwuzhinan.mingchang.data.MedalListData
 import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.data.RankHomeData
 import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.data.TextDescriptionData
+import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
+import com.wanwuzhinan.mingchang.entity.GradeInfo
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.repository.comm.CommRepository
@@ -56,12 +56,12 @@ class UserRepository : CommRepository() {
 
     //选择城市
     suspend fun getAllRegion(
-    ): ApiResponse<CityData> {
+    ): ApiResponse<CityInfo> {
         return executeHttp { mService.getAllRegion() }
     }
 
     //获取年级
-    suspend fun getAllGrade(pid: Int = 16): ApiResponse<GradeData> {
+    suspend fun getAllGrade(pid: Int = 16): ApiResponse<GradeInfo> {
         return executeHttp { mService.getAllGrade(pid) }
     }
 
@@ -72,16 +72,14 @@ class UserRepository : CommRepository() {
 
     //音频视频科目列表
     suspend fun courseSubjectList(
-        id: String,
-        need_lesson: Int
+        id: String, need_lesson: Int
     ): ApiResponse<ApiInfoResponse<SubjectListData>> {
         return executeHttp { mService.courseSubjectList(id, need_lesson) }
     }
 
     //音频视频科目季度列表
     suspend fun courseQuarterList(
-        lesson_subject_id: String,
-        need_lesson: Int
+        lesson_subject_id: String, need_lesson: Int
     ): ApiResponse<ApiListResponse<SubjectListData>> {
         return executeHttp { mService.courseQuarterList(lesson_subject_id, need_lesson) }
     }
@@ -108,9 +106,7 @@ class UserRepository : CommRepository() {
 
     //学习课程 记录
     suspend fun courseStudy(
-        lesson_id: String,
-        start_second: Int,
-        end_second: Int
+        lesson_id: String, start_second: Int, end_second: Int
     ): ApiResponse<CourseStudyData> {
         return executeHttp { mService.courseStudy(lesson_id, start_second, end_second) }
     }
@@ -145,8 +141,7 @@ class UserRepository : CommRepository() {
     }
 
     suspend fun questionPageDetail(
-        id: String,
-        question_id: String
+        id: String, question_id: String
     ): ApiResponse<ApiInfoResponse<QuestionListData>> {
         return executeHttp { mService.questionPageDetail(id, question_id) }
     }
@@ -176,18 +171,13 @@ class UserRepository : CommRepository() {
     }
 
     suspend fun feedbackAdd(
-        typeid: Int,
-        content: String,
-        photos: String,
-        version_name: String
+        typeid: Int, content: String, photos: String, version_name: String
     ): ApiResponse<MutableList<String>> {
         return executeHttp { mService.feedbackAdd(typeid, content, photos, version_name) }
     }
 
     suspend fun editAddress(
-        contact_name: String,
-        contact_address: String,
-        contact_phone: String
+        contact_name: String, contact_address: String, contact_phone: String
     ): ApiResponse<MutableList<String>> {
         return executeHttp { mService.editAddress(contact_name, contact_address, contact_phone) }
     }
@@ -227,15 +217,13 @@ class UserRepository : CommRepository() {
             //调用enqueue方法异步返回结果
             call.enqueue(object : retrofit2.Callback<ResponseBody> {
                 override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
+                    call: Call<ResponseBody>, response: Response<ResponseBody>
                 ) {
                     try {
                         val result = response.body()!!.string()
                         LogUtils.e("result===================>${result}")
-                        val response =
-                            GsonManager.get().getGson()
-                                .fromJson(result, TextDescriptionData::class.java)
+                        val response = GsonManager.get().getGson()
+                            .fromJson(result, TextDescriptionData::class.java)
                         if (response.code == 200) {
                             EaseThreadManager.getInstance().runOnMainThread {
                                 hideLoading()

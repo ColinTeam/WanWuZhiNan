@@ -19,13 +19,19 @@ const val HTTP_ACTION_LOGIN_PWD = 2
 const val HTTP_ACTION_LOGIN_FIND_PWD = 3
 const val HTTP_LOGIN_DEVICE_PHONE = 1
 const val HTTP_LOGIN_DEVICE_TABLET = 2
+const val HTTP_SUCCESS = 0
+const val HTTP_CONFIRM = 9
+const val HTTP_TOKEN_ERROR = 4
+const val HTTP_TOKEN_EMPTY = 2
 
 class SmsCodeResponse() : AppResponse<String>()
 class RegisterResponse() : AppResponse<RegisterData>()
-class UserInfoResponse() : AppResponse<UserInfo>()
+class UserInfoResponse() : AppResponse<UserData>()
 class ConfigDataResponse() : AppResponse<Config>()
 class LessonSubjectGroupResponse() : AppResponse<LessonSubjectGroup>()
 class LessonInfoResponse() : AppResponse<LessonInfo>()
+class CityInfoResponse() : AppResponse<CityInfo>()
+class GradeResponse() : AppResponse<GradeInfo>()
 
 data class LessonInfo(
     val info: MediaInfo
@@ -124,20 +130,29 @@ data class PhotosInfo(
     val path: String = "", val sort: String = "", var isShow: Boolean = false
 ) : BaseModel()
 
+data class UserData(val info: UserInfo)
+
 data class UserInfo(
-    val id: String = "",//
-    val headimg: String = "",//
-    val account: String = "",//
-    val truename: String = "",//
-    val nickname: String = "",//
-    val sex: String = "",//
-    val province_name: String = "",//
-    val city_name: String = "",//
-    val area_name: String = "",//
-    val school_name: String = "",//
-    val grade_name: String = "",//
-    val question_count_error: Int = 0, val question_compass: Int = 0
+    val account: String = "",
+    val area_name: String = "",
+    val city_name: String = "",
+    val contact_address: String = "",
+    val contact_name: String = "",
+    val contact_phone: String = "",
+    val create_time: Int = 0,
+    val grade_name: String = "",
+    val headimg: String = "",
+    val id: Int = 0,
+    val nickname: String = "",
+    val province_name: String = "",
+    val question_compass: Int = 0,
+    val question_count_error: Int = 0,
+    val school_name: String = "",
+    val sex: String = "",
+    val truename: String = ""
 ) : BaseModel()
+
+// {"code":0,"msg":"用户信息","data":{"info":{"id":2573,"account":"17721919249","headimg":"https:\/\/s.wanwuzhinan.top\/upload\/20250213\/07420263f3d58e477ba99e90cfee06fb.png","truename":"急急急","nickname":"急急急","sex":"女生","province_name":"北京","city_name":"北京市","area_name":"东城区","school_name":"","grade_name":"中班","question_compass":0,"contact_name":"","contact_phone":"","contact_address":"","create_time":1746852131,"question_count_error":0}}}
 
 
 data class Config(
@@ -256,3 +271,18 @@ data class DataBean(
 data class SmsCode(var code: String = "")
 
 data class RegisterData(val token: String = "", val user_id: String = "")
+
+
+data class CityInfo(
+    val list: List<Children>
+) : BaseModel()
+
+data class GradeInfo(
+    var listArr: List<String>
+) : BaseModel()
+
+data class Children(
+    val children: List<Children> = emptyList<Children>(),
+    val value: Int = 0,
+    val label: String = "-"
+)

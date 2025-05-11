@@ -3,7 +3,6 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelStore
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -16,7 +15,9 @@ import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.TabBean
 import com.wanwuzhinan.mingchang.databinding.FragmentSettingTabBinding
 import com.wanwuzhinan.mingchang.ui.HomeActivity.Companion.EXTRAS_POSITION
-import com.wanwuzhinan.mingchang.vm.HomeViewModel
+import com.wanwuzhinan.mingchang.ui.phone.fra.ExchangeCourseFragment
+import com.wanwuzhinan.mingchang.ui.phone.fra.ReportFragment
+import com.wanwuzhinan.mingchang.vm.UserInfoViewModel
 
 /**
  * Author:ColinLu
@@ -25,7 +26,7 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  *
  * Des   :AudioFragment
  */
-class SettingTabFragment : AppFragment<FragmentSettingTabBinding, HomeViewModel>() {
+class SettingTabFragment : AppFragment<FragmentSettingTabBinding, UserInfoViewModel>() {
     private var tabAdapter: SettingTabAdapter? = null
     private var fragmentAdapter: TabFragmentAdapter? = null
 
@@ -49,10 +50,6 @@ class SettingTabFragment : AppFragment<FragmentSettingTabBinding, HomeViewModel>
         }
     }
 
-    override fun bindViewModelStore(): ViewModelStore {
-        return requireActivity().viewModelStore
-    }
-
     private fun getTabList(): List<TabBean> {
         val list = arrayListOf<TabBean>()
         val title = resources.getStringArray(R.array.setting_tab_title)
@@ -69,71 +66,29 @@ class SettingTabFragment : AppFragment<FragmentSettingTabBinding, HomeViewModel>
     }
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+        val position =
+            savedInstanceState?.getInt(EXTRAS_POSITION, 0) ?: bundle?.getInt(EXTRAS_POSITION, 0)
+            ?: 0
+        viewModel.tabPosition(position)
         val tabs = getTabList()
         tabAdapter = SettingTabAdapter()
         tabAdapter!!.submitList(tabs)
         tabAdapter!!.onItemClickListener = { v, it ->
-            {
-                Log.e("selected onItemClickListener $it")
-                when (it.title) {
-                    tabs[0] -> selected(0)
-                    tabs[1] -> selected(1)
-                    tabs[3] -> selected(3)
-                    tabs[2] -> {
-                        WebFragment.navigate(
-                            this@SettingTabFragment,
-                            url = ConfigApp.VIDEO_INTRODUCTION,
-                            title = it.title.toString()
-                        )
-                    }
-
-                    tabs[4] -> {
-                        findNavController().navigate(R.id.action_toSettingOther)
-                    }
-                }
-            }
+            val position = v.tag as Int
+            viewModel.tabPosition(position)
         }
-//        tabAdapter.setOnDebouncedItemClick { adapter, view, position ->
-//            {
-//                Log.e("selected setOnDebouncedItemClick $position")
-//            }
-//        }
-
-//        tabAdapter!!.setOnDebouncedItemClick { _, view, position ->
-//            {
-//                startVibrator(requireActivity())
-//                Log.e("selected setOnDebouncedItemClick $position")
-//                when (position) {
-//                    0, 1, 3 -> {
-////                        selected(position)
-//                        tabAdapter!!.selected = position
-//                        viewBinding.pager.setCurrentItem(position, false)
-//                    }
-//
-//                    2 -> {//企业介绍
-//                        WebFragment.navigate(
-//                            this@SettingTabFragment,
-//                            url = ConfigApp.VIDEO_INTRODUCTION
-//                        )
-//                    }
-//
-//                    4 -> {//用户反馈
-//                        findNavController().navigate(R.id.action_toSettingOther)
-//                    }
-//                }
-//            }
-//        }
         viewBinding.list.adapter = tabAdapter
         fragmentAdapter = TabFragmentAdapter(
             this, listOf(
                 UserInfoFragment.newInstance(),
-                UserInfoFragment.newInstance(),
-                UserInfoFragment.newInstance(),
+                ExchangeCourseFragment.instance,
+                ReportFragment.instance,
             )
         )
         viewBinding.pager.apply {
-            isUserInputEnabled = false  // 禁用用户滑动
+            isUserInputEnabled = false
             adapter = fragmentAdapter
+            offscreenPageLimit = fragmentAdapter!!.itemCount
         }
     }
 
@@ -144,25 +99,34 @@ class SettingTabFragment : AppFragment<FragmentSettingTabBinding, HomeViewModel>
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            selected(savedInstanceState.getInt(EXTRAS_POSITION, 0))
-        } else {
-            selected(bundle?.getInt(EXTRAS_POSITION, 0) ?: 0)
+        viewModel.apply {
+            tabPosition.observe {
+                selected(it)
+            }
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(EXTRAS_POSITION, tabAdapter?.selected ?: 0)
+        val position = tabAdapter?.selected ?: 0
+        outState.putInt(EXTRAS_POSITION, position)
     }
 
     private fun selected(position: Int) {
         Log.e("selected $position")
         tabAdapter!!.selected = position
         if (position == 3) {
-            viewBinding.pager.setCurrentItem(2, true)
+            viewBinding.pager.setCurrentItem(2, false)
+        } else if (position == 2) {
+            WebFragment.navigate(
+                this@SettingTabFragment,
+                url = ConfigApp.VIDEO_INTRODUCTION,
+                title = tabAdapter!!.items[position].title.toString()
+            )
+        } else if (position == 4) {
+            findNavController().navigate(R.id.action_toSettingOther)
         } else {
-            viewBinding.pager.setCurrentItem(position, true)
+            viewBinding.pager.setCurrentItem(position, false)
         }
     }
 }

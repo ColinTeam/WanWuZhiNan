@@ -17,9 +17,9 @@ import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.media.MediaManager
 import com.ssm.comm.ui.base.BaseFragment
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.GradeData
-import com.wanwuzhinan.mingchang.data.ProvinceListData
 import com.wanwuzhinan.mingchang.databinding.FragmentEditFileBinding
+import com.wanwuzhinan.mingchang.entity.Children
+import com.wanwuzhinan.mingchang.entity.GradeInfo
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
@@ -30,7 +30,7 @@ import java.io.File
 
 //
 class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(UserViewModel()) {
-    var mAddressList: List<ProvinceListData>? = null
+    var mAddressList: List<Children>? = null
     var mProvinceName = ""
     var mCityName = ""
     var mAreaName = ""
@@ -71,7 +71,6 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                 }
                 mDataBinding.tvGrade.text = mInfo.grade_name
                 selectSex(mInfo.sex)
-                mDataBinding.tvMan.isSelected
                 changeButtonBackground()
             }
         }
@@ -250,7 +249,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
 
     }
 
-    fun showGradeDialog(data: GradeData?) {
+    fun showGradeDialog(data: GradeInfo?) {
         val list = data?.listArr ?: return
         ChooseDialog.newInstance(getString(R.string.choose_title_grade), list).apply {
             sure = {

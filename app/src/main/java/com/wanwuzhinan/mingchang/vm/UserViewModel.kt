@@ -5,19 +5,19 @@ import com.comm.net_work.entity.ApiInfoResponse
 import com.comm.net_work.entity.ApiListResponse
 import com.ssm.comm.data.VersionData
 import com.ssm.comm.ui.base.BaseViewModel
-import com.wanwuzhinan.mingchang.data.CityData
 import com.wanwuzhinan.mingchang.data.CourseStudyData
 import com.wanwuzhinan.mingchang.data.ExchangeCodeData
 import com.wanwuzhinan.mingchang.data.ExchangeListData
 import com.wanwuzhinan.mingchang.data.GoodsInfoData
-import com.wanwuzhinan.mingchang.data.GradeData
 import com.wanwuzhinan.mingchang.data.MedalListData
 import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.data.RankHomeData
 import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
+import com.wanwuzhinan.mingchang.entity.GradeInfo
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.repository.UserRepository
@@ -31,8 +31,8 @@ class UserViewModel : BaseViewModel<UserInfo, UserRepository>(UserRepository()) 
     val editUserInfoLiveData = com.ssm.comm.ext.StateMutableLiveData<MutableList<String>>()
     val getVersionLiveData = com.ssm.comm.ext.StateMutableLiveData<VersionData>()
     val uploadImgLiveData = com.ssm.comm.ext.StateMutableLiveData<UploadImgData>()
-    val allProvinceLiveData = com.ssm.comm.ext.StateMutableLiveData<CityData>()
-    val getAllGradeLiveData = com.ssm.comm.ext.StateMutableLiveData<GradeData>()
+    val allProvinceLiveData = com.ssm.comm.ext.StateMutableLiveData<CityInfo>()
+    val getAllGradeLiveData = com.ssm.comm.ext.StateMutableLiveData<GradeInfo>()
     val courseSubjectLiveData = com.ssm.comm.ext.StateMutableLiveData<ApiListResponse<SubjectListData>>()
     val courseSubjectListLiveData = com.ssm.comm.ext.StateMutableLiveData<ApiInfoResponse<SubjectListData>>()
     val courseQuarterListLiveData = com.ssm.comm.ext.StateMutableLiveData<ApiListResponse<SubjectListData>>()

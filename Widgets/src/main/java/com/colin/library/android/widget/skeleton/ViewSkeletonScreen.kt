@@ -35,7 +35,7 @@ class ViewSkeletonScreen private constructor(builder: Builder) : ISkeletonScreen
         ) as ShimmerLayout
         shimmerLayout.setShimmerColor(shimmerColor)
         shimmerLayout.setShimmerAngle(shimmerAngle)
-        shimmerLayout.setAnimationDuration(shimmerDuration.toLong())
+        shimmerLayout.setShimmerAnimationDuration(shimmerDuration)
         val innerView =
             LayoutInflater.from(actualView.context).inflate(skeletonResID, shimmerLayout, false)
         innerView.layoutParams?.let { shimmerLayout.setLayoutParams(it) }

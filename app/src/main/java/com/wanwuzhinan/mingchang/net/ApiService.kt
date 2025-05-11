@@ -5,22 +5,25 @@ import com.comm.net_work.entity.ApiListResponse
 import com.comm.net_work.entity.ApiResponse
 import com.ssm.comm.data.VersionData
 import com.wanwuzhinan.mingchang.data.AddressData
-import com.wanwuzhinan.mingchang.data.CityData
+import com.wanwuzhinan.mingchang.data.AppResponse
 import com.wanwuzhinan.mingchang.data.CityListData
 import com.wanwuzhinan.mingchang.data.CourseStudyData
 import com.wanwuzhinan.mingchang.data.ExchangeCodeData
 import com.wanwuzhinan.mingchang.data.ExchangeListData
 import com.wanwuzhinan.mingchang.data.GoodsInfoData
-import com.wanwuzhinan.mingchang.data.GradeData
 import com.wanwuzhinan.mingchang.data.MedalListData
 import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.data.RankHomeData
 import com.wanwuzhinan.mingchang.data.RegisterData
 import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.entity.CityInfo
+import com.wanwuzhinan.mingchang.entity.CityInfoResponse
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigDataResponse
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
+import com.wanwuzhinan.mingchang.entity.GradeInfo
+import com.wanwuzhinan.mingchang.entity.GradeResponse
 import com.wanwuzhinan.mingchang.entity.LessonInfoResponse
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroupResponse
 import com.wanwuzhinan.mingchang.entity.RegisterResponse
@@ -96,6 +99,30 @@ interface ApiService {
         @Field("end_second") end_second: Int
     ): ApiResponse<CourseStudyData>
 
+    //获取全部省份
+    @POST("/api/District/indexPicker")
+    suspend fun newCityInfo(): CityInfoResponse
+
+    //获取年级
+    @FormUrlEncoded
+    @POST("/api/Fragment/index")
+    suspend fun newGrade(
+        @Field("pid") pid: Int
+    ): GradeResponse
+
+    //修改用户信息
+    @FormUrlEncoded
+    @POST("/api/User/edit")
+    suspend fun newEditUserInfo(@FieldMap map: HashMap<String, Any>): AppResponse<List<String>>
+
+
+    //获取年级
+    @FormUrlEncoded
+    @POST("/api/Fragment/index")
+    suspend fun getAllGrade(
+        @Field("pid") pid: Int
+    ): ApiResponse<GradeInfo>
+
     //获取验证码
     @FormUrlEncoded
     @POST("/api/SmsCode/send")
@@ -135,14 +162,8 @@ interface ApiService {
     //获取全部省份
     @POST("/api/District/indexPicker")
     suspend fun getAllRegion(
-    ): ApiResponse<CityData>
+    ): ApiResponse<CityInfo>
 
-    //获取年级
-    @FormUrlEncoded
-    @POST("/api/Fragment/index")
-    suspend fun getAllGrade(
-        @Field("pid") pid: Int
-    ): ApiResponse<GradeData>
 
     //上传图片
     @Multipart

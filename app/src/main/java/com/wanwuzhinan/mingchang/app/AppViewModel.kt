@@ -19,8 +19,8 @@ open class AppViewModel : ViewModel() {
     val service: ApiService by lazy {
         NetworkHelper.create(ApiService::class.java)
     }
-    protected val _showError: MutableLiveData<NetworkResult.Failure?> = MutableLiveData(null)
-    val showError: LiveData<NetworkResult.Failure?> = _showError
+    protected val _showToast: MutableLiveData<NetworkResult.Failure?> = MutableLiveData(null)
+    val showToast: LiveData<NetworkResult.Failure?> = _showToast
     protected val _showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val showLoading: LiveData<Boolean> = _showLoading
 

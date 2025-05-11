@@ -9,8 +9,8 @@ import com.colin.library.android.widget.wheel.ArrayWheelAdapter
 import com.colin.library.android.widget.wheel.TextFormatter
 import com.colin.library.android.widget.wheel.WheelView
 import com.wanwuzhinan.mingchang.app.AppDialogFragment
-import com.wanwuzhinan.mingchang.data.ProvinceListData
 import com.wanwuzhinan.mingchang.databinding.DialogChooseAreaBinding
+import com.wanwuzhinan.mingchang.entity.Children
 
 /**
  * Author:ColinLu
@@ -20,7 +20,7 @@ import com.wanwuzhinan.mingchang.databinding.DialogChooseAreaBinding
  * Des   :ChooseAreaDialog
  */
 class ChooseAreaDialog private constructor(
-    private val array: List<ProvinceListData>,
+    private val array: List<Children>,
     private val province: String? = null,
     private val city: String? = null,
     private val area: String? = null
@@ -39,7 +39,7 @@ class ChooseAreaDialog private constructor(
 
         @JvmStatic
         fun newInstance(
-            array: List<ProvinceListData>, province: String?, city: String?, area: String?
+            array: List<Children>, province: String?, city: String?, area: String?
         ): ChooseAreaDialog {
             val fragment = ChooseAreaDialog(array, province, city, area)
             fragment.height = 0.75f
@@ -132,7 +132,7 @@ class ChooseAreaDialog private constructor(
         initWheel(viewBinding.wheelArea, areaList, areaIndex)
     }
 
-    private fun initWheel(view: WheelView, data: List<ProvinceListData>, selected: Int) {
+    private fun initWheel(view: WheelView, data: List<Children>, selected: Int) {
         view.setAdapter(ArrayWheelAdapter(data))
         view.setTextFormatter(FormatArea())
         view.setSelectedPosition(selected, true)
@@ -141,7 +141,7 @@ class ChooseAreaDialog private constructor(
 
     private class FormatArea() : TextFormatter {
         override fun formatText(item: Any?): String {
-            return if (item is ProvinceListData) item.label else "-"
+            return if (item is Children) item.label else "-"
         }
 
     }

@@ -2,6 +2,7 @@ package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.colin.library.android.network.data.NetworkResult
 import com.colin.library.android.network.request
 import com.colin.library.android.utils.Constants
 import com.wanwuzhinan.mingchang.app.AppViewModel
@@ -36,7 +37,7 @@ class LoginViewModelV2 : AppViewModel() {
                 _configData.postValue(it)
             }
         }, failure = {
-            _showError.postValue(it)
+            _showToast.postValue(it)
         })
     }
 
@@ -45,9 +46,9 @@ class LoginViewModelV2 : AppViewModel() {
         request({
             service.newUserInfo()
         }, success = {
-            _userInfo.postValue(it)
+            _userInfo.postValue(it.info)
         }, failure = {
-            _showError.postValue(it)
+            _showToast.postValue(it)
         })
     }
 
@@ -57,10 +58,11 @@ class LoginViewModelV2 : AppViewModel() {
             delay(Constants.ONE_SECOND.toLong())
             service.newCode(phone)
         }, success = {
+            _showToast.postValue(NetworkResult.failure(0, "登录成功"))
             _showLoading.postValue(false)
             _smsSuccess.postValue(true)
         }, failure = {
-            _showError.postValue(it)
+            _showToast.postValue(it)
             _showLoading.postValue(false)
             _smsSuccess.postValue(false)
         })
@@ -72,10 +74,11 @@ class LoginViewModelV2 : AppViewModel() {
             delay(Constants.ONE_SECOND.toLong())
             service.newLogin(phone, code, type, action)
         }, success = {
+            _showToast.postValue(NetworkResult.failure(0, "登录成功"))
             _RegisterData.postValue(it)
             _showLoading.postValue(false)
         }, failure = {
-            _showError.postValue(it)
+            _showToast.postValue(it)
             _showLoading.postValue(false)
         })
     }
@@ -97,7 +100,7 @@ class LoginViewModelV2 : AppViewModel() {
             _RegisterData.postValue(it)
             _showLoading.postValue(false)
         }, failure = {
-            _showError.postValue(it)
+            _showToast.postValue(it)
             _showLoading.postValue(false)
         })
     }
