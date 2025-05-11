@@ -17,6 +17,8 @@ import android.util.AttributeSet
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.core.content.withStyledAttributes
+import androidx.core.graphics.withSave
+import androidx.core.graphics.withTranslation
 import androidx.core.view.isVisible
 import com.colin.library.android.widget.R
 import kotlin.math.abs
@@ -34,41 +36,35 @@ class ShimmerLayout @JvmOverloads constructor(
     private var localMaskBitmap: Bitmap? = null
     private var maskBitmap: Bitmap? = null
     private var canvasForShimmerMask: Canvas? = null
-    private var isAnimationReversed = false
-    private var isAnimationStarted = false
+    private var animationReversed = false
+    private var animationStarted = false
     private var autoStart = false
-    private var shimmerAnimationDuration = 0
+    private var animationDuration = 0
     private var shimmerColor = 0
     private var shimmerAngle = 0
     private var maskWidth = 0f
-    private var gradientCenterColorWidth = 0f
+    private var gradientWidth = 0f
     private var startAnimationPreDrawListener: ViewTreeObserver.OnPreDrawListener? = null
 
     init {
         this.setWillNotDraw(false)
         context.withStyledAttributes(attrs, R.styleable.ShimmerLayout, defStyle, 0) {
             shimmerAngle = getInteger(R.styleable.ShimmerLayout_shimmer_angle, 20)
-            shimmerAnimationDuration =
+            animationDuration =
                 getInteger(R.styleable.ShimmerLayout_shimmer_animation_duration, 1500)
             shimmerColor = getColor(
                 R.styleable.ShimmerLayout_shimmer_color, getColor(R.color.skeleton_shimmer_color)
             )
             autoStart = getBoolean(R.styleable.ShimmerLayout_shimmer_auto_start, false)
             maskWidth = getFloat(R.styleable.ShimmerLayout_shimmer_mask_width, 0.5f)
-            gradientCenterColorWidth =
-                getFloat(R.styleable.ShimmerLayout_shimmer_gradient_width, 0.1f)
-            isAnimationReversed =
+            gradientWidth = getFloat(R.styleable.ShimmerLayout_shimmer_gradient_width, 0.1f)
+            animationReversed =
                 getBoolean(R.styleable.ShimmerLayout_shimmer_reverse_animation, false)
         }
-
-
-
         this.setMaskWidth(this.maskWidth)
-        this.setGradientCenterColorWidth(this.gradientCenterColorWidth)
+        this.setgradientWidth(this.gradientWidth)
         this.setShimmerAngle(this.shimmerAngle)
-        if (this.autoStart && this.isVisible) {
-            this.startShimmerAnimation()
-        }
+        if (this.autoStart && this.isVisible) this.startShimmerAnimation()
     }
 
     override fun onDetachedFromWindow() {
@@ -77,7 +73,8 @@ class ShimmerLayout @JvmOverloads constructor(
     }
 
     override fun dispatchDraw(canvas: Canvas) {
-        if (this.isAnimationStarted && this.width > 0 && this.height > 0) {
+        if (!isVisible) return
+        if (this.animationStarted && this.width > 0 && this.height > 0) {
             this.dispatchDrawShimmer(canvas)
         } else {
             super.dispatchDraw(canvas)
@@ -86,17 +83,15 @@ class ShimmerLayout @JvmOverloads constructor(
 
     override fun setVisibility(visibility: Int) {
         super.setVisibility(visibility)
-        if (visibility == 0) {
-            if (this.autoStart) {
-                this.startShimmerAnimation()
-            }
+        if (visibility == VISIBLE) {
+            if (this.autoStart) this.startShimmerAnimation()
         } else {
             this.stopShimmerAnimation()
         }
     }
 
     fun startShimmerAnimation() {
-        if (!this.isAnimationStarted) {
+        if (!this.animationStarted) {
             if (this.width == 0) {
                 this.startAnimationPreDrawListener = object : ViewTreeObserver.OnPreDrawListener {
                     override fun onPreDraw(): Boolean {
@@ -109,7 +104,7 @@ class ShimmerLayout @JvmOverloads constructor(
             } else {
                 val animator: Animator = this.shimmerAnimation
                 animator.start()
-                this.isAnimationStarted = true
+                this.animationStarted = true
             }
         }
     }
@@ -128,12 +123,12 @@ class ShimmerLayout @JvmOverloads constructor(
     }
 
     fun setShimmerAnimationDuration(durationMillis: Int) {
-        this.shimmerAnimationDuration = durationMillis
+        this.animationDuration = durationMillis
         this.resetIfStarted()
     }
 
     fun setAnimationReversed(animationReversed: Boolean) {
-        this.isAnimationReversed = animationReversed
+        this.animationReversed = animationReversed
         this.resetIfStarted()
     }
 
@@ -163,21 +158,21 @@ class ShimmerLayout @JvmOverloads constructor(
         }
     }
 
-    fun setGradientCenterColorWidth(gradientCenterColorWidth: Float) {
-        if (!(gradientCenterColorWidth <= 0.0f) && !(1.0f <= gradientCenterColorWidth)) {
-            this.gradientCenterColorWidth = gradientCenterColorWidth
+    fun setgradientWidth(gradientWidth: Float) {
+        if (!(gradientWidth <= 0.0f) && !(1.0f <= gradientWidth)) {
+            this.gradientWidth = gradientWidth
             this.resetIfStarted()
         } else {
             throw IllegalArgumentException(
                 String.format(
-                    "gradientCenterColorWidth value must be higher than %d and less than %d", 0, 1
+                    "gradientWidth value must be higher than %d and less than %d", 0, 1
                 )
             )
         }
     }
 
     private fun resetIfStarted() {
-        if (this.isAnimationStarted) {
+        if (this.animationStarted) {
             this.resetShimmering()
             this.startShimmerAnimation()
         }
@@ -185,34 +180,32 @@ class ShimmerLayout @JvmOverloads constructor(
 
     private fun dispatchDrawShimmer(canvas: Canvas) {
         super.dispatchDraw(canvas)
-        this.localMaskBitmap = this.getMaskBitmap()
-        if (this.localMaskBitmap != null) {
-            if (this.canvasForShimmerMask == null) {
-                this.canvasForShimmerMask = Canvas(this.localMaskBitmap!!)
-            }
-
-            this.canvasForShimmerMask!!.drawColor(0, PorterDuff.Mode.CLEAR)
-            this.canvasForShimmerMask!!.save()
-            this.canvasForShimmerMask!!.translate((-this.maskOffsetX).toFloat(), 0.0f)
-            super.dispatchDraw(this.canvasForShimmerMask!!)
-            this.canvasForShimmerMask!!.restore()
-            this.drawShimmer(canvas)
-            this.localMaskBitmap = null
+        this.localMaskBitmap = this.getMaskBitmap() ?: return
+        if (this.canvasForShimmerMask == null) {
+            this.canvasForShimmerMask = Canvas(this.localMaskBitmap!!)
         }
+
+        this.canvasForShimmerMask!!.drawColor(0, PorterDuff.Mode.CLEAR)
+        this.canvasForShimmerMask!!.withSave {
+            canvasForShimmerMask!!.translate((-maskOffsetX).toFloat(), 0.0f)
+            super.dispatchDraw(canvasForShimmerMask!!)
+            canvasForShimmerMask!!
+        }
+        this.drawShimmer(canvas)
+        this.localMaskBitmap = null
     }
 
     private fun drawShimmer(destinationCanvas: Canvas) {
         this.createShimmerPaint()
-        destinationCanvas.save()
-        destinationCanvas.translate(this.maskOffsetX.toFloat(), 0.0f)
-        destinationCanvas.drawRect(
-            this.maskRect!!.left.toFloat(),
-            0.0f,
-            this.maskRect!!.width().toFloat(),
-            this.maskRect!!.height().toFloat(),
-            this.gradientTexturePaint!!
-        )
-        destinationCanvas.restore()
+        destinationCanvas.withTranslation(this.maskOffsetX.toFloat(), 0.0f) {
+            drawRect(
+                maskRect!!.left.toFloat(),
+                0.0f,
+                maskRect!!.width().toFloat(),
+                maskRect!!.height().toFloat(),
+                gradientTexturePaint!!
+            )
+        }
     }
 
     private fun resetShimmering() {
@@ -223,7 +216,7 @@ class ShimmerLayout @JvmOverloads constructor(
 
         this.maskAnimator = null
         this.gradientTexturePaint = null
-        this.isAnimationStarted = false
+        this.animationStarted = false
         this.releaseBitMaps()
     }
 
@@ -246,8 +239,8 @@ class ShimmerLayout @JvmOverloads constructor(
     private fun createShimmerPaint() {
         if (this.gradientTexturePaint == null) {
             val edgeColor = this.reduceColorAlphaValueToZero(this.shimmerColor)
-            val shimmerLineWidth = (this.getWidth() / 2).toFloat() * this.maskWidth
-            val yPosition = if (0 <= this.shimmerAngle) this.getHeight().toFloat() else 0.0f
+            val shimmerLineWidth = (this.width / 2).toFloat() * this.maskWidth
+            val yPosition = if (0 <= this.shimmerAngle) this.height.toFloat() else 0.0f
             val gradient = LinearGradient(
                 0.0f,
                 yPosition,
@@ -262,11 +255,12 @@ class ShimmerLayout @JvmOverloads constructor(
             val maskBitmapShader =
                 BitmapShader(this.localMaskBitmap!!, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
             val composeShader = ComposeShader(gradient, maskBitmapShader, PorterDuff.Mode.DST_IN)
-            this.gradientTexturePaint = Paint()
-            this.gradientTexturePaint!!.isAntiAlias = true
-            this.gradientTexturePaint!!.isDither = true
-            this.gradientTexturePaint!!.isFilterBitmap = true
-            this.gradientTexturePaint!!.setShader(composeShader)
+            this.gradientTexturePaint = Paint().apply {
+                isAntiAlias = true
+                isDither = true
+                isFilterBitmap = true
+                setShader(composeShader)
+            }
         }
     }
 
@@ -289,12 +283,12 @@ class ShimmerLayout @JvmOverloads constructor(
 
                 val shimmerBitmapWidth = this.maskRect!!.width()
                 val shimmerAnimationFullLength = animationToX - animationFromX
-                this.maskAnimator = if (this.isAnimationReversed) ValueAnimator.ofInt(
+                this.maskAnimator = if (this.animationReversed) ValueAnimator.ofInt(
                     *intArrayOf(
                         shimmerAnimationFullLength, 0
                     )
                 ) else ValueAnimator.ofInt(*intArrayOf(0, shimmerAnimationFullLength))
-                this.maskAnimator!!.setDuration(this.shimmerAnimationDuration.toLong())
+                this.maskAnimator!!.setDuration(this.animationDuration.toLong())
                 this.maskAnimator!!.repeatCount = -1
                 this.maskAnimator!!.addUpdateListener(object :
                     ValueAnimator.AnimatorUpdateListener {
@@ -347,19 +341,9 @@ class ShimmerLayout @JvmOverloads constructor(
             val colorDistribution = FloatArray(4)
             colorDistribution[0] = 0.0f
             colorDistribution[3] = 1.0f
-            colorDistribution[1] = 0.5f - this.gradientCenterColorWidth / 2.0f
-            colorDistribution[2] = 0.5f + this.gradientCenterColorWidth / 2.0f
+            colorDistribution[1] = 0.5f - this.gradientWidth / 2.0f
+            colorDistribution[2] = 0.5f + this.gradientWidth / 2.0f
             return colorDistribution
         }
 
-    companion object {
-        private const val DEFAULT_ANIMATION_DURATION = 1500
-        private const val DEFAULT_ANGLE: Byte = 20
-        private val MIN_ANGLE_VALUE: Byte = -45
-        private const val MAX_ANGLE_VALUE: Byte = 45
-        private const val MIN_MASK_WIDTH_VALUE: Byte = 0
-        private const val MAX_MASK_WIDTH_VALUE: Byte = 1
-        private const val MIN_GRADIENT_CENTER_COLOR_WIDTH_VALUE: Byte = 0
-        private const val MAX_GRADIENT_CENTER_COLOR_WIDTH_VALUE: Byte = 1
-    }
 }

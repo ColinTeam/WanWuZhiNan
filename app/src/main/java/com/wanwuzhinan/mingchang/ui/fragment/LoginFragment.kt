@@ -1,10 +1,9 @@
 package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
@@ -66,9 +65,9 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
             etPhone.setText(MMKVUtils.decodeString(Constant.USER_MOBILE).toString())
-            etPhone.addTextChangedListener(textWatcher)
-            etSMS.addTextChangedListener(textWatcher)
-            etPassword.addTextChangedListener(textWatcher)
+            etPhone.doAfterTextChanged { updateButton() }
+            etSMS.doAfterTextChanged { updateButton() }
+            etPassword.doAfterTextChanged { updateButton() }
             onClick(
                 tvSmsTips,
                 tvPwdTips,
@@ -258,20 +257,6 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
             viewModel.loginByPassword(phone, null, text, text, HTTP_ACTION_LOGIN_PWD, type, 0)
         }
 
-    }
-
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-            updateButton()
-        }
     }
 
     private fun startCountDown() {

@@ -3,10 +3,10 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelStore
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.colin.library.android.utils.Log
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.SettingTabAdapter
 import com.wanwuzhinan.mingchang.adapter.TabFragmentAdapter
@@ -29,6 +29,9 @@ import com.wanwuzhinan.mingchang.vm.UserInfoViewModel
 class SettingTabFragment : AppFragment<FragmentSettingTabBinding, UserInfoViewModel>() {
     private var tabAdapter: SettingTabAdapter? = null
     private var fragmentAdapter: TabFragmentAdapter? = null
+    override fun bindViewModelStore(): ViewModelStore {
+        return requireActivity().viewModelStore
+    }
 
     companion object {
         @JvmStatic
@@ -113,7 +116,6 @@ class SettingTabFragment : AppFragment<FragmentSettingTabBinding, UserInfoViewMo
     }
 
     private fun selected(position: Int) {
-        Log.e("selected $position")
         tabAdapter!!.selected = position
         if (position == 3) {
             viewBinding.pager.setCurrentItem(2, false)

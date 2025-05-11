@@ -1,9 +1,7 @@
 package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import androidx.fragment.app.Fragment
+import androidx.core.widget.doAfterTextChanged
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.countDown
@@ -36,17 +34,6 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModelV2>(
         const val PWD_LENGTH_MIN = 6
         const val PWD_LENGTH_MAX = 20
         const val EXTRA_LOGIN_STATE = "EXTRA_LOGIN_STATE"
-
-        @JvmStatic
-        fun navigate(fragment: Fragment, login: Boolean = false) {
-//            fragment.findNavController().apply {
-//                navigate(
-//                    R.id.action_toPassword, Bundle().apply {
-//                        putBoolean(EXTRA_LOGIN_STATE, login)
-//                    }, NavOptions.Builder().build()
-//                )
-//            }
-        }
     }
 
     private var isLogin = false
@@ -56,10 +43,11 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModelV2>(
         isLogin = ConfigApp.token.isNotEmpty() && phone.isNotEmpty()
         viewBinding.apply {
             etPhone.setText(if (isLogin) phone else "")
-            etPhone.addTextChangedListener(textWatcher)
-            etSMS.addTextChangedListener(textWatcher)
-            etPassword.addTextChangedListener(textWatcher)
-            etPasswordConfirm.addTextChangedListener(textWatcher)
+            etPhone.doAfterTextChanged { updateButton() }
+            etSMS.doAfterTextChanged { updateButton() }
+            etPassword.doAfterTextChanged { updateButton() }
+            etPasswordConfirm.doAfterTextChanged { updateButton() }
+
             onClick(tvSmsSend, btConfirm) {
                 when (it) {
                     tvSmsSend -> startSendSms(etPhone.text.toString().trim())
@@ -112,21 +100,6 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModelV2>(
         viewModel.getConfig()
     }
 
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-            updateButton()
-        }
-
-    }
-
     private fun updateButton() {
         viewBinding.apply {
             val enable = etPhone.text.toString().trim().isNotEmpty()
@@ -157,6 +130,14 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModelV2>(
         val pwd = viewBinding.etPassword.text.toString().trim()
         if (pwd.isEmpty()) {
             ToastUtil.show(R.string.login_toast_pwd)
+            return
+        }
+        if (pwd.length < PWD_LENGTH_MIN) {
+            ToastUtil.show(R.string.login_toast_pwd_min)
+            return
+        }
+        if (pwd.length > PWD_LENGTH_MAX) {
+            ToastUtil.show(R.string.login_toast_pwd_max)
             return
         }
         val confirmPWD = viewBinding.etPasswordConfirm.text.toString().trim()

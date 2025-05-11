@@ -3,6 +3,7 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
+import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
@@ -30,6 +31,7 @@ import com.wanwuzhinan.mingchang.vm.UserInfoViewModel
 class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>() {
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
+            etNick.doAfterTextChanged { updateButton() }
             onClick(
                 ivAvatar, tvMan, tvWoman, tvArea, tvGrade, tvPassword, btSave
             ) {
@@ -145,6 +147,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
             val area = getArea(info.province_name, info.city_name, info.area_name)
             if (area != tvArea.text.toString().trim()) {
                 viewBinding.btSave.isSelected = true
+                return@apply
             }
             viewBinding.btSave.isSelected = false
 
@@ -224,7 +227,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
     private var areaName: String? = null
     private fun updateUserInfo() {
         var name = viewBinding.etNick.text.toString().trim()
-        var sex = viewBinding.tvSex.tag ?: ""
+        var sex = viewBinding.tvSex.tag as? String ?: ""
         var school = viewBinding.tvSchool.text.toString().trim()
         var grade = viewBinding.tvGrade.text.toString().trim()
 
@@ -237,8 +240,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
             return
         }
 
-        val map = HashMap<String, Any>()
-//        map["headimg"] = mHeadImg
+        val map = HashMap<String, String>()
         map["province_name"] = provinceName ?: ""
         map["city_name"] = cityName ?: ""
         map["area_name"] = areaName ?: ""
@@ -247,9 +249,6 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
         map["nickname"] = name
         map["school_name"] = school
         map["grade_name"] = grade
-        map.forEach {
-            Log.e("map key:${it.key} value:${it.value}")
-        }
         viewModel.editUserInfo(map)
     }
 

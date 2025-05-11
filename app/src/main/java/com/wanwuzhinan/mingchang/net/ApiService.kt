@@ -113,7 +113,7 @@ interface ApiService {
     //修改用户信息
     @FormUrlEncoded
     @POST("/api/User/edit")
-    suspend fun newEditUserInfo(@FieldMap map: HashMap<String, Any>): AppResponse<List<String>>
+    suspend fun newEditUserInfo(@FieldMap map: HashMap<String, String>): AppResponse<List<String>>
 
 
     //获取年级

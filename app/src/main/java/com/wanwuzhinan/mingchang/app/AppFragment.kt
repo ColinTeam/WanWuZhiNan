@@ -60,10 +60,6 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
         super.onStart()
         viewModel.apply {
             showToast.observe {
-//                if ((it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) && !ConfigApp.token.isEmpty()) {
-//                    Log.e("$it ${ConfigApp.token}")
-//                    return@observe
-//                }
                 ToastUtil.show(it.msg)
                 if (it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) {
                     navigate(R.id.action_toLogin)

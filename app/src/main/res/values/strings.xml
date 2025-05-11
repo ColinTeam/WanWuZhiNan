@@ -25,6 +25,8 @@
     <string name="login_toast_short">请正确输入手机号码</string>
     <string name="login_toast_sms">请输入验证码</string>
     <string name="login_toast_pwd">请输入密码</string>
+    <string name="login_toast_pwd_min">输入密码长度不能小于6位</string>
+    <string name="login_toast_pwd_max">输入密码长度不能大于20位</string>
     <string name="login_toast_same">两次输入密码不一致</string>
     <string name="login_toast_protocol">请阅读并同意《用户协议》《隐私协议》和《儿童隐私政策》</string>
     <!--主页-->

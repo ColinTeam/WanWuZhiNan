@@ -60,7 +60,7 @@ class UserInfoViewModel : AppViewModel() {
         })
     }
 
-    fun editUserInfo(map: HashMap<String, Any>) {
+    fun editUserInfo(map: HashMap<String, String>) {
         request({
             service.newEditUserInfo(map)
         }, success = {
