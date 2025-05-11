@@ -10,7 +10,7 @@ import com.colin.library.android.utils.ext.dp
  *
  * Des   :常量
  */
-interface Constants {
+interface Constants : com.colin.library.android.utils.Constants {
     companion object {
 
         private val dp_7 = 7F.dp()

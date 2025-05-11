@@ -31,7 +31,7 @@ class MediaViewModel : AppViewModel() {
 
     fun getAudioLessonSubjectGroup(groupID: Int = ConfigApp.TYPE_AUDIO) {
         request({
-            service.newAudioLessonSubjectGroup(groupID)
+            service.newMediaLessonSubjectGroup(groupID)
         }, success = {
             _AudioLessonSubjectGroup.postValue(it)
         }, failure = {

@@ -8,7 +8,6 @@ package com.colin.library.android.widget.wheel
  * Des   :Adapter
  */
 abstract class BaseAdapter<T>(data: List<T>? = null) {
-
     private val dataList: MutableList<T> = mutableListOf()
     private var isRangeData: Boolean = false
     private val rangeDataList: MutableList<T> by lazy { mutableListOf<T>() }

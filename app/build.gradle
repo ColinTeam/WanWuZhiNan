@@ -5,7 +5,7 @@ plugins {
 }
 
 static def releaseTime() {
-    return new Date().format("yyMMdd", TimeZone.getTimeZone("UTC"))
+    return new Date().format("yyMMddHHmmSSSS", TimeZone.getTimeZone("UTC"))
 }
 
 android {
@@ -51,9 +51,9 @@ android {
             def fileName
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 if (variant.buildType.name == 'release') {//如果是release包
-                    fileName = "wwzn(release)_${defaultConfig.versionName}_${releaseTime()}.apk"
+                    fileName = "wwzn${defaultConfig.versionName}_${releaseTime()}_release.apk"
                 } else if (variant.buildType.name == 'debug') {//如果是debug包
-                    fileName = "wwzn(debug)_${defaultConfig.versionName}_${releaseTime()}.apk"
+                    fileName = "wwzn${defaultConfig.versionName}_${releaseTime()}_debug.apk"
                 }
                 outputFileName = fileName
             }
@@ -204,13 +204,12 @@ dependencies {
 
     //骨架 skeleton
 //    implementation 'com.ethanhua:skeleton:1.1.2'
-    implementation 'io.supercharge:shimmerlayout:2.1.0'
+//    implementation 'io.supercharge:shimmerlayout:2.1.0'
     implementation libs.androidx.lifecycle.runtime.ktx
     //视频播放
     implementation libs.liteavsdk.player.premium
     implementation libs.gsyvideoplayer
     implementation 'com.github.getActivity:ShapeView:6.0'
-
 
 //    testImplementation rootProject.ext.dependVersion.junit
 //    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit

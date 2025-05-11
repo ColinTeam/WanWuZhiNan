@@ -121,12 +121,6 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.getConfig()
-        if (bundle == null) {
-            toAction(R.id.action_toSplash)
-        } else {
-            val position = bundle.getInt(EXTRAS_POSITION, 0)
-            toAction(bundle.getInt(Constant.EXTRAS_ACTION_ID, Constants.INVALID), position)
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

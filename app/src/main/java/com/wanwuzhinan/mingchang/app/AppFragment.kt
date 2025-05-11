@@ -20,7 +20,6 @@ import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_ERROR
 import com.wanwuzhinan.mingchang.receiver.ScreenChangedReceiver
 import com.wanwuzhinan.mingchang.ui.pop.LoadingDialog
 import com.wanwuzhinan.mingchang.utils.navigate
-import com.colin.library.android.widget.skeleton.ShimmerLayout
 import kotlinx.coroutines.Runnable
 import java.lang.reflect.ParameterizedType
 
@@ -52,6 +51,7 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
             viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     isEnabled = onBackPressed()
+                    Log.e("handleOnBackPressed$isEnabled")
                 }
             })
     }
@@ -111,7 +111,6 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
         inflater: LayoutInflater, container: ViewGroup?
     ): VB {
         try {
-            ShimmerLayout
             val clazz = getActualClass<VB>(0)
             val inflate = clazz.getDeclaredMethod(
                 "inflate",

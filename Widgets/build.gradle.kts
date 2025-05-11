@@ -2,7 +2,9 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
 }
+
 val PATH_LIBS = "${rootDir.absolutePath}/app/libs"
+
 android {
     namespace = "com.colin.library.android.widget"
     compileSdk = libs.versions.compileSdk.get().toInt()

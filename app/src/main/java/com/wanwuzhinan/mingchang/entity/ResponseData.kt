@@ -6,6 +6,7 @@ import com.wanwuzhinan.mingchang.data.AppResponse
 import com.wanwuzhinan.mingchang.data.QuestionListData
 import kotlinx.parcelize.Parcelize
 
+
 /**
  * Author:ColinLu
  * E-mail:945919945@qq.com
@@ -192,7 +193,7 @@ data class ConfigData(
 )
 
 data class LessonSubjectGroup(
-    val list: List<LessonSubject>? = null
+    val list: List<LessonSubject> = emptyList<LessonSubject>()
 )
 
 data class LessonSubject(
@@ -285,4 +286,36 @@ data class Children(
     val children: List<Children> = emptyList<Children>(),
     val value: Int = 0,
     val label: String = "-"
+
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardBg"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:shadowColor="#66000000"
+        android:shadowRadius="0.95"
+        app:cardCornerRadius="@dimen/margin_default_half">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBg"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/bg_main" />
+
+            <TextView
+                android:id="@+id/tv_number"
+                style="@style/text_white_14"
+                android:layout_width="@dimen/dp_0"
+                android:layout_margin="@dimen/dp_12"
+                android:text="No.11-18 共8节"
+                android:textFontWeight="400"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_first"
+                style="@style/text_white_14"
+                android:layout_width="@dimen/dp_0"
+                android:layout_marginTop="@dimen/dp_6"
+                android:text="第一季"
+                android:textFontWeight="600"
+                app:layout_constraintBottom_toTopOf="@+id/tv_number"
+                app:layout_constraintLeft_toLeftOf="@id/tv_number"
+                app:layout_constraintRight_toRightOf="@id/tv_number" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

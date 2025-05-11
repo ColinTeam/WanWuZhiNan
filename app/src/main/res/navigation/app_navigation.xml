@@ -37,6 +37,11 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_audio" />
     <fragment
+        android:id="@+id/fragment_video_home"
+        android:name="com.wanwuzhinan.mingchang.ui.fragment.VideoHomeFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_video_home" />
+    <fragment
         android:id="@+id/fragment_setting_tab"
         android:name="com.wanwuzhinan.mingchang.ui.fragment.SettingTabFragment"
         android:label="@string/app_name"
@@ -46,6 +51,7 @@
             android:defaultValue="0"
             app:argType="integer" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_setting_other"
         android:name="com.wanwuzhinan.mingchang.ui.fragment.SettingOtherFragment"
@@ -99,6 +105,9 @@
     <action
         android:id="@+id/action_toVideo"
         app:destination="@+id/fragment_video" />
+    <action
+        android:id="@+id/action_toVideoHome"
+        app:destination="@+id/fragment_video_home" />
     <action
         android:id="@+id/action_toSettingTab"
         app:destination="@+id/fragment_setting_tab" />

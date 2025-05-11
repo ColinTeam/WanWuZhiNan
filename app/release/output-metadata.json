@@ -11,10 +11,27 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1390,
-      "versionName": "1.3.9",
-      "outputFile": "wwzn(release)_1.3.9_250428.apk"
+      "versionCode": 1400,
+      "versionName": "1.4.0",
+      "outputFile": "wwzn(release)_1.4.0_25051112050029.apk"
     }
   ],
-  "elementType": "File"
+  "elementType": "File",
+  "baselineProfiles": [
+    {
+      "minApi": 28,
+      "maxApi": 30,
+      "baselineProfiles": [
+        "baselineProfiles/1/wwzn(release)_1.4.0_25051112050029.dm"
+      ]
+    },
+    {
+      "minApi": 31,
+      "maxApi": 2147483647,
+      "baselineProfiles": [
+        "baselineProfiles/0/wwzn(release)_1.4.0_25051112050029.dm"
+      ]
+    }
+  ],
+  "minSdkVersionForDexing": 27
 }

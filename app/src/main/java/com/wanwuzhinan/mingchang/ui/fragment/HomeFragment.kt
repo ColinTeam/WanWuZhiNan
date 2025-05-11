@@ -22,7 +22,6 @@ import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
-import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
 import com.wanwuzhinan.mingchang.ui.phone.RankActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
@@ -63,7 +62,6 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
                 when (it) {
                     tvSetting -> {
                         activity?.let {
-//                            SettingActivity.start(it)
                             SettingTabFragment.navigate(this@HomeFragment)
                         }
                     }
@@ -101,13 +99,15 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
 
                     ivThreeBg -> {
                         activity?.let {
-                            QuestionListAskActivity.start(it)
+//                            QuestionListAskActivity.start(it)
+                            findNavController().navigate(R.id.action_toVideoHome)
                         }
                     }
 
                     ivFourBg -> {
                         activity?.let {
                             QuestionListPracticeActivity.start(it)
+                            findNavController().navigate(R.id.action_toVideo)
                         }
                     }
                 }

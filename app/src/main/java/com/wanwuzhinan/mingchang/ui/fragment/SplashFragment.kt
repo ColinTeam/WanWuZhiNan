@@ -36,7 +36,6 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-
         viewBinding.ivBack.setOnTouchListener(MotionTouchLister())
         val path = "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.raw.splash1
         PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
