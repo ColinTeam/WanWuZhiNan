@@ -77,6 +77,13 @@ interface ApiService {
         @Field("group_id") group_id: Int
     ): LessonSubjectGroupResponse
 
+    //音频视频科目列表
+    @FormUrlEncoded
+    @POST("/api/LessonSubject/info")
+    suspend fun newLessonSubject(
+        @Field("id") id: String, @Field("need_lesson") need_lesson: Int
+    ): LessonSubjectGroupResponse
+
     //音频视频科目季度列表
     @FormUrlEncoded
     @POST("/api/LessonQuarter/index")

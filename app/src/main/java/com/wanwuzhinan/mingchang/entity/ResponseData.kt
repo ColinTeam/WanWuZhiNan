@@ -1,6 +1,7 @@
 package com.wanwuzhinan.mingchang.entity
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import com.ssm.comm.ui.base.BaseModel
 import com.wanwuzhinan.mingchang.data.AppResponse
 import com.wanwuzhinan.mingchang.data.QuestionListData
@@ -196,32 +197,56 @@ data class LessonSubjectGroup(
     val list: List<LessonSubject> = emptyList<LessonSubject>()
 )
 
+//
+//val id: String,//
+//val select: Boolean,//
+//val group_id: String,
+//val type_id: String,
+//val name: String,
+//val image: String,
+//val photos: String,
+//val content: String,
+//val sort: String,
+//val is_open: String,
+//val update_time: String,
+//val create_time: String,
+//val del: String,
+//val delName: String,
+//val delColor: String,
+//val photosArr: List<PhotosBean>,
+//val lessonList: List<Lesson>,
+//val group_idName: String,
+//val group_idColor: String,
+//val type_idName: String,
+//val lesson_quarterCount: String,
+//val lesson_subject_name: String,
+//val lessonCount: String,
+//val lessonCountStar: Int,
+//val lesson_quarterList: List<DataBean>
+
 data class LessonSubject(
-    val id: String,//
-    val select: Boolean,//
-    val group_id: String,
-    val type_id: String,
-    val name: String,
-    val image: String,
-    val photos: String,
-    val content: String,
-    val sort: String,
-    val is_open: String,
-    val update_time: String,
-    val create_time: String,
-    val del: String,
-    val delName: String,
-    val delColor: String,
-    val photosArr: List<PhotosBean>,
-    val lessonList: List<Lesson>,
-    val group_idName: String,
-    val group_idColor: String,
-    val type_idName: String,
-    val lesson_quarterCount: String,
-    val lesson_subject_name: String,
-    val lessonCount: String,
-    val lessonCountStar: Int,
-    val lesson_quarterList: List<DataBean>
+    @SerializedName("id") val id: Int = 0,
+    @SerializedName("content") val content: String = "",
+    @SerializedName("create_time") val createTime: Int = 0,
+    @SerializedName("del") val del: Int = 0,
+    @SerializedName("delColor") val delColor: String = "",
+    @SerializedName("delName") val delName: String = "",
+    @SerializedName("group_id") val groupId: Int = 0,
+    @SerializedName("group_idColor") val groupIdColor: String = "",
+    @SerializedName("group_idName") val groupIdName: String = "",
+    @SerializedName("image") val image: String = "",
+    @SerializedName("is_open") val isOpen: Int = 0,
+    @SerializedName("lessonCount") val lessonCount: Int = 0,
+    @SerializedName("lesson_quarterCount") val lessonQuarterCount: Int = 0,
+    @SerializedName("name") val name: String = "",
+    @SerializedName("photos") val photos: String = "",
+    @SerializedName("photosArr") val photo: List<Photo> = listOf(),
+    @SerializedName("lessonList") val lessons: List<Lesson> = listOf(),
+    @SerializedName("lesson_quarterList") val lessonQuarter: List<LessonQuarter> = listOf(),
+    @SerializedName("sort") val sort: Int = 0,
+    @SerializedName("type_id") val typeId: Int = 0,
+    @SerializedName("type_idName") val typeIdName: String = "",
+    @SerializedName("update_time") val updateTime: Int = 0
 )
 
 @Parcelize
@@ -245,14 +270,14 @@ data class Lesson(
     val questionsCount: Int
 ) : Parcelable
 
-data class PhotosBean(
+data class Photo(
     var path: String,//
     var title: String,//
     var desc: String,//
     var sort: String
 )
 
-data class DataBean(
+data class LessonQuarter(
     var id: String,//
     var lesson_subject_id: String,//
     var name: String,//
@@ -274,20 +299,28 @@ data class SmsCode(var code: String = "")
 data class RegisterData(val token: String = "", val user_id: String = "")
 
 
-data class CityInfo(
-    val list: List<Children>
-) : BaseModel()
+data class CityInfo(val list: List<Children>) : BaseModel()
 
-data class GradeInfo(
-    var listArr: List<String>
-) : BaseModel()
+data class GradeInfo(var listArr: List<String>) : BaseModel()
 
 data class Children(
     val children: List<Children> = emptyList<Children>(),
     val value: Int = 0,
     val label: String = "-"
-
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

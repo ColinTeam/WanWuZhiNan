@@ -8,6 +8,8 @@ import com.tencent.rtmp.TXVodPlayer
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentVideoHomeBinding
+import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
+import com.wanwuzhinan.mingchang.ext.visible
 import com.wanwuzhinan.mingchang.vm.MediaViewModel
 
 /**
@@ -18,34 +20,77 @@ import com.wanwuzhinan.mingchang.vm.MediaViewModel
  * Des   :VideoHomeFragment
  */
 class VideoHomeFragment : AppFragment<FragmentVideoHomeBinding, MediaViewModel>() {
-
+    private var groupID = 0
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+
         viewBinding.apply {
 //            playerView.setSuperPlayerListener(superPlayerListener)
 //            playerView.setPlayerViewCallback(superPlayerViewCallback)
         }
         viewModel.apply {
-            audioLessonSubjectGroup.observe {
-                Log.i("audioLessonSubjectGroup:$it")
+            mediaLessonSubjectGroup.observe {
+                Log.i("mediaLessonSubjectGroup:$it")
+                val groupSize = it.list.size
+                var position = getGroupPositionValue()
+                if (position >= groupSize) position = groupSize - 1
+                else if (position < 0) position = 0
+                updateGroupPosition(position)
             }
-            audioLessonQuarter.observe {
-                Log.i("audioLessonQuarter:$it")
+            groupPosition.observe {
+                Log.i("groupPosition:$it")
+                val group = getMediaLessonSubjectGroupValue() ?: return@observe
+                getMediaLessonQuarter(group.list[it].groupId, 1)
+                displayGroup(group)
             }
-            lessonInfo.observe {
-                Log.i("lessonInfo:$it")
+            mediaLessonQuarter.observe {
+                Log.i("mediaLessonQuarter:$it")
+                displayLesson(it)
             }
         }
     }
 
-    override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        viewModel.getAudioLessonSubjectGroup(ConfigApp.TYPE_VIDEO)
+    fun displayGroup(group: LessonSubjectGroup) {
 
-        play(ConfigApp.VIDEO_DEMO_2)
+
+    }
+
+
+    fun displayLesson(lesson: LessonSubjectGroup) {
+
+    }
+
+    private fun updateGroup(group: LessonSubjectGroup, index: Int = 0) {
+        val size = group.list.size
+        val position = if (index >= size) size - 1 else if (index < 0) 0 else index
+        //组标题
+        if (size > 1) {
+            viewBinding.progress.max = size
+            viewBinding.ivPro.visible(true)
+            viewBinding.ivNext.visible(true)
+            viewBinding.progress.visible(true)
+            viewBinding.tvPage.visible(true)
+        } else {
+            viewBinding.ivPro.visible(false)
+            viewBinding.ivNext.visible(false)
+            viewBinding.progress.visible(false)
+            viewBinding.tvPage.visible(false)
+        }
+        viewModel.updateGroupPosition(position)
+    }
+
+    fun selectedGroup(group: LessonSubjectGroup?, position: Int) {
+        if (group == null || group.list.isEmpty() || group.list.size <= position) return
+        val lesson = group.list[position]
+        //考虑缓存不
+        viewModel.getMediaLessonSubjectGroup()
+    }
+
+    override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
+        viewModel.getMediaLessonSubjectGroup(ConfigApp.TYPE_VIDEO)
     }
 
     override fun onResume() {
         super.onResume()
-//        viewBinding.playerView.onResume()
     }
 
 

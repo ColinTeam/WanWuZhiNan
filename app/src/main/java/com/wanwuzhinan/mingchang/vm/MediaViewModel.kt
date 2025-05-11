@@ -17,11 +17,11 @@ import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
  */
 class MediaViewModel : AppViewModel() {
 
-    private val _AudioLessonSubjectGroup: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
-    val audioLessonSubjectGroup: LiveData<LessonSubjectGroup> = _AudioLessonSubjectGroup
+    private val _mediaLessonSubjectGroup: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
+    val mediaLessonSubjectGroup: LiveData<LessonSubjectGroup> = _mediaLessonSubjectGroup
 
-    private val _AudioLessonQuarter: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
-    val audioLessonQuarter: LiveData<LessonSubjectGroup> = _AudioLessonQuarter
+    private val _mediaLessonQuarter: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
+    val mediaLessonQuarter: LiveData<LessonSubjectGroup> = _mediaLessonQuarter
 
     private val _LessonInfo: MutableLiveData<LessonInfo> = MutableLiveData()
     val lessonInfo: LiveData<LessonInfo> = _LessonInfo
@@ -29,21 +29,21 @@ class MediaViewModel : AppViewModel() {
     private val _GroupPosition: MutableLiveData<Int> = MutableLiveData(0)
     val groupPosition: LiveData<Int> = _GroupPosition
 
-    fun getAudioLessonSubjectGroup(groupID: Int = ConfigApp.TYPE_AUDIO) {
+    fun getMediaLessonSubjectGroup(groupID: Int = ConfigApp.TYPE_AUDIO) {
         request({
             service.newMediaLessonSubjectGroup(groupID)
         }, success = {
-            _AudioLessonSubjectGroup.postValue(it)
+            _mediaLessonSubjectGroup.postValue(it)
         }, failure = {
             _showToast.postValue(it)
         })
     }
 
-    fun getAudioLessonQuarter(subjectID: Int, need: Int = 1) {
+    fun getMediaLessonQuarter(groupID: Int, need: Int = 1) {
         request({
-            service.newAudioLessonQuarter(subjectID, need)
+            service.newAudioLessonQuarter(groupID, need)
         }, success = {
-            _AudioLessonQuarter.postValue(it)
+            _mediaLessonQuarter.postValue(it)
         }, failure = {
             _showToast.postValue(it)
         })
@@ -59,11 +59,18 @@ class MediaViewModel : AppViewModel() {
         })
     }
 
-    fun setGroupPosition(position: Int) {
+    fun updateGroupPosition(position: Int) {
         if (position != getGroupPositionValue()) {
             _GroupPosition.value = position
         }
     }
 
-    fun getGroupPositionValue() = _GroupPosition.value ?: 0
+    fun getGroupPositionValue() = groupPosition.value ?: 0
+    fun getMediaLessonSubjectGroupValue() = mediaLessonSubjectGroup.value
+    private fun updateGroup(position: Int) {
+
+    }
+
+
+
 }

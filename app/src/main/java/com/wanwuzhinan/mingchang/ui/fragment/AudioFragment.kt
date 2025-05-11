@@ -5,6 +5,7 @@ import com.colin.library.android.utils.Log
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentAudioBinding
+import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
 import com.wanwuzhinan.mingchang.vm.MediaViewModel
 
 /**
@@ -18,26 +19,40 @@ class AudioFragment : AppFragment<FragmentAudioBinding, MediaViewModel>() {
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
-            audioLessonSubjectGroup.observe {
-                Log.i("audioLessonSubjectGroup:$it")
-            }
-            audioLessonQuarter.observe {
-                Log.i("audioLessonQuarter:$it")
-            }
-            lessonInfo.observe {
-                Log.i("lessonInfo:$it")
+            mediaLessonSubjectGroup.observe {
+                Log.i("mediaLessonSubjectGroup:$it")
+                val groupSize = it.list.size
+                var position = getGroupPositionValue()
+                if (position >= groupSize) position = groupSize - 1
+                else if (position < 0) position = 0
+                updateGroupPosition(position)
             }
             groupPosition.observe {
                 Log.i("groupPosition:$it")
+                val group = getMediaLessonSubjectGroupValue() ?: return@observe
+                getMediaLessonQuarter(group.list[it].groupId, 1)
+                displayGroup(group)
+            }
+            mediaLessonQuarter.observe {
+                Log.i("mediaLessonQuarter:$it")
+                displayLesson(it)
             }
         }
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
-            getAudioLessonSubjectGroup(ConfigApp.TYPE_AUDIO)
-            getAudioLessonQuarter(getGroupPositionValue(), 1)
+            getMediaLessonSubjectGroup(ConfigApp.TYPE_AUDIO)
         }
     }
 
+    fun displayGroup(group: LessonSubjectGroup) {
+
+
+    }
+
+
+    fun displayLesson(lesson: LessonSubjectGroup) {
+
+    }
 }
