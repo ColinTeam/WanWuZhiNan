@@ -20,7 +20,7 @@ object NetworkConfig {
     private val DELAY: Long = 500L
     private val RETRY: Int = 3
     private val TIMEOUT: Long = 10000L
-    private val URL_DEBUG: String = "http://14.103.238.200"
+    private val URL_DEBUG: String = "https://www.mxwsl.cn"
     private val URL_RELEASE: String = "https://app.wanwuzhinan.top"
     var gson: Gson =
         GsonBuilder().setLenient().registerTypeAdapter(Int::class.java, IntegerTypeAdapter())

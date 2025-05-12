@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.util.setOnDebouncedItemClick
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.utils.countDown
+import com.colin.library.android.utils.encrypt.DecryptUtil
 import com.comm.net_work.sign.AESDecryptor
 import com.ssm.comm.config.Constant
 import com.ssm.comm.event.MessageEvent
@@ -514,9 +515,7 @@ class AudioHomeActivity : BaseActivity<ActivityAudioHomeBinding, UserViewModel>(
         }
         mMediaPlayer!!.reset()
         mMediaPlayer!!.setDataSource(
-            AESDecryptor.decryptAES(
-                data.info.videoAes, "W1a2n3W4u5Z6h7i8N9a0n"
-            )
+            DecryptUtil.aes(data.info.videoAes, ConfigApp.VIDEO_AES_KEY)
         )
         mMediaPlayer!!.isLooping = false
         mMediaPlayer!!.prepareAsync() //异步准备

@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import com.chad.library.adapter.base.util.setOnDebouncedItemClick
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.utils.countDown
-import com.comm.net_work.sign.AESDecryptor
+import com.colin.library.android.utils.encrypt.DecryptUtil
 import com.ssm.comm.config.Constant
 import com.ssm.comm.event.MessageEvent
 import com.ssm.comm.ext.dismissLoadingExt
@@ -37,7 +37,6 @@ import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.ext.launchAudioPlayInfoActivity
 import com.wanwuzhinan.mingchang.ext.launchExchangeActivity
 import com.wanwuzhinan.mingchang.ext.showCardImage
-import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeCoursePop
 import com.wanwuzhinan.mingchang.utils.AnimationUtils
@@ -504,9 +503,7 @@ class AudioHomeIpadActivity :
         }
         mMediaPlayer!!.reset()
         mMediaPlayer!!.setDataSource(
-            AESDecryptor.decryptAES(
-                data.info.videoAes, "W1a2n3W4u5Z6h7i8N9a0n"
-            )
+            DecryptUtil.aes(data.info.videoAes, ConfigApp.VIDEO_AES_KEY)
         )
         mMediaPlayer!!.isLooping = false
         mMediaPlayer!!.prepareAsync() //异步准备

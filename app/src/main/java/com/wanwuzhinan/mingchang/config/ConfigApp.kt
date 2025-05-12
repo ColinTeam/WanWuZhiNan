@@ -11,6 +11,7 @@ object ConfigApp {
     const val WE_CHAT_APP_SCOPE = "snsapi_userinfo"
     const val WE_CHAT_APP_SECRET = "72e067e19f371d8dc3ac4bc9d9e69687"
     const val WE_CHAT_APP_ID = "wxd55ebb21dd8fe7a2"
+    const val VIDEO_AES_KEY = "W1a2n3W4u5Z6h7i8N9a0n"
 
     //保留两位小数
     const val KEEP_TWO_DIGITS = 2

@@ -21,6 +21,9 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  * Des   :SettingOtherFragment
  */
 class SettingOtherFragment : AppFragment<FragmentSettingOtherBinding, HomeViewModel>() {
+    override fun onBackPressed(): Boolean {
+        findNavController().navigate(R.id.action_setting_other_back)
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {

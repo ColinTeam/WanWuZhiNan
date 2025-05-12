@@ -11,6 +11,7 @@ import androidx.mediarouter.media.MediaRouteSelector
 import androidx.mediarouter.media.MediaRouter
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.utils.Log
+import com.colin.library.android.utils.encrypt.DecryptUtil
 import com.colin.library.android.utils.ext.onClick
 import com.comm.net_work.sign.AESDecryptor
 import com.google.gson.Gson
@@ -174,8 +175,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                     mDataBinding.clVideoNoNet.visibility = View.GONE
                     mDataBinding.detailPlayer.resetPlayer()
                     val model = SuperPlayerModel()
-                    model.url =
-                        AESDecryptor.decryptAES(mData?.info?.videoAes!!, "W1a2n3W4u5Z6h7i8N9a0n")
+                    model.url = DecryptUtil.aes(mData?.info?.videoAes!!, ConfigApp.VIDEO_AES_KEY)
                     mDataBinding.detailPlayer.playWithModelNeedLicence(model)
                     mDataBinding.detailPlayer.seek(errorPro)
                 }
@@ -194,9 +194,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
         LelinkSourceSDK.getInstance().setEasyCastListener(object : IEasyCastListener {
             override fun onCast(p0: LelinkServiceInfo?): EasyCastBean {
                 val bean = EasyCastBean()
-                bean.url = AESDecryptor.decryptAES(
-                    mData?.info?.videoAes!!, "W1a2n3W4u5Z6h7i8N9a0n"
-                ) //实际需要投屏的url
+                bean.url = DecryptUtil.aes(mData?.info?.videoAes!!, ConfigApp.VIDEO_AES_KEY)
                 return bean
             }
 
@@ -421,7 +419,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
         timer.cancel()
 
         val model = SuperPlayerModel()
-        model.url = AESDecryptor.decryptAES(mData?.info?.videoAes!!, "W1a2n3W4u5Z6h7i8N9a0n")
+        model.url = DecryptUtil.aes(mData?.info?.videoAes!!, ConfigApp.VIDEO_AES_KEY)
         mDataBinding.detailPlayer.playWithModelNeedLicence(model)
         seek = 0
         seek = if (mData?.info?.study_end_second!! < mData?.info?.video_duration!!) {

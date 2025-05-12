@@ -10,7 +10,6 @@ import com.colin.library.android.network.gson.ObjectTypeAdapter
 import com.colin.library.android.network.gson.StringTypeAdapter
 import com.colin.library.android.utils.config.UtilConfig
 import com.colin.library.android.utils.helper.UtilHelper
-import com.comm.net_work.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kongzue.dialogx.DialogX
@@ -122,7 +121,7 @@ class BaseApplication : CommApplication() {
             .loadErrorRes(-2).loadFallbackRes(-3)
             .setDiskCacheDirPath(getExternalFilesDir("Cache")?.path ?: filesDir.path)
             .setDiskCacheFolderName("Img").setDiskCacheSize(2 * 1024 * 1024).setBitmapPoolSize(2.0f)
-            .bindBaseUrl(BuildConfig.IMG_HOST).setMemoryCacheSize(1.5f).build()
+            .bindBaseUrl("http://images.smart0006.cn/").setMemoryCacheSize(1.5f).build()
     }
 
 
