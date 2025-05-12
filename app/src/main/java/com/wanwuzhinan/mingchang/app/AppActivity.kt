@@ -1,7 +1,9 @@
 package com.wanwuzhinan.mingchang.app
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.Window
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
@@ -11,21 +13,50 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewbinding.ViewBinding
+import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
+import com.colin.library.android.utils.ToastUtil
+import com.colin.library.android.utils.ext.onClick
+import com.colin.library.android.utils.helper.ThreadHelper
 import com.colin.library.android.widget.base.BaseActivity
-import com.wanwuzhinan.mingchang.entity.Config
+import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_EMPTY
+import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_ERROR
+import com.wanwuzhinan.mingchang.ui.LoginActivity
+import com.wanwuzhinan.mingchang.ui.pop.LoadingDialog
+import kotlinx.coroutines.Runnable
 import java.lang.reflect.ParameterizedType
 
 
 abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity() {
     internal lateinit var viewBinding: VB
     internal val viewModel: VM by lazy { reflectViewModel() }
+    private var loadingDialog: LoadingDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         viewBinding = reflectViewBinding()
         setContentView(viewBinding.root, savedInstanceState)
+        viewBinding.root.findViewById<View>(R.id.ivBack)?.onClick { goBack() }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.showToast.observe {
+            ToastUtil.show(it.msg)
+            if (it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) {
+                LoginActivity.start(this@AppActivity)
+                this@AppActivity.finish()
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+        super.onDestroy()
     }
 
     override fun loadData(refresh: Boolean) {
@@ -33,8 +64,21 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
     }
 
     /*如果想修改Store 可以重写此方法*/
-    open fun bindViewModelStore() = viewModelStore
+    internal open fun bindViewModelStore() = viewModelStore
 
+    internal open fun goBack() {
+        finish()
+    }
+
+    fun showLoading(show: Boolean = false) {
+        if (loadingDialog?.isShowing() == show) return
+        if (!show) {
+            loadingDialog?.dismiss()
+            return
+        }
+        loadingDialog = loadingDialog ?: LoadingDialog.newInstance()
+        ThreadHelper.post(Runnable { loadingDialog!!.show(this) })
+    }
 
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class)
@@ -84,6 +128,15 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
         }
     }
 
+    protected fun getExtrasPosition(bundle: Bundle?, savedInstanceState: Bundle?): Int {
+        return savedInstanceState?.getInt(ConfigApp.EXTRAS_POSITION, Constants.ZERO)
+            ?: bundle?.getInt(ConfigApp.EXTRAS_POSITION, Constants.ZERO) ?: Constants.ZERO
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // 自定义处理逻辑，避免 Activity 被重建
+    }
 }
 
 

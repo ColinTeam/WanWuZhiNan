@@ -200,14 +200,15 @@
                     style="@style/Style.Item.Label"
                     android:layout_marginTop="@dimen/margin_default"
                     android:text="@string/setting_school_label"
-                    app:layout_constraintEnd_toStartOf="@+id/tvSchool"
+                    app:layout_constraintEnd_toStartOf="@+id/etSchool"
                     app:layout_constraintHorizontal_weight="0.8"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvAreaLabel" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvSchool"
-                    style="@style/Style.Item.Text"
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etSchool"
+                    style="@style/Style.Item.Edit"
+                    android:gravity="end|center_vertical"
                     android:drawablePadding="@dimen/margin_default_half"
                     android:hint="@string/setting_school_label"
                     app:drawableEndCompat="@drawable/ic_arrow_right_home"
@@ -216,7 +217,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="4"
                     app:layout_constraintStart_toEndOf="@+id/tvSchoolLabel"
-                    app:layout_constraintTop_toTopOf="@+id/tvSchoolLabel" />
+                    app:layout_constraintTop_toTopOf="@+id/tvSchoolLabel"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvGradeLabel"

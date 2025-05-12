@@ -30,10 +30,10 @@ class WebFragment() : AppFragment<FragmentWebBinding, HomeViewModel>() {
     var title: String? = null
     var content: String? = null
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        webType = bundle?.getInt(Constant.URL_TYPE) ?: -1
-        url = bundle?.getString(Constant.H5_URL)
-        title = bundle?.getString(Constant.WEB_TITLE)
-        content = bundle?.getString(Constant.WEB_CONTENT)
+//        webType = bundle?.getInt(Constant.URL_TYPE) ?: -1
+//        url = bundle?.getString(Constant.H5_URL)
+//        title = bundle?.getString(Constant.WEB_TITLE)
+//        content = bundle?.getString(Constant.WEB_CONTENT)
         Log.i("webType:$webType url:$url title:$title content:$content")
 
         viewBinding.apply {
@@ -43,13 +43,6 @@ class WebFragment() : AppFragment<FragmentWebBinding, HomeViewModel>() {
         }
     }
 
-    override fun onBackPressed(): Boolean {
-        if (viewBinding.web.canGoBack()) {
-            viewBinding.web.goBack()
-            return true
-        }
-        return super.onBackPressed()
-    }
 
     val callback = object : IWebViewCallback {
         override fun start(url: String?) {
@@ -116,10 +109,10 @@ class WebFragment() : AppFragment<FragmentWebBinding, HomeViewModel>() {
             fragment.findNavController().apply {
                 navigate(
                     R.id.action_toWeb, Bundle().apply {
-                        putInt(Constant.URL_TYPE, type)
-                        url?.let { putString(Constant.H5_URL, it) }
-                        title?.let { putString(Constant.WEB_TITLE, it) }
-                        content?.let { putString(Constant.WEB_CONTENT, it) }
+//                        putInt(Constant.URL_TYPE, type)
+//                        url?.let { putString(Constant.H5_URL, it) }
+//                        title?.let { putString(Constant.WEB_TITLE, it) }
+//                        content?.let { putString(Constant.WEB_CONTENT, it) }
                     }, NavOptions.Builder().build()
 //                    }, NavOptions.Builder().setLaunchSingleTop(true).setRestoreState(true).build()
                 )

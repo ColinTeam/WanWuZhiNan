@@ -9,31 +9,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
+import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.utils.helper.ThreadHelper
 import com.colin.library.android.widget.base.BaseFragment
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_EMPTY
 import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_ERROR
-import com.wanwuzhinan.mingchang.receiver.ScreenChangedReceiver
+import com.wanwuzhinan.mingchang.ui.LoginActivity
 import com.wanwuzhinan.mingchang.ui.pop.LoadingDialog
-import com.wanwuzhinan.mingchang.utils.navigate
 import kotlinx.coroutines.Runnable
 import java.lang.reflect.ParameterizedType
 
 
-abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment(),
-    ScreenChangedReceiver.OnScreenChangedListener {
+abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment() {
     private var _viewBinding: VB? = null
     internal val viewBinding: VB get() = _viewBinding!!
     internal val viewModel: VM by lazy { reflectViewModel() }
     private var loadingDialog: LoadingDialog? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        ScreenChangedReceiver.bind(this)
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -44,25 +41,21 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewBinding.root.findViewById<View>(R.id.ivBack)?.onClick {
-            onBackPressed()
-        }
+        viewBinding.root.findViewById<View>(R.id.ivBack)?.onClick { goBack() }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    isEnabled = onBackPressed()
-                    Log.e("handleOnBackPressed$isEnabled")
-                }
+                override fun handleOnBackPressed() { isEnabled = goBack() }
             })
     }
 
     override fun onStart() {
         super.onStart()
-        viewModel.apply {
-            showToast.observe {
-                ToastUtil.show(it.msg)
-                if (it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) {
-                    navigate(R.id.action_toLogin)
+        viewModel.showToast.observe {
+            ToastUtil.show(it.msg)
+            if (it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) {
+                activity?.let {
+                    LoginActivity.start(it)
+                    it.finish()
                 }
             }
         }
@@ -78,11 +71,10 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
     override fun loadData(refresh: Boolean) {
     }
 
-    override fun screenChanged(action: String) {
-    }
-
-    open fun onBackPressed(): Boolean {
-        return findNavController().popBackStack()
+    internal open fun goBack(): Boolean {
+        val isEnable = findNavController().popBackStack()
+        Log.e("$TAG goBack $isEnable ")
+        return isEnable
     }
 
     fun showLoading(show: Boolean = false) {
@@ -141,5 +133,9 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
         return (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[index] as Class<T>
     }
 
+    internal fun getExtrasPosition(bundle: Bundle?, savedInstanceState: Bundle?): Int {
+        return savedInstanceState?.getInt(ConfigApp.EXTRAS_POSITION, Constants.ZERO)
+            ?: bundle?.getInt(ConfigApp.EXTRAS_POSITION, Constants.ZERO) ?: Constants.ZERO
+    }
 
 }

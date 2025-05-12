@@ -1,7 +1,5 @@
 package com.ssm.comm.app
 
-//import com.tencent.bugly.Bugly
-//import com.tencent.bugly.crashreport.CrashReport
 import android.content.Context
 import androidx.multidex.MultiDexApplication
 import com.hjq.toast.ToastUtils
@@ -49,24 +47,6 @@ open class CommApplication : MultiDexApplication() {
      */
     fun initBugly() {
         CrashReport.initCrashReport(applicationContext, "7531451148", false);
-//        val strategy = CrashReport.UserStrategy(appContext)
-//        strategy.appVersion = getCurrentVersionName()
-//        strategy.appPackageName = packageName
-//        if(TextUtils.isEmpty(getUID())){
-//            strategy.deviceID=""
-//        }else{
-//            strategy.deviceID= getUID()
-//        }
-//        //Bugly会在启动10s后联网同步数据
-//        strategy.appReportDelay = 10000
-//
-//        CrashReport.initCrashReport(
-//            appContext,
-//            BuildConfig.BUGLY_APP_ID,
-//            com.comm.net_work.BuildConfig.IS_ENABLE_LOG,
-//            strategy
-//        )
-//        Bugly.init(appContext, BuildConfig.BUGLY_APP_ID, com.comm.net_work.BuildConfig.IS_ENABLE_LOG)
     }
 
 

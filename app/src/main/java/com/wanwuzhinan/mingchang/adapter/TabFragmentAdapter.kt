@@ -1,6 +1,7 @@
 package com.wanwuzhinan.mingchang.adapter
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 /**
@@ -13,6 +14,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class TabFragmentAdapter : FragmentStateAdapter {
     private val list: ArrayList<Fragment> = arrayListOf()
 
+    constructor(activity: FragmentActivity, list: List<Fragment>) : super(
+        activity.supportFragmentManager, activity.lifecycle
+    ) {
+        this.list.addAll(list)
+    }
+
     constructor(fragment: Fragment, list: List<Fragment>) : super(
         fragment.childFragmentManager, fragment.lifecycle
     ) {
@@ -20,7 +27,6 @@ class TabFragmentAdapter : FragmentStateAdapter {
     }
 
     override fun createFragment(position: Int): Fragment {
-        // 示例实现，需根据实际业务逻辑替换
         return list[position]
     }
 

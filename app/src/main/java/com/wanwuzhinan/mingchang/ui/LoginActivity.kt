@@ -1,14 +1,11 @@
-package com.wanwuzhinan.mingchang.ui.fragment
+package com.wanwuzhinan.mingchang.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.countDown
@@ -16,7 +13,7 @@ import com.colin.library.android.utils.ext.onClick
 import com.google.android.material.tabs.TabLayout
 import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.app.AppFragment
+import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.config.ConfigApp.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
@@ -25,42 +22,21 @@ import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.isPhone
+import com.wanwuzhinan.mingchang.ui.fragment.LoginFragment
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.vm.LoginViewModel
 
 /**
  * Author:ColinLu
  * E-mail:945919945@qq.com
- * Create:2025-04-23 22:34
+ * Create:2025-05-12 17:58
  *
- * Des   :LoginFragment
+ * Des   :LoginActivity
  */
-class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
-    companion object {
-        const val TAB_SMS = 0
-        const val TAB_PWD = 1
-        const val PHONE_LENGTH = 11
+class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
 
-        @JvmStatic
-        fun navigate(fragment: Fragment) {
-            navigate(fragment.findNavController())
-        }
 
-        @JvmStatic
-        fun navigate(activity: AppCompatActivity) {
-            navigate(activity.findNavController(R.id.nav_host))
-        }
-
-        @JvmStatic
-        fun navigate(controller: NavController) {
-            val option =
-                NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, true)
-                    .setLaunchSingleTop(true).build()
-            controller.navigate(R.id.action_toLogin, null, option)
-        }
-    }
-
-    private var tabIndex = TAB_SMS
+    private var tabIndex = LoginFragment.Companion.TAB_SMS
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
@@ -79,13 +55,13 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
             ) {
                 when (it) {
                     tvSmsTips -> {
-                        WebFragment.navigate(
-                            this@LoginFragment, url = getConfigData().code_verification
+                        WebViewActivity.start(
+                            this@LoginActivity, url = getConfigData().code_verification
                         )
                     }
 
                     tvPwdTips -> {
-                        findNavController().navigate(R.id.action_toPassword)
+                        PasswordActivity.start(this@LoginActivity, Constants.INVALID)
                     }
 
                     tvSmsSend -> {
@@ -97,24 +73,24 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
                     }
 
                     tvProtocolLink1 -> {
-                        WebFragment.navigate(
-                            this@LoginFragment,
+                        WebViewActivity.start(
+                            this@LoginActivity,
                             url = ConfigApp.USER_AGREEMENT,
                             title = getString(R.string.login_protocol_link_1)
                         )
                     }
 
                     tvProtocolLink2 -> {
-                        WebFragment.navigate(
-                            this@LoginFragment,
+                        WebViewActivity.start(
+                            this@LoginActivity,
                             url = ConfigApp.PRIVACY_POLICY,
                             title = getString(R.string.login_protocol_link_2)
                         )
                     }
 
                     tvProtocolLink3 -> {
-                        WebFragment.navigate(
-                            this@LoginFragment,
+                        WebViewActivity.start(
+                            this@LoginActivity,
                             url = ConfigApp.PRIVACY_CHILD,
                             title = getString(R.string.login_protocol_link_3)
                         )
@@ -125,7 +101,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
             tabLogin.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     val isSms = tab?.text == getString(R.string.login_by_sms)
-                    updateTab(if (isSms) TAB_SMS else TAB_PWD)
+                    updateTab(if (isSms) LoginFragment.Companion.TAB_SMS else LoginFragment.Companion.TAB_PWD)
                 }
 
 
@@ -140,14 +116,14 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
         }
         viewModel.apply {
             configData.observe {
-                Log.d("configData:$it")
+                Log.i("configData:$it")
             }
             showLoading.observe {
-                Log.d("showLoading:$it")
+                Log.i("showLoading:$it")
                 showLoading(it)
             }
             smsSuccess.observe {
-                Log.d("smsSuccess:$it")
+                Log.i("smsSuccess:$it")
                 if (it) {
                     viewBinding.tvSmsSend.isEnabled = false
                     viewBinding.tvSmsSend.alpha = 0.3F
@@ -161,11 +137,10 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
                 }
             }
             registerData.observe {
-                Log.e("registerData:$it")
                 ConfigApp.token = it.token
                 MMKVUtils.encode(Constant.TOKEN, it.token)
                 MMKVUtils.encode(Constant.USER_MOBILE, viewBinding.etPhone.text.toString())
-//                HomeFragment.navigate(this@LoginFragment)
+                HomeActivity.start(this@LoginActivity)
             }
         }
     }
@@ -184,10 +159,9 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
         }
     }
 
-
     private fun updateTab(index: Int) {
         this.tabIndex = index
-        val isSms = index == TAB_SMS
+        val isSms = index == LoginFragment.Companion.TAB_SMS
         viewBinding.tvSmsTips.isVisible = isSms
         viewBinding.etSMS.isVisible = isSms
         viewBinding.tvSmsSend.isVisible = isSms
@@ -200,7 +174,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
     private fun updateButton() {
         viewBinding.apply {
             val phoneNotEmpty = etPhone.text.toString().trim().isNotEmpty()
-            if (tabIndex == TAB_SMS) {
+            if (tabIndex == LoginFragment.Companion.TAB_SMS) {
                 tvSmsSend.isEnabled = phoneNotEmpty
                 btLogin.isSelected = phoneNotEmpty && etSMS.text.toString().trim()
                     .isNotEmpty() && rbProtocolTips.isChecked
@@ -216,7 +190,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
             ToastUtil.show(R.string.login_toast_phone)
             return
         }
-        if (phone.length < PHONE_LENGTH) {
+        if (phone.length < LoginFragment.Companion.PHONE_LENGTH) {
             ToastUtil.show(R.string.login_toast_short)
             return
         }
@@ -229,7 +203,7 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
             ToastUtil.show(R.string.login_toast_phone)
             return
         }
-        if (phone.length < PHONE_LENGTH) {
+        if (phone.length < LoginFragment.Companion.PHONE_LENGTH) {
             ToastUtil.show(R.string.login_toast_short)
             return
         }
@@ -238,15 +212,15 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
             ToastUtil.show(R.string.login_toast_protocol)
             return
         }
-        val text = if (tabIndex == TAB_SMS) {
+        val text = if (tabIndex == LoginFragment.Companion.TAB_SMS) {
             viewBinding.etSMS.text.toString().trim()
         } else viewBinding.etPassword.text.toString().trim()
         if (text.isEmpty()) {
-            ToastUtil.show(if (tabIndex == TAB_SMS) R.string.login_toast_sms else R.string.login_toast_pwd)
+            ToastUtil.show(if (tabIndex == LoginFragment.Companion.TAB_SMS) R.string.login_toast_sms else R.string.login_toast_pwd)
             return
         }
         val type = if (isPhone()) HTTP_LOGIN_DEVICE_PHONE else HTTP_LOGIN_DEVICE_TABLET
-        if (tabIndex == TAB_SMS) {
+        if (tabIndex == LoginFragment.Companion.TAB_SMS) {
             viewModel.loginBySms(phone, text, type)
         } else {
             viewModel.loginByPassword(phone, null, text, text, HTTP_ACTION_LOGIN_PWD, type, 0)
@@ -256,15 +230,23 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
 
     private fun startCountDown() {
         countDown(60, onNext = {
-            if (isAdded && !isDetached && isVisible) {
-                viewBinding.tvSmsSend.text = getString(R.string.login_sms_countdown, it)
-            }
+            viewBinding.tvSmsSend.text = getString(R.string.login_sms_countdown, it)
         }, onFinish = {
-            if (isAdded && !isDetached && isVisible) {
-                viewModel.updateSuccess(false)
-            }
+            viewModel.updateSuccess(false)
         })
     }
 
+    companion object {
+        const val TAB_SMS = 0
+        const val TAB_PWD = 1
+        const val PHONE_LENGTH = 11
 
+        @JvmStatic
+        fun start(context: Context, position: Int = TAB_SMS) {
+            val starter = Intent(context, LoginActivity::class.java).putExtra(
+                ConfigApp.EXTRAS_POSITION, position
+            )
+            context.startActivity(starter)
+        }
+    }
 }

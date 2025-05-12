@@ -38,8 +38,6 @@ class ExchangeCourseFragment :
         initList()
         Log.e(TAG, "initView:COURSE_VIDEO")
 
-//        SkeletonUtils.showList(mDataBinding.reList,mAdapter,R.layout.item_exchange_course_skeleton)
-//        mViewModel.exchangeList(mSelectType)
         mDataBinding.tvVideo.setBackgroundResource(R.drawable.shape_fc982e_16)
         mDataBinding.tvVideo.setTextColor(ResourcesUtil.getColor(requireContext(), R.color.white))
         SkeletonUtils.showList(
@@ -135,13 +133,6 @@ class ExchangeCourseFragment :
     }
 
     override fun initRequest() {
-//        mViewModel.exchangeListLiveData.observeState(this){
-//            SkeletonUtils.hideList()
-//            onSuccess={data, msg ->
-//                mAdapter.isEmptyViewEnable=true
-//                mAdapter.submitList(data!!.list)
-//            }
-//        }
         mViewModel.exchangeCodeLiveData.observeState(this) {
             SkeletonUtils.hideList()
             onSuccess = { data, msg ->

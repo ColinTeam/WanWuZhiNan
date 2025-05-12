@@ -1,13 +1,13 @@
 package com.wanwuzhinan.mingchang.app
 
 import android.content.Context
-import android.util.Log
 import com.colin.library.android.image.glide.GlideImageLoader
 import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.network.data.AppResponse
 import com.colin.library.android.network.gson.IntegerTypeAdapter
 import com.colin.library.android.network.gson.ObjectTypeAdapter
 import com.colin.library.android.network.gson.StringTypeAdapter
+import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.config.UtilConfig
 import com.colin.library.android.utils.helper.UtilHelper
 import com.google.gson.Gson
@@ -101,7 +101,6 @@ class BaseApplication : CommApplication() {
     }
 
     fun enterInApp() {
-        Log.e("BaseApplication", "enterInApp: ")
         initBugly()
         initLive()
         TXLiveBase.setListener(object : TXLiveBaseListener() {

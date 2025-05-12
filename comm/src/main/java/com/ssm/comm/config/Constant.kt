@@ -66,10 +66,6 @@ object Constant {
     }
 
 
-    const val H5_URL = "h5_url"
-    const val URL_TYPE = "url_type"
-    const val WEB_TITLE = "web_title"
-    const val WEB_CONTENT = "web_content"
     const val USER_AGREEMENT_TYPE = 1
     const val PRIVACY_POLICY_TYPE = 2
     const val OTHER_TYPE = 3

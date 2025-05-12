@@ -13,6 +13,11 @@ object ConfigApp {
     const val WE_CHAT_APP_ID = "wxd55ebb21dd8fe7a2"
     const val VIDEO_AES_KEY = "W1a2n3W4u5Z6h7i8N9a0n"
 
+    const val EXTRAS_URL = "EXTRAS_URL"
+    const val EXTRAS_POSITION = "EXTRAS_POSITION"
+    const val EXTRAS_TITLE = "EXTRAS_TITLE"
+    const val EXTRAS_HTML = "EXTRAS_HTML"
+
     //保留两位小数
     const val KEEP_TWO_DIGITS = 2
 

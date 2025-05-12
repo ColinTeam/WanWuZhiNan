@@ -1,14 +1,17 @@
-package com.wanwuzhinan.mingchang.ui.fragment
+package com.wanwuzhinan.mingchang.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.widget.doAfterTextChanged
+import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.countDown
 import com.colin.library.android.utils.ext.onClick
 import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.app.AppFragment
+import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentPasswordBinding
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_FIND_PWD
@@ -17,7 +20,6 @@ import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.ext.isPhone
-import com.wanwuzhinan.mingchang.ui.fragment.LoginFragment.Companion.PHONE_LENGTH
 import com.wanwuzhinan.mingchang.ui.pop.TipsDialog
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.vm.LoginViewModel
@@ -25,56 +27,49 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModel
 /**
  * Author:ColinLu
  * E-mail:945919945@qq.com
- * Create:2025-05-03 19:47
+ * Create:2025-05-12 20:33
  *
- * Des   :PasswordFragment
+ * Des   :PasswordActivity
  */
-class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModel>() {
-    companion object {
-        const val PWD_LENGTH_MIN = 6
-        const val PWD_LENGTH_MAX = 20
-        const val EXTRA_LOGIN_STATE = "EXTRA_LOGIN_STATE"
-    }
+class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() {
 
     private var isLogin = false
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-//        isLogin = bundle?.getBoolean(EXTRA_LOGIN_STATE, false) == true
+        val position = getExtrasPosition(bundle, savedInstanceState)
+        isLogin = position == Constants.ZERO
         val phone = MMKVUtils.decodeString(Constant.USER_MOBILE)
-        isLogin = ConfigApp.token.isNotEmpty() && phone.isNotEmpty()
+        isLogin = isLogin && ConfigApp.token.isNotEmpty()
         viewBinding.apply {
             etPhone.setText(if (isLogin) phone else "")
             etPhone.doAfterTextChanged { updateButton() }
             etSMS.doAfterTextChanged { updateButton() }
             etPassword.doAfterTextChanged { updateButton() }
             etPasswordConfirm.doAfterTextChanged { updateButton() }
-
             onClick(tvSmsSend, btConfirm) {
                 when (it) {
                     tvSmsSend -> startSendSms(etPhone.text.toString().trim())
                     btConfirm -> startConfirm()
                 }
-
             }
         }
+    }
 
+    override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
-            configData.observe {
-                Log.d("configData:$it")
-            }
             showLoading.observe {
-                Log.d("showLoading:$it")
+                Log.i("showLoading:$it")
                 showLoading(it)
             }
             showToast.observe {
-                Log.d("showToast:$it")
+                Log.i("showToast:$it")
                 if (it.code == HTTP_CONFIRM) {
                     showConfirmDialog(it.msg)
                 } else if (it.code == HTTP_SUCCESS) {
-//                    HomeFragment.navigate(this@PasswordFragment)
+                    HomeActivity.start(this@PasswordActivity)
                 }
             }
             smsSuccess.observe {
-                Log.d("smsSuccess:$it")
+                Log.i("smsSuccess:$it")
                 if (it) {
                     viewBinding.tvSmsSend.isEnabled = false
                     viewBinding.tvSmsSend.alpha = 0.3F
@@ -89,15 +84,14 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModel>() 
             }
             registerData.observe {
                 if (it.token.isNotEmpty()) {
-//                    HomeFragment.navigate(this@PasswordFragment)
+                    HomeActivity.start(this@PasswordActivity)
                 }
             }
         }
         updateButton()
     }
 
-    override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        viewModel.getConfig()
+    override fun loadData(refresh: Boolean) {
     }
 
     private fun updateButton() {
@@ -182,5 +176,19 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModel>() 
                 startConfirm(1)
             }
         }.show(this)
+    }
+
+    companion object {
+        const val PWD_LENGTH_MIN = 6
+        const val PWD_LENGTH_MAX = 20
+        const val PHONE_LENGTH = 11
+
+        @JvmStatic
+        fun start(context: Context, position: Int = 0) {
+            val starter = Intent(context, PasswordActivity::class.java).putExtra(
+                ConfigApp.EXTRAS_POSITION, position
+            )
+            context.startActivity(starter)
+        }
     }
 }

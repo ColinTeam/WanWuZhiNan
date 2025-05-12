@@ -21,7 +21,7 @@ import com.wanwuzhinan.mingchang.databinding.FragmentEditFileBinding
 import com.wanwuzhinan.mingchang.entity.Children
 import com.wanwuzhinan.mingchang.entity.GradeInfo
 import com.wanwuzhinan.mingchang.entity.UserInfo
-import com.wanwuzhinan.mingchang.ui.HomeActivity
+import com.wanwuzhinan.mingchang.ui.PasswordActivity
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseDialog
 import com.wanwuzhinan.mingchang.view.GlideEngine
@@ -63,7 +63,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                     .loadImg(mHeadImg, mDataBinding.ivAvatar, R.mipmap.default_icon)
                 mDataBinding.tvPhone.text = getString(R.string.setting_account, mInfo.account)
                 mDataBinding.tvNickLabel.text = mInfo.truename
-                mDataBinding.tvSchool.text = mInfo.school_name
+                mDataBinding.etSchool.setText(mInfo.school_name)
                 mDataBinding.tvArea.text =
                     "${mInfo.province_name} ${mInfo.city_name} ${mInfo.area_name}"
                 if (mInfo.city_name.contains(mInfo.province_name)) {
@@ -181,7 +181,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                 }
 
                 mDataBinding.tvPassword -> {//年级
-                    HomeActivity.start(requireActivity(), R.id.action_toPassword)
+                    PasswordActivity.start(requireActivity())
                 }
 
                 mDataBinding.btSave -> {
@@ -190,7 +190,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                         if (mDataBinding.tvWoman.isSelected) getString(R.string.setting_man) else getString(
                             R.string.setting_women
                         )
-                    var school = mDataBinding.tvSchool.text.toString().trim()
+                    var school = mDataBinding.etSchool.text.toString().trim()
                     var grade = mDataBinding.tvGrade.text.toString().trim()
 
                     if (TextUtils.isEmpty(mHeadImg)) {

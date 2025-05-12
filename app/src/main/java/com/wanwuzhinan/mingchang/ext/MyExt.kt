@@ -1,7 +1,5 @@
 package com.wanwuzhinan.mingchang.ext
 
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Bitmap
 import android.text.TextUtils
 import android.view.View
@@ -19,32 +17,16 @@ import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.toastError
 import com.ssm.comm.ui.base.IWrapView
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.TextDescriptionData
 import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.entity.UserInfo
-import com.wanwuzhinan.mingchang.net.repository.UserRepository
 import com.wanwuzhinan.mingchang.thread.EaseThreadManager
-import com.wanwuzhinan.mingchang.ui.pop.SurePop
 import com.wanwuzhinan.mingchang.ui.publics.WebGoodsViewActivity
-import com.wanwuzhinan.mingchang.ui.publics.WebViewActivity
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Hashtable
 import java.util.Locale
 
-
-//打开h5链接
-fun IWrapView.performLaunchH5Agreements(url: String, title: String) {
-    launchActivity(
-        WebViewActivity::class.java,
-        Pair(Constant.URL_TYPE, Constant.OTHER_TYPE),
-        Pair(Constant.H5_URL, url),
-        Pair(
-            Constant.WEB_TITLE, title
-        ),
-    )
-}
 
 fun IWrapView.performLaunchGoodsDetail(goodsId: String) {
     launchActivity(
@@ -138,15 +120,6 @@ fun createQRCodeBitmap(
     }
 }
 
-//打开隐私政策
-fun IWrapView.performLaunchPrivacy() {
-    launchActivity(
-        WebViewActivity::class.java, Pair(
-            Constant.URL_TYPE, Constant.PRIVACY_POLICY_TYPE
-        )
-    )
-}
-
 
 
 fun editTips(vararg edit: TextView?): Boolean {
@@ -162,51 +135,6 @@ fun editTips(vararg edit: TextView?): Boolean {
     return true
 }
 
-fun showSurePop(
-    context: Activity,
-    content: String,
-    title: String = "提示",
-    cancel: String = "取消",
-    sure: String = "确定",
-    is_show: Boolean = true,
-    onSure: () -> Unit
-) {
-    var pop = SurePop(context)
-    pop.showPop(content, title, cancel, sure, is_show) {
-        onSure()
-    }
-}
-
-fun showCancelPop(
-    context: Activity,
-    content: String,
-    is_show: Boolean = true,
-    title: String = "提示",
-    cancel: String = "取消",
-    sure: String = "确定",
-    onSure: () -> Unit,
-    onCancel: () -> Unit
-) {
-    var pop = SurePop(context)
-    pop.showCancelPop(content, title, cancel, sure, is_show, onSure = {
-        onSure()
-    }, onCancel = {
-        onCancel()
-    })
-}
-
-
-
-//打开h5链接
-fun Activity.performLaunchH5Agreement(url: String, title: String) {
-    var intent = Intent(this, WebViewActivity::class.java)
-    intent.putExtra(Constant.URL_TYPE, Constant.OTHER_TYPE)
-    intent.putExtra(Constant.H5_URL, url)
-    if (title.isNotEmpty()) {
-        intent.putExtra(Constant.WEB_TITLE, title)
-    }
-    startActivity(intent)
-}
 
 
 

@@ -2,7 +2,9 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.colin.library.android.utils.Log
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
@@ -24,13 +26,12 @@ import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
  */
 class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
     var playCompleted = false
-    override fun onBackPressed(): Boolean {
+    override fun goBack(): Boolean {
+        Log.e("$TAG playCompleted:$playCompleted")
         if (playCompleted) {
             toHome()
-            return true
-        } else {
-            return false
         }
+        return true
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -58,10 +59,9 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
     }
 
     private fun toHome() {
-        findNavController().navigate(R.id.fragment_home)
-//        val option = NavOptions.Builder().setPopUpTo(R.id.fragment_splash, inclusive = true)
-//            .setLaunchSingleTop(true).setRestoreState(false).build()
-//        findNavController().navigate(R.id.fragment_home, null, option)
+        val option = NavOptions.Builder().setPopUpTo(R.id.fragment_splash, inclusive = true)
+            .setLaunchSingleTop(true).setRestoreState(false).build()
+        findNavController().navigate(R.id.fragment_home, null, option)
     }
 
 }

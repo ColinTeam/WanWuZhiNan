@@ -81,13 +81,15 @@ fun countDown(
     total: Int,
     onNext: (Int) -> Unit,
     onStart: (() -> Unit) = {},
-    onFinish: (() -> Unit)? = {},
+    onFinish: (() -> Unit) = {},
 ): Job {
-    return flow {
-        for (i in total downTo 0) {
-            emit(i)
-            delay(1000)
-        }
-    }.flowOn(Dispatchers.Main).onStart { onStart.invoke() }.onCompletion { onFinish?.invoke() }
-        .onEach { onNext.invoke(it) }.launchIn(scope)
+    return scope.launch {
+        flow {
+            for (i in total downTo 0) {
+                emit(i)
+                delay(1000)
+            }
+        }.flowOn(Dispatchers.Main).onStart { onStart() }.onCompletion { onFinish() }
+            .onEach { onNext(it) }.launchIn(this@launch)
+    }
 }

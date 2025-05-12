@@ -246,7 +246,8 @@ data class LessonSubject(
     @SerializedName("sort") val sort: Int = 0,
     @SerializedName("type_id") val typeId: Int = 0,
     @SerializedName("type_idName") val typeIdName: String = "",
-    @SerializedName("update_time") val updateTime: Int = 0
+    @SerializedName("update_time") val updateTime: Int = 0,
+    val selected: Boolean = false
 )
 
 @Parcelize

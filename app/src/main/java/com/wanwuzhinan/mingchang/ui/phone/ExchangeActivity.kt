@@ -14,6 +14,8 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.ActivityExchangeBinding
 import com.wanwuzhinan.mingchang.ext.editTips
 import com.wanwuzhinan.mingchang.ui.HomeActivity
+import com.wanwuzhinan.mingchang.ui.SettingTabActivity
+import com.wanwuzhinan.mingchang.ui.phone.AnswerAskActivity
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
 import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
 import com.wanwuzhinan.mingchang.vm.UserViewModel
@@ -45,7 +47,7 @@ class ExchangeActivity : BaseActivity<ActivityExchangeBinding, UserViewModel>(Us
         onClick(mDataBinding.tvRecord, mDataBinding.tvContact, mDataBinding.tvNow) {
             when (it) {
                 mDataBinding.tvRecord -> {//兑换记录
-                    HomeActivity.start(this@ExchangeActivity, R.id.action_toSettingTab, 1)
+                    SettingTabActivity.start(this@ExchangeActivity,1)
                 }
 
                 mDataBinding.tvContact -> {//联系老师

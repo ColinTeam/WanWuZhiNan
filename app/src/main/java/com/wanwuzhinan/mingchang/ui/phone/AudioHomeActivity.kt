@@ -16,7 +16,6 @@ import com.chad.library.adapter.base.util.setOnDebouncedItemClick
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.utils.countDown
 import com.colin.library.android.utils.encrypt.DecryptUtil
-import com.comm.net_work.sign.AESDecryptor
 import com.ssm.comm.config.Constant
 import com.ssm.comm.event.MessageEvent
 import com.ssm.comm.ext.dismissLoadingExt

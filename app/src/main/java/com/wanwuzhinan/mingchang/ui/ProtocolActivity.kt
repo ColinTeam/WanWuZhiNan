@@ -1,12 +1,13 @@
-package com.wanwuzhinan.mingchang.ui.fragment
+package com.wanwuzhinan.mingchang.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.app.AppFragment
+import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentSettingOtherBinding
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
@@ -16,12 +17,11 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
 /**
  * Author:ColinLu
  * E-mail:945919945@qq.com
- * Create:2025-04-23 22:34
+ * Create:2025-05-12 20:35
  *
- * Des   :SettingOtherFragment
+ * Des   :ProtocolActivity
  */
-class SettingOtherFragment : AppFragment<FragmentSettingOtherBinding, HomeViewModel>() {
-
+class ProtocolActivity : AppActivity<FragmentSettingOtherBinding, HomeViewModel>() {
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
@@ -34,37 +34,37 @@ class SettingOtherFragment : AppFragment<FragmentSettingOtherBinding, HomeViewMo
             onClick(viewUserBg, viewPrivacyBg, viewChildBg, viewPwdBg, btLogout) {
                 when (it) {
                     viewUserBg -> {
-                        WebFragment.navigate(
-                            this@SettingOtherFragment,
+                        WebViewActivity.start(
+                            this@ProtocolActivity,
                             url = ConfigApp.USER_AGREEMENT,
                             title = getString(R.string.login_protocol_link_1)
                         )
                     }
 
                     viewPrivacyBg -> {
-                        WebFragment.navigate(
-                            this@SettingOtherFragment,
+                        WebViewActivity.start(
+                            this@ProtocolActivity,
                             url = ConfigApp.PRIVACY_POLICY,
                             title = getString(R.string.login_protocol_link_2)
                         )
                     }
 
                     viewChildBg -> {
-                        WebFragment.navigate(
-                            this@SettingOtherFragment,
+                        WebViewActivity.start(
+                            this@ProtocolActivity,
                             url = ConfigApp.PRIVACY_CHILD,
                             title = getString(R.string.login_protocol_link_3)
                         )
                     }
 
                     viewPwdBg -> {
-                        findNavController().navigate(R.id.action_toPassword)
+                        PasswordActivity.start(this@ProtocolActivity)
                     }
 
                     btLogout -> {
                         ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_LOGOUT).apply {
                             sure = { logout() }
-                        }.show(this@SettingOtherFragment)
+                        }.show(this@ProtocolActivity)
                     }
                 }
             }
@@ -72,11 +72,20 @@ class SettingOtherFragment : AppFragment<FragmentSettingOtherBinding, HomeViewMo
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-
+        viewModel.getConfig()
     }
 
     fun logout() {
         clearAllData()
-        LoginFragment.navigate(this)
+        LoginActivity.start(this)
+        finish()
+    }
+
+    companion object {
+        @JvmStatic
+        fun start(context: Context) {
+            val starter = Intent(context, ProtocolActivity::class.java)
+            context.startActivity(starter)
+        }
     }
 }

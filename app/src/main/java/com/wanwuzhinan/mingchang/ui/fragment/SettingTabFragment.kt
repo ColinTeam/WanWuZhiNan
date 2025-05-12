@@ -12,9 +12,9 @@ import com.wanwuzhinan.mingchang.adapter.SettingTabAdapter
 import com.wanwuzhinan.mingchang.adapter.TabFragmentAdapter
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.config.ConfigApp.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.data.TabBean
 import com.wanwuzhinan.mingchang.databinding.FragmentSettingTabBinding
-import com.wanwuzhinan.mingchang.ui.HomeActivity.Companion.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.ui.phone.fra.ExchangeCourseFragment
 import com.wanwuzhinan.mingchang.ui.phone.fra.ReportFragment
 import com.wanwuzhinan.mingchang.vm.UserInfoViewModel
@@ -69,9 +69,7 @@ class SettingTabFragment : AppFragment<FragmentSettingTabBinding, UserInfoViewMo
     }
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        val position =
-            savedInstanceState?.getInt(EXTRAS_POSITION, 0) ?: bundle?.getInt(EXTRAS_POSITION, 0)
-            ?: 0
+        val position = getExtrasPosition(bundle, savedInstanceState)
         viewModel.tabPosition(position)
         val tabs = getTabList()
         tabAdapter = SettingTabAdapter()

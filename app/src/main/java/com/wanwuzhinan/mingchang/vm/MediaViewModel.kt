@@ -29,6 +29,25 @@ class MediaViewModel : AppViewModel() {
     private val _GroupPosition: MutableLiveData<Int> = MutableLiveData(0)
     val groupPosition: LiveData<Int> = _GroupPosition
 
+    //第一个请求的为第二个请求的值
+//    fun getMediaLessonSubjectGroup(
+//        groupID: Int = ConfigApp.TYPE_AUDIO, index: Int = 0, need: Int = 1
+//    ) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            _showLoading.postValue(true)
+//            val lessonID = viewModelScope.async(Dispatchers.IO) {
+//                val group = service.newMediaLessonSubjectGroup(groupID)
+//                val groupLesson = group.getData()?.list
+//                if (!groupLesson.isNullOrEmpty<LessonSubject>() && groupLesson.size > index) {
+//                    groupLesson[index].id
+//                } else -1
+//            }.await()
+//            if (lessonID != -1) service.newAudioLessonQuarter(lessonID, need)
+//            else _showToast.postValue(NetworkResult.failure(-1, "failed"))
+//            _showLoading.postValue(true)
+//        }
+//    }
+
     fun getMediaLessonSubjectGroup(groupID: Int = ConfigApp.TYPE_AUDIO) {
         request({
             service.newMediaLessonSubjectGroup(groupID)
@@ -39,9 +58,10 @@ class MediaViewModel : AppViewModel() {
         })
     }
 
-    fun getMediaLessonQuarter(groupID: Int, need: Int = 1) {
+
+    fun getMediaLessonQuarter(lessonID: Int, need: Int = 1) {
         request({
-            service.newAudioLessonQuarter(groupID, need)
+            service.newAudioLessonQuarter(lessonID, need)
         }, success = {
             _mediaLessonQuarter.postValue(it)
         }, failure = {
@@ -70,7 +90,6 @@ class MediaViewModel : AppViewModel() {
     private fun updateGroup(position: Int) {
 
     }
-
 
 
 }

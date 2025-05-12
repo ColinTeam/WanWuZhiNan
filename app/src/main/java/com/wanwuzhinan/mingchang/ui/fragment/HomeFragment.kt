@@ -3,10 +3,7 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelStore
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.utils.Log
@@ -19,9 +16,12 @@ import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentHomeBinding
 import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.ui.HomeActivity
+import com.wanwuzhinan.mingchang.ui.SettingTabActivity
+import com.wanwuzhinan.mingchang.ui.WebViewActivity
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
 import com.wanwuzhinan.mingchang.ui.phone.RankActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
@@ -45,6 +45,11 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
         return requireActivity().viewModelStore
     }
 
+    override fun goBack(): Boolean {
+        activity?.finish()
+        return true
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
@@ -62,7 +67,7 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
                 when (it) {
                     tvSetting -> {
                         activity?.let {
-                            SettingTabFragment.navigate(this@HomeFragment)
+                            SettingTabActivity.start(it)
                         }
                     }
 
@@ -77,12 +82,11 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
                     tab2 -> {
                         val title = viewModel.getConfigValue()?.info?.home_title5
                             ?: getString(R.string.home_tab_2)
-                        WebFragment.navigate(
-                            this@HomeFragment,
-                            type = Constant.OTHER_TYPE,
-                            url = ConfigApp.SCREEN_CASTING,
-                            title = title
-                        )
+                        activity?.let {
+                            WebViewActivity.start(
+                                it, url = ConfigApp.SCREEN_CASTING, title = title
+                            )
+                        }
                     }
 
                     ivOneBg -> {//video
@@ -99,15 +103,14 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
 
                     ivThreeBg -> {
                         activity?.let {
-//                            QuestionListAskActivity.start(it)
-                            findNavController().navigate(R.id.action_toVideoHome)
+                            QuestionListAskActivity.start(it)
+//                            findNavController().navigate(R.id.action_toVideoHome)
                         }
                     }
 
                     ivFourBg -> {
                         activity?.let {
                             QuestionListPracticeActivity.start(it)
-                            findNavController().navigate(R.id.action_toVideo)
                         }
                     }
                 }
@@ -153,11 +156,15 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
         setData(Constant.CONFIG_DATA, NetworkConfig.gson.toJson(data))
     }
 
+    override fun loadData(refresh: Boolean) {
+        super.loadData(refresh)
+        viewModel.getUserInfo()
+        showPrivacyPop()
+    }
+
     override fun onResume() {
         (requireActivity() as HomeActivity).changeADState(viewModel.getAdStateValue())
         super.onResume()
-        viewModel.getUserInfo()
-        showPrivacyPop()
     }
 
 
@@ -167,42 +174,27 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
     }
 
     private fun showPrivacyPop() {
+        val currentActivity = activity ?: return
         if (isShowPrivacy()) return
-        PrivacyPop(requireActivity()).showPrivacyPop {
+        PrivacyPop(currentActivity).showPrivacyPop {
             when (it) {
                 1 -> {
-                    WebFragment.navigate(
-                        this@HomeFragment,
+                    WebViewActivity.start(
+                        currentActivity,
                         url = ConfigApp.USER_AGREEMENT,
                         title = getString(R.string.login_protocol_link_1)
                     )
                 }
 
                 2 -> {
-                    WebFragment.navigate(
-                        this@HomeFragment,
-                        url = ConfigApp.PRIVACY_POLICY,
-                        title = getString(R.string.login_protocol_link_2)
+                    WebViewActivity.start(
+                        currentActivity,
+                        url = ConfigApp.USER_AGREEMENT,
+                        title = getString(R.string.login_protocol_link_1)
                     )
                 }
             }
         }
     }
 
-    override fun onBackPressed(): Boolean {
-        activity?.finish()
-        return false
-    }
-
-    companion object {
-        @JvmStatic
-        fun navigate(fragment: Fragment) {
-            val controller = fragment.findNavController()
-            val option =
-                NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, false)
-                    .setLaunchSingleTop(true).build()
-//            controller.navigate(R.id.action_toHome, null, option)
-            controller.navigate(R.id.action_toHome, null, null)
-        }
-    }
 }

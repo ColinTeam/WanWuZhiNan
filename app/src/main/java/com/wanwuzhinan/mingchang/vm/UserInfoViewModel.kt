@@ -71,7 +71,9 @@ class UserInfoViewModel : AppViewModel() {
     }
 
     fun tabPosition(position: Int) {
-        _tabPosition.value = position
+        if (tabPosition.value != position) {
+            _tabPosition.value = position
+        }
     }
 
     fun getUserInfoValue() = userInfo.value

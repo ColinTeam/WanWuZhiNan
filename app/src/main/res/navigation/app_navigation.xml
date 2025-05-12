@@ -63,19 +63,19 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_web">
         <argument
-            android:name="url_type"
+            android:name="position"
             android:defaultValue="-1"
             app:argType="integer" />
         <argument
-            android:name="h5_url"
+            android:name="url"
             app:argType="string"
             app:nullable="true" />
         <argument
-            android:name="web_title"
+            android:name="title"
             app:argType="string"
             app:nullable="true" />
         <argument
-            android:name="web_content"
+            android:name="html"
             app:argType="string"
             app:nullable="true" />
     </fragment>
@@ -151,10 +151,7 @@
         app:destination="@+id/fragment_video_home" />
     <action
         android:id="@+id/action_toSettingTab"
-        app:destination="@+id/fragment_setting_tab"
-        app:launchSingleTop="true"
-        app:popUpToSaveState="true"
-        app:restoreState="true" />
+        app:destination="@+id/fragment_setting_tab" />
     <action
         android:id="@+id/action_toSettingOther"
         app:destination="@+id/fragment_setting_other" />

@@ -32,6 +32,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
             etNick.doAfterTextChanged { updateButton() }
+            etSchool.doAfterTextChanged { updateButton() }
             onClick(
                 ivAvatar, tvMan, tvWoman, tvArea, tvGrade, tvPassword, btSave
             ) {
@@ -54,10 +55,6 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
 
                     tvGrade -> {
                         chooseGrade()
-                    }
-
-                    tvSchool -> {
-                        chooseSchool()
                     }
 
                     tvPassword -> {
@@ -139,7 +136,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
                 viewBinding.btSave.isSelected = true
                 return@apply
             }
-            val school = tvSchool.text.toString().trim()
+            val school = etSchool.text.toString().trim()
             if (school != info.school_name) {
                 viewBinding.btSave.isSelected = true
                 return@apply
@@ -188,10 +185,6 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
         return if (city.contains(province)) "$province $area" else "$province $city $area"
     }
 
-    private fun chooseSchool() {
-
-    }
-
     private fun chooseGrade() {
         val info = viewModel.getGradeInfoValue()
         if (info == null || info.listArr.isEmpty()) {
@@ -217,7 +210,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
             selectSex(mInfo.sex, false)
             etNick.setText(mInfo.truename)
             chooseArea(mInfo.province_name, mInfo.city_name, mInfo.area_name, false)
-            tvSchool.text = mInfo.school_name
+            etSchool.setText(mInfo.school_name)
             tvGrade.text = mInfo.grade_name
         }
     }
@@ -228,7 +221,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
     private fun updateUserInfo() {
         var name = viewBinding.etNick.text.toString().trim()
         var sex = viewBinding.tvSex.tag as? String ?: ""
-        var school = viewBinding.tvSchool.text.toString().trim()
+        var school = viewBinding.etSchool.text.toString().trim()
         var grade = viewBinding.tvGrade.text.toString().trim()
 
         if (TextUtils.isEmpty(name)) {

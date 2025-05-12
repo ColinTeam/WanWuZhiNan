@@ -20,6 +20,8 @@ import com.wanwuzhinan.mingchang.databinding.ActivityAnswerPracticeBinding
 import com.wanwuzhinan.mingchang.ext.showCardImage
 import com.wanwuzhinan.mingchang.ext.visible
 import com.wanwuzhinan.mingchang.ui.HomeActivity
+import com.wanwuzhinan.mingchang.ui.SettingTabActivity
+import com.wanwuzhinan.mingchang.ui.phone.AnswerAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
 import com.wanwuzhinan.mingchang.ui.pop.AnswerExplainPop
 import com.wanwuzhinan.mingchang.ui.pop.CompassNumPop
@@ -112,7 +114,7 @@ class AnswerErrorAskActivity :
                 }
 
                 mDataBinding.tvReport -> {
-                    HomeActivity.start(this@AnswerErrorAskActivity, R.id.action_toSettingTab, 3)
+                    SettingTabActivity.start(this@AnswerErrorAskActivity,3)
                 }
             }
 

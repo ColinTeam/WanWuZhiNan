@@ -152,10 +152,7 @@
             android:name=".ui.publics.EnlargeImageActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".ui.publics.WebViewActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape" />
+
         <activity
             android:name=".ui.publics.WebGoodsViewActivity"
             android:exported="false"
@@ -239,10 +236,38 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-            <meta-data
-                android:name="android.enableJetifier"
-                android:value="true" />
+
         </activity>
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorLandscape" />
+
+        <activity
+            android:name=".ui.WebViewActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="sensorLandscape" />
+
+        <activity
+            android:name=".ui.SettingTabActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".ui.PasswordActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".ui.ProtocolActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+
         <meta-data
             android:name="android.enableJetifier"
             android:value="true" />

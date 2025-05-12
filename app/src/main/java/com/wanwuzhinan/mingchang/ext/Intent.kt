@@ -10,7 +10,6 @@ import com.ssm.comm.ui.base.IWrapView
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.ui.HomeActivity
-import com.wanwuzhinan.mingchang.ui.HomeActivity.Companion.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.pad.VideoListPadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AnswerAskActivity
@@ -162,11 +161,6 @@ fun IWrapView.launchHonorListActivity() {
     launchActivity(HonorListActivity::class.java)
 }
 
-//设置
-fun IWrapView.launchSettingActivity(index: Int) {
-//    launchActivity(SettingActivity::class.java, Pair(ConfigApp.INTENT_TYPE, index))
-    launchActivity(HomeActivity::class.java, Pair(EXTRAS_POSITION, index))
-}
 
 //课程兑换
 fun IWrapView.launchExchangeActivity() {
