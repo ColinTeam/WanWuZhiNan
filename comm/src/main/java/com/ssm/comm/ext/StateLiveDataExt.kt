@@ -6,10 +6,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.comm.net_work.ResultBuilder
-import com.comm.net_work.entity.ApiResponse
-import com.comm.net_work.parseData
 import com.ssm.comm.event.MessageEvent
+import com.ssm.comm.response.ApiResponse
+import com.ssm.comm.response.ResultBuilder
+import com.ssm.comm.response.parseData
 
 typealias StateLiveData<T> = LiveData<ApiResponse<T>>
 

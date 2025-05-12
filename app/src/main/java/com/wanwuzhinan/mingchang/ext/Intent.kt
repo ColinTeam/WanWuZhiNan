@@ -9,25 +9,20 @@ import com.ssm.comm.ext.toastError
 import com.ssm.comm.ui.base.IWrapView
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.data.SubjectListData
-import com.wanwuzhinan.mingchang.ui.HomeActivity
-import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.pad.VideoListPadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AnswerAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.AnswerErrorAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.AnswerPracticeActivity
-import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.AudioPlayInfoActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeCourseActivity
 import com.wanwuzhinan.mingchang.ui.phone.HonorHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.HonorListActivity
-import com.wanwuzhinan.mingchang.ui.phone.QuestionHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionVideoActivity
 import com.wanwuzhinan.mingchang.ui.phone.RankActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoAnswerActivity
-import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoListActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoPlayActivity
 import com.wanwuzhinan.mingchang.utils.getAudioData
@@ -37,12 +32,6 @@ fun isPhone(): Boolean {
     val config: Configuration = appContext.resources!!.configuration
     return !(config.smallestScreenWidthDp >= 600)
 }
-
-//视频主页
-fun IWrapView.launchVideoHomeActivity() {
-    launchActivity(VideoHomeActivity::class.java)
-}
-
 //视频列表
 fun IWrapView.launchVideoListActivity(type: Int, id: String, selectId: String) {
     val dd = getScreenWidth2() / (getScreenHeight2() * 1.0f)
@@ -63,16 +52,6 @@ fun IWrapView.launchVideoListActivity(type: Int, id: String, selectId: String) {
     }
 }
 
-//音频主页
-fun IWrapView.launchAudioHomeActivity() {
-
-    val dd = getScreenWidth2() / (getScreenHeight2() * 1.0f)
-    if (dd >= (16 / 9.0)) {
-        launchActivity(AudioHomeActivity::class.java)
-    } else {
-        launchActivity(AudioHomeIpadActivity::class.java)
-    }
-}
 
 
 //音频播放
@@ -107,11 +86,6 @@ fun IWrapView.launchVideoAnswerActivity(id: String) {
 }
 
 
-//答题主页
-fun IWrapView.launchQuestionHomeActivity() {
-    launchActivity(QuestionHomeActivity::class.java)
-}
-
 //答题列表
 fun IWrapView.launchQuestionListActivity(type: Int) {
     if (type == ConfigApp.TYPE_ASK) {
@@ -122,7 +96,6 @@ fun IWrapView.launchQuestionListActivity(type: Int) {
 }
 
 //答题 物理十万问
-
 fun IWrapView.launchAnswerPracticeActivity(id: String) {
     launchActivity(AnswerPracticeActivity::class.java, Pair(ConfigApp.INTENT_ID, id))
 }

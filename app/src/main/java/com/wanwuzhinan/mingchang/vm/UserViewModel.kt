@@ -1,8 +1,6 @@
 package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.viewModelScope
-import com.comm.net_work.entity.ApiInfoResponse
-import com.comm.net_work.entity.ApiListResponse
 import com.ssm.comm.data.VersionData
 import com.ssm.comm.ui.base.BaseViewModel
 import com.wanwuzhinan.mingchang.data.CourseStudyData
@@ -20,6 +18,8 @@ import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.entity.GradeInfo
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfo
+import com.wanwuzhinan.mingchang.net.repository.ApiInfoResponse
+import com.wanwuzhinan.mingchang.net.repository.ApiListResponse
 import com.wanwuzhinan.mingchang.net.repository.UserRepository
 import kotlinx.coroutines.launch
 import java.io.File

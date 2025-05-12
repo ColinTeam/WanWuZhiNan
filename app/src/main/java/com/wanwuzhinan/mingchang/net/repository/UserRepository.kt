@@ -1,8 +1,6 @@
 package com.wanwuzhinan.mingchang.net.repository
 
-import com.comm.net_work.entity.ApiInfoResponse
-import com.comm.net_work.entity.ApiListResponse
-import com.comm.net_work.entity.ApiResponse
+import com.ssm.comm.response.ApiResponse
 import com.wanwuzhinan.mingchang.data.CourseStudyData
 import com.wanwuzhinan.mingchang.data.ExchangeCodeData
 import com.wanwuzhinan.mingchang.data.ExchangeListData

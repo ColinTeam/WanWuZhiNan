@@ -1,7 +1,7 @@
 package com.ssm.comm.ui.base
 
 import androidx.lifecycle.ViewModel
-import com.comm.net_work.base.BaseRepository
+import com.ssm.comm.response.BaseRepository
 import org.reactivestreams.Subscription
 
 /**

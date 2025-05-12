@@ -94,7 +94,7 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     }
 
     fun changeADState(visible: Boolean, config: Config? = viewModel.getConfigValue()) {
-        val isEmpty = config?.info?.home_ad.isNullOrEmpty()
+        val isEmpty = config?.info?.home_ad.isNullOrEmpty() or config?.info?.home_ad_link.isNullOrEmpty()
         val isVisible = visible && !isEmpty
         viewBinding.ivAd.isVisible = isVisible
         viewBinding.ivAdclose.isVisible = isVisible

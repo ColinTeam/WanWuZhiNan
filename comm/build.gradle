@@ -36,8 +36,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":net_work"))
-
     implementation(libs.bundles.androidCommon)
     implementation libs.androidx.constraintlayout
     implementation libs.mmkv

@@ -1,9 +1,7 @@
 package com.wanwuzhinan.mingchang.net
 
-import com.comm.net_work.entity.ApiInfoResponse
-import com.comm.net_work.entity.ApiListResponse
-import com.comm.net_work.entity.ApiResponse
 import com.ssm.comm.data.VersionData
+import com.ssm.comm.response.ApiResponse
 import com.wanwuzhinan.mingchang.data.AddressData
 import com.wanwuzhinan.mingchang.data.AppResponse
 import com.wanwuzhinan.mingchang.data.CityListData
@@ -31,6 +29,8 @@ import com.wanwuzhinan.mingchang.entity.SmsCodeResponse
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.entity.UserInfoResponse
+import com.wanwuzhinan.mingchang.net.repository.ApiInfoResponse
+import com.wanwuzhinan.mingchang.net.repository.ApiListResponse
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call

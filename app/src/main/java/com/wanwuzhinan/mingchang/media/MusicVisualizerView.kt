@@ -1,4 +1,4 @@
-package com.wgllss.core.widget
+package com.wanwuzhinan.mingchang.media
 
 import android.content.Context
 import android.graphics.Canvas

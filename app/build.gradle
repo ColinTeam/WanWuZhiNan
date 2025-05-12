@@ -1,11 +1,16 @@
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-parcelize")
 }
 
-static def releaseTime() {
-    return new Date().format("yyMMddHHmmSSSS", TimeZone.getTimeZone("UTC"))
+
+static String releaseTime() {
+    def formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm")
+    return formatter.format(LocalDateTime.now())
 }
 
 android {
@@ -34,17 +39,29 @@ android {
     }
 
     //自定义打包输出文件名
+// 自定义打包输出文件名
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             def outputFile = output.outputFile
             def fileName
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                if (variant.buildType.name == 'release') {//如果是release包
-                    fileName = "wwzn${defaultConfig.versionName}_${releaseTime()}_release.apk"
-                } else if (variant.buildType.name == 'debug') {//如果是debug包
-                    fileName = "wwzn${defaultConfig.versionName}_${releaseTime()}_debug.apk"
+                if (variant.buildType.name == 'release') {
+                    fileName = "wwzn_${defaultConfig.versionName}_${releaseTime()}_release.apk"
+                } else if (variant.buildType.name == 'debug') {
+                    fileName = "wwzn_${defaultConfig.versionName}_${releaseTime()}_debug.apk"
                 }
-                outputFileName = fileName
+
+                // 打印输出路径和文件名
+                def outputDir = outputFile.parentFile.absolutePath
+                println "**********************************************"
+                println "Variant: ${variant.buildType.name}"
+                println "Output Directory: $outputDir"
+                println "Original APK Name: ${outputFile.name}"
+                println "Renamed APK Name: $fileName"
+                println "Full Output Path: $outputDir/$fileName"
+                println "**********************************************"
+
+                output.outputFileName = fileName
             }
         }
     }
@@ -161,7 +178,7 @@ dependencies {
     implementation(project(":comm"))
 //    implementation(project(":img_load"))
 //    implementation(project(":library"))
-    implementation(project(":net_work"))
+//    implementation(project(":net_work"))
     implementation(project(":superplayerkit"))
     implementation(libs.bundles.androidCommon)
     implementation(libs.bundles.androidNavigation)

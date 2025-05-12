@@ -5,8 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.view.View
+import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
-import com.comm.net_work.ByteFormatUtils
 import com.ssm.comm.app.appContext
 import com.ssm.comm.data.VersionData
 import com.ssm.comm.ext.installApk
@@ -14,7 +14,7 @@ import com.ssm.comm.ext.isEmpty
 import com.ssm.comm.ext.isWebUrlLegal
 import com.ssm.comm.ext.toastError
 import com.ssm.comm.ext.toastNormal
-import com.ssm.comm.utils.LogUtils
+import com.ssm.comm.utils.FileCacheUtils
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.databinding.PopVersionBinding
@@ -30,17 +30,18 @@ import java.io.File
 import java.net.URL
 
 //删除地址
-class VersionPop(var context: Activity) :BasePop<PopVersionBinding>(context){
+class VersionPop(var context: Activity) : BasePop<PopVersionBinding>(context) {
 
-    lateinit var mData:VersionData
+    lateinit var mData: VersionData
 
     override fun initClick() {
-        onClick(mDataBinding.tvUpgradation,mDataBinding.tvNot){
+        onClick(mDataBinding.tvUpgradation, mDataBinding.tvNot) {
             when (it) {
                 mDataBinding.tvUpgradation -> {//立即升级
                     mDataBinding.tvUpgradation.isEnabled = false
                     startDownloadApp(mData.android.version_url)
                 }
+
                 mDataBinding.tvNot -> {//暂不更新
                     dismiss()
                 }
@@ -50,11 +51,12 @@ class VersionPop(var context: Activity) :BasePop<PopVersionBinding>(context){
     }
 
     fun showPop(data: VersionData) {
-        mData=data
-        mDataBinding.tvNot.visibility=if(data.android.version_upgrade.equals("1")) View.INVISIBLE else View.VISIBLE
+        mData = data
+        mDataBinding.tvNot.visibility =
+            if (data.android.version_upgrade.equals("1")) View.INVISIBLE else View.VISIBLE
         mDataBinding.tvContent.text = data.android.version_desc
 
-        getApkFileSize(data.android.version_url){
+        getApkFileSize(data.android.version_url) {
             mDataBinding.tvLength.text = "0/${it}"
         }
         showPop()
@@ -69,7 +71,7 @@ class VersionPop(var context: Activity) :BasePop<PopVersionBinding>(context){
                 urlConnection.connect()
                 val length = urlConnection.contentLength
                 EaseThreadManager.getInstance().runOnMainThread {
-                    onSuccess(ByteFormatUtils.bytes2kb(length.toLong()))
+                    onSuccess(FileCacheUtils.formatFileSize(length.toLong()))
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -78,18 +80,16 @@ class VersionPop(var context: Activity) :BasePop<PopVersionBinding>(context){
     }
 
     private fun startDownloadApp(url: String) {
-        RxPermissions.getInstance(mContext)
-            .request(
+        RxPermissions.getInstance(mContext).request(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-            .subscribe { granted ->
+            ).subscribe { granted ->
                 if (!granted) {
                     toastNormal("请在设置中开启文件存储权限!")
                     return@subscribe
                 }
                 if (!isEmpty(url)) {
-                    LogUtils.e("下载地址===========================>${url}")
+                    Log.d("下载地址===========================>${url}")
                     if (url.endsWith(".apk")) {
                         downLoadFile(url)
                     } else {
@@ -105,39 +105,43 @@ class VersionPop(var context: Activity) :BasePop<PopVersionBinding>(context){
         val appName = appContext.resources!!.getString(R.string.app_name)
         val saveName = String.format("${appName}.apk")
         val savePath = appContext.filesDir.absolutePath
-        val apkFile = File(savePath,saveName)
-        if (apkFile.exists()){
+        val apkFile = File(savePath, saveName)
+        if (apkFile.exists()) {
             apkFile.delete()
         }
         val scope = CoroutineScope(Dispatchers.IO + Job())
         //创建下载任务
-        val downloadTask = scope.download(url,saveName,savePath)
+        val downloadTask = scope.download(url, saveName, savePath)
         downloadTask.remove(true)
         //状态监听
         downloadTask.state().onEach {
             when (it) {
-                is State.None -> LogUtils.e("downloadTask====================>未开始任务")
+                is State.None -> Log.d("downloadTask====================>未开始任务")
                 is State.Waiting -> {
-                    LogUtils.e("downloadTask====================>等待中")
+                    Log.d("downloadTask====================>等待中")
                     EaseThreadManager.getInstance().runOnMainThread {
                         mDataBinding!!.tvUpgradation.text = "等待中"
                     }
                 }
+
                 is State.Downloading -> {
                     EaseThreadManager.getInstance().runOnMainThread {
                         mDataBinding!!.tvUpgradation.text = "下载中"
                     }
                 }
+
                 is State.Failed -> {
                     EaseThreadManager.getInstance().runOnMainThread {
                         mDataBinding!!.tvUpgradation.text = "下载失败"
                     }
                 }
+
                 is State.Stopped -> {
                     EaseThreadManager.getInstance().runOnMainThread {
                         mDataBinding!!.tvUpgradation.text = "已暂停下载"
                     }
                 }
+
                 is State.Succeed -> {
                     EaseThreadManager.getInstance().runOnMainThread {
                         dismiss()
@@ -151,11 +155,11 @@ class VersionPop(var context: Activity) :BasePop<PopVersionBinding>(context){
         //进度监听
         downloadTask.progress().onEach {
             EaseThreadManager.getInstance().runOnMainThread {
-                mDataBinding.groupProgress.visibility=View.VISIBLE
-                mDataBinding.tvNot.visibility=View.INVISIBLE
+                mDataBinding.groupProgress.visibility = View.VISIBLE
+                mDataBinding.tvNot.visibility = View.INVISIBLE
 
-                mDataBinding.tvLength.text="${it.downloadSizeStr()}/${it.totalSizeStr()}"
-                mDataBinding.progress.progress=it.percent().toInt()
+                mDataBinding.tvLength.text = "${it.downloadSizeStr()}/${it.totalSizeStr()}"
+                mDataBinding.progress.progress = it.percent().toInt()
             }
         }.launchIn(scope)
 
@@ -183,4 +187,5 @@ class VersionPop(var context: Activity) :BasePop<PopVersionBinding>(context){
     override fun getLayoutID(): Int {
         return R.layout.pop_version
     }
+
 }
