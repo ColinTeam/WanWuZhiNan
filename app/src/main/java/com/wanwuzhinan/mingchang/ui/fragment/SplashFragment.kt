@@ -2,7 +2,6 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
@@ -59,9 +58,10 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
     }
 
     private fun toHome() {
-        val option = NavOptions.Builder().setPopUpTo(R.id.fragment_splash, inclusive = true)
-            .setLaunchSingleTop(true).setRestoreState(false).build()
-        findNavController().navigate(R.id.fragment_home, null, option)
+        findNavController().navigate(R.id.fragment_home)
+//        val option = NavOptions.Builder().setPopUpTo(R.id.fragment_splash, inclusive = true)
+//            .setLaunchSingleTop(true).setRestoreState(false).build()
+//        findNavController().navigate(R.id.fragment_home, null, option)
     }
 
 }

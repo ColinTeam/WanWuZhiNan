@@ -86,19 +86,48 @@
         tools:layout="@layout/fragment_splash" />
     <action
         android:id="@+id/action_toSplash"
-        app:destination="@+id/fragment_splash" />
+        app:destination="@+id/fragment_splash"
+        app:enterAnim="@anim/dialog_scale_in"
+        app:exitAnim="@anim/dialog_scale_out"
+        app:popEnterAnim="@anim/dialog_scale_in"
+        app:popExitAnim="@anim/dialog_scale_out"
+        app:popUpTo="@+id/action_toSplash" />
     <action
         android:id="@+id/action_toLogin"
-        app:destination="@+id/fragment_login" />
+        app:destination="@+id/fragment_login"
+        app:enterAnim="@anim/dialog_scale_in"
+        app:exitAnim="@anim/dialog_scale_out"
+        app:launchSingleTop="true"
+        app:popEnterAnim="@anim/dialog_scale_in"
+        app:popExitAnim="@anim/dialog_scale_out"
+        app:popUpTo="@+id/action_toLogin"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_toHome"
+        app:destination="@+id/fragment_home"
+        app:enterAnim="@anim/dialog_scale_in"
+        app:exitAnim="@anim/dialog_scale_out"
+        app:launchSingleTop="true"
+        app:popEnterAnim="@anim/dialog_scale_in"
+        app:popExitAnim="@anim/dialog_scale_out"
+        app:popUpTo="@+id/action_toHome"
+        app:popUpToInclusive="true"
+        app:restoreState="false" />
     <action
         android:id="@+id/action_toPassword"
         app:destination="@+id/fragment_password" />
-    <action
-        android:id="@+id/action_toHome"
-        app:destination="@+id/fragment_home" />
+
     <action
         android:id="@+id/action_toWeb"
-        app:destination="@+id/fragment_web" />
+        app:destination="@+id/fragment_web"
+        app:enterAnim="@anim/dialog_ios_in"
+        app:exitAnim="@anim/dialog_ios_out"
+        app:launchSingleTop="true"
+        app:popEnterAnim="@anim/dialog_ios_in"
+        app:popExitAnim="@anim/dialog_ios_out"
+        app:popUpTo="@+id/action_toWeb"
+        app:popUpToInclusive="true"
+        app:restoreState="false" />
     <action
         android:id="@+id/action_toAudio"
         app:destination="@+id/fragment_audio" />
@@ -110,7 +139,10 @@
         app:destination="@+id/fragment_video_home" />
     <action
         android:id="@+id/action_toSettingTab"
-        app:destination="@+id/fragment_setting_tab" />
+        app:destination="@+id/fragment_setting_tab"
+        app:launchSingleTop="true"
+        app:popUpToSaveState="true"
+        app:restoreState="true" />
     <action
         android:id="@+id/action_toSettingOther"
         app:destination="@+id/fragment_setting_other" />

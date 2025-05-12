@@ -120,7 +120,8 @@ class WebFragment() : AppFragment<FragmentWebBinding, HomeViewModel>() {
                         url?.let { putString(Constant.H5_URL, it) }
                         title?.let { putString(Constant.WEB_TITLE, it) }
                         content?.let { putString(Constant.WEB_CONTENT, it) }
-                    }, NavOptions.Builder().setLaunchSingleTop(true).setRestoreState(true).build()
+                    }, NavOptions.Builder().build()
+//                    }, NavOptions.Builder().setLaunchSingleTop(true).setRestoreState(true).build()
                 )
             }
         }

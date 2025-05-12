@@ -6,7 +6,6 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.Log
@@ -53,10 +52,11 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
 
         @JvmStatic
         fun navigate(controller: NavController) {
-            val option =
-                NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, true)
-                    .setLaunchSingleTop(true).build()
-            controller.navigate(R.id.action_toLogin, null, option)
+//            val option =
+//                NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, true)
+//                    .setLaunchSingleTop(true).build()
+//            controller.navigate(R.id.action_toLogin, null, option)
+            controller.navigate(R.id.action_toLogin)
         }
     }
 

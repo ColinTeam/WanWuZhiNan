@@ -201,7 +201,8 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
             val option =
                 NavOptions.Builder().setPopUpTo(controller.graph.startDestinationId, true, false)
                     .setLaunchSingleTop(true).build()
-            controller.navigate(R.id.action_toHome, null, option)
+//            controller.navigate(R.id.action_toHome, null, option)
+            controller.navigate(R.id.action_toHome, null, null)
         }
     }
 }
