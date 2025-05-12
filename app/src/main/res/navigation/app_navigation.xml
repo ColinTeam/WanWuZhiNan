@@ -92,6 +92,19 @@
         app:popEnterAnim="@anim/dialog_scale_in"
         app:popExitAnim="@anim/dialog_scale_out"
         app:popUpTo="@+id/action_toSplash" />
+<!--
+app:popUpTo：
+跳转到目前页面的时候，会先在返回栈寻找是否已经有该页面的实例，
+如果有的话，需要将该页面之上的页面都清空。
+app:popUpToInclusive：
+如果只配置app:popUpTo，是不会清空页面本身的实例，那么在返回栈中就有该页面的两个实例，
+这个是不符合预期的。所以此时需要将app:popUpToInclusive设置为true，表示可以清空页面自身的实例。
+
+假设，我从A页面跳转到B页面，再从B页面跳转到A页面。如果不使用popupTo属性的话，返回栈的实例是：A' B A''；
+如果我们设置popupTo，返回栈的实例是：A' A''，因为从B跳转到A时，我们会清空A以上的实例，那个B的实例自然就被清空了；
+如果我们同时配置了popupTo和popUpToInclusive，那么返回栈中的实例是：A''，需要注意的是，这里是A''，也就是新创建的实例。
+
+-->
     <action
         android:id="@+id/action_toLogin"
         app:destination="@+id/fragment_login"

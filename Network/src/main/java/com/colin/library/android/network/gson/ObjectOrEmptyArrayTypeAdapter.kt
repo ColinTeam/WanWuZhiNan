@@ -75,6 +75,7 @@ class ObjectTypeAdapter<T>(private val gson: Gson, private val clazz: Class<T>) 
                     throw JsonSyntaxException("Expected a JSON object but found an array")
                 }
             }
+
             JsonToken.NULL -> {
                 reader.nextNull()
                 null
@@ -89,6 +90,7 @@ class ObjectTypeAdapter<T>(private val gson: Gson, private val clazz: Class<T>) 
     }
 }
 
+@Suppress("UNCHECKED_CAST")
 class ObjectTypeAdapterFactory : TypeAdapterFactory {
     override fun <T : Any?> create(gson: Gson, type: TypeToken<T>): TypeAdapter<T>? {
         val rawType = type.rawType
@@ -97,4 +99,7 @@ class ObjectTypeAdapterFactory : TypeAdapterFactory {
         }
         return null
     }
+
+
 }
+

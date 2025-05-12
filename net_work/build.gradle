@@ -8,11 +8,6 @@ android {
     compileSdk = 35
     defaultConfig {
         minSdk = 27
-        buildConfigField("String", "IMG_HOST", "\"http://images.smart0006.cn/\"")
-        buildConfigField("String", "APP_AES_KEY", "\"forceGFpT66AjkTM\"")
-        buildConfigField("String", "APP_AES_IV", "\"force2022501luck\"")
-        buildConfigField("String", "APP_AES_MODEL", "\"AES/CBC/PKCS5Padding\"")
-        buildConfigField("String", "APP_API_SIGNATURE", "\"G5D*Y2\$FDdf4gf1576SD\"")
         consumerProguardFiles("consumer-rules.pro")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -20,23 +15,16 @@ android {
     buildTypes {
         release {
             minifyEnabled = false
-//            buildConfigField("String", "APP_HOST", "\"https://app.wanwuzhinan.top\"")
-            buildConfigField("String", "APP_HOST", "\"http://14.103.238.200/ \"")
             proguardFiles(
                     getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
         debug {
             minifyEnabled = false
-            buildConfigField("String", "APP_HOST", "\"http://14.103.238.200\"")
             proguardFiles(
                     getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
-    }
-
-    buildFeatures {
-        buildConfig = true
     }
 
     compileOptions {
@@ -51,17 +39,12 @@ dependencies {
     implementation(libs.bundles.androidCommon)
     implementation(libs.androidx.constraintlayout)
     //日志拦截器
-    api('com.github.ihsanbal:LoggingInterceptor:3.1.0') {
+    implementation(libs.logginginterceptor) {
         exclude group: 'org.json', module: 'json'
     }
     /** rxjava框架所需依赖  */
-    api 'io.reactivex.rxjava2:rxjava:2.2.6'
-    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation libs.rxjava
+    implementation libs.rxandroid
 
-    def work_version = "2.7.0"
-    implementation "androidx.work:work-runtime-ktx:$work_version"
-
-//    testImplementation rootProject.ext.dependVersion.junit
-//    androidTestImplementation rootProject.ext.dependVersion.test_ext_junit
-//    androidTestImplementation rootProject.ext.dependVersion.espresso_core
+    implementation libs.androidx.work.runtime.ktx
 }

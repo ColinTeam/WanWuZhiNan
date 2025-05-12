@@ -25,7 +25,7 @@ import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.ui.HomeActivity.Companion.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
-import com.wanwuzhinan.mingchang.vm.LoginViewModelV2
+import com.wanwuzhinan.mingchang.vm.LoginViewModel
 
 /**
  * Author:ColinLu
@@ -34,7 +34,7 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModelV2
  *
  * Des   :LoginFragment
  */
-class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModelV2>() {
+class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
     companion object {
         const val TAB_SMS = 0
         const val TAB_PWD = 1

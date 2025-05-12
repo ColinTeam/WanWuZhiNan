@@ -3,9 +3,6 @@ package com.wanwuzhinan.mingchang.net.repository
 import com.comm.net_work.entity.ApiInfoResponse
 import com.comm.net_work.entity.ApiListResponse
 import com.comm.net_work.entity.ApiResponse
-import com.comm.net_work.gson.GsonManager
-import com.ssm.comm.data.VersionData
-import com.ssm.comm.utils.LogUtils
 import com.wanwuzhinan.mingchang.data.CourseStudyData
 import com.wanwuzhinan.mingchang.data.ExchangeCodeData
 import com.wanwuzhinan.mingchang.data.ExchangeListData
@@ -15,7 +12,6 @@ import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.data.RankHomeData
 import com.wanwuzhinan.mingchang.data.SubjectListData
-import com.wanwuzhinan.mingchang.data.TextDescriptionData
 import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
@@ -23,13 +19,9 @@ import com.wanwuzhinan.mingchang.entity.GradeInfo
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.repository.comm.CommRepository
-import com.wanwuzhinan.mingchang.thread.EaseThreadManager
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Response
 import java.io.File
 
 /**
@@ -187,12 +179,6 @@ class UserRepository : CommRepository() {
     }
 
 
-    //获取版本号
-    suspend fun getVersion(): ApiResponse<VersionData> {
-        val signature = setSignStr()
-        return executeHttp { mService.getVersion(signature) }
-    }
-
     //上传图片
     suspend fun uploadImage(
         file: File
@@ -200,57 +186,5 @@ class UserRepository : CommRepository() {
         val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, requestBody)
         return executeHttp { mService.uploadImage(part) }
-    }
-
-
-    fun getTextDescription(
-        key: String,
-        showLoading: () -> Unit,
-        hideLoading: () -> Unit,
-        onSuccess: (data: TextDescriptionData.Result) -> Unit,
-        onFailure: (error: String) -> Unit
-    ) {
-        showLoading()
-        EaseThreadManager.getInstance().runOnIOThread {
-            val signature = setSignStr(Pair("key", key))
-            val call = mService.getTextDescription(signature, key)
-            //调用enqueue方法异步返回结果
-            call.enqueue(object : retrofit2.Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>, response: Response<ResponseBody>
-                ) {
-                    try {
-                        val result = response.body()!!.string()
-                        LogUtils.e("result===================>${result}")
-                        val response = GsonManager.get().getGson()
-                            .fromJson(result, TextDescriptionData::class.java)
-                        if (response.code == 200) {
-                            EaseThreadManager.getInstance().runOnMainThread {
-                                hideLoading()
-                                onSuccess(response.result)
-                            }
-                        } else {
-                            EaseThreadManager.getInstance().runOnMainThread {
-                                hideLoading()
-                                onFailure(response.msg)
-                            }
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        EaseThreadManager.getInstance().runOnMainThread {
-                            hideLoading()
-                            onFailure("说明文本内容获取失败")
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    EaseThreadManager.getInstance().runOnMainThread {
-                        hideLoading()
-                        onFailure(t.message.toString())
-                    }
-                }
-            })
-        }
     }
 }

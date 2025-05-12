@@ -1,28 +1,16 @@
 package com.wanwuzhinan.mingchang.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.widget.ImageView;
-
-import androidx.annotation.NonNull;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.luck.picture.lib.engine.ImageEngine;
 import com.luck.picture.lib.utils.ActivityCompatHelper;
 import com.wanwuzhinan.mingchang.R;
-import com.luck.picture.lib.engine.ImageEngine;
-import com.luck.picture.lib.interfaces.OnCallbackListener;
 
-/**
- * @author：luck
- * @date：2019-11-13 17:02
- * @describe：Glide加载引擎
- */
 public class GlideEngine implements ImageEngine {
 
     /**

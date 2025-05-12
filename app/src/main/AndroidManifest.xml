@@ -149,22 +149,6 @@
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".ui.phone.MainActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".ui.pad.MainIpadActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".ui.pad.MainIpadWidthActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".ui.publics.SelectCityActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape" />
-        <activity
             android:name=".ui.publics.EnlargeImageActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
@@ -180,7 +164,6 @@
             android:name=".ui.phone.HonorDetailActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
-
 
         <activity
             android:name=".ui.phone.RankActivity"

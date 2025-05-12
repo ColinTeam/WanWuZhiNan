@@ -253,14 +253,6 @@ class UserViewModel : BaseViewModel<UserInfo, UserRepository>(UserRepository()) 
     }
 
 
-    //获取版本号
-    fun getVersion() {
-        viewModelScope.launch {
-            //请求到的数据用livedata包裹
-            getVersionLiveData.value = repository.getVersion()
-        }
-    }
-
     //上传图片
     fun uploadImage(file: File) {
         viewModelScope.launch {

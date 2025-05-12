@@ -9,8 +9,6 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.internal.platform.Platform
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 /**
@@ -22,6 +20,11 @@ import java.util.concurrent.TimeUnit
  * CreateDate: 2022/9/3 16:33
  * Email:shiming024@163.com
  * Description:Retrofit构建器-基类做了一些基本的配置，子类继承后可以添加新的配置，并配置自己喜欢的日志拦截器
+ *      buildConfigField("String", "IMG_HOST", "\"http://images.smart0006.cn/\"")
+ *         buildConfigField("String", "APP_AES_KEY", "\"forceGFpT66AjkTM\"")
+ *         buildConfigField("String", "APP_AES_IV", "\"force2022501luck\"")
+ *         buildConfigField("String", "APP_AES_MODEL", "\"AES/CBC/PKCS5Padding\"")
+ *         buildConfigField("String", "APP_API_SIGNATURE", "\"G5D*Y2\$FDdf4gf1576SD\"")
  */
 abstract class BaseRetrofitBuilder {
 
@@ -53,16 +56,6 @@ abstract class BaseRetrofitBuilder {
     }
 
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BuildConfig.APP_HOST)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(okHttpClient)
-        .build()
-
-
-    fun <T> create(service: Class<T>): T = retrofit.create(service)
-
-    inline fun <reified T> create(): T = create(T::class.java)
 
 
     /**

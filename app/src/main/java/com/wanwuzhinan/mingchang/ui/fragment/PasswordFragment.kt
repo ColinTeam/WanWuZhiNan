@@ -20,7 +20,7 @@ import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.ui.fragment.LoginFragment.Companion.PHONE_LENGTH
 import com.wanwuzhinan.mingchang.ui.pop.TipsDialog
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
-import com.wanwuzhinan.mingchang.vm.LoginViewModelV2
+import com.wanwuzhinan.mingchang.vm.LoginViewModel
 
 /**
  * Author:ColinLu
@@ -29,7 +29,7 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModelV2
  *
  * Des   :PasswordFragment
  */
-class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModelV2>() {
+class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModel>() {
     companion object {
         const val PWD_LENGTH_MIN = 6
         const val PWD_LENGTH_MAX = 20

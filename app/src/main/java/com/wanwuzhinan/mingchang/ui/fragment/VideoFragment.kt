@@ -26,12 +26,6 @@ class VideoFragment : AppFragment<FragmentVideoBinding, MediaViewModel>() {
             playerView.setPlayerViewCallback(superPlayerViewCallback)
         }
         viewModel.apply {
-            audioLessonSubjectGroup.observe {
-                Log.i("audioLessonSubjectGroup:$it")
-            }
-            audioLessonQuarter.observe {
-                Log.i("audioLessonQuarter:$it")
-            }
             lessonInfo.observe {
                 Log.i("lessonInfo:$it")
             }
@@ -39,10 +33,7 @@ class VideoFragment : AppFragment<FragmentVideoBinding, MediaViewModel>() {
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        viewModel.apply {
-            getAudioLessonSubjectGroup(ConfigApp.TYPE_VIDEO)
-            getAudioLessonQuarter(getGroupPositionValue(), 1)
-        }
+
         play(ConfigApp.VIDEO_DEMO_2)
     }
 

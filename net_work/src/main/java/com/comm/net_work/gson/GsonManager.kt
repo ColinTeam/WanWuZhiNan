@@ -17,20 +17,29 @@ import com.google.gson.reflect.TypeToken
  */
 class GsonManager private constructor() {
 
-    companion object{
-        @Volatile
-        private var instance: GsonManager? = null
-           get(){
-               synchronized(GsonManager::class.java){
-                   if(field == null){
-                       field = GsonManager()
-                   }
-               }
-               return field
-           }
-        @Synchronized
-        fun get() : GsonManager{
-            return instance!!
+//    companion object{
+//        @Volatile
+//        private var instance: GsonManager? = null
+//           get(){
+//               synchronized(GsonManager::class.java){
+//                   if(field == null){
+//                       field = GsonManager()
+//                   }
+//               }
+//               return field
+//           }
+//        @Synchronized
+//        fun get() : GsonManager{
+//            return instance!!
+//        }
+//    }
+
+    @Volatile
+    private var instance: GsonManager? = null
+
+    fun get(): GsonManager {
+        return instance ?: synchronized(this) {
+            instance ?: GsonManager().also { instance = it }
         }
     }
 
@@ -40,13 +49,13 @@ class GsonManager private constructor() {
         mGson = createGson()
     }
 
-    fun getGson() : Gson{
+    fun getGson(): Gson {
         return mGson!!
     }
 
-    private fun createGson() : Gson = GsonBuilder()
-        .registerTypeAdapter(Int::class.java,IntegerDefaultAdapter())
-        .registerTypeAdapter(String::class.java,StringNullAdapter()).create()
+    private fun createGson(): Gson =
+        GsonBuilder().registerTypeAdapter(Int::class.java, IntegerDefaultAdapter())
+            .registerTypeAdapter(String::class.java, StringNullAdapter()).create()
 
 
     /**

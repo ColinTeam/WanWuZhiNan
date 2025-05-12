@@ -15,9 +15,9 @@ object DefaultWebSetting {
     lateinit var mWebSettings: WebSettings
 
 
+    @Suppress("DEPRECATION")
     fun getSetting(webView: WebView) {
         val appCacheDir = webView.context.getDir("cache", Context.MODE_PRIVATE).path
-
         mWebSettings = webView.settings
         mWebSettings.apply {
             // 设置WebView是否允许执行JavaScript脚本，默认false，不允许。
@@ -47,9 +47,6 @@ object DefaultWebSetting {
             blockNetworkImage = false
             //允许加载本地文件html  file协议
             allowFileAccess = true
-            // 是否明文存储
-            savePassword = false
-            saveFormData = false
             // 是否允许WebView度超出以概览的方式载入页面
             loadWithOverviewMode = true
             useWideViewPort = true

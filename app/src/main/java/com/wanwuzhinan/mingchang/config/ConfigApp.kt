@@ -1,10 +1,16 @@
 package com.wanwuzhinan.mingchang.config
 
-import com.colin.library.android.utils.Log
 import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 
 object ConfigApp {
+    const val IS_SPLASH_VODEI = false
+    const val BUGLY_APP_ID = "7531451148"
+    const val LIVE_LICENSE_KEY = "d025b928c9f91abb9a3a354cad87af4b"
+    const val WE_CHAT_APP_STATE = "wechat_sdk_demo_test_neng"
+    const val WE_CHAT_APP_SCOPE = "snsapi_userinfo"
+    const val WE_CHAT_APP_SECRET = "72e067e19f371d8dc3ac4bc9d9e69687"
+    const val WE_CHAT_APP_ID = "wxd55ebb21dd8fe7a2"
 
     //保留两位小数
     const val KEEP_TWO_DIGITS = 2
@@ -66,6 +72,5 @@ object ConfigApp {
         }
         @Synchronized set(value: String) {
             field = value
-            Log.e("save token Synchronized")
         }
 }

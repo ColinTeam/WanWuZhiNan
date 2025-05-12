@@ -7,9 +7,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.colin.library.android.image.glide.GlideImgManager
-import com.colin.library.android.utils.countDown
 import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
@@ -21,11 +19,9 @@ import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.toastError
 import com.ssm.comm.ui.base.IWrapView
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.CodeData
 import com.wanwuzhinan.mingchang.data.TextDescriptionData
 import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.entity.UserInfo
-import com.wanwuzhinan.mingchang.net.repository.LoginRepository
 import com.wanwuzhinan.mingchang.net.repository.UserRepository
 import com.wanwuzhinan.mingchang.thread.EaseThreadManager
 import com.wanwuzhinan.mingchang.ui.pop.SurePop
@@ -152,21 +148,6 @@ fun IWrapView.performLaunchPrivacy() {
 }
 
 
-//获取说明
-fun IWrapView.getTextDescription(
-    key: String, repository: UserRepository, success: (data: TextDescriptionData.Result) -> Unit
-) {
-    repository.getTextDescription(key, showLoading = {
-        showBaseLoading()
-    }, hideLoading = {
-        dismissBaseLoading()
-    }, onSuccess = {
-        success(it)
-    }, onFailure = {
-        toastError(it)
-    })
-}
-
 
 fun editTips(vararg edit: TextView?): Boolean {
     edit.forEach {
@@ -214,23 +195,7 @@ fun showCancelPop(
     })
 }
 
-//打开用户协议
-fun IWrapView.performLaunchUserAgreement() {
-    launchActivity(
-        WebViewActivity::class.java, Pair(
-            Constant.URL_TYPE, Constant.USER_AGREEMENT_TYPE
-        )
-    )
-}
 
-//打开h5链接
-fun IWrapView.performLaunchH5Agreements(url: String) {
-    launchActivity(
-        WebViewActivity::class.java,
-        Pair(Constant.URL_TYPE, Constant.OTHER_TYPE),
-        Pair(Constant.H5_URL, url)
-    )
-}
 
 //打开h5链接
 fun Activity.performLaunchH5Agreement(url: String, title: String) {
@@ -244,64 +209,6 @@ fun Activity.performLaunchH5Agreement(url: String, title: String) {
 }
 
 
-//获取验证码
-fun IWrapView.getCode(
-    mobile: String,
-    sendTv: TextView,
-    repository: LoginRepository,
-    success: (data: CodeData?) -> Unit = {}
-) {
-    repository.getCode(mobile, showLoading = {
-        showBaseLoading()
-    }, hideLoading = {
-        dismissBaseLoading()
-    }, onSuccess = {
-        success(it)
-        getCurrentActivity().startCountDowntime(sendTv)
-    }, onFailure = {
-        toastError(it)
-    })
-}
-
-fun AppCompatActivity.startCountDowntime(sendTv: TextView) {
-    val time = Constant.SMS_TIME.toInt()
-    countDown(time, start = {
-        sendTv.text = String.format("获取验证码(%s)", time)
-        sendTv.alpha = 0.3f
-        sendTv.isEnabled = false
-    }, end = {
-        sendTv.text = "获取验证码"
-        sendTv.alpha = 1.0f
-        sendTv.isEnabled = true
-    }, next = {
-        sendTv.text = String.format("获取验证码(%s)", it.toString())
-        sendTv.alpha = 0.3f
-        sendTv.isEnabled = false
-    })
-}
-
-
-/*fun IWrapView.getCode(
-    mobile: String,
-    repository: LoginRepository,
-    complete: (code: String, type: String) -> Unit
-) {
-    repository.getCode(mobile,
-        showLoading = {
-            showBaseLoading()
-        },
-        hideLoading = {
-            dismissBaseLoading()
-        },
-        onSuccess = {
-            toastSuccess(it)
-            showCodeDialog(type, complete)
-        },
-        onFailure = {
-            toastError(it)
-        }
-    )
-}*/
 
 
 fun showCardImage(image: String, complete: () -> Unit) {

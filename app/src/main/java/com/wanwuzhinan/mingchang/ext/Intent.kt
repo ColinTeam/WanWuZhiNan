@@ -1,7 +1,6 @@
 package com.wanwuzhinan.mingchang.ext
 
 import android.content.res.Configuration
-import android.util.Log
 import com.google.gson.Gson
 import com.ssm.comm.app.appContext
 import com.ssm.comm.ext.getScreenHeight2
@@ -13,8 +12,6 @@ import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.HomeActivity.Companion.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
-import com.wanwuzhinan.mingchang.ui.pad.MainIpadActivity
-import com.wanwuzhinan.mingchang.ui.pad.MainIpadWidthActivity
 import com.wanwuzhinan.mingchang.ui.pad.VideoListPadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AnswerAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.AnswerErrorAskActivity
@@ -25,7 +22,6 @@ import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeCourseActivity
 import com.wanwuzhinan.mingchang.ui.phone.HonorHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.HonorListActivity
-import com.wanwuzhinan.mingchang.ui.phone.MainActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
@@ -41,20 +37,6 @@ import com.wanwuzhinan.mingchang.utils.getAudioData
 fun isPhone(): Boolean {
     val config: Configuration = appContext.resources!!.configuration
     return !(config.smallestScreenWidthDp >= 600)
-}
-
-
-//首页
-fun IWrapView.launchMainActivity() {
-    val dd = getScreenWidth2() / (getScreenHeight2() * 1.0f)
-    Log.e("TAG", "getScreenWidth2()/ getScreenHeight2(): " + dd)
-    if (dd > 2.0) {
-        launchActivity(MainActivity::class.java)
-    } else if (dd >= (16 / 9.0)) {
-        launchActivity(MainIpadWidthActivity::class.java)
-    } else {
-        launchActivity(MainIpadActivity::class.java)
-    }
 }
 
 //视频主页

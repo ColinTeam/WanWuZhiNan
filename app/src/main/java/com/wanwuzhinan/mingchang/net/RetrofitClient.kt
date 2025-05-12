@@ -21,9 +21,9 @@ import okhttp3.OkHttpClient
  */
 object RetrofitClient : BaseRetrofitBuilder() {
 
-    val service by lazy {
-        create(ApiService::class.java)
-    }
+//    val service by lazy {
+//        create(ApiService::class.java)
+//    }
 
     override fun handleOkHttpClientBuilder(builder: OkHttpClient.Builder) {
 

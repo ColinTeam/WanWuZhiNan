@@ -101,13 +101,6 @@ fun copyString(mActivity: Context, content: String?) {
     toastSuccess("内容复制成功")
 }
 
-fun String.urlFormat(): String {
-    if (isWebUrlLegal(this)) {
-        return this
-    }
-    //    return String.format("%s%s",,this)
-    return String.format("%s%s", com.comm.net_work.BuildConfig.IMG_HOST, this)
-}
 
 fun isWebUrlLegal(url: String): Boolean {
     if (isEmpty(url)) {
