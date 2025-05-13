@@ -64,15 +64,15 @@ dependencies {
     implementation libs.androidx.lifecycle.reactivestreams.ktx
 
     //viewpager2
-    implementation 'androidx.viewpager2:viewpager2:1.1.0'
+    implementation libs.androidx.viewpager2
 
     //multidex
-    api 'androidx.multidex:multidex:2.0.1'
+    api libs.androidx.multidex
 
     //Rxpermissions
     api libs.rxpermissions
     //图文详情的textview
-    api 'org.sufficientlysecure:html-textview:4.0'
+    api libs.html.textview
 
     // PictureSelector basic (Necessary)
     api 'io.github.lucksiege:pictureselector:v3.11.2'

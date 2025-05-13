@@ -206,7 +206,7 @@ dependencies {
     implementation libs.lcardview.kt
     implementation libs.androidx.legacy.support.core.ui
 
-    implementation 'com.github.yyued:SVGAPlayer-Android:2.6.1'
+    implementation libs.svgaplayer.android
 
     //骨架 skeleton
 //    implementation 'com.ethanhua:skeleton:1.1.2'
