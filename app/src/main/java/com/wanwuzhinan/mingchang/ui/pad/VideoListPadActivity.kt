@@ -46,7 +46,6 @@ class VideoListPadActivity :
     BaseActivity<ActivityVideoListPadBinding, UserViewModel>(UserViewModel()) {
 
     var mId = ""
-    var mType = 0
     var mPosition = 0
     var mChildPosition = 0
     var mSelectId = ""
@@ -65,7 +64,6 @@ class VideoListPadActivity :
         }
         registerBus(this)
         mLightPop = LightPop(this)
-        mType = intent.getIntExtra(ConfigApp.INTENT_TYPE, mType)
         mId = intent.getStringExtra(ConfigApp.INTENT_ID).toString()
         mSelectId = intent.getStringExtra(ConfigApp.INTENT_NUMBER).toString()
 

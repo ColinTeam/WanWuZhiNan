@@ -44,7 +44,9 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
         viewBinding.root.findViewById<View>(R.id.ivBack)?.onClick { goBack() }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() { isEnabled = goBack() }
+                override fun handleOnBackPressed() {
+                    isEnabled = goBack()
+                }
             })
     }
 
@@ -71,10 +73,13 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
     override fun loadData(refresh: Boolean) {
     }
 
-    internal open fun goBack(): Boolean {
-        val isEnable = findNavController().popBackStack()
-        Log.e("$TAG goBack $isEnable ")
-        return isEnable
+    override fun goBack(): Boolean {
+        return if (findNavController().popBackStack()) {
+            true
+        } else {
+            activity?.finish()
+            true
+        }
     }
 
     fun showLoading(show: Boolean = false) {

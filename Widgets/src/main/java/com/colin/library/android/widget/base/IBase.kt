@@ -24,4 +24,6 @@ interface IBase {
     /*load data by sqlite、http等耗时动作*/
     fun loadData(refresh: Boolean)
 
+    fun goBack(): Boolean
+
 }

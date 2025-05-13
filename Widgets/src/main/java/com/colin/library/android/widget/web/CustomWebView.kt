@@ -8,7 +8,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.colin.library.android.widget.web.client.DefaultWebChromeClient
-import com.colin.library.android.widget.web.client.DefaultWebSetting
 import com.colin.library.android.widget.web.client.DefaultWebViewClient
 import com.colin.library.android.widget.web.service.JsParam
 import com.colin.library.android.widget.web.service.WebServiceConnection
@@ -21,12 +20,9 @@ import com.google.gson.Gson
  *
  * Des   :ScrollWebView
  */
-class ScrollWebView @JvmOverloads constructor(
+class CustomWebView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : com.tencent.smtt.sdk.WebView(context, attrs, defStyleAttr), LifecycleEventObserver {
-    init {
-        DefaultWebSetting.getSetting(this)
-    }
 
     fun bind(lifecycle: Lifecycle) {
         lifecycle.addObserver(this)

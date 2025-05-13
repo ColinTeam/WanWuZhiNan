@@ -1,6 +1,7 @@
 package com.colin.library.android.widget.base
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.colin.library.android.utils.Log
@@ -55,10 +56,20 @@ abstract class BaseActivity : AppCompatActivity(), IBase {
         super.onDestroy()
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return if (keyCode == KeyEvent.KEYCODE_BACK) goBack()
+        else super.onKeyDown(keyCode, event)
+    }
+
     open fun setContentView(layoutRes: Int, savedInstanceState: Bundle?) {
         super.setContentView(layoutRes)
         initView(intent?.extras, savedInstanceState)
         initData(intent?.extras, savedInstanceState)
+    }
+
+    override fun goBack(): Boolean {
+        finish()
+        return true
     }
 
     /**

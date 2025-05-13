@@ -69,7 +69,6 @@ object Constant {
     const val USER_AGREEMENT_TYPE = 1
     const val PRIVACY_POLICY_TYPE = 2
     const val OTHER_TYPE = 3
-    const val HELP_CENTER = 4
 
     const val APP_UPDATE_TYPE = 2
 

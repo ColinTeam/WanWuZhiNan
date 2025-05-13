@@ -66,9 +66,7 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
     /*如果想修改Store 可以重写此方法*/
     internal open fun bindViewModelStore() = viewModelStore
 
-    internal open fun goBack() {
-        finish()
-    }
+
 
     fun showLoading(show: Boolean = false) {
         if (loadingDialog?.isShowing() == show) return

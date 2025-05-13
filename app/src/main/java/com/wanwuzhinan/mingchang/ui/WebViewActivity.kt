@@ -3,9 +3,12 @@ package com.wanwuzhinan.mingchang.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View.OVER_SCROLL_NEVER
+import android.view.View.SCROLLBARS_INSIDE_OVERLAY
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.widget.web.IWebViewCallback
+import com.colin.library.android.widget.web.client.DefaultWebSetting
 import com.tencent.smtt.sdk.WebView
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
@@ -25,17 +28,16 @@ class WebViewActivity : AppActivity<FragmentWebBinding, HomeViewModel>() {
     var title: String? = null
     var html: String? = null
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        Log.i("bundle:$bundle savedInstanceState:$savedInstanceState html:$html")
         if (savedInstanceState != null) parse(savedInstanceState) else parse(bundle)
-        viewBinding.apply {
-            this.tvTitle.text = title ?: ""
-            this.web.bind(lifecycle)
-            this.web.initWebClient(callback)
+        viewBinding.web.apply {
+            this.bind(lifecycle)
+            this.scrollBarStyle = SCROLLBARS_INSIDE_OVERLAY
+            this.overScrollMode = OVER_SCROLL_NEVER
+            DefaultWebSetting.updateSetting(this)
+            //添加js监听 这样html就能调用客户端
+            this.addJavascriptInterface(this,"android")
+            this.initWebClient(callback)
         }
-    }
-
-    override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        loadData(url, html)
     }
 
     //重新打开
@@ -43,13 +45,19 @@ class WebViewActivity : AppActivity<FragmentWebBinding, HomeViewModel>() {
         super.onNewIntent(intent)
         intent?.let {
             parse(it.extras)
-            loadData(url, html)
+            loadData(title, url, html)
         }
     }
 
-    override fun goBack() {
-        if (viewBinding.web.canGoBack()) {
+    override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
+        loadData(title, url, html)
+    }
+
+
+    override fun goBack(): Boolean {
+        return if (viewBinding.web.canGoBack()) {
             viewBinding.web.goBack()
+            true
         } else super.goBack()
     }
 
@@ -88,8 +96,9 @@ class WebViewActivity : AppActivity<FragmentWebBinding, HomeViewModel>() {
     }
 
 
-    private fun loadData(url: String?, html: String?) {
-        Log.i("url:$url html:$html")
+    private fun loadData(title: String?, url: String?, html: String?) {
+        Log.i("title:$title url:$url html:$html")
+        viewBinding.tvTitle.text = title ?: ""
         if (!url.isNullOrEmpty()) {
             viewBinding.web.loadUrl(url)
             return

@@ -80,7 +80,7 @@
             app:layout_constraintStart_toStartOf="@+id/line_margin_start"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
-        <com.colin.library.android.widget.web.ScrollWebView
+        <com.colin.library.android.widget.web.CustomWebView
             android:id="@+id/web"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"

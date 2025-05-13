@@ -8,7 +8,7 @@ import android.os.IBinder
 import android.os.RemoteException
 import com.colin.library.android.widget.ICallbackFromWebProcessInterface
 import com.colin.library.android.widget.IWebProcessInterface
-import com.colin.library.android.widget.web.ScrollWebView
+import com.colin.library.android.widget.web.CustomWebView
 
 /**
  * Author:ColinLu
@@ -45,7 +45,7 @@ class WebServiceConnection private constructor() : ServiceConnection {
 //        initAidlConnection()
     }
 
-    fun executeCommand(commandName: String, params: String?, webView: ScrollWebView) {
+    fun executeCommand(commandName: String, params: String?, webView: CustomWebView) {
         try {
             webProcessInterface?.handleWebCommand(
                 commandName, params, object : ICallbackFromWebProcessInterface.Stub() {

@@ -19,9 +19,10 @@ abstract class BaseFragment : Fragment(), IBase {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d(TAG, "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
-        initView(arguments,savedInstanceState)
-        initData(arguments,savedInstanceState)
+        initView(arguments, savedInstanceState)
+        initData(arguments, savedInstanceState)
     }
+
 
     override fun onStart() {
         Log.d(TAG, "onStart")
@@ -57,4 +58,7 @@ abstract class BaseFragment : Fragment(), IBase {
         super.onDestroy()
     }
 
+    override fun goBack(): Boolean {
+        return false
+    }
 }
