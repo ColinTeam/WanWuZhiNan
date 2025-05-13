@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.colin.library.android.utils.Log
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
@@ -27,7 +26,6 @@ import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
 class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
     var playCompleted = false
     override fun goBack(): Boolean {
-        Log.e("$TAG playCompleted:$playCompleted")
         if (playCompleted) {
             toHome()
         }
@@ -37,6 +35,7 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.ivBack.setOnTouchListener(MotionTouchLister())
+        viewBinding.ivBack.isEnabled = false
         val path = "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.raw.splash1
         PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_FULL)
@@ -46,6 +45,7 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
             .setVideoAllCallBack(object : GSYSampleCallBack() {
                 override fun onAutoComplete(url: String?, vararg objects: Any?) {
                     playCompleted = true
+                    viewBinding.ivBack.isEnabled = true
                     toHome()
                 }
 

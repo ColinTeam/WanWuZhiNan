@@ -149,11 +149,11 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btLogin"
+            style="@style/Style.Button"
             android:layout_width="@dimen/dp_200"
             android:layout_height="@dimen/dp_48"
             android:layout_marginTop="@dimen/margin_default"
             android:layout_marginBottom="@dimen/margin_default"
-            android:background="@drawable/bg_button"
             android:text="@string/login"
             android:textAppearance="@style/Text.Button"
             app:layout_constraintBottom_toTopOf="@id/rbProtocolTips"

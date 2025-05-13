@@ -12,8 +12,7 @@ import com.colin.library.android.widget.base.BaseDialogFragment
 import java.lang.reflect.ParameterizedType
 
 
-abstract class AppDialogFragment<VB : ViewBinding>() :
-    BaseDialogFragment(Constants.ZERO) {
+abstract class AppDialogFragment<VB : ViewBinding>() : BaseDialogFragment(Constants.ZERO) {
 
     private var _viewBinding: VB? = null
     internal val viewBinding: VB get() = _viewBinding!!
@@ -23,6 +22,11 @@ abstract class AppDialogFragment<VB : ViewBinding>() :
     ): View {
         _viewBinding = reflectViewBinding(inflater, container)
         return viewBinding.root
+    }
+
+    override fun goBack(): Boolean {
+        dismiss()
+        return true
     }
 
     override fun loadData(refresh: Boolean) {

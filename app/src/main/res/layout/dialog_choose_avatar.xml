@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingVertical="@dimen/margin_default">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivCancel"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintBottom_toTopOf="@+id/card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/alert_close" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:shadowColor="@color/line"
+            android:shadowRadius="@integer/password_length_min"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_6"
+            app:cardMaxElevation="@dimen/dp_6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.792"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivCancel"
+            app:layout_constraintWidth_percent="0.7333">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/margin_default">
+
+
+                <com.colin.library.android.widget.image.RectangleImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_0"
+                    android:layout_marginTop="@dimen/margin_default"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toStartOf="@+id/ivLeft"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.2"
+                    app:shapeAppearanceOverlay="@style/ImageCircle"
+                    app:srcCompat="@mipmap/stat_avater_1" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivLeft"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_0"
+                    android:layout_marginStart="@dimen/margin_default_half"
+                    android:padding="@dimen/margin_default"
+                    android:scaleType="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
+                    app:layout_constraintEnd_toStartOf="@+id/list"
+                    app:layout_constraintStart_toEndOf="@+id/ivAvatar"
+                    app:layout_constraintTop_toTopOf="@+id/ivAvatar"
+                    app:layout_constraintWidth_percent="0.1"
+                    app:srcCompat="@drawable/ic_choose_left" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_0"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
+                    app:layout_constraintDimensionRatio="w,1:4"
+                    app:layout_constraintEnd_toStartOf="@+id/ivRight"
+                    app:layout_constraintStart_toEndOf="@+id/ivLeft"
+                    app:layout_constraintTop_toTopOf="@+id/ivAvatar"
+                    app:layout_constraintWidth_percent="0.6"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_choose_avatar" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivRight"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_0"
+                    android:padding="@dimen/margin_default"
+                    android:scaleType="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/list"
+                    app:layout_constraintTop_toTopOf="@+id/ivAvatar"
+                    app:layout_constraintWidth_percent="0.1"
+                    app:srcCompat="@drawable/ic_choose_right" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btCancel"
+                    style="@style/Style.Button.Cancel"
+                    android:layout_marginHorizontal="@dimen/margin_default"
+                    android:text="@string/cancel"
+                    app:layout_constraintEnd_toStartOf="@+id/btSure"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="@+id/ivLeft"
+                    app:layout_constraintTop_toBottomOf="@+id/ivLeft" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btSure"
+                    style="@style/Style.Button"
+                    android:layout_marginHorizontal="@dimen/margin_default"
+                    android:text="@string/sure"
+                    app:layout_constraintBottom_toBottomOf="@+id/btCancel"
+                    app:layout_constraintEnd_toEndOf="@+id/ivRight"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/btCancel"
+                    app:layout_constraintTop_toTopOf="@+id/btCancel" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginBottom="@dimen/margin_default_half"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/margin_default"
+                    android:text="设置头像"
+                    android:textAppearance="@style/Text"
+                    app:layout_constrainedWidth="false"
+                    app:layout_constraintBottom_toTopOf="@id/ivAvatar"
+                    app:layout_constraintEnd_toEndOf="@id/ivAvatar"
+                    app:layout_constraintStart_toStartOf="@id/ivAvatar" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvMsg"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_40"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/margin_default"
+                    android:text="预览"
+                    android:textAppearance="@style/Text"
+                    android:textColor="@color/text_color_hint"
+                    app:layout_constrainedWidth="false"
+                    app:layout_constraintEnd_toEndOf="@id/ivAvatar"
+                    app:layout_constraintStart_toStartOf="@id/ivAvatar"
+                    app:layout_constraintTop_toBottomOf="@id/ivAvatar" />
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabChoose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_33"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:layout_marginBottom="@dimen/margin_default"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toTopOf="@+id/list"
+                    app:layout_constraintEnd_toEndOf="@+id/list"
+                    app:layout_constraintStart_toStartOf="@id/list"
+                    app:tabBackground="@color/white"
+                    app:tabIndicator="@drawable/tab_indicator_login"
+                    app:tabIndicatorAnimationMode="elastic"
+                    app:tabIndicatorColor="@color/color_active"
+                    app:tabMode="scrollable"
+                    app:tabRippleColor="@null"
+                    app:tabSelectedTextAppearance="@style/Text.Tab.Selected"
+                    app:tabSelectedTextColor="@color/color_active"
+                    app:tabTextAppearance="@style/Text.Tab"
+                    app:tabTextColor="@color/text_color_default">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/setting_man" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/setting_women" />
+                </com.google.android.material.tabs.TabLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

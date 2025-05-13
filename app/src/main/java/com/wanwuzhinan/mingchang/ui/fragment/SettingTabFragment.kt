@@ -65,7 +65,6 @@ class SettingTabFragment : AppFragment<FragmentSettingTabBinding, UserInfoViewMo
         }
         array.recycle()
         return list
-
     }
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
@@ -74,8 +73,7 @@ class SettingTabFragment : AppFragment<FragmentSettingTabBinding, UserInfoViewMo
         val tabs = getTabList()
         tabAdapter = SettingTabAdapter()
         tabAdapter!!.submitList(tabs)
-        tabAdapter!!.onItemClickListener = { v, it ->
-            val position = v.tag as Int
+        tabAdapter!!.onItemClickListener = { v, it, position ->
             viewModel.tabPosition(position)
         }
         viewBinding.list.adapter = tabAdapter

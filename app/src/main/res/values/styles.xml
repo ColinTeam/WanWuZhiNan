@@ -205,6 +205,31 @@
         <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
     </style>
 
+    <style name="Style.Button" parent="Style">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">@dimen/dp_48</item>
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingHorizontal">@dimen/margin_default</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">@style/Text.Button</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeStepGranularity">@dimen/text_home_step</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/button_text_size</item>
+        <item name="android:autoSizeMinTextSize">@dimen/sp_14</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeStepGranularity">@dimen/text_home_step</item>
+        <item name="autoSizeMaxTextSize">@dimen/button_text_size</item>
+        <item name="autoSizeMinTextSize">@dimen/sp_14</item>
+        <item name="android:fontWeight">600</item>
+        <item name="android:textFontWeight" tools:ignore="NewApi">600</item>
+    </style>
+
+    <style name="Style.Button.Cancel" parent="Style.Button">
+        <item name="android:background">@drawable/bg_button_cancel</item>
+        <item name="android:textColor">@color/text_button_cancel</item>
+    </style>
+
     <style name="Style.Text.Home" parent="Style.Text">
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_home_title</item>

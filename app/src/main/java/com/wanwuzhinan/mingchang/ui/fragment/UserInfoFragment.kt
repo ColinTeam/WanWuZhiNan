@@ -17,6 +17,7 @@ import com.wanwuzhinan.mingchang.entity.GradeInfo
 import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
+import com.wanwuzhinan.mingchang.ui.pop.ChooseAvatarDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseDialog
 import com.wanwuzhinan.mingchang.utils.load
 import com.wanwuzhinan.mingchang.vm.UserInfoViewModel
@@ -121,6 +122,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
             return
         }
         viewBinding.apply {
+
             val nick = etNick.text.toString().trim()
             if (info.truename != nick) {
                 viewBinding.btSave.isSelected = true
@@ -152,7 +154,11 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
     }
 
     private fun chooseAvatar() {
-
+        ChooseAvatarDialog.newInstance(ChooseAvatarDialog.TAB_MAN, 0).apply {
+            sure = {
+                Log.e("ChooseAvatarDialog:$it")
+            }
+        }.show(this)
     }
 
     private fun chooseArea() {

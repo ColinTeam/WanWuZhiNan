@@ -23,23 +23,6 @@ class ChooseDialog private constructor(
     var sure: ((Int) -> Unit) = { }
     var cancel: ((View) -> Unit) = { }
 
-    companion object {
-        const val TYPE_SEX = 0
-        const val TYPE_GRADE = 1
-        const val EXTRAS_TITLE = "EXTRAS_TITLE"
-
-        @JvmStatic
-        fun newInstance(title: CharSequence, array: List<String>): ChooseDialog {
-            val bundle = Bundle().apply {
-                putCharSequence(EXTRAS_TITLE, title)
-            }
-            val fragment = ChooseDialog(title, array)
-            fragment.arguments = bundle
-            fragment.height = 0.75f
-            fragment.gravity = Gravity.BOTTOM
-            return fragment
-        }
-    }
 
     private var selected = Constants.INVALID
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
@@ -67,5 +50,24 @@ class ChooseDialog private constructor(
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
 
+    }
+
+
+    companion object {
+        const val TYPE_SEX = 0
+        const val TYPE_GRADE = 1
+        const val EXTRAS_TITLE = "EXTRAS_TITLE"
+
+        @JvmStatic
+        fun newInstance(title: CharSequence, array: List<String>): ChooseDialog {
+            val bundle = Bundle().apply {
+                putCharSequence(EXTRAS_TITLE, title)
+            }
+            val fragment = ChooseDialog(title, array)
+            fragment.arguments = bundle
+            fragment.height = 0.75f
+            fragment.gravity = Gravity.BOTTOM
+            return fragment
+        }
     }
 }

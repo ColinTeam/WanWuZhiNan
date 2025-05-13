@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/bt_ripple">
+    <item>
+        <selector>
+            <item android:state_selected="false">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/edit_height" />
+                    <stroke
+                        android:width="@dimen/dp_1"
+                        android:color="@color/bt_bg_pressed" />
+                    <solid android:color="@color/white" />
+                </shape>
+            </item>
+            <item android:state_enabled="false">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/edit_height" />
+                    <stroke
+                        android:width="@dimen/dp_1"
+                        android:color="@color/bt_bg_pressed" />
+                    <solid android:color="@color/white" />
+                </shape>
+            </item>
+            <item android:state_pressed="true">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/edit_height" />
+                    <solid android:color="@color/bt_bg_pressed" />
+                    <stroke
+                        android:width="@dimen/dp_1"
+                        android:color="@color/bt_bg_disable" />
+                </shape>
+            </item>
+
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/edit_height" />
+                    <solid android:color="@color/white" />
+                    <stroke
+                        android:width="@dimen/dp_1"
+                        android:color="@color/bt_bg_default" />
+                </shape>
+            </item>
+        </selector>
+    </item>
+
+</ripple>

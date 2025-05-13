@@ -20,4 +20,10 @@
         <item>@drawable/tab_report_selector</item>
         <item>@drawable/tab_person_icon_selector</item>
     </array>
+    <array name="setting_avater">
+        <item>@mipmap/stat_avater_1</item>
+        <item>@mipmap/stat_avater_2</item>
+        <item>@mipmap/stat_avater_3</item>
+        <item>@mipmap/stat_avater_4</item>
+    </array>
 </resources>

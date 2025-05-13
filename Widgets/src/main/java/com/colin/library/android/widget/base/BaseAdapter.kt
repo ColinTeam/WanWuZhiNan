@@ -44,7 +44,7 @@ abstract class BaseAdapter<ITEM>(
     /**
      * Item点击事件监听
      */
-    var onItemClickListener: ((View, ITEM) -> Unit)? = null
+    var onItemClickListener: ((View, ITEM, Int) -> Unit)? = null
 
     /**
      * Item长按事件监听
@@ -76,7 +76,7 @@ abstract class BaseAdapter<ITEM>(
     ) {
         if (shouldDisplayEmpty(position)) bindEmptyViewHolder(holder, position, payloads)
         else if (shouldDisplayFoot(position)) bindFooterViewHolder(holder, position, payloads)
-        else bindListViewHolder(holder, items[position], payloads)
+        else bindListViewHolder(holder, items[position], position, payloads)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -213,7 +213,7 @@ abstract class BaseAdapter<ITEM>(
     }
 
     abstract fun bindListViewHolder(
-        holder: BaseViewHolder, item: ITEM, payloads: MutableList<Any>
+        holder: BaseViewHolder, item: ITEM, position: Int, payloads: MutableList<Any>
     )
 
 

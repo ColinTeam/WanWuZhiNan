@@ -9,7 +9,10 @@
         <attr name="shimmer_gradient_width" format="fraction|reference" />
         <attr name="shimmer_reverse_animation" format="boolean|reference" />
     </declare-styleable>
-
+    <declare-styleable name="SquareImageView">
+        <attr name="byWidth" format="boolean|reference" />
+        <attr name="ratio" format="fraction|reference" />
+    </declare-styleable>
     <declare-styleable name="RoundImageView">
         <attr name="android:scaleType" />
         <attr name="round_radius" format="dimension" />

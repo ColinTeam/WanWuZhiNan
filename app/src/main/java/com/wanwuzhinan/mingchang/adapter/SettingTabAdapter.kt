@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.colin.library.android.utils.Constants
-import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.base.BaseAdapter
 import com.colin.library.android.widget.base.BaseViewHolder
@@ -15,15 +14,15 @@ import com.wanwuzhinan.mingchang.data.TabBean
 class SettingTabAdapter(layoutRes: Int = R.layout.item_setting) : BaseAdapter<TabBean>(layoutRes) {
 
     var selected: Int = 0
-        @SuppressLint("NotifyDataSetChanged")
-        set(value) {
+        @SuppressLint("NotifyDataSetChanged") set(value) {
             if (field == value) return
             field = value
             notifyDataSetChanged()
         }
 
-    override fun onBindViewHolder(
-        holder: BaseViewHolder, position: Int, payloads: MutableList<Any>
+
+    override fun bindListViewHolder(
+        holder: BaseViewHolder, item: TabBean, position: Int, payloads: MutableList<Any>
     ) {
         items[position].let {
             val isSelected = selected == position
@@ -39,19 +38,10 @@ class SettingTabAdapter(layoutRes: Int = R.layout.item_setting) : BaseAdapter<Ta
                 this.isSelected = isSelected
             }
             onClick(holder.getView<View>(R.id.lin)) {
-                Log.e("onItemClickListener$it")
-                it.tag = position
-                onItemClickListener?.invoke(it, items[position])
+                onItemClickListener?.invoke(it, items[position], position)
             }
+
         }
     }
-
-    override fun bindListViewHolder(
-        holder: BaseViewHolder, item: TabBean, payloads: MutableList<Any>
-    ) {
-
-
-    }
-
 
 }
