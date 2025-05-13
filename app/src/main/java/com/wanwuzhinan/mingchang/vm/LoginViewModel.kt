@@ -10,7 +10,6 @@ import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
 import com.wanwuzhinan.mingchang.entity.RegisterData
-import com.wanwuzhinan.mingchang.entity.UserInfo
 import kotlinx.coroutines.delay
 
 /**
@@ -21,7 +20,6 @@ import kotlinx.coroutines.delay
  * Des   :LoginViewModel
  */
 class LoginViewModel : AppViewModel() {
-    private val _userInfo: MutableLiveData<UserInfo?> = MutableLiveData(null)
     private val _configData: MutableLiveData<Config?> = MutableLiveData(null)
     val configData: LiveData<Config?> = _configData
     private val _RegisterData: MutableLiveData<RegisterData?> = MutableLiveData(null)
@@ -37,17 +35,7 @@ class LoginViewModel : AppViewModel() {
                 _configData.postValue(it)
             }
         }, failure = {
-            _showToast.postValue(it)
-        })
-    }
-
-    //获取用户信息
-    fun getUserInfo() {
-        request({
-            service.newUserInfo()
-        }, success = {
-            _userInfo.postValue(it.info)
-        }, failure = {
+            postError(type = it.code, it.msg)
             _showToast.postValue(it)
         })
     }
@@ -62,6 +50,7 @@ class LoginViewModel : AppViewModel() {
             _showLoading.postValue(false)
             _smsSuccess.postValue(true)
         }, failure = {
+            postError(type = it.code, it.msg)
             _showToast.postValue(it)
             _showLoading.postValue(false)
             _smsSuccess.postValue(false)
@@ -78,6 +67,7 @@ class LoginViewModel : AppViewModel() {
             _RegisterData.postValue(it)
             _showLoading.postValue(false)
         }, failure = {
+            postError(type = it.code, it.msg)
             _showToast.postValue(it)
             _showLoading.postValue(false)
         })
@@ -100,13 +90,14 @@ class LoginViewModel : AppViewModel() {
             _RegisterData.postValue(it)
             _showLoading.postValue(false)
         }, failure = {
+            postError(type = it.code, it.msg)
             _showToast.postValue(it)
             _showLoading.postValue(false)
         })
     }
 
     fun updateSuccess(state: Boolean = false) {
-        if (_smsSuccess.value != state) _smsSuccess.value = state
+        if (smsSuccess.value != state) _smsSuccess.value = state
     }
 
 

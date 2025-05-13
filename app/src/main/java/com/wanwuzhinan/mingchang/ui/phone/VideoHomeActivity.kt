@@ -22,8 +22,9 @@ import com.ssm.comm.ui.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.VideoHomeAdapter
 import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.databinding.ActivityVideoHomeBinding
+import com.wanwuzhinan.mingchang.entity.LessonQuarter
+import com.wanwuzhinan.mingchang.entity.LessonSubject
 import com.wanwuzhinan.mingchang.ext.launchVideoListActivity
 import com.wanwuzhinan.mingchang.utils.FadeInOutItemAnimator
 import com.wanwuzhinan.mingchang.vm.UserViewModel
@@ -42,11 +43,11 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
         }
     }
 
-    var mList: MutableList<SubjectListData>? = null
+    var mList: MutableList<LessonSubject>? = null
     var mPosition = 0
     var mScrollPosition = 0
     lateinit var mAdapter: VideoHomeAdapter
-    private var mData: MutableList<SubjectListData.dataBean> = mutableListOf()
+    private var mData: List<LessonQuarter> = emptyList<LessonQuarter>()
     private var previousFullScreenView: ImageView? = null
 
     //动画的持续时间
@@ -55,7 +56,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
     //当前正在进行的动画
     private var mCurrentAnimation: AnimatorSet? = null
 
-    private var mapMap = mutableMapOf<String, MutableList<SubjectListData.dataBean>>()
+    private var mapMap = mutableMapOf<Int, List<LessonQuarter>>()
 
     override fun initView() {
         initList()
@@ -138,7 +139,7 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
 
         mViewModel.courseSubjectListLiveData.observeState(this) {
             onSuccess = { data, msg ->
-                mData = data!!.info!!.lesson_quarterList
+                mData = data!!.info!!.lessonQuarter
                 for ((index, value) in mData.withIndex()) {
                     mData[index].index = index
                 }
@@ -321,25 +322,22 @@ class VideoHomeActivity : BaseActivity<ActivityVideoHomeBinding, UserViewModel>(
         //四种动画同时播放
         val set = AnimatorSet()
         set.play(
-                ObjectAnimator.ofFloat(
-                    expandedImageView,
-                    View.X,
-                    startBounds.left.toFloat(),
-                    finalBounds.left.toFloat()
-                )
-            ).with(
-                ObjectAnimator.ofFloat(
-                    expandedImageView, View.Y, startBounds.top.toFloat(), finalBounds.top.toFloat()
-                )
-            ).with(
-                ObjectAnimator.ofFloat(
-                    expandedImageView, View.SCALE_X, startScale, 1f
-                )
-            ).with(
-                ObjectAnimator.ofFloat(
-                    expandedImageView, View.SCALE_Y, startScale, 1f
-                )
+            ObjectAnimator.ofFloat(
+                expandedImageView, View.X, startBounds.left.toFloat(), finalBounds.left.toFloat()
             )
+        ).with(
+            ObjectAnimator.ofFloat(
+                expandedImageView, View.Y, startBounds.top.toFloat(), finalBounds.top.toFloat()
+            )
+        ).with(
+            ObjectAnimator.ofFloat(
+                expandedImageView, View.SCALE_X, startScale, 1f
+            )
+        ).with(
+            ObjectAnimator.ofFloat(
+                expandedImageView, View.SCALE_Y, startScale, 1f
+            )
+        )
         set.duration = mShortAnimationDuration.toLong()
         set.interpolator = AccelerateInterpolator()
         set.addListener(object : AnimatorListenerAdapter() {

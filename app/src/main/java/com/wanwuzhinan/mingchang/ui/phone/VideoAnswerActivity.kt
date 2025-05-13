@@ -33,7 +33,7 @@ class VideoAnswerActivity :
     var mPosition = 0
     var mSelectPosition = 0
     var mType = 1//1选择状态 2显示状态
-    lateinit var mQuestionList: MutableList<QuestionListData.questionBean>
+    lateinit var mQuestionList: MutableList<QuestionListData.QuestionBean>
     lateinit var mAdapter: AnswerPracticeOptionAdapter
     lateinit var mMediaPlayer: MediaPlayer
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.colin.library.android.network.request
 import com.wanwuzhinan.mingchang.app.AppViewModel
 import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.entity.LessonInfo
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
 
@@ -24,12 +25,17 @@ class MediaViewModel : AppViewModel() {
     private val _mediaLessonInfo: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
     val mediaLessonInfo: LiveData<LessonSubjectGroup> = _mediaLessonInfo
 
-    private val _LessonInfo: MutableLiveData<LessonInfo> = MutableLiveData()
-    val lessonInfo: LiveData<LessonInfo> = _LessonInfo
+    private val _lessonInfo: MutableLiveData<LessonInfo> = MutableLiveData()
+    val lessonInfo: LiveData<LessonInfo> = _lessonInfo
 
-    private val _GroupPosition: MutableLiveData<Int> = MutableLiveData(0)
-    val groupPosition: LiveData<Int> = _GroupPosition
+    private val _position: MutableLiveData<Int> = MutableLiveData(0)
+    val position: LiveData<Int> = _position
+
+    private val _lessons: MutableLiveData<List<Lesson?>?> = MutableLiveData(null)
+    val lessons: LiveData<List<Lesson?>?> = _lessons
     private val lessonInfoArray: SparseArray<LessonSubjectGroup> = SparseArray()
+
+
     //第一个请求的为第二个请求的值
 //    fun getMediaLessonSubjectGroup(
 //        groupID: Int = ConfigApp.TYPE_AUDIO, index: Int = 0, need: Int = 1
@@ -84,19 +90,26 @@ class MediaViewModel : AppViewModel() {
         request({
             service.newLessonInfo(lessonID)
         }, success = {
-            _LessonInfo.postValue(it)
+            _lessonInfo.postValue(it)
         }, failure = {
             _showToast.postValue(it)
         })
     }
 
-    fun updateGroupPosition(position: Int) {
-        if (position != getGroupPositionValue()) {
-            _GroupPosition.value = position
+    fun updatePosition(position: Int) {
+        if (position != getPositionValue()) {
+            _position.value = position
         }
     }
 
-    fun getGroupPositionValue() = groupPosition.value ?: 0
+    fun updateLessons(list: List<Lesson>?) {
+        if (list != null && list.isNotEmpty()) {
+            _lessons.value = list
+        }
+    }
+
+    fun getPositionValue() = position.value ?: 0
+    fun getLessons() = lessons.value
     fun getMediaLessonSubjectGroupValue() = mediaLessonSubjectGroup.value
     fun getMediaLessonInfoValue() = mediaLessonInfo.value
     fun getMediaLessonInfoValue(id: Int) = lessonInfoArray.get(id, null)

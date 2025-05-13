@@ -7,15 +7,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
 import com.colin.library.android.image.glide.GlideImgManager
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.entity.Lesson
 
 
-class AudioHomeListPadAdapter : BaseQuickAdapter<SubjectListData.lessonBean,QuickViewHolder>() {
-    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: SubjectListData.lessonBean?) {
+class AudioHomeListPadAdapter : BaseQuickAdapter<Lesson,QuickViewHolder>() {
+    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: Lesson?) {
 
         GlideImgManager.get().loadImg(item!!.image,holder.getView(R.id.riv_head),R.drawable.img_default_icon)
-////        GlideImgManager.get().loadImg(item.image,holder.getView(R.id.riv_head),R.drawable.img_default_icon)
-//        holder.setText(R.id.tv_title,"共${item.lessonCount}节")
         holder.setText(R.id.tv_title,item!!.name)
             .setGone(R.id.iv_state,playId != item.id.toInt())
             .setTextColor(R.id.tv_title,if (playId != item.id.toInt()) Color.parseColor("#333333") else Color.parseColor("#FE9324"))

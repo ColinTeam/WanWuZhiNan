@@ -8,12 +8,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
 import com.colin.library.android.image.glide.GlideImgManager
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.entity.Lesson
 import java.text.SimpleDateFormat
 
 
-class VideoQuestionAdapter : BaseQuickAdapter<SubjectListData.lessonBean,QuickViewHolder>() {
-    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: SubjectListData.lessonBean?) {
+class VideoQuestionAdapter : BaseQuickAdapter<Lesson,QuickViewHolder>() {
+    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: Lesson?) {
         holder.setText(R.id.tv_title,item!!.name)
             .setText(R.id.tv_time,format(item.video_duration.toLong()*1000))
             .setImageResource(R.id.iv_quest_score_1,if(item.study_is_success==1) R.mipmap.ic_quest_sorce_s else R.mipmap.ic_quest_sorce_n)

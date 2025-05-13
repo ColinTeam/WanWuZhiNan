@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.QuestionListData.questionBean
+import com.wanwuzhinan.mingchang.data.QuestionListData.QuestionBean
 
 
-class QuestionCheckAdapter : BaseQuickAdapter<questionBean?,QuickViewHolder>() {
+class QuestionCheckAdapter : BaseQuickAdapter<QuestionBean?,QuickViewHolder>() {
 
 
-    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: questionBean?) {
+    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: QuestionBean?) {
 
         holder.setText(R.id.tv_title,"${item!!.index+1}")
 

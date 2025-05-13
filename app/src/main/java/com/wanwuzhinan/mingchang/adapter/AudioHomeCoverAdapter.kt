@@ -6,13 +6,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
 import com.colin.library.android.image.glide.GlideImgManager
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.entity.LessonSubject
 
 
-class AudioHomeCoverAdapter : BaseQuickAdapter<SubjectListData, QuickViewHolder>() {
+class AudioHomeCoverAdapter : BaseQuickAdapter<LessonSubject, QuickViewHolder>() {
     var selectIndex = 0
 
-    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: SubjectListData?) {
+    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: LessonSubject?) {
         GlideImgManager.get()
             .loadImg(item!!.image, holder.getView(R.id.riv_image), R.drawable.img_default_icon)
         holder.setText(R.id.tv_num, "${position + 1}")

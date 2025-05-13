@@ -2,6 +2,7 @@ package com.wanwuzhinan.mingchang.data
 
 import android.os.Parcelable
 import com.ssm.comm.ui.base.BaseModel
+import com.wanwuzhinan.mingchang.entity.LessonInfo
 import kotlinx.parcelize.Parcelize
 
 data class SubjectListData(
@@ -21,7 +22,7 @@ data class SubjectListData(
     var delName: String,
     var delColor: String,
     var photosArr: MutableList<photosBean>,
-    var lessonList: MutableList<lessonBean>,
+    var lessonList: MutableList<LessonInfo>,
     var group_idName: String,
     var group_idColor: String,
     var type_idName: String,

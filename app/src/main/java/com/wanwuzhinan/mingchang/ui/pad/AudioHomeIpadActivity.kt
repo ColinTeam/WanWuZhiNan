@@ -30,10 +30,11 @@ import com.wanwuzhinan.mingchang.adapter.AudioHomeCoverPadAdapter
 import com.wanwuzhinan.mingchang.adapter.AudioHomeListPadAdapter
 import com.wanwuzhinan.mingchang.adapter.CatePhoneAdapter
 import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.data.UploadProgressEvent
 import com.wanwuzhinan.mingchang.databinding.ActivityAudioHomePadBinding
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
+import com.wanwuzhinan.mingchang.entity.Lesson
+import com.wanwuzhinan.mingchang.entity.LessonSubject
 import com.wanwuzhinan.mingchang.ext.launchAudioPlayInfoActivity
 import com.wanwuzhinan.mingchang.ext.launchExchangeActivity
 import com.wanwuzhinan.mingchang.ext.showCardImage
@@ -57,15 +58,15 @@ class AudioHomeIpadActivity :
         }
     }
 
-    var mList: MutableList<SubjectListData>? = null
+    var mList: MutableList<LessonSubject>? = null
     var mPosition = 0
     var mChildPosition = 0
     lateinit var mCateAdapter: CatePhoneAdapter
     lateinit var mAdapter: AudioHomeCoverPadAdapter
     lateinit var mListAdapter: AudioHomeListPadAdapter
 
-    var mAudioList: MutableList<SubjectListData>? = null
-    var mPlayAudioList: MutableList<SubjectListData.lessonBean>? = null
+    var mAudioList: MutableList<LessonSubject>? = null
+    var mPlayAudioList: List<Lesson>? = null
     var mPlayPage = 0
     var mPlayData: CourseInfoData? = null
 
@@ -119,7 +120,7 @@ class AudioHomeIpadActivity :
             mPosition = position
             mAdapter.selectIndex = mPosition
             mAdapter.notifyDataSetChanged()
-            mListAdapter.submitList(mAudioList?.get(mPosition)?.lessonList)
+            mListAdapter.submitList(mAudioList?.get(mPosition)?.lessons)
         }
 
         mListAdapter = AudioHomeListPadAdapter()
@@ -127,7 +128,7 @@ class AudioHomeIpadActivity :
         mListAdapter.setOnDebouncedItemClick { adapter, view, position ->
             if (mAudioList == null) return@setOnDebouncedItemClick
             if (mPosition >= mAudioList!!.size) return@setOnDebouncedItemClick
-            if (mAudioList?.get(mPosition)?.lessonList!!.get(position).has_power != "1") {
+            if (mAudioList?.get(mPosition)?.lessons!!.get(position).has_power != "1") {
                 ExchangeCoursePop(AppActivityManager.getInstance().topActivity).showPop(onSure = {
                     launchExchangeActivity()
                 }, onContact = {
@@ -135,7 +136,7 @@ class AudioHomeIpadActivity :
                 })
                 return@setOnDebouncedItemClick
             }
-            mPlayAudioList = mAudioList?.get(mPosition)?.lessonList
+            mPlayAudioList = mAudioList?.get(mPosition)?.lessons
             mPlayPage = position
 
             if (mPlayPage < mPlayAudioList!!.size) {
@@ -151,7 +152,7 @@ class AudioHomeIpadActivity :
                     mList = data.list!!
                     mCateAdapter.submitList(mList)
 
-                    if (mList!!.size > 0) {
+                    if (mList != null && (mList?.size ?: 0) > 0) {
                         mChildPosition = 0
                         if (getAudioData(Constant.AUDIO_PLAY_PAGE) != null) {
                             mChildPosition = getAudioData(Constant.AUDIO_PLAY_PAGE)!!
@@ -181,7 +182,7 @@ class AudioHomeIpadActivity :
                         mPlayPage = 0
                         Log.e("TAG", "initRequest: " + getAudioData(Constant.AUDIO_PLAY_ID))
                         data.list!!.forEachIndexed { index, obj ->
-                            obj.lessonList.forEachIndexed { childIndex, lessonBean ->
+                            obj.lessons.forEachIndexed { childIndex, lessonBean ->
                                 if (lessonBean.id.toInt() == getAudioData(Constant.AUDIO_PLAY_ID)) {
                                     mPlayPage = childIndex
                                     mPosition = index
@@ -192,9 +193,9 @@ class AudioHomeIpadActivity :
                         mAdapter.selectIndex = mPosition
                         mAdapter.notifyDataSetChanged()
 
-                        mListAdapter.submitList(mAudioList?.get(mPosition)?.lessonList)
+                        mListAdapter.submitList(mAudioList?.get(mPosition)?.lessons)
 
-                        mPlayAudioList = mAudioList?.get(mPosition)?.lessonList
+                        mPlayAudioList = mAudioList?.get(mPosition)?.lessons
 
                         if (mPlayPage < mPlayAudioList!!.size) {
                             if (mPlayAudioList!!.get(mPlayPage).has_power.toInt() != 1) {

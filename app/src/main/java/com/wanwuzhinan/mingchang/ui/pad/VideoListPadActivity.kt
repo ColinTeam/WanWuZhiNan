@@ -23,9 +23,10 @@ import com.wanwuzhinan.mingchang.adapter.CatePhoneAdapter
 import com.wanwuzhinan.mingchang.adapter.VideoListLeftAdapter
 import com.wanwuzhinan.mingchang.adapter.VideoQuestionAdapter
 import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.data.UploadProgressEvent
 import com.wanwuzhinan.mingchang.databinding.ActivityVideoListPadBinding
+import com.wanwuzhinan.mingchang.entity.Lesson
+import com.wanwuzhinan.mingchang.entity.LessonSubject
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.launchExchangeActivity
 import com.wanwuzhinan.mingchang.ext.launchVideoAnswerActivity
@@ -45,11 +46,11 @@ import org.greenrobot.eventbus.ThreadMode
 class VideoListPadActivity :
     BaseActivity<ActivityVideoListPadBinding, UserViewModel>(UserViewModel()) {
 
-    var mId = ""
+    var mId = 0
     var mPosition = 0
     var mChildPosition = 0
-    var mSelectId = ""
-    var mList: MutableList<SubjectListData>? = null
+    var mSelectId = 0
+    var mList: MutableList<LessonSubject>? = null
     lateinit var mCateAdapter: CatePhoneAdapter
     lateinit var mLeftAdapter: VideoListLeftAdapter
     lateinit var mRightAdapter: VideoQuestionAdapter
@@ -64,8 +65,8 @@ class VideoListPadActivity :
         }
         registerBus(this)
         mLightPop = LightPop(this)
-        mId = intent.getStringExtra(ConfigApp.INTENT_ID).toString()
-        mSelectId = intent.getStringExtra(ConfigApp.INTENT_NUMBER).toString()
+        mId = intent.getIntExtra(ConfigApp.INTENT_ID, 0)
+        mSelectId = intent.getIntExtra(ConfigApp.INTENT_NUMBER, 0)
 
         initLeftList()
         initRightList()
@@ -115,7 +116,7 @@ class VideoListPadActivity :
             mLeftAdapter.getItem(position)!!.select = true
             mLeftAdapter.notifyDataSetChanged()
 
-            mRightAdapter.submitList(mLeftAdapter.getItem(position)!!.lessonList)
+            mRightAdapter.submitList(mLeftAdapter.getItem(position)!!.lessons)
         }
     }
 
@@ -136,7 +137,7 @@ class VideoListPadActivity :
                 return@setOnDebouncedItemClick
             }
 
-            val list = mRightAdapter.items as ArrayList<SubjectListData.lessonBean>
+            val list = mRightAdapter.items as ArrayList<Lesson>
             launchVideoPlayActivity(list, list[position].id)
         }
 
@@ -145,7 +146,7 @@ class VideoListPadActivity :
                 showCourse()
                 return@addOnDebouncedChildClick
             }
-            val list = mRightAdapter.items as ArrayList<SubjectListData.lessonBean>
+            val list = mRightAdapter.items as ArrayList<Lesson>
             launchVideoAnswerActivity(list[position].id)
         }
     }
@@ -225,8 +226,7 @@ class VideoListPadActivity :
                 "mChildPosition :${(65) * level.toInt()} ${adapterHeight} ${mChildPosition} --- ${top}"
             )
             constraintSet.connect(
-                imageView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP,
-                top
+                imageView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, top
             )  // 设置距离父布局顶部 100px
             // 应用新的约束
             constraintSet.applyTo(constraintLayout)
@@ -265,7 +265,7 @@ class VideoListPadActivity :
 
                 mRightAdapter.isEmptyViewEnable = true
                 if (mPosition <= data.list!!.size - 1) {
-                    mRightAdapter.submitList(data.list!!.get(mPosition).lessonList)
+                    mRightAdapter.submitList(data.list!![mPosition].lessons)
                 }
             }
         }

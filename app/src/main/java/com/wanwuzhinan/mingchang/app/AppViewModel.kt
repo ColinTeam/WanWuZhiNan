@@ -3,9 +3,14 @@ package com.wanwuzhinan.mingchang.app
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.network.NetworkHelper
 import com.colin.library.android.network.data.NetworkResult
+import com.wanwuzhinan.mingchang.data.ErrorLog
 import com.wanwuzhinan.mingchang.net.ApiService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * Author:ColinLu
@@ -24,4 +29,12 @@ open class AppViewModel : ViewModel() {
     protected val _showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val showLoading: LiveData<Boolean> = _showLoading
 
+
+    fun postError(type: Int = 0, error: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            service.newErrorLog(
+                NetworkConfig.gson.toJson(ErrorLog(type = type, error = error))
+            )
+        }
+    }
 }

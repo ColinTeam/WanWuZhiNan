@@ -100,7 +100,7 @@ data class MediaInfo(
     val videoAes: String,
     val content: String,
     val video_duration: Int,
-    var questionsList: MutableList<QuestionListData.questionBean>,
+    var questionsList: MutableList<QuestionListData.QuestionBean>,
     var photos_tipsArr: MutableList<PhotosInfo>,
 ) : BaseModel()
 
@@ -238,6 +238,7 @@ data class LessonSubject(
     @SerializedName("is_open") val isOpen: Int = 0,
     @SerializedName("lessonCount") val lessonCount: Int = 0,
     @SerializedName("lesson_quarterCount") val lessonQuarterCount: Int = 0,
+    @SerializedName("lesson_subject_name") val lesson_subject_name: String = "",
     @SerializedName("name") val name: String = "",
     @SerializedName("photos") val photos: String = "",
     @SerializedName("photosArr") val photo: List<Photo> = listOf(),
@@ -247,7 +248,7 @@ data class LessonSubject(
     @SerializedName("type_id") val typeId: Int = 0,
     @SerializedName("type_idName") val typeIdName: String = "",
     @SerializedName("update_time") val updateTime: Int = 0,
-    val selected: Boolean = false
+    var select: Boolean = false
 )
 
 @Parcelize
@@ -279,7 +280,7 @@ data class Photo(
 )
 
 data class LessonQuarter(
-    var id: String,//
+    var id: Int,//
     var lesson_subject_id: String,//
     var name: String,//
     var image: String,//

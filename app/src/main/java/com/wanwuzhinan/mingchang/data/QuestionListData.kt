@@ -4,9 +4,9 @@ import com.ssm.comm.ui.base.BaseModel
 
 
 data class QuestionListData(
-    var id: String,
+    var id: Int,
     var select: Boolean,//
-    var typeid: String,//1单选 2多选
+    var typeid: Int,//1单选 2多选
     val has_power: Int,
     var name: String,//
     var desc: String,//
@@ -26,11 +26,11 @@ data class QuestionListData(
     var answerLastQuestionId: Int,//
     var questionsCount: Int,//
     var questionsListPageIndex: Int,//
-    var questionsList: MutableList<questionBean>,//
+    var questionsList: MutableList<QuestionBean>,//
 ): BaseModel(){
 
-    data class questionBean(
-        var id: String,//
+    data class QuestionBean(
+        var id: Int,//
         var questions_bank_id: String,//
         var typeid: Int,//
         var title: String,//

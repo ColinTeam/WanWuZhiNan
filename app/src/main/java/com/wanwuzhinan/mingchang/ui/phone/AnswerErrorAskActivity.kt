@@ -19,10 +19,7 @@ import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.databinding.ActivityAnswerPracticeBinding
 import com.wanwuzhinan.mingchang.ext.showCardImage
 import com.wanwuzhinan.mingchang.ext.visible
-import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.SettingTabActivity
-import com.wanwuzhinan.mingchang.ui.phone.AnswerAskActivity
-import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
 import com.wanwuzhinan.mingchang.ui.pop.AnswerExplainPop
 import com.wanwuzhinan.mingchang.ui.pop.CompassNumPop
 import com.wanwuzhinan.mingchang.vm.UserViewModel
@@ -38,7 +35,7 @@ class AnswerErrorAskActivity :
     lateinit var mAdapter: AnswerPracticeOptionAdapter
     lateinit var mMediaPlayer: MediaPlayer
 
-    lateinit var mQuestionList: MutableList<QuestionListData.questionBean>
+    lateinit var mQuestionList: MutableList<QuestionListData.QuestionBean>
     lateinit var logModel: QuestionLogData
 
     override fun initView() {

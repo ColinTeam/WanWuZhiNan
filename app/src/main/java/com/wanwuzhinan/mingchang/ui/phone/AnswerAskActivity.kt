@@ -19,7 +19,6 @@ import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.databinding.ActivityAnswerPracticeBinding
 import com.wanwuzhinan.mingchang.ext.showCardImage
 import com.wanwuzhinan.mingchang.ext.visible
-import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.SettingTabActivity
 import com.wanwuzhinan.mingchang.ui.pop.AnswerExplainPop
 import com.wanwuzhinan.mingchang.ui.pop.CompassNumPop
@@ -29,13 +28,13 @@ import com.wanwuzhinan.mingchang.vm.UserViewModel
 class AnswerAskActivity :
     BaseActivity<ActivityAnswerPracticeBinding, UserViewModel>(UserViewModel()) {
 
-    var mId = ""
+    var mId = 0
     var mPosition = 0
     var mShowBasePosition = 0
     var mQuestionCount = 0
     var mSelectPosition = 0
     var mType = 1//1选择状态 2显示状态
-    lateinit var mQuestionList: List<QuestionListData.questionBean>
+    lateinit var mQuestionList: List<QuestionListData.QuestionBean>
     lateinit var mAdapter: AnswerPracticeOptionAdapter
     lateinit var mMediaPlayer: MediaPlayer
 
@@ -43,12 +42,12 @@ class AnswerAskActivity :
     lateinit var logModel: QuestionLogData
 
     override fun initView() {
-        mId = intent.getStringExtra(ConfigApp.INTENT_ID).toString()
+        mId = intent.getIntExtra(ConfigApp.INTENT_ID,0)
         mMediaPlayer = MediaPlayer()
 
         initQuestionList()
         showBaseLoading()
-        mViewModel.questionPageDetail(mId, "")
+        mViewModel.questionPageDetail(mId, 0)
 
         mDataBinding.tvErrorNum.text = "${ConfigApp.question_compass}"
     }

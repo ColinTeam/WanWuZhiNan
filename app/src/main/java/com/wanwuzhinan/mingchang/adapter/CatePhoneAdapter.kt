@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.entity.LessonSubject
 
 
-class CatePhoneAdapter : BaseQuickAdapter<SubjectListData,QuickViewHolder>() {
+class CatePhoneAdapter : BaseQuickAdapter<LessonSubject,QuickViewHolder>() {
 
-    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: SubjectListData?) {
+    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: LessonSubject?) {
         holder.setBackgroundResource(R.id.ll_root,if(curPage == position) R.drawable.shape_ffffff_12_line_1 else R.drawable.shape_ffc285_12_line_1)
             .setText(R.id.tv_title,item?.name)
             .setTextColor(R.id.tv_title,if(curPage == position) Color.parseColor("#ffffff") else Color.parseColor("#FF9424"))

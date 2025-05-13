@@ -14,7 +14,6 @@ import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.data.RankHomeData
 import com.wanwuzhinan.mingchang.data.RegisterData
-import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.CityInfoResponse
 import com.wanwuzhinan.mingchang.entity.Config
@@ -22,7 +21,9 @@ import com.wanwuzhinan.mingchang.entity.ConfigDataResponse
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.entity.GradeInfo
 import com.wanwuzhinan.mingchang.entity.GradeResponse
+import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.entity.LessonInfoResponse
+import com.wanwuzhinan.mingchang.entity.LessonSubject
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroupResponse
 import com.wanwuzhinan.mingchang.entity.RegisterResponse
 import com.wanwuzhinan.mingchang.entity.SmsCodeResponse
@@ -184,29 +185,29 @@ interface ApiService {
     @POST("/api/LessonSubject/index")
     suspend fun courseSubject(
         @Field("group_id") group_id: Int
-    ): ApiResponse<ApiListResponse<SubjectListData>>
+    ): ApiResponse<ApiListResponse<LessonSubject>>
 
     //音频视频科目列表
     @FormUrlEncoded
     @POST("/api/LessonSubject/info")
     suspend fun courseSubjectList(
-        @Field("id") id: String, @Field("need_lesson") need_lesson: Int
-    ): ApiResponse<ApiInfoResponse<SubjectListData>>
+        @Field("id") id: Int, @Field("need_lesson") need_lesson: Int
+    ): ApiResponse<ApiInfoResponse<LessonSubject>>
 
     //音频视频科目季度列表
     @FormUrlEncoded
     @POST("/api/LessonQuarter/index")
     suspend fun courseQuarterList(
-        @Field("lesson_subject_id") lesson_subject_id: String,
+        @Field("lesson_subject_id") lesson_subject_id: Int,
         @Field("need_lesson") need_lesson: Int
-    ): ApiResponse<ApiListResponse<SubjectListData>>
+    ): ApiResponse<ApiListResponse<LessonSubject>>
 
     //视频列表通过季度id获取
     @FormUrlEncoded
     @POST("/api/Lesson/index")
     suspend fun courseList(
-        @Field("lesson_quarter_id") lesson_subject_id: String,
-    ): ApiResponse<ApiListResponse<SubjectListData.lessonBean>>
+        @Field("lesson_quarter_id") lesson_subject_id: Int,
+    ): ApiResponse<ApiListResponse<Lesson>>
 
     //课程兑换
     @FormUrlEncoded
@@ -249,7 +250,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/QuestionsLogs/add")
     suspend fun questionAdd(
-        @Field("questions_id") questions_id: String, @Field("answer") answer: String
+        @Field("questions_id") questions_id: Int, @Field("answer") answer: String
     ): ApiResponse<QuestionLogData>
 
     //题库答题记录清理
@@ -259,19 +260,19 @@ interface ApiService {
     //错题记
     @POST("/api/QuestionsLogs/index")
     suspend fun questionErrorList(
-    ): ApiResponse<ApiListResponse<QuestionListData.questionBean>>
+    ): ApiResponse<ApiListResponse<QuestionListData.QuestionBean>>
 
 
     //题目详情
     @FormUrlEncoded
     @POST("/api/QuestionsBank/info")
-    suspend fun questionDetail(@Field("id") id: String): ApiResponse<ApiInfoResponse<QuestionListData>>
+    suspend fun questionDetail(@Field("id") id: Int): ApiResponse<ApiInfoResponse<QuestionListData>>
 
     //题目详情分页
     @FormUrlEncoded
     @POST("/api/QuestionsBank/infoPage")
     suspend fun questionPageDetail(
-        @Field("id") id: String, @Field("question_id") question_id: String
+        @Field("id") id: Int, @Field("question_id") question_id: String
     ): ApiResponse<ApiInfoResponse<QuestionListData>>
 
 

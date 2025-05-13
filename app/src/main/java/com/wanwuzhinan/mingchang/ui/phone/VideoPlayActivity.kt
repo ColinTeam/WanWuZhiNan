@@ -32,10 +32,10 @@ import com.tencent.rtmp.TXLiveConstants
 import com.tencent.rtmp.TXVodPlayer
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.data.UploadProgressEvent
 import com.wanwuzhinan.mingchang.databinding.ActivityVideoPlayBinding
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
+import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.launchExchangeActivity
 import com.wanwuzhinan.mingchang.ext.launchQuestionListActivity
@@ -50,7 +50,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
 
     val TAG = "VideoPlayActivity"
     var mPosition = 0
-    var mVideoList: ArrayList<SubjectListData.lessonBean>? = null
+    var mVideoList: ArrayList<Lesson>? = null
     var seek = 0L
     lateinit var startBtn: ImageView
 
@@ -72,7 +72,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         val videoCourseId = intent.getStringExtra(ConfigApp.INTENT_ID)
-        val listType = object : TypeToken<ArrayList<SubjectListData.lessonBean>>() {}.type
+        val listType = object : TypeToken<ArrayList<Lesson>>() {}.type
         mVideoList = Gson().fromJson(intent.getStringExtra(ConfigApp.INTENT_DATA), listType)
         mVideoList?.removeIf { it.is_video.toInt() == 0 }
         mPosition = mVideoList?.indexOfFirst { it.id == videoCourseId } ?: 0
@@ -103,7 +103,6 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
         onClick(
             mDataBinding.tvPlay,
             mDataBinding.llMenu,
-            mDataBinding.ivShare,
             mDataBinding.tvQuestion,
             mDataBinding.tvSure,
             mDataBinding.tvReload,
@@ -137,9 +136,6 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                     finish()
                 }
 
-                mDataBinding.ivShare -> {
-                    initShare()
-                }
 
                 mDataBinding.tvSure -> {
                     mDataBinding.llTips.visibility = View.GONE

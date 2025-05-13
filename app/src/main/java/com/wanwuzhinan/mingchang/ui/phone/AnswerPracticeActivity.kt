@@ -23,9 +23,9 @@ import kotlin.math.floor
 class AnswerPracticeActivity :
     BaseActivity<ActivityAnswerAskBinding, UserViewModel>(UserViewModel()) {
 
-    var mId = ""
+    var mId = 0
     var mPosition = -1
-    lateinit var mQuestionList: MutableList<QuestionListData.questionBean>
+    lateinit var mQuestionList: MutableList<QuestionListData.QuestionBean>
     lateinit var mAdapter: AnswerAskAdapter
 
     lateinit var infoModel: QuestionListData
@@ -36,7 +36,7 @@ class AnswerPracticeActivity :
     lateinit var checkPop: QuestionCheckPop
 
     override fun initView() {
-        mId = intent.getStringExtra(ConfigApp.INTENT_ID).toString()
+        mId = intent.getIntExtra(ConfigApp.INTENT_ID,0)
 
         initList()
         checkPop = QuestionCheckPop(mActivity)

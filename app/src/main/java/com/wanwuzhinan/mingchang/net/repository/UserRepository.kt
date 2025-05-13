@@ -9,11 +9,12 @@ import com.wanwuzhinan.mingchang.data.MedalListData
 import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.data.RankHomeData
-import com.wanwuzhinan.mingchang.data.SubjectListData
 import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.entity.GradeInfo
+import com.wanwuzhinan.mingchang.entity.Lesson
+import com.wanwuzhinan.mingchang.entity.LessonSubject
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.repository.comm.CommRepository
@@ -56,26 +57,26 @@ class UserRepository : CommRepository() {
     }
 
     //音频视频科目
-    suspend fun courseSubject(group_id: Int): ApiResponse<ApiListResponse<SubjectListData>> {
+    suspend fun courseSubject(group_id: Int): ApiResponse<ApiListResponse<LessonSubject>> {
         return executeHttp { mService.courseSubject(group_id) }
     }
 
     //音频视频科目列表
     suspend fun courseSubjectList(
-        id: String, need_lesson: Int
-    ): ApiResponse<ApiInfoResponse<SubjectListData>> {
+        id: Int, need_lesson: Int
+    ): ApiResponse<ApiInfoResponse<LessonSubject>> {
         return executeHttp { mService.courseSubjectList(id, need_lesson) }
     }
 
     //音频视频科目季度列表
     suspend fun courseQuarterList(
-        lesson_subject_id: String, need_lesson: Int
-    ): ApiResponse<ApiListResponse<SubjectListData>> {
+        lesson_subject_id: Int, need_lesson: Int
+    ): ApiResponse<ApiListResponse<LessonSubject>> {
         return executeHttp { mService.courseQuarterList(lesson_subject_id, need_lesson) }
     }
 
     //音频视频列表通过季度id获取
-    suspend fun courseList(lesson_quarter_id: String): ApiResponse<ApiListResponse<SubjectListData.lessonBean>> {
+    suspend fun courseList(lesson_quarter_id: Int): ApiResponse<ApiListResponse<Lesson>> {
         return executeHttp { mService.courseList(lesson_quarter_id) }
     }
 
@@ -111,7 +112,7 @@ class UserRepository : CommRepository() {
     }
 
     //题库答题
-    suspend fun questionAdd(questions_id: String, answer: String): ApiResponse<QuestionLogData> {
+    suspend fun questionAdd(questions_id: Int, answer: String): ApiResponse<QuestionLogData> {
         return executeHttp { mService.questionAdd(questions_id, answer) }
     }
 
@@ -121,19 +122,23 @@ class UserRepository : CommRepository() {
 
 
     //错题集列表
-    suspend fun questionErrorList(): ApiResponse<ApiListResponse<QuestionListData.questionBean>> {
+    suspend fun questionErrorList(): ApiResponse<ApiListResponse<QuestionListData.QuestionBean>> {
         return executeHttp { mService.questionErrorList() }
     }
 
     //题目详情
-    suspend fun questionDetail(id: String): ApiResponse<ApiInfoResponse<QuestionListData>> {
+    suspend fun questionDetail(id: Int): ApiResponse<ApiInfoResponse<QuestionListData>> {
         return executeHttp { mService.questionDetail(id) }
     }
 
     suspend fun questionPageDetail(
-        id: String, question_id: String
+        id: Int, question_id: Int
     ): ApiResponse<ApiInfoResponse<QuestionListData>> {
-        return executeHttp { mService.questionPageDetail(id, question_id) }
+        return executeHttp {
+            mService.questionPageDetail(
+                id, if (question_id == 0) "" else question_id.toString()
+            )
+        }
     }
 
     //获取配置

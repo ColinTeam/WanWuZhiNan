@@ -8,7 +8,7 @@ import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.QuestionCheckAdapter
 import com.wanwuzhinan.mingchang.adapter.QuestionScreenAdapter
-import com.wanwuzhinan.mingchang.data.QuestionListData.questionBean
+import com.wanwuzhinan.mingchang.data.QuestionListData.QuestionBean
 import com.wanwuzhinan.mingchang.data.QuestionScreenData
 import com.wanwuzhinan.mingchang.databinding.PopQuestionCheckBinding
 import java.lang.ref.WeakReference
@@ -20,7 +20,7 @@ class QuestionCheckPop(context: Activity) : BasePop<PopQuestionCheckBinding>(con
     lateinit var mAdapter: QuestionScreenAdapter
     lateinit var mOptionAdapter: QuestionCheckAdapter
     var mList: MutableList<QuestionScreenData> = mutableListOf()
-    var mOptionList: MutableList<MutableList<questionBean>> = mutableListOf()
+    var mOptionList: MutableList<MutableList<QuestionBean>> = mutableListOf()
     var cur = -1
 
     override fun initClick() {
@@ -63,7 +63,7 @@ class QuestionCheckPop(context: Activity) : BasePop<PopQuestionCheckBinding>(con
         }
     }
 
-    fun setList(list: MutableList<questionBean>) {
+    fun setList(list: MutableList<QuestionBean>) {
         for (i in 0 until Math.floor(list.size / 20.0).toInt()) {
             if (i == 0) {
                 mList.add(QuestionScreenData(i, true))
@@ -73,7 +73,7 @@ class QuestionCheckPop(context: Activity) : BasePop<PopQuestionCheckBinding>(con
         }
 
         val chunkSize = 20
-        var tmpList = mutableListOf<questionBean>()
+        var tmpList = mutableListOf<QuestionBean>()
         mOptionList.clear()
 
         list.forEach { obj ->

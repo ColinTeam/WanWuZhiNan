@@ -10,10 +10,11 @@ import com.wanwuzhinan.mingchang.data.QuestionListData
 
 class QuestionListAdapter : BaseQuickAdapter<QuestionListData,QuickViewHolder>() {
     override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: QuestionListData?) {
-        holder.setText(R.id.tv_name,item!!.name)
-            .setText(R.id.tv_desc,item!!.desc)
-            .setGone(R.id.iv_top,item!!.typeid.toInt() == 2)
-            .setGone(R.id.iv_top_1,item!!.typeid.toInt() == 1)
+        item?:return
+        holder.setText(R.id.tv_name, item.name)
+            .setText(R.id.tv_desc, item.desc)
+            .setGone(R.id.iv_top, item.typeid.toInt() == 2)
+            .setGone(R.id.iv_top_1, item.typeid.toInt() == 1)
 
         when(position%6){
             0 ->{

@@ -8,20 +8,15 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bg"
+        android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_height="match_parent">
 
         <com.tencent.liteav.demo.superplayer.SuperPlayerView
-            android:id="@+id/playerView"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/viewPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

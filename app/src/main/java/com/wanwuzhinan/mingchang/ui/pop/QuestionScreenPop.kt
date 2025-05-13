@@ -5,7 +5,7 @@ import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.QuestionScreenAdapter
-import com.wanwuzhinan.mingchang.data.QuestionListData.questionBean
+import com.wanwuzhinan.mingchang.data.QuestionListData.QuestionBean
 import com.wanwuzhinan.mingchang.data.QuestionScreenData
 import com.wanwuzhinan.mingchang.databinding.PopQuestionScreenBinding
 
@@ -90,7 +90,7 @@ class QuestionScreenPop(var context: Activity , var onSure: (finishS:Boolean,noF
         }
     }
 
-    fun setList(list:MutableList<questionBean>){
+    fun setList(list:MutableList<QuestionBean>){
         for (i in 0 until Math.floor(list.size/20.0).toInt()){
             mList.add(QuestionScreenData(i,false))
         }

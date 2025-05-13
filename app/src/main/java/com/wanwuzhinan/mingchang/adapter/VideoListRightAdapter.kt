@@ -6,11 +6,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
 import com.colin.library.android.image.glide.GlideImgManager
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.entity.Lesson
 
 
-class VideoListRightAdapter : BaseQuickAdapter<SubjectListData.lessonBean,QuickViewHolder>() {
-    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: SubjectListData.lessonBean?) {
+class VideoListRightAdapter : BaseQuickAdapter<Lesson,QuickViewHolder>() {
+    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: Lesson?) {
         GlideImgManager.get().loadImg(item!!.image,holder.getView(R.id.riv_head),R.drawable.img_default_icon)
         holder.setText(R.id.tv_name,item.name)
 

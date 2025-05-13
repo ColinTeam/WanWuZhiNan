@@ -35,6 +35,7 @@ class UserInfoViewModel : AppViewModel() {
         }, success = {
             _userInfo.postValue(it.info)
         }, failure = {
+            postError(type = it.code, it.msg)
             _showToast.postValue(it)
         })
     }
@@ -46,6 +47,7 @@ class UserInfoViewModel : AppViewModel() {
         }, success = {
             _cityInfo.postValue(it)
         }, failure = {
+            postError(type = it.code, it.msg)
             _showToast.postValue(it)
         })
     }
@@ -56,6 +58,7 @@ class UserInfoViewModel : AppViewModel() {
         }, success = {
             _gradeInfo.postValue(it)
         }, failure = {
+            postError(type = it.code, it.msg)
             _showToast.postValue(it)
         })
     }
@@ -66,6 +69,7 @@ class UserInfoViewModel : AppViewModel() {
         }, success = {
             _showToast.postValue(NetworkResult.failure(0, "保存成功"))
         }, failure = {
+            postError(type = it.code, it.msg)
             _showToast.postValue(it)
         })
     }

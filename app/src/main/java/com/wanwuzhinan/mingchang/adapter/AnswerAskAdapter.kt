@@ -11,10 +11,10 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.QuestionListData
 
 
-class AnswerAskAdapter : BaseQuickAdapter<QuestionListData.questionBean?,QuickViewHolder>() {
+class AnswerAskAdapter : BaseQuickAdapter<QuestionListData.QuestionBean?,QuickViewHolder>() {
 
 
-    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: QuestionListData.questionBean?) {
+    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: QuestionListData.QuestionBean?) {
 
         holder.setText(R.id.tv_title,"${item?.title}")
             .setGone(R.id.iv_topic,item?.title_img?.length == 0)

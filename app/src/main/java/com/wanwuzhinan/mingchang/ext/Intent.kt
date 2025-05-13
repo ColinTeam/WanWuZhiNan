@@ -8,7 +8,7 @@ import com.ssm.comm.ext.getScreenWidth2
 import com.ssm.comm.ext.toastError
 import com.ssm.comm.ui.base.IWrapView
 import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.data.SubjectListData
+import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.ui.pad.VideoListPadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AnswerAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.AnswerErrorAskActivity
@@ -33,7 +33,7 @@ fun isPhone(): Boolean {
     return !(config.smallestScreenWidthDp >= 600)
 }
 //视频列表
-fun IWrapView.launchVideoListActivity(type: Int, id: String, selectId: String) {
+fun IWrapView.launchVideoListActivity(type: Int, id: Int, selectId: Int) {
     val dd = getScreenWidth2() / (getScreenHeight2() * 1.0f)
     if (dd >= (16 / 9.0)) {
         launchActivity(
@@ -64,7 +64,7 @@ fun IWrapView.launchAudioPlayInfoActivity(data: String, title: String) {
 }
 
 //视频播放
-fun IWrapView.launchVideoPlayActivity(list: ArrayList<SubjectListData.lessonBean>, id: String) {
+fun IWrapView.launchVideoPlayActivity(list: ArrayList<Lesson>, id: String) {
     if (getAudioData("TXLiveBaseLicence") == 1) {
         launchActivity(
             VideoPlayActivity::class.java,
@@ -96,12 +96,12 @@ fun IWrapView.launchQuestionListActivity(type: Int) {
 }
 
 //答题 物理十万问
-fun IWrapView.launchAnswerPracticeActivity(id: String) {
+fun IWrapView.launchAnswerPracticeActivity(id: Int) {
     launchActivity(AnswerPracticeActivity::class.java, Pair(ConfigApp.INTENT_ID, id))
 }
 
 //答题 龙门题库
-fun IWrapView.launchAnswerAskActivity(id: String) {
+fun IWrapView.launchAnswerAskActivity(id: Int) {
     launchActivity(AnswerAskActivity::class.java, Pair(ConfigApp.INTENT_ID, id))
 }
 
