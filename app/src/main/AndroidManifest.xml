@@ -267,6 +267,21 @@
             android:configChanges="orientation|screenSize"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".ui.VideoHomeActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".ui.VideoListActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".ui.VideoPlayActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
 
         <meta-data
             android:name="android.enableJetifier"

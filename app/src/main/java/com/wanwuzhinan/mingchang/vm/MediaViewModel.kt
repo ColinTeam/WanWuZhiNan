@@ -1,5 +1,6 @@
 package com.wanwuzhinan.mingchang.vm
 
+import android.util.SparseArray
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.colin.library.android.network.request
@@ -20,15 +21,15 @@ class MediaViewModel : AppViewModel() {
     private val _mediaLessonSubjectGroup: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
     val mediaLessonSubjectGroup: LiveData<LessonSubjectGroup> = _mediaLessonSubjectGroup
 
-    private val _mediaLessonQuarter: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
-    val mediaLessonQuarter: LiveData<LessonSubjectGroup> = _mediaLessonQuarter
+    private val _mediaLessonInfo: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
+    val mediaLessonInfo: LiveData<LessonSubjectGroup> = _mediaLessonInfo
 
     private val _LessonInfo: MutableLiveData<LessonInfo> = MutableLiveData()
     val lessonInfo: LiveData<LessonInfo> = _LessonInfo
 
     private val _GroupPosition: MutableLiveData<Int> = MutableLiveData(0)
     val groupPosition: LiveData<Int> = _GroupPosition
-
+    private val lessonInfoArray: SparseArray<LessonSubjectGroup> = SparseArray()
     //第一个请求的为第二个请求的值
 //    fun getMediaLessonSubjectGroup(
 //        groupID: Int = ConfigApp.TYPE_AUDIO, index: Int = 0, need: Int = 1
@@ -58,12 +59,21 @@ class MediaViewModel : AppViewModel() {
         })
     }
 
+    fun getMediaLessonInfo(lessonID: Int, need: Int = 1) {
+        request({
+            service.newLessonSubject(lessonID, need)
+        }, success = {
+            _mediaLessonInfo.postValue(it)
+        }, failure = {
+            _showToast.postValue(it)
+        })
+    }
 
     fun getMediaLessonQuarter(lessonID: Int, need: Int = 1) {
         request({
             service.newAudioLessonQuarter(lessonID, need)
         }, success = {
-            _mediaLessonQuarter.postValue(it)
+            _mediaLessonInfo.postValue(it)
         }, failure = {
             _showToast.postValue(it)
         })
@@ -87,6 +97,8 @@ class MediaViewModel : AppViewModel() {
 
     fun getGroupPositionValue() = groupPosition.value ?: 0
     fun getMediaLessonSubjectGroupValue() = mediaLessonSubjectGroup.value
+    fun getMediaLessonInfoValue() = mediaLessonInfo.value
+    fun getMediaLessonInfoValue(id: Int) = lessonInfoArray.get(id, null)
     private fun updateGroup(position: Int) {
 
     }

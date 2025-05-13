@@ -12,6 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/bannerBg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/bg_login" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivBack"
             android:layout_width="@dimen/dp_50"
@@ -22,22 +28,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/ic_back_mian" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivBg1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@mipmap/bg_login"
-            android:scaleType="centerCrop" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivBg2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:visibility="visible"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"

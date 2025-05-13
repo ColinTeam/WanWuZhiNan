@@ -1,4 +1,4 @@
-package com.wanwuzhinan.mingchang.adapter
+package com.wanwuzhinan.mingchang.ui.adapter
 
 import com.colin.library.android.widget.base.BaseAdapter
 import com.colin.library.android.widget.base.BaseViewHolder
@@ -29,9 +29,7 @@ class VideoHomeListAdapter() : BaseAdapter<LessonSubject>(layoutRes = R.layout.i
 //    }
 
     override fun bindListViewHolder(
-        holder: BaseViewHolder,
-        item: LessonSubject,
-        payloads: MutableList<Any>
+        holder: BaseViewHolder, item: LessonSubject, postion: Int, payloads: MutableList<Any>
     ) {
     }
 }

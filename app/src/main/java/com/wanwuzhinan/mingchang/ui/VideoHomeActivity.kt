@@ -1,9 +1,9 @@
-package com.wanwuzhinan.mingchang.ui.fragment
+package com.wanwuzhinan.mingchang.ui
 
 import android.os.Bundle
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
-import com.wanwuzhinan.mingchang.app.AppFragment
+import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentVideoHomeBinding
 import com.wanwuzhinan.mingchang.entity.LessonSubject
@@ -14,11 +14,11 @@ import com.wanwuzhinan.mingchang.vm.MediaViewModel
 /**
  * Author:ColinLu
  * E-mail:945919945@qq.com
- * Create:2025-05-11 18:01
+ * Create:2025-05-13 16:43
  *
- * Des   :VideoHomeFragment
+ * Des   :VideoHomeActivity
  */
-class VideoHomeFragment : AppFragment<FragmentVideoHomeBinding, MediaViewModel>() {
+class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>() {
     var position = 0
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         position = getExtrasPosition(bundle, savedInstanceState)
@@ -61,7 +61,7 @@ class VideoHomeFragment : AppFragment<FragmentVideoHomeBinding, MediaViewModel>(
         selectedLesson(group.groupId)
     }
 
-    fun selectedLesson(id: Int) {
+    fun selectedLesson( id: Int) {
         val lessonInfo = viewModel.getMediaLessonInfoValue(id)
         if (lessonInfo == null || lessonInfo.list.isEmpty()) {
             viewModel.getMediaLessonInfo(id)
@@ -88,6 +88,4 @@ class VideoHomeFragment : AppFragment<FragmentVideoHomeBinding, MediaViewModel>(
     private fun updateLessonUI(subject: List<LessonSubject>) {
 
     }
-
-
 }

@@ -48,7 +48,7 @@ class ChooseAvatarDialog private constructor(
                 }
 
             })
-            onClick(ivLeft, ivRight, btCancel, btSure) {
+            onClick(ivLeft, ivRight, btCancel, btSure, ivCancel) {
                 when (it) {
                     ivLeft -> {
                         val selected = position - 1
@@ -60,12 +60,12 @@ class ChooseAvatarDialog private constructor(
                         selected(min(selected, adapter?.itemCount ?: 0))
                     }
 
-                    btCancel -> {
+                    btCancel, ivCancel -> {
                         cancel.invoke(it)
                         dismiss()
                     }
 
-                    btCancel -> {
+                    btSure -> {
                         sure.invoke(adapter?.selected ?: 0)
                         dismiss()
                     }
@@ -85,7 +85,7 @@ class ChooseAvatarDialog private constructor(
         val itemCount = (adapter?.itemCount ?: 0)
         if (itemCount == 0) return
         val range = 0..itemCount
-        val selected = if (position <= range.start) 0
+        val selected = if (position <= range.first) 0
         else if (position >= range.last) range.last - 1
         else position
         if (this.position == selected && !update) return

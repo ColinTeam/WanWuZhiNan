@@ -81,7 +81,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/LessonSubject/info")
     suspend fun newLessonSubject(
-        @Field("id") id: String, @Field("need_lesson") need_lesson: Int
+        @Field("id") id: Int, @Field("need_lesson") need_lesson: Int
     ): LessonSubjectGroupResponse
 
     //音频视频科目季度列表
