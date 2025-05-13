@@ -58,7 +58,7 @@ class VideoHomeFragment : AppFragment<FragmentVideoHomeBinding, MediaViewModel>(
         if (selected < 0) position = 0
         this.position = position
         val group = group.list[position]
-        selectedLesson(group.groupId)
+        selectedLesson(group.id)
     }
 
     fun selectedLesson(id: Int) {

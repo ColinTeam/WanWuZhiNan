@@ -59,10 +59,11 @@ class MediaViewModel : AppViewModel() {
         })
     }
 
-    fun getMediaLessonInfo(lessonID: Int, need: Int = 1) {
+    fun getMediaLessonInfo(groupID: Int, need: Int = 1) {
         request({
-            service.newLessonSubject(lessonID, need)
+            service.newLessonSubject(groupID, need)
         }, success = {
+            lessonInfoArray.put(groupID, it)
             _mediaLessonInfo.postValue(it)
         }, failure = {
             _showToast.postValue(it)

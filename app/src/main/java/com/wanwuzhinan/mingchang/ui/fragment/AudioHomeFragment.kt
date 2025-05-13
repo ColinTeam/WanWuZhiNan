@@ -33,7 +33,7 @@ class AudioHomeFragment : AppFragment<FragmentAudioBinding, MediaViewModel>() {
                 getMediaLessonQuarter(group.list[it].groupId, 1)
                 displayGroup(group)
             }
-            mediaLessonQuarter.observe {
+            mediaLessonInfo.observe {
                 Log.i("mediaLessonQuarter:$it")
                 displayLesson(it)
             }
