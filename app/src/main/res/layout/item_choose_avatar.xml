@@ -8,8 +8,9 @@
 
     <com.colin.library.android.widget.image.RectangleImageView
         android:id="@+id/ivAvatar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/dp_98"
+        android:layout_height="@dimen/dp_98"
+        android:padding="@dimen/dp_3"
         android:src="@mipmap/stat_avater_2"
         app:byWidth="false"
         app:shapeAppearanceOverlay="@style/ImageCircle">

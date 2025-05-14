@@ -16,7 +16,6 @@ import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentVideoBinding
 import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.entity.LessonInfo
-import com.wanwuzhinan.mingchang.entity.MediaInfo
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeCoursePop
@@ -74,7 +73,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
         }
     }
 
-    private fun showTipsView(): MediaInfo? {
+    private fun showTipsView() {
         TODO("Not yet implemented")
     }
 

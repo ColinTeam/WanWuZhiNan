@@ -55,7 +55,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/ivLeft"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.2"
+                    app:layout_constraintWidth_percent="0.22"
                     app:shapeAppearanceOverlay="@style/ImageCircle"
                     app:srcCompat="@mipmap/stat_avater_1" />
 
@@ -113,7 +113,7 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btSure"
-                    style="@style/Style.Button"
+                    style="@style/Style.Button.Sure"
                     android:layout_marginHorizontal="@dimen/margin_default"
                     android:text="@string/sure"
                     app:layout_constraintBottom_toBottomOf="@+id/btCancel"

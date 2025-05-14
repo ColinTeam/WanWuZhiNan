@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.core.widget.doAfterTextChanged
-import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
@@ -16,6 +15,7 @@ import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.GradeInfo
 import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.entity.UserInfo
+import com.wanwuzhinan.mingchang.ui.PasswordActivity
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAvatarDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseDialog
@@ -39,7 +39,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
             ) {
                 when (it) {
                     ivAvatar -> {
-                       // chooseAvatar()
+                        chooseAvatar()
                     }
 
                     tvMan -> {
@@ -59,7 +59,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
                     }
 
                     tvPassword -> {
-                        findNavController().navigate(R.id.action_toPassword)
+                        PasswordActivity.start(requireActivity())
                     }
 
                     btSave -> {

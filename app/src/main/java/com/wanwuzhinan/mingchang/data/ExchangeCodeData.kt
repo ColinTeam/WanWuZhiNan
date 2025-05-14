@@ -1,6 +1,5 @@
 package com.wanwuzhinan.mingchang.data
 
-import com.hpplay.common.asyncmanager.AsyncFileParameter.In
 
 
 data class ExchangeCodeData(

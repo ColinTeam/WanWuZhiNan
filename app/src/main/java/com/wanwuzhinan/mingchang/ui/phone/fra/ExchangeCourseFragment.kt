@@ -12,7 +12,6 @@ import com.wanwuzhinan.mingchang.adapter.ExchangeGiveAdapter
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentExchangeCourseBinding
 import com.wanwuzhinan.mingchang.ext.performLaunchGoodsDetail
-import com.wanwuzhinan.mingchang.ui.pop.EditAddressDialog
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
 import com.wanwuzhinan.mingchang.utils.SkeletonUtils
 import com.wanwuzhinan.mingchang.vm.UserViewModel
@@ -103,7 +102,6 @@ class ExchangeCourseFragment :
             mDataBinding.tvAudio,
             mDataBinding.tvVideo,
             mDataBinding.tvGive,
-            mDataBinding.tvAddress,
             mDataBinding.tvKefu,
         ) {
             when (it) {
@@ -123,11 +121,6 @@ class ExchangeCourseFragment :
                     ExchangeContactPop(mActivity).showHeightPop()
                 }
 
-                mDataBinding.tvAddress -> {
-                    EditAddressDialog().show(
-                        getCurrentActivity().supportFragmentManager, "EditAddressDialog"
-                    )
-                }
             }
         }
     }

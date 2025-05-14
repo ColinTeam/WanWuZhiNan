@@ -30,10 +30,13 @@ class ChooseAvatarDialog private constructor(
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
 
         viewBinding.apply {
+            btSure.isSelected = true
             adapter = ChooseAvatarAdapter(getTabList()).apply {
                 onItemClickListener = itemListener
             }
+            list.setHasFixedSize(false)
             list.adapter = adapter
+
             tabChoose.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     val isMan = tab?.text == getString(R.string.setting_man)
@@ -78,7 +81,7 @@ class ChooseAvatarDialog private constructor(
     private fun updateTab(position: Int) {
         if (tab == position) return
         this.tab = position
-        selected(position)
+        selected(0)
     }
 
     private fun selected(position: Int, update: Boolean = true) {

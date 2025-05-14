@@ -99,4 +99,7 @@
     <string name="and">和</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setting_tab_video">视频课程</string>
+    <string name="setting_tab_audio">音频课程</string>
+    <string name="setting_tab_gift">赠品</string>
 </resources>

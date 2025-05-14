@@ -229,6 +229,11 @@
         <item name="android:textColor">@color/text_button_cancel</item>
     </style>
 
+    <style name="Style.Button.Sure" parent="Style.Button">
+        <item name="android:background">@drawable/bg_button_sure</item>
+        <item name="android:textColor">@color/text_button_cancel</item>
+    </style>
+
     <style name="Style.Text.Home" parent="Style.Text">
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_home_title</item>

@@ -2,9 +2,7 @@ package com.wanwuzhinan.mingchang.net
 
 import com.ssm.comm.data.VersionData
 import com.ssm.comm.response.ApiResponse
-import com.wanwuzhinan.mingchang.data.AddressData
 import com.wanwuzhinan.mingchang.data.AppResponse
-import com.wanwuzhinan.mingchang.data.CityListData
 import com.wanwuzhinan.mingchang.data.CourseStudyData
 import com.wanwuzhinan.mingchang.data.ExchangeCodeData
 import com.wanwuzhinan.mingchang.data.ExchangeListData
@@ -323,89 +321,9 @@ interface ApiService {
     suspend fun rankIndex(): ApiResponse<RankHomeData>
 
 
-    //注册
-    @FormUrlEncoded
-    @POST("/v1/common/register")
-    suspend fun register(
-        @Header("signature") signature: String,
-        @Field("mobile") mobile: String,
-        @Field("code") code: String,
-        @Field("password") password: String,
-        @Field("pay_password") pay_password: String,
-        @Field("parent") parent: String
-    ): ApiResponse<RegisterData>
-
-
-    //忘记密码
-    @FormUrlEncoded
-    @POST("/v1/common/forget_password")
-    suspend fun forgetPass(
-        @Header("signature") signature: String,
-        @Field("mobile") mobile: String,
-        @Field("password") password: String,
-        @Field("code") code: String
-    ): ApiResponse<MutableList<String>>
-
-
-    //修改支付密码
-    @FormUrlEncoded
-    @POST("/v1/user/edit_pay_password")
-    suspend fun changePayPass(
-        @Header("signature") signature: String,
-        @Field("new_password") new_password: String,
-        @Field("new_password2") new_password2: String,
-        @Field("code") code: String
-    ): ApiResponse<MutableList<String>>
-
-    //修改登录密码
-    @FormUrlEncoded
-    @POST("/v1/user/edit_pay_password")
-    suspend fun changeLoginPass(
-        @Header("signature") signature: String,
-        @Field("password") password: String,
-        @Field("code") code: String
-    ): ApiResponse<MutableList<String>>
-
     //获取版本号
     @POST("/v1/common/version")
     suspend fun getVersion(@Header("signature") signature: String): ApiResponse<VersionData>
 
-
-    //获取说明
-    @FormUrlEncoded
-    @POST("/v1/illustrate/get_index")
-    fun getTextDescription(
-        @Header("signature") signature: String, @Field("key") key: String
-    ): Call<ResponseBody>
-
-    //获取地址列表
-    @POST("/v1/address/get_index")
-    suspend fun getAddressList(@Header("signature") signature: String): ApiResponse<MutableList<AddressData>>
-
-    //添加地址
-    @FormUrlEncoded
-    @POST("/v1/address/add")
-    suspend fun addAddress(
-        @Header("signature") signature: String, @FieldMap map: MutableMap<String, Any>
-    ): ApiResponse<MutableList<String>>
-
-
-    //删除地址
-    @FormUrlEncoded
-    @POST("/v1/address/del")
-    suspend fun deleteAddress(
-        @Header("signature") signature: String, @Field("address_id") address_id: String
-    ): ApiResponse<MutableList<String>>
-
-    //获取默认地址
-    @POST("/v1/address/get_moren")
-    suspend fun getDefaultAddress(@Header("signature") signature: String): ApiResponse<AddressData>
-
-    //获取城市列表
-    @FormUrlEncoded
-    @POST("/v1/gaode/get_city")
-    suspend fun getCityList(
-        @Header("signature") signature: String, @Field("city_id") city_id: String
-    ): ApiResponse<MutableList<CityListData>>
 
 }
