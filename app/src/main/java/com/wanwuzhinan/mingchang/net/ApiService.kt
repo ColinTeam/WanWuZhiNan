@@ -158,9 +158,10 @@ interface ApiService {
     suspend fun newConfig(): ConfigDataResponse
 
 
-    //获取配置
+    //错误日志上报
+    @FormUrlEncoded
     @POST("api/Video/errorlog")
-    suspend fun newErrorLog(@Field("error") error: String): ConfigDataResponse
+    suspend fun newErrorLog(@Field("error") error: String): AppResponse<Nothing>
 
     //修改用户信息
     @FormUrlEncoded
@@ -198,8 +199,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/LessonQuarter/index")
     suspend fun courseQuarterList(
-        @Field("lesson_subject_id") lesson_subject_id: Int,
-        @Field("need_lesson") need_lesson: Int
+        @Field("lesson_subject_id") lesson_subject_id: Int, @Field("need_lesson") need_lesson: Int
     ): ApiResponse<ApiListResponse<LessonSubject>>
 
     //视频列表通过季度id获取

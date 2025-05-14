@@ -27,7 +27,7 @@
             app:shapeAppearanceOverlay="@style/Image.Radius_20" />
 
         <ImageView
-            android:id="@+id/iv_ai"
+            android:id="@+id/ivAvatar"
             android:layout_width="@dimen/dp_75"
             android:layout_height="@dimen/dp_120"
             android:layout_marginStart="@dimen/margin_default"
@@ -44,7 +44,7 @@
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginTop="@dimen/margin_default"
             app:layout_constrainedWidth="true"
-            app:layout_constraintStart_toEndOf="@+id/iv_ai"
+            app:layout_constraintStart_toEndOf="@+id/ivAvatar"
             app:layout_constraintTop_toTopOf="@+id/ivContentBg"
             app:tabBackground="@color/white"
             app:tabIndicator="@drawable/tab_indicator_login"
@@ -75,7 +75,7 @@
             android:gravity="center_vertical|end"
             android:text="@string/login_sms_fail"
             android:textAppearance="@style/Text.Tips"
-            app:layout_constraintBottom_toTopOf="@id/etPhone"
+            app:layout_constraintBottom_toBottomOf="@id/tabLogin"
             app:layout_constraintEnd_toEndOf="@+id/etPhone"
             app:layout_constraintStart_toEndOf="@+id/tabLogin"
             app:layout_constraintTop_toTopOf="@+id/tabLogin" />
@@ -88,7 +88,7 @@
             android:text="@string/login_forget_password"
             android:textAppearance="@style/Text.Tips"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/etPhone"
+            app:layout_constraintBottom_toBottomOf="@id/tabLogin"
             app:layout_constraintEnd_toEndOf="@+id/etPhone"
             app:layout_constraintStart_toEndOf="@+id/tabLogin"
             app:layout_constraintTop_toTopOf="@+id/tabLogin"
@@ -98,10 +98,9 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etPhone"
             style="@style/Style.Edit.Phone"
-            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginTop="@dimen/dp_30"
             android:textColor="@color/text_color_default"
             android:textColorHint="@color/text_color_hint"
-            app:layout_constraintBottom_toTopOf="@+id/etSMS"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabLogin"
@@ -114,11 +113,9 @@
             android:layout_marginTop="@dimen/margin_default_half"
             android:textColor="@color/text_color_default"
             android:textColorHint="@color/text_color_hint"
-            app:layout_constraintBottom_toTopOf="@+id/etPassword"
             app:layout_constraintEnd_toEndOf="@+id/etPhone"
             app:layout_constraintStart_toStartOf="@+id/etPhone"
-            app:layout_constraintTop_toBottomOf="@+id/etPhone"
-            app:layout_constraintVertical_weight="3" />
+            app:layout_constraintTop_toBottomOf="@+id/etPhone" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSmsSend"
@@ -141,11 +138,9 @@
             android:textColor="@color/text_color_default"
             android:textColorHint="@color/text_color_hint"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/btLogin"
             app:layout_constraintEnd_toEndOf="@+id/etPhone"
             app:layout_constraintStart_toStartOf="@+id/etPhone"
-            app:layout_constraintTop_toBottomOf="@+id/etSMS"
-            app:layout_constraintVertical_weight="3" />
+            app:layout_constraintTop_toBottomOf="@+id/etPhone" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btLogin"
@@ -158,9 +153,7 @@
             android:textAppearance="@style/Text.Button"
             app:layout_constraintBottom_toTopOf="@id/rbProtocolTips"
             app:layout_constraintEnd_toEndOf="@id/ivContentBg"
-            app:layout_constraintStart_toStartOf="@id/ivContentBg"
-            app:layout_constraintTop_toBottomOf="@+id/etPassword"
-            app:layout_constraintVertical_weight="4" />
+            app:layout_constraintStart_toStartOf="@id/ivContentBg" />
 
 
         <androidx.appcompat.widget.AppCompatCheckBox

@@ -166,10 +166,12 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
 
         override fun onClickFloatCloseBtn() {
             Log.e("onClickFloatCloseBtn")
+            finish()
         }
 
         override fun onClickSmallReturnBtn() {
             Log.e("onClickSmallReturnBtn")
+            finish()
         }
 
         override fun onStartFloatWindowPlay() {

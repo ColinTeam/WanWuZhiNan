@@ -110,6 +110,7 @@ class MediaViewModel : AppViewModel() {
 
     fun getPositionValue() = positionData.value ?: 0
     fun getLessons() = lessonsData.value
+    fun getLessonInfoValue() = lessonInfo.value
     fun getMediaLessonSubjectGroupValue() = mediaLessonSubjectGroup.value
     fun getMediaLessonInfoValue() = mediaLessonInfo.value
     fun getMediaLessonInfoValue(id: Int) = lessonInfoArray.get(id, null)

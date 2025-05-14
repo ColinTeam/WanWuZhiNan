@@ -181,6 +181,10 @@ class UserRepository : CommRepository() {
         return executeHttp { mService.rankIndex() }
     }
 
+    suspend fun errorLog(json: String) {
+        mService.newErrorLog(json)
+    }
+
 
     //上传图片
     suspend fun uploadImage(

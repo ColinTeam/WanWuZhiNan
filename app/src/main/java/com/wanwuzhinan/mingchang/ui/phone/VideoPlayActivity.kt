@@ -72,8 +72,9 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         val videoCourseId = intent.getStringExtra(ConfigApp.INTENT_ID)
+        val json = intent.getStringExtra(ConfigApp.INTENT_DATA)
         val listType = object : TypeToken<ArrayList<Lesson>>() {}.type
-        mVideoList = Gson().fromJson(intent.getStringExtra(ConfigApp.INTENT_DATA), listType)
+        mVideoList = Gson().fromJson(json, listType)
         mVideoList?.removeIf { it.is_video.toInt() == 0 }
         mPosition = mVideoList?.indexOfFirst { it.id == videoCourseId } ?: 0
 
@@ -81,6 +82,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             mPosition = 0
         }
         if (mVideoList?.isEmpty() == true) {
+            viewModel.postError(error = "mPosition,$json")
             finish()
         } else {
             val videoData = mVideoList?.get(mPosition)
@@ -118,6 +120,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                 mDataBinding.tvPlay -> {
                     timer.cancel()
                     if (mPosition >= mVideoList!!.size - 1) {
+                        viewModel.postError(error = "mPosition >= mVideoList!!.size - 1->$mData")
                         finish()
                         return@onClick
                     }
@@ -126,6 +129,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
 
                 mDataBinding.tvQuestion -> {
                     timer.cancel()
+                    viewModel.postError(error = "tvQuestion->$mData")
                     if (mPosition >= mVideoList!!.size - 1) {
                         finish()
                         launchQuestionListActivity(ConfigApp.TYPE_ASK)
@@ -146,6 +150,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                     mDataBinding.clNoNet.visibility = View.GONE
                     val videoData = mVideoList?.get(mPosition)
                     if (videoData?.has_power == "0") {
+                        viewModel.postError(error = "has_power->$videoData")
                         ExchangeCoursePop(mActivity).showPop(onSure = {
                             finish()
                             launchExchangeActivity()
@@ -159,10 +164,12 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                 }
 
                 mDataBinding.netErrorBack -> {
+                    viewModel.postError(error = "netErrorBack->$mData")
                     finish()
                 }
 
                 mDataBinding.ivVideoBack -> {
+                    viewModel.postError(error = "ivVideoBack->$mData")
                     finish()
                 }
 
@@ -194,6 +201,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             }
 
             override fun onCastError(p0: LelinkServiceInfo?, p1: EasyCastBean?, p2: Int, p3: Int) {
+
             }
 
             override fun onCastLoading(p0: LelinkServiceInfo?, p1: EasyCastBean?) {
@@ -241,6 +249,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
 
         mDataBinding.detailPlayer.setSuperPlayerListener(object : ISuperPlayerListener {
             override fun onVodPlayEvent(player: TXVodPlayer?, event: Int, param: Bundle?) {
+                viewModel.postError(error = "onVodPlayEvent event->$event param->$param")
                 if (event == 2013) {
 
                 }
@@ -285,6 +294,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             }
 
             override fun onVodNetStatus(player: TXVodPlayer?, status: Bundle?) {
+                viewModel.postError(error = "onVodNetStatus status->$status")
                 // 获取实时速率, 单位：kbps
 //                val speed: Int = status?.getInt(TXLiveConstants.NET_STATUS_NET_SPEED) ?: 0
 //                Log.e(TAG, "onLiveNetStatus: $speed" )
@@ -292,40 +302,47 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             }
 
             override fun onLivePlayEvent(event: Int, param: Bundle?) {
-
+                viewModel.postError(error = "onLivePlayEvent event->$event param->$param")
             }
 
             override fun onLiveNetStatus(status: Bundle?) {
+                viewModel.postError(error = "onLiveNetStatus status->$status")
             }
         })
 
         mDataBinding.detailPlayer.setPlayerViewCallback(object : OnSuperPlayerViewCallback {
             override fun onStartFullScreenPlay() {
-
+                viewModel.postError(error = "onStartFullScreenPlay")
             }
 
             override fun onStopFullScreenPlay() {
-
+                viewModel.postError(error = "onStopFullScreenPlay")
             }
 
             override fun onClickFloatCloseBtn() {
+                viewModel.postError(error = "onClickFloatCloseBtn")
                 finish()
             }
 
             override fun onClickSmallReturnBtn() {
+                viewModel.postError(error = "onClickSmallReturnBtn")
                 finish()
             }
 
             override fun onStartFloatWindowPlay() {
+                viewModel.postError(error = "onStartFloatWindowPlay")
             }
 
             override fun onPlaying() {
+                viewModel.postError(error = "onPlaying")
             }
 
             override fun onPlayEnd() {
+                viewModel.postError(error = "onPlayEnd")
             }
 
             override fun onError(code: Int) {
+                viewModel.postError(error = "onError $code")
                 if (code == SuperPlayerCode.NET_ERROR) {
                     mDataBinding.clVideoNoNet.visibility = View.VISIBLE
                     errorPro =
@@ -334,6 +351,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             }
 
             override fun onShowCacheListClick() {
+                viewModel.postError(error = "onShowCacheListClick")
             }
 
         })

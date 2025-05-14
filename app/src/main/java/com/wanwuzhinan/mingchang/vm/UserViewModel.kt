@@ -1,9 +1,11 @@
 package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.viewModelScope
+import com.colin.library.android.network.NetworkConfig
 import com.ssm.comm.data.VersionData
 import com.ssm.comm.ui.base.BaseViewModel
 import com.wanwuzhinan.mingchang.data.CourseStudyData
+import com.wanwuzhinan.mingchang.data.ErrorLog
 import com.wanwuzhinan.mingchang.data.ExchangeCodeData
 import com.wanwuzhinan.mingchang.data.ExchangeListData
 import com.wanwuzhinan.mingchang.data.GoodsInfoData
@@ -22,6 +24,7 @@ import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.repository.ApiInfoResponse
 import com.wanwuzhinan.mingchang.net.repository.ApiListResponse
 import com.wanwuzhinan.mingchang.net.repository.UserRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -269,4 +272,9 @@ class UserViewModel : BaseViewModel<UserInfo, UserRepository>(UserRepository()) 
         }
     }
 
+    fun postError(type: Int = -3, error: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.errorLog(NetworkConfig.gson.toJson(ErrorLog(type = type, error = error)))
+        }
+    }
 }
