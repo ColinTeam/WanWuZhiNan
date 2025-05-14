@@ -22,12 +22,12 @@ class AudioHomeFragment : AppFragment<FragmentAudioBinding, MediaViewModel>() {
             mediaLessonSubjectGroup.observe {
                 Log.i("mediaLessonSubjectGroup:$it")
                 val groupSize = it.list.size
-                var position = getGroupPositionValue()
+                var position = getPositionValue()
                 if (position >= groupSize) position = groupSize - 1
                 else if (position < 0) position = 0
-                updateGroupPosition(position)
+                updatePosition(position)
             }
-            groupPosition.observe {
+            positionData.observe {
                 Log.i("groupPosition:$it")
                 val group = getMediaLessonSubjectGroupValue() ?: return@observe
                 getMediaLessonQuarter(group.list[it].groupId, 1)

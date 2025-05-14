@@ -28,11 +28,11 @@ class MediaViewModel : AppViewModel() {
     private val _lessonInfo: MutableLiveData<LessonInfo> = MutableLiveData()
     val lessonInfo: LiveData<LessonInfo> = _lessonInfo
 
-    private val _position: MutableLiveData<Int> = MutableLiveData(0)
-    val position: LiveData<Int> = _position
+    private val _positionData: MutableLiveData<Int> = MutableLiveData(0)
+    val positionData: LiveData<Int> = _positionData
 
-    private val _lessons: MutableLiveData<List<Lesson?>?> = MutableLiveData(null)
-    val lessons: LiveData<List<Lesson?>?> = _lessons
+    private val _lessonsData: MutableLiveData<List<Lesson?>?> = MutableLiveData(null)
+    val lessonsData: LiveData<List<Lesson?>?> = _lessonsData
     private val lessonInfoArray: SparseArray<LessonSubjectGroup> = SparseArray()
 
 
@@ -98,18 +98,18 @@ class MediaViewModel : AppViewModel() {
 
     fun updatePosition(position: Int) {
         if (position != getPositionValue()) {
-            _position.value = position
+            _positionData.value = position
         }
     }
 
     fun updateLessons(list: List<Lesson>?) {
         if (list != null && list.isNotEmpty()) {
-            _lessons.value = list
+            _lessonsData.value = list
         }
     }
 
-    fun getPositionValue() = position.value ?: 0
-    fun getLessons() = lessons.value
+    fun getPositionValue() = positionData.value ?: 0
+    fun getLessons() = lessonsData.value
     fun getMediaLessonSubjectGroupValue() = mediaLessonSubjectGroup.value
     fun getMediaLessonInfoValue() = mediaLessonInfo.value
     fun getMediaLessonInfoValue(id: Int) = lessonInfoArray.get(id, null)

@@ -22,8 +22,8 @@ class VideoFragment : AppFragment<FragmentVideoBinding, MediaViewModel>() {
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
-            playerView.setSuperPlayerListener(superPlayerListener)
-            playerView.setPlayerViewCallback(superPlayerViewCallback)
+            viewPlayer.setSuperPlayerListener(superPlayerListener)
+            viewPlayer.setPlayerViewCallback(superPlayerViewCallback)
         }
         viewModel.apply {
             lessonInfo.observe {
@@ -39,17 +39,17 @@ class VideoFragment : AppFragment<FragmentVideoBinding, MediaViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        viewBinding.playerView.onResume()
+        viewBinding.viewPlayer.onResume()
     }
 
 
     override fun onPause() {
-        viewBinding.playerView.onPause()
+        viewBinding.viewPlayer.onPause()
         super.onPause()
     }
 
     override fun onDestroyView() {
-        viewBinding.playerView.apply {
+        viewBinding.viewPlayer.apply {
             resetPlayer()
             release()
         }
@@ -60,7 +60,7 @@ class VideoFragment : AppFragment<FragmentVideoBinding, MediaViewModel>() {
         val model = SuperPlayerModel().apply {
             this.url = url
         }
-        viewBinding.playerView.apply {
+        viewBinding.viewPlayer.apply {
             playWithModelNeedLicence(model)
         }
     }

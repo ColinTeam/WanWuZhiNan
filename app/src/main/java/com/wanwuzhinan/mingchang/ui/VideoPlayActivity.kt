@@ -44,7 +44,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
-            position.observe {
+            positionData.observe {
                 Log.d("position:$it")
                 play(it, viewModel.getLessons())
             }
@@ -99,7 +99,6 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
             playWithModelNeedLicence(model)
             setStartTime(seek.toDouble())
         }
-
     }
 
     private fun showTips() {

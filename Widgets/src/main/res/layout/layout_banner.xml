@@ -5,8 +5,31 @@
     android:layout_height="match_parent">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/banner"
+        android:id="@+id/page"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_default"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_33"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constrainedWidth="true"
+            app:tabBackground="@color/white"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabMode="scrollable"
+            app:tabRippleColor="@null">
+
+        </com.google.android.material.tabs.TabLayout>
+
+    </FrameLayout>
 </merge>
