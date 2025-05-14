@@ -24,7 +24,7 @@ class RecordFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>()
     companion object {
         @JvmStatic
         fun newInstance(): RecordFragment {
-            val fragment = UserInfoFragment()
+            val fragment = RecordFragment()
             return fragment
         }
     }

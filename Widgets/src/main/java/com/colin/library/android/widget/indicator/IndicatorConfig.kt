@@ -2,6 +2,7 @@ package com.colin.library.android.widget.indicator
 
 import android.graphics.Color
 import androidx.annotation.ColorInt
+import androidx.annotation.Px
 import com.colin.library.android.widget.Constants
 import com.colin.library.android.widget.def.Direction
 
@@ -20,6 +21,8 @@ class IndicatorConfig {
     private var indicatorSpace = Constants.INDICATOR_SPACE
     private var normalWidth = Constants.INDICATOR_NORMAL_WIDTH
     private var selectedWidth = Constants.INDICATOR_SELECTED_WIDTH
+    private var normalHeight = Constants.INDICATOR_SELECTED_WIDTH
+    private var selectedHeight = Constants.INDICATOR_SELECTED_WIDTH
 
     @ColorInt
     private var normalColor = Color.GRAY
@@ -88,6 +91,25 @@ class IndicatorConfig {
         this.currentPosition = position
     }
 
+    fun setWidth(@Px normal: Float, selected: Float) = apply {
+        this.normalWidth = normal
+        this.selectedWidth = selected
+    }
+
+    fun setHeight(@Px normal: Float, selected: Float) = apply {
+        this.normalHeight = normal
+        this.selectedHeight = selected
+    }
+
+    fun setRadius(@Px radius: Float) = apply {
+        this.radius = radius
+    }
+
+    fun setColor(@ColorInt normal: Int, @ColorInt selected: Int) = apply {
+        this.normalColor = normal
+        this.selectedColor = selected
+    }
+
     fun getNormalWidth(): Float {
         return normalWidth
     }
@@ -125,9 +147,6 @@ class IndicatorConfig {
         return radius
     }
 
-    fun setRadius(radius: Float) = apply {
-        this.radius = radius
-    }
 
     fun getHeight(): Float {
         return height
@@ -152,6 +171,18 @@ class IndicatorConfig {
             this.bottom = bottom
             this.left = left
             this.right = right
+        }
+    }
+
+    companion object {
+        @JvmStatic
+        fun createMargins(space: Float): Margins {
+            return Margins(space, space, space, space)
+        }
+
+        @JvmStatic
+        fun createMargins(top: Float, bottom: Float, left: Float, right: Float): Margins {
+            return Margins(top, bottom, left, right)
         }
     }
 }

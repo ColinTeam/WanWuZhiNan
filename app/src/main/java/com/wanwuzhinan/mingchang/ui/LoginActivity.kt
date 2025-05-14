@@ -1,8 +1,10 @@
 package com.wanwuzhinan.mingchang.ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.colin.library.android.utils.Constants
@@ -61,7 +63,9 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
                     }
 
                     tvPwdTips -> {
-                        PasswordActivity.start(this@LoginActivity, Constants.INVALID)
+                        launcher.launch(
+                            PasswordActivity.getIntent(this@LoginActivity, Constants.INVALID)
+                        )
                     }
 
                     tvSmsSend -> {
@@ -247,6 +251,20 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
                 ConfigApp.EXTRAS_POSITION, position
             )
             context.startActivity(starter)
+        }
+    }
+
+
+    private val launcher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        Log.e("result:${result.resultCode} $result")
+        if (result.resultCode == Activity.RESULT_OK) {
+            val phone = result.data?.getStringExtra(Constant.USER_MOBILE) ?: ""
+            if (!phone.isEmpty()) {
+                viewBinding.etPhone.setText(phone)
+                MMKVUtils.encode(Constant.USER_MOBILE, phone)
+            }
         }
     }
 }

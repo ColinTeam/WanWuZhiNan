@@ -1,5 +1,6 @@
 package com.wanwuzhinan.mingchang.ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -65,7 +66,7 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
                 if (it.code == HTTP_CONFIRM) {
                     showConfirmDialog(it.msg)
                 } else if (it.code == HTTP_SUCCESS) {
-                    HomeActivity.start(this@PasswordActivity)
+                    passwordSuccess()
                 }
             }
             smsSuccess.observe {
@@ -83,13 +84,14 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
                 }
             }
             registerData.observe {
-                if (it.token.isNotEmpty()) {
-                    HomeActivity.start(this@PasswordActivity)
+                if (it.status == 0) {
+                    passwordSuccess()
                 }
             }
         }
         updateButton()
     }
+
 
     override fun loadData(refresh: Boolean) {
     }
@@ -172,16 +174,23 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
 
     private fun showConfirmDialog(smg: String) {
         TipsDialog.newInstance(getString(R.string.dialog_tips_title), smg).apply {
-            sure = {
-                startConfirm(1)
-            }
+            sure = { startConfirm(1) }
         }.show(this)
+    }
+
+    private fun passwordSuccess() {
+        val bundle = Intent().apply {
+            putExtra(Constant.USER_MOBILE, viewBinding.etPhone.text.toString().trim())
+        }
+        setResult(Activity.RESULT_OK, bundle)
+        finish()
     }
 
     companion object {
         const val PWD_LENGTH_MIN = 6
         const val PWD_LENGTH_MAX = 20
         const val PHONE_LENGTH = 11
+        const val REQUEST_CODE_PASSWORD = 1001
 
         @JvmStatic
         fun start(context: Context, position: Int = 0) {
@@ -189,6 +198,13 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
                 ConfigApp.EXTRAS_POSITION, position
             )
             context.startActivity(starter)
+        }
+
+        @JvmStatic
+        fun getIntent(context: Context, position: Int = 0): Intent {
+            return Intent(context, PasswordActivity::class.java).apply {
+                putExtra(ConfigApp.EXTRAS_POSITION, position)
+            }
         }
     }
 }

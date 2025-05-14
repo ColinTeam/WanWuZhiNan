@@ -298,7 +298,8 @@ data class LessonQuarter(
 
 data class SmsCode(var code: String = "")
 
-data class RegisterData(val token: String = "", val user_id: String = "")
+data class RegisterData(val token: String = "", val user_id: String = "", val status: Int = 0)
+data class Password(val token: String = "", val user_id: String = "")
 
 
 data class CityInfo(val list: List<Children>) : BaseModel()
