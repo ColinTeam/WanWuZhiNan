@@ -55,9 +55,9 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
         viewModel.showToast.observe {
             ToastUtil.show(it.msg)
             if (it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) {
-                activity?.let {
-                    LoginActivity.start(it)
-                    it.finish()
+                activity?.let { act ->
+                    LoginActivity.start(act)
+                    act.finish()
                 }
             }
         }

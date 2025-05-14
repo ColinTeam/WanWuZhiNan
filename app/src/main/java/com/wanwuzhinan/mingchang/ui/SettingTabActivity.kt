@@ -51,6 +51,12 @@ class SettingTabActivity : AppActivity<FragmentSettingTabBinding, UserInfoViewMo
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        //防止协议界面退出登录，回来不能跳转到登录界面
+        viewModel.getUserInfo()
+    }
+
     override fun onDestroy() {
         tabAdapter = null
         fragmentAdapter = null

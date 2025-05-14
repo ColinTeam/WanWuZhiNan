@@ -14,6 +14,7 @@ import com.colin.library.android.utils.ext.onClick
 import com.ssm.comm.ext.getCurrentVersionCode
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
+import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.ActivityHomeBinding
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigData
@@ -46,7 +47,7 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         val navController = findNavController(R.id.nav_host)
         appBarConfiguration = AppBarConfiguration(navController.graph)
-
+        if (bundle == null) navController.navigate(R.id.action_toSplash)
         viewBinding.apply {
             onClick(ivAd, ivAdclose) {
                 when (it) {
@@ -94,7 +95,8 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     }
 
     fun changeADState(visible: Boolean, config: Config? = viewModel.getConfigValue()) {
-        val isEmpty = config?.info?.home_ad.isNullOrEmpty() or config?.info?.home_ad_link.isNullOrEmpty()
+        val isEmpty =
+            config?.info?.home_ad.isNullOrEmpty() or config?.info?.home_ad_link.isNullOrEmpty()
         val isVisible = visible && !isEmpty
         viewBinding.ivAd.isVisible = isVisible
         viewBinding.ivAdclose.isVisible = isVisible
@@ -115,11 +117,12 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
     }
 
     companion object {
+
         @JvmStatic
-        fun start(context: Context, extras: Bundle? = null) {
+        fun start(context: Context, id: Int = R.id.action_toHome) {
             val starter = Intent(
                 context, HomeActivity::class.java
-            ).apply { extras?.let { putExtras(it) } }
+            ).putExtra(ConfigApp.EXTRAS_POSITION, id)
             context.startActivity(starter)
         }
     }

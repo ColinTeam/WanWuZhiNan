@@ -158,13 +158,13 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
 
     override fun loadData(refresh: Boolean) {
         super.loadData(refresh)
-        viewModel.getUserInfo()
         showPrivacyPop()
     }
 
     override fun onResume() {
         (requireActivity() as HomeActivity).changeADState(viewModel.getAdStateValue())
         super.onResume()
+        viewModel.getUserInfo()
     }
 
 

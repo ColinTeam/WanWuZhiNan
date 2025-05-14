@@ -2,7 +2,6 @@ package com.wanwuzhinan.mingchang.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
@@ -25,6 +24,7 @@ import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
  */
 class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
     var playCompleted = false
+    var builder: GSYVideoOptionBuilder? = null
     override fun goBack(): Boolean {
         if (playCompleted) {
             toHome()
@@ -36,32 +36,52 @@ class SplashFragment : AppFragment<FragmentSplashBinding, HomeViewModel>() {
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.ivBack.setOnTouchListener(MotionTouchLister())
         viewBinding.ivBack.isEnabled = false
+    }
+
+    override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         val path = "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.raw.splash1
         PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_FULL)
         GSYVideoType.disableMediaCodec()
         GSYVideoType.disableMediaCodecTexture()
-        GSYVideoOptionBuilder().setAutoFullWithSize(true).setIsTouchWiget(false).setUrl(path)
-            .setVideoAllCallBack(object : GSYSampleCallBack() {
-                override fun onAutoComplete(url: String?, vararg objects: Any?) {
-                    playCompleted = true
-                    viewBinding.ivBack.isEnabled = true
-                    toHome()
-                }
+        builder = GSYVideoOptionBuilder().apply {
+            setAutoFullWithSize(true)
+            setIsTouchWiget(false)
+            setUrl(path)
+            setVideoAllCallBack(callback)
+        }
+        builder!!.build(viewBinding.video)
+    }
 
-            }).build(viewBinding.video)
-
+    override fun onResume() {
+        super.onResume()
         viewBinding.video.startPlayLogic()
     }
 
-    override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-
+    override fun onStop() {
+        super.onStop()
+        builder?.setVideoAllCallBack(null)
+        builder = null
+        viewBinding.video.release()
     }
 
     private fun toHome() {
-        val option = NavOptions.Builder().setPopUpTo(R.id.fragment_splash, inclusive = true)
-            .setLaunchSingleTop(true).setRestoreState(false).build()
-        findNavController().navigate(R.id.fragment_home, null, option)
+        findNavController().navigate(R.id.fragment_home)
+    }
+
+    private val callback = object : GSYSampleCallBack() {
+        override fun onAutoComplete(url: String?, vararg objects: Any?) {
+            playCompleted = true
+            viewBinding.ivBack.isEnabled = true
+            toHome()
+        }
+
+        override fun onPlayError(url: String?, vararg objects: Any?) {
+            playCompleted = true
+            viewBinding.ivBack.isEnabled = true
+            viewModel.postError(error = "SplashFragment $url $objects")
+            toHome()
+        }
     }
 
 }

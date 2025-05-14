@@ -25,7 +25,7 @@ import com.wanwuzhinan.mingchang.ui.phone.RankActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoAnswerActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoListActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoPlayActivity
-import com.wanwuzhinan.mingchang.utils.getAudioData
+import com.wanwuzhinan.mingchang.utils.MMKVUtils
 
 //判断当前设备是手机还是平板
 fun isPhone(): Boolean {
@@ -65,7 +65,7 @@ fun IWrapView.launchAudioPlayInfoActivity(data: String, title: String) {
 
 //视频播放
 fun IWrapView.launchVideoPlayActivity(list: ArrayList<Lesson>, id: String) {
-    if (getAudioData("TXLiveBaseLicence") == 1) {
+    if (MMKVUtils.decodeInt(ConfigApp.MMKY_KEY_TXLIVE) == 1) {
         launchActivity(
             VideoPlayActivity::class.java,
             Pair(ConfigApp.INTENT_DATA, Gson().toJson(list)),

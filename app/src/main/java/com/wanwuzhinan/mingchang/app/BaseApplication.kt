@@ -29,9 +29,9 @@ import com.ssm.comm.global.AppActivityManager
 import com.tencent.rtmp.TXLiveBase
 import com.tencent.rtmp.TXLiveBaseListener
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.entity.RegisterData
-import com.wanwuzhinan.mingchang.net.HeaderInterceptor
-import com.wanwuzhinan.mingchang.utils.setData
+import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.zjh.download.SimpleDownload
 
 
@@ -50,6 +50,7 @@ class BaseApplication : CommApplication() {
     override fun onCreate() {
         super.onCreate()
         UtilHelper.init(UtilConfig.newBuilder(this, true).build())
+        initNetwork()
         AppActivityManager.getInstance().init(appContext)
         initMMKV(this)
 //        MediaHolder.initialize(this)
@@ -58,7 +59,6 @@ class BaseApplication : CommApplication() {
         DialogX.init(this);
         initX5Environment()
         enterInApp()
-        initNetwork()
         Log.e("BaseApplication", "onCreate: ")
 
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(object : DefaultRefreshHeaderCreator {
@@ -96,8 +96,6 @@ class BaseApplication : CommApplication() {
                 )
                 .create()
         NetworkConfig.gson = gson
-        NetworkConfig.addInterceptor(HeaderInterceptor())
-
     }
 
     fun enterInApp() {
@@ -107,7 +105,7 @@ class BaseApplication : CommApplication() {
             override fun onLicenceLoaded(result: Int, reason: String) {
                 Log.i("TAG", "onLicenceLoaded: result:$result, reason:$reason")
                 if (result == 0) {
-                    setData("TXLiveBaseLicence", 1)
+                    MMKVUtils.encode(ConfigApp.MMKY_KEY_TXLIVE,1)
                 } else {
                     initLive()
                 }
