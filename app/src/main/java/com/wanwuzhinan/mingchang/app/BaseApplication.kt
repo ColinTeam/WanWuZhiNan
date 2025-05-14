@@ -31,6 +31,7 @@ import com.tencent.rtmp.TXLiveBaseListener
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.entity.RegisterData
+import com.wanwuzhinan.mingchang.net.HeaderInterceptor
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.zjh.download.SimpleDownload
 
@@ -96,6 +97,7 @@ class BaseApplication : CommApplication() {
                 )
                 .create()
         NetworkConfig.gson = gson
+        NetworkConfig.addInterceptor(HeaderInterceptor())
     }
 
     fun enterInApp() {
