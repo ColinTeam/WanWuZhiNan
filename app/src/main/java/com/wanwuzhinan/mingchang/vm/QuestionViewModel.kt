@@ -53,7 +53,7 @@ class QuestionViewModel : AppViewModel() {
         request({
             service.newQuestionList(type)
         }, success = {
-            _questionList.postValue(it.getData()?.list)
+            _questionList.postValue(it.list)
         }, failure = {
             postError(type = it.code, it.msg)
             _showToast.postValue(it)

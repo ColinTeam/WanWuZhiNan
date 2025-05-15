@@ -125,7 +125,7 @@ interface ApiService {
     //题库列表
     @FormUrlEncoded
     @POST("/api/QuestionsBank/index")
-    suspend fun newQuestionList(@Field("typeid") typeid: Int): AppResponse<QuestionListResponse>
+    suspend fun newQuestionList(@Field("typeid") typeid: Int): QuestionListResponse
 
 
     //获取年级

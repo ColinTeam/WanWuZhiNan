@@ -3,6 +3,7 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
@@ -47,12 +48,20 @@ class QuestionHomeFragment : AppFragment<FragmentQuestionHomeBinding, QuestionVi
 
             onClick(one, two, three, four, five, ivErrorBg) {
                 when (it) {
-                    one, two, three, four, five -> check(it.tag as? Int ?: 0)
+                    one, two, three, four, five -> check(getTag(it))
                     ivErrorBg -> {
                         QuestionListFragment.navigate(this@QuestionHomeFragment, -1, title = title)
                     }
                 }
             }
+        }
+    }
+
+    private fun getTag(view: View): Int {
+        return when (val tag = view.tag) {
+            is Int -> tag
+            is String -> tag.toIntOrNull() ?: 0
+            else -> 0
         }
     }
 

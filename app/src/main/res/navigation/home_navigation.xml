@@ -71,7 +71,7 @@
         app:popExitAnim="@anim/dialog_scale_out" />
     <action
         android:id="@+id/action_toQuestionList"
-        app:destination="@+id/fragment_home"
+        app:destination="@+id/fragment_question_home"
         app:enterAnim="@anim/dialog_scale_in"
         app:exitAnim="@anim/dialog_scale_out"
         app:launchSingleTop="true"
