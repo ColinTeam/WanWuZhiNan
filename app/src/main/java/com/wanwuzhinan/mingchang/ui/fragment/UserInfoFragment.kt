@@ -8,6 +8,7 @@ import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.ext.onClick
+import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.databinding.FragmentEditFileBinding
@@ -19,6 +20,7 @@ import com.wanwuzhinan.mingchang.ui.PasswordActivity
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAvatarDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseDialog
+import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.utils.load
 import com.wanwuzhinan.mingchang.vm.UserInfoViewModel
 
@@ -59,7 +61,9 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
                     }
 
                     tvPassword -> {
-                        PasswordActivity.start(requireActivity())
+                        PasswordActivity.start(
+                            requireActivity(), MMKVUtils.getString(Constant.USER_MOBILE)
+                        )
                     }
 
                     btSave -> {

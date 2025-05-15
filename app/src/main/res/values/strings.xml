@@ -47,16 +47,16 @@
     <string name="setting_look">查看</string>
     <string name="setting_logout">退出登录</string>
 
-    <string name="password_tips">设置密码|密码为6-20个数字、英文字母组合</string>
+    <string name="password_tips">设置密码|密码为6–20个数字、英文字母组合</string>
     <string name="password_new_hint">输入新密码</string>
     <string name="password_confirm_hint">确认新密码</string>
-    <string name="dialog_tips_title">提示</string>
+    <string name="dialog_tips_title">温馨提醒</string>
     <string name="dialog_unregister">确定要注销账号吗？注销后您将无法使用该账号，并且个人信息将无法找回。</string>
     <string name="dialog_logout_title">退出登录</string>
     <string name="dialog_logout_subtitle">确定要退出登录吗？</string>
     <string name="dialog_logout_msg">您的数据随账号保存</string>
 
-    <string name="dialog_question_title">提示</string>
+    <string name="dialog_question_title">@string/dialog_tips_title</string>
     <string name="dialog_exchange_title">兑换课程</string>
     <string name="dialog_question_subtitle">哎呀，来早啦</string>
     <string name="dialog_exchange_subtitle">哎呀，您还未开课哟～</string>

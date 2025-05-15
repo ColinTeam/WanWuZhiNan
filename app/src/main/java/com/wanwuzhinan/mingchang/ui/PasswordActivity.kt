@@ -200,9 +200,9 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
         const val REQUEST_CODE_PASSWORD = 1001
 
         @JvmStatic
-        fun start(context: Context, phone: String) {
+        fun start(context: Context, phone: String?) {
             val starter = Intent(context, PasswordActivity::class.java).putExtra(
-                ConfigApp.EXTRAS_TITLE, phone
+                ConfigApp.EXTRAS_TITLE, phone ?: ""
             )
             context.startActivity(starter)
         }

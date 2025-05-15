@@ -70,12 +70,13 @@ class ImageTipsDialog private constructor(
         return if (type == TYPE_LOGOUT) getString(R.string.confirm)
         else if (type == TYPE_QUESTION) getString(R.string.dialog_i_know)
         else if (type == TYPE_EXCHANGE) getString(R.string.dialog_exchange_sure)
-        else if (type == TYPE_PASSWORD) getString(R.string.confirm)
+        else if (type == TYPE_PASSWORD) getString(R.string.sure)
         else null
     }
 
     private fun getCancelText(type: Int): CharSequence? {
         return if (type == TYPE_EXCHANGE) getString(R.string.dialog_exchange_cancel)
+        else if (type == TYPE_PASSWORD) getString(R.string.cancel)
         else null
     }
 
@@ -119,10 +120,10 @@ class ImageTipsDialog private constructor(
     }
 
     companion object {
-        const val TYPE_LOGOUT = 0
-        const val TYPE_PASSWORD = 1
-        const val TYPE_QUESTION = 2
-        const val TYPE_EXCHANGE = 3
+        const val TYPE_LOGOUT = 0   //退出登录提示
+        const val TYPE_PASSWORD = 1 //修改密码，后台引起弹框提示
+        const val TYPE_QUESTION = 2 //回答问题，点击异常提示
+        const val TYPE_EXCHANGE = 3 //兑换课程提示
         const val TYPE_UPGRADE = 4
 
         @JvmStatic

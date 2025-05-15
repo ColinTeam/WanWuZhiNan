@@ -7,6 +7,7 @@ import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.utils.ext.onClick
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
+import com.ssm.comm.config.Constant
 import com.ssm.comm.event.MessageEvent
 import com.ssm.comm.ext.editChange
 import com.ssm.comm.ext.initEditChange
@@ -24,6 +25,7 @@ import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.ui.PasswordActivity
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseDialog
+import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.view.GlideEngine
 import com.wanwuzhinan.mingchang.vm.UserViewModel
 import java.io.File
@@ -181,7 +183,9 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                 }
 
                 mDataBinding.tvPassword -> {//年级
-                    PasswordActivity.start(requireActivity())
+                    PasswordActivity.start(
+                        requireActivity(), MMKVUtils.getString(Constant.USER_MOBILE)
+                    )
                 }
 
                 mDataBinding.btSave -> {
