@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.countDown
@@ -64,7 +63,7 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
 
                     tvPwdTips -> {
                         launcher.launch(
-                            PasswordActivity.getIntent(this@LoginActivity, Constants.INVALID)
+                            PasswordActivity.getIntent(this@LoginActivity,null)
                         )
                     }
 

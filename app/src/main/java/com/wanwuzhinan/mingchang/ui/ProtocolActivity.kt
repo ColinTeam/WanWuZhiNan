@@ -6,11 +6,13 @@ import android.content.Intent
 import android.os.Bundle
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.motion.MotionTouchLister
+import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentSettingOtherBinding
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
+import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.utils.clearAllData
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
@@ -58,7 +60,10 @@ class ProtocolActivity : AppActivity<FragmentSettingOtherBinding, HomeViewModel>
                     }
 
                     viewPwdBg -> {
-                        PasswordActivity.start(this@ProtocolActivity)
+                        val phone = MMKVUtils.getString(Constant.USER_MOBILE)
+                        if (!phone.isNullOrEmpty()) {
+                            PasswordActivity.start(this@ProtocolActivity, phone)
+                        }
                     }
 
                     btLogout -> {

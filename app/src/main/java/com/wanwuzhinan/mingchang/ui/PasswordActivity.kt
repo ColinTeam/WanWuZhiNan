@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import androidx.core.widget.doAfterTextChanged
-import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.countDown
@@ -21,7 +21,7 @@ import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.ext.isPhone
-import com.wanwuzhinan.mingchang.ui.pop.TipsDialog
+import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.vm.LoginViewModel
 
@@ -34,15 +34,20 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModel
  */
 class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() {
 
-    private var isLogin = false
+    private var phone: String? = null
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        val position = getExtrasPosition(bundle, savedInstanceState)
-        isLogin = position == Constants.ZERO
-        val phone = MMKVUtils.decodeString(Constant.USER_MOBILE)
-        isLogin = isLogin && ConfigApp.token.isNotEmpty()
+        phone = if (savedInstanceState != null) savedInstanceState.getString(ConfigApp.EXTRAS_TITLE)
+        else bundle?.getString(ConfigApp.EXTRAS_TITLE)
         viewBinding.apply {
-            etPhone.setText(if (isLogin) phone else "")
-            etPhone.doAfterTextChanged { updateButton() }
+            etPhone.apply {
+                val isEnable = !phone.isNullOrEmpty()
+                this.setText(phone ?: "")
+                if (!isEnable) this.inputType = InputType.TYPE_NULL
+                else this.doAfterTextChanged { updateButton() }
+                this.setFocusableInTouchMode(isEnable)
+                this.isClickable = isEnable
+                this.isEnabled = isEnable
+            }
             etSMS.doAfterTextChanged { updateButton() }
             etPassword.doAfterTextChanged { updateButton() }
             etPasswordConfirm.doAfterTextChanged { updateButton() }
@@ -173,16 +178,18 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
     }
 
     private fun showConfirmDialog(smg: String) {
-        TipsDialog.newInstance(getString(R.string.dialog_tips_title), smg).apply {
+        ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_PASSWORD, msg = smg).apply {
             sure = { startConfirm(1) }
         }.show(this)
     }
 
     private fun passwordSuccess() {
-        val bundle = Intent().apply {
-            putExtra(Constant.USER_MOBILE, viewBinding.etPhone.text.toString().trim())
+        val phone = viewBinding.etPhone.text.toString().trim()
+        MMKVUtils.set(Constant.USER_MOBILE, phone)
+        val intent = Intent().apply {
+            putExtra(Constant.USER_MOBILE, phone)
         }
-        setResult(Activity.RESULT_OK, bundle)
+        setResult(Activity.RESULT_OK, intent)
         finish()
     }
 
@@ -193,17 +200,17 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
         const val REQUEST_CODE_PASSWORD = 1001
 
         @JvmStatic
-        fun start(context: Context, position: Int = 0) {
+        fun start(context: Context, phone: String) {
             val starter = Intent(context, PasswordActivity::class.java).putExtra(
-                ConfigApp.EXTRAS_POSITION, position
+                ConfigApp.EXTRAS_TITLE, phone
             )
             context.startActivity(starter)
         }
 
         @JvmStatic
-        fun getIntent(context: Context, position: Int = 0): Intent {
+        fun getIntent(context: Context, phone: String?): Intent {
             return Intent(context, PasswordActivity::class.java).apply {
-                putExtra(ConfigApp.EXTRAS_POSITION, position)
+                putExtra(ConfigApp.EXTRAS_TITLE, phone)
             }
         }
     }

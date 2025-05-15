@@ -22,16 +22,18 @@ import com.wanwuzhinan.mingchang.ext.visible
  * Des   :TipsDialog
  */
 class ImageTipsDialog private constructor(
-    private val type: Int, private val title: CharSequence? = null
+    private val type: Int,
+    private val title: CharSequence? = null,
+    private val msg: CharSequence? = null
 ) : AppDialogFragment<DialogImageTipsBinding>() {
     var sure: ((View) -> Unit) = { }
     var cancel: ((View) -> Unit) = { }
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
-            displayText(tvTitle, getTitle(type))
+            displayText(tvTitle, title ?: getTitle(type))
             displayText(tvSubtitle, getSubtitle(type))
-            displayText(tvMsg, getMsg(type))
+            displayText(tvMsg, msg ?: getMsg(type))
             displayText(tvOther, getOther(type))
             displayText(btSure, getSureText(type))
             displayText(btCancel, getCancelText(type))
@@ -65,20 +67,22 @@ class ImageTipsDialog private constructor(
     }
 
     private fun getSureText(type: Int): CharSequence? {
-        if (type == TYPE_LOGOUT) getString(R.string.confirm)
-        if (type == TYPE_QUESTION) getString(R.string.dialog_i_know)
-        if (type == TYPE_EXCHANGE) getString(R.string.dialog_exchange_sure)
-        return null
+        return if (type == TYPE_LOGOUT) getString(R.string.confirm)
+        else if (type == TYPE_QUESTION) getString(R.string.dialog_i_know)
+        else if (type == TYPE_EXCHANGE) getString(R.string.dialog_exchange_sure)
+        else if (type == TYPE_PASSWORD) getString(R.string.confirm)
+        else null
     }
 
     private fun getCancelText(type: Int): CharSequence? {
-        if (type == TYPE_EXCHANGE) return getString(R.string.dialog_exchange_cancel)
-        return null
+        return if (type == TYPE_EXCHANGE) getString(R.string.dialog_exchange_cancel)
+        else null
     }
 
 
     private fun getTitle(type: Int): CharSequence? {
         return if (type == TYPE_LOGOUT) getString(R.string.dialog_logout_title)
+        else if (type == TYPE_PASSWORD) getString(R.string.dialog_question_title)
         else if (type == TYPE_QUESTION) getString(R.string.dialog_question_title)
         else if (type == TYPE_UPGRADE) getString(R.string.dialog_upgrade_title)
         else null
@@ -116,14 +120,16 @@ class ImageTipsDialog private constructor(
 
     companion object {
         const val TYPE_LOGOUT = 0
-        const val TYPE_QUESTION = 1
-        const val TYPE_EXCHANGE = 2
-        const val TYPE_UPGRADE = 3
+        const val TYPE_PASSWORD = 1
+        const val TYPE_QUESTION = 2
+        const val TYPE_EXCHANGE = 3
+        const val TYPE_UPGRADE = 4
 
         @JvmStatic
-        fun newInstance(type: Int, title: CharSequence? = null): ImageTipsDialog {
-            val fragment = ImageTipsDialog(type, title)
-            return fragment
+        fun newInstance(
+            type: Int, title: CharSequence? = null, msg: CharSequence? = null
+        ): ImageTipsDialog {
+            return ImageTipsDialog(type, title, msg)
         }
 
     }
