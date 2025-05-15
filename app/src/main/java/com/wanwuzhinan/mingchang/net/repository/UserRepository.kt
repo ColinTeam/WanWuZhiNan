@@ -136,7 +136,7 @@ class UserRepository : CommRepository() {
     ): ApiResponse<ApiInfoResponse<QuestionListData>> {
         return executeHttp {
             mService.questionPageDetail(
-                id, if (question_id == 0) "" else question_id.toString()
+                id, question_id
             )
         }
     }

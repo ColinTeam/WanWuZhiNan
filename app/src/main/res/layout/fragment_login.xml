@@ -30,7 +30,7 @@
             android:id="@+id/ivAvatar"
             android:layout_width="@dimen/dp_75"
             android:layout_height="@dimen/dp_120"
-            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginStart="@dimen/dp_24"
             android:layout_marginTop="@dimen/dp_30"
             android:contentDescription="@string/app_name"
             android:src="@mipmap/ic_login_a"
@@ -71,34 +71,32 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSmsTips"
             android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_0"
+            android:layout_height="@dimen/dp_30"
             android:gravity="center_vertical|end"
             android:text="@string/login_sms_fail"
             android:textAppearance="@style/Text.Tips"
-            app:layout_constraintBottom_toBottomOf="@id/tabLogin"
             app:layout_constraintEnd_toEndOf="@+id/etPhone"
-            app:layout_constraintStart_toEndOf="@+id/tabLogin"
-            app:layout_constraintTop_toTopOf="@+id/tabLogin" />
+            app:layout_constraintStart_toStartOf="@+id/etPhone"
+            app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPwdTips"
             android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_0"
+            android:layout_height="@dimen/dp_30"
             android:gravity="center_vertical|end"
             android:text="@string/login_forget_password"
             android:textAppearance="@style/Text.Tips"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/tabLogin"
             app:layout_constraintEnd_toEndOf="@+id/etPhone"
-            app:layout_constraintStart_toEndOf="@+id/tabLogin"
-            app:layout_constraintTop_toTopOf="@+id/tabLogin"
+            app:layout_constraintStart_toStartOf="@+id/etPhone"
+            app:layout_constraintTop_toBottomOf="@+id/etPassword"
             tools:visibility="visible" />
 
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etPhone"
             style="@style/Style.Edit.Phone"
-            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginTop="@dimen/margin_default"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:textColor="@color/text_color_default"
@@ -107,7 +105,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabLogin"
             app:layout_constraintVertical_weight="3"
-            app:layout_constraintWidth_percent="0.55" />
+            app:layout_constraintWidth_percent="0.517" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etSMS"
@@ -131,8 +129,7 @@
             android:minWidth="@dimen/dp_110"
             android:paddingHorizontal="@dimen/margin_default"
             android:text="@string/login_sms_action"
-            android:textAppearance="@style/Text"
-            android:textSize="@dimen/sp_16"
+            android:textAppearance="@style/Text.Label"
             app:layout_constraintBottom_toBottomOf="@id/etSMS"
             app:layout_constraintEnd_toEndOf="@+id/etSMS"
             app:layout_constraintTop_toTopOf="@+id/etSMS" />
@@ -141,9 +138,9 @@
             android:id="@+id/etPassword"
             style="@style/Style.Edit.Password"
             android:layout_marginTop="@dimen/margin_default_half"
+            android:inputType="textVisiblePassword"
             android:textColor="@color/text_color_default"
             android:textColorHint="@color/text_color_hint"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/etPhone"
             app:layout_constraintStart_toStartOf="@+id/etPhone"
             app:layout_constraintTop_toBottomOf="@+id/etPhone" />
@@ -156,7 +153,6 @@
             android:layout_marginTop="@dimen/margin_default"
             android:layout_marginBottom="@dimen/margin_default"
             android:text="@string/login"
-            android:textAppearance="@style/Text.Button"
             app:layout_constraintBottom_toTopOf="@id/rbProtocolTips"
             app:layout_constraintEnd_toEndOf="@id/ivContentBg"
             app:layout_constraintStart_toStartOf="@id/ivContentBg" />

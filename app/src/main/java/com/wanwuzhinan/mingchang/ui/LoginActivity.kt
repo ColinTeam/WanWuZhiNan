@@ -19,11 +19,13 @@ import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.config.ConfigApp.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
+import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.ui.fragment.LoginFragment
+import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.vm.LoginViewModel
 
@@ -62,9 +64,7 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
                     }
 
                     tvPwdTips -> {
-                        launcher.launch(
-                            PasswordActivity.getIntent(this@LoginActivity,null)
-                        )
+                        toPassword()
                     }
 
                     tvSmsSend -> {
@@ -120,6 +120,12 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
         viewModel.apply {
             configData.observe {
                 Log.i("configData:$it")
+            }
+            showToast.observe {
+                Log.e("showToast:$it")
+                if (it.code == HTTP_CONFIRM) {
+                    showConfirmDialog(it.msg)
+                }
             }
             showLoading.observe {
                 Log.i("showLoading:$it")
@@ -253,6 +259,21 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
         }
     }
 
+    private fun showConfirmDialog(smg: String) {
+        ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_PASSWORD, msg = smg).apply {
+            sure = { toPassword() }
+        }.show(this)
+    }
+
+    fun toPassword() {
+        launcher.launch(
+            PasswordActivity.getIntent(
+                this@LoginActivity,
+                viewBinding.etPhone.text.toString().trim(),
+                viewBinding.etPassword.text.toString().trim()
+            )
+        )
+    }
 
     private val launcher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()

@@ -77,11 +77,10 @@
         <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:textStyle">bold</item>
     </style>
-    403210
 
     <style name="Text.Button" parent="Text">
         <item name="android:textSize">@dimen/button_text_size</item>
-        <item name="android:textColor">@color/tab_honor</item>
+        <item name="android:textColor">@color/text_button</item>
     </style>
 
     <style name="Text.Button.Cancel" parent="Text.Button">

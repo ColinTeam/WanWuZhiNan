@@ -119,6 +119,8 @@ class ImageTipsDialog private constructor(
         } else null
     }
 
+
+
     companion object {
         const val TYPE_LOGOUT = 0   //退出登录提示
         const val TYPE_PASSWORD = 1 //修改密码，后台引起弹框提示

@@ -35,6 +35,7 @@ class LessonInfoResponse() : AppResponse<LessonInfo>()
 class CityInfoResponse() : AppResponse<CityInfo>()
 class GradeResponse() : AppResponse<GradeInfo>()
 class QuestionListResponse() : AppResponse<QuestionList>()
+class QuestionResponse() : AppResponse<Question>()
 
 data class LessonInfo(
     val info: MediaInfo

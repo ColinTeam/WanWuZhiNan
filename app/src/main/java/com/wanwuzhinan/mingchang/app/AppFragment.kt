@@ -1,5 +1,6 @@
 package com.wanwuzhinan.mingchang.app
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -145,5 +146,11 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
             ?: bundle?.getInt(ConfigApp.EXTRAS_POSITION, def) ?: def
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (_viewBinding?.root != null) {
+            _viewBinding!!.root.requestLayout()
+        }
+    }
 
 }

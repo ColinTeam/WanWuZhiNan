@@ -37,6 +37,7 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        showSystemBars(window, false)
         viewBinding = reflectViewBinding()
         setContentView(viewBinding.root, savedInstanceState)
         viewBinding.root.findViewById<View>(R.id.ivBack)?.onClick { goBack() }
@@ -65,7 +66,6 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
 
     /*如果想修改Store 可以重写此方法*/
     internal open fun bindViewModelStore() = viewModelStore
-
 
 
     fun showLoading(show: Boolean = false) {
@@ -134,6 +134,9 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         // 自定义处理逻辑，避免 Activity 被重建
+        if (viewBinding?.root != null) {
+            viewBinding!!.root.requestLayout()
+        }
     }
 }
 

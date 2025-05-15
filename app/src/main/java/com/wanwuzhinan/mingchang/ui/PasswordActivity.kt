@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import androidx.core.widget.doAfterTextChanged
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
@@ -13,7 +12,6 @@ import com.colin.library.android.utils.ext.onClick
 import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
-import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentPasswordBinding
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_FIND_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
@@ -35,19 +33,17 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModel
 class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() {
 
     private var phone: String? = null
+    private var pwd: String? = null
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        phone = if (savedInstanceState != null) savedInstanceState.getString(ConfigApp.EXTRAS_TITLE)
-        else bundle?.getString(ConfigApp.EXTRAS_TITLE)
+        phone = if (savedInstanceState != null) savedInstanceState.getString(EXTRAS_PHONE)
+        else bundle?.getString(EXTRAS_PHONE)
+        pwd = if (savedInstanceState != null) savedInstanceState.getString(EXTRAS_PWD)
+        else bundle?.getString(EXTRAS_PWD)
         viewBinding.apply {
-            etPhone.apply {
-                val isEnable = !phone.isNullOrEmpty()
-                this.setText(phone ?: "")
-                if (!isEnable) this.inputType = InputType.TYPE_NULL
-                else this.doAfterTextChanged { updateButton() }
-                this.setFocusableInTouchMode(isEnable)
-                this.isClickable = isEnable
-                this.isEnabled = isEnable
-            }
+            etPhone.setText(phone ?: "")
+            etPassword.setText(pwd ?: "")
+            etPasswordConfirm.setText(pwd ?: "")
+            etPhone.doAfterTextChanged { updateButton() }
             etSMS.doAfterTextChanged { updateButton() }
             etPassword.doAfterTextChanged { updateButton() }
             etPasswordConfirm.doAfterTextChanged { updateButton() }
@@ -197,20 +193,22 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
         const val PWD_LENGTH_MIN = 6
         const val PWD_LENGTH_MAX = 20
         const val PHONE_LENGTH = 11
-        const val REQUEST_CODE_PASSWORD = 1001
+        const val EXTRAS_PHONE = "phone"
+        const val EXTRAS_PWD = "pwd"
 
         @JvmStatic
         fun start(context: Context, phone: String?) {
             val starter = Intent(context, PasswordActivity::class.java).putExtra(
-                ConfigApp.EXTRAS_TITLE, phone ?: ""
+                EXTRAS_PHONE, phone ?: ""
             )
             context.startActivity(starter)
         }
 
         @JvmStatic
-        fun getIntent(context: Context, phone: String?): Intent {
+        fun getIntent(context: Context, phone: String? = null, pwd: String? = null): Intent {
             return Intent(context, PasswordActivity::class.java).apply {
-                putExtra(ConfigApp.EXTRAS_TITLE, phone)
+                phone?.let { putExtra(EXTRAS_PHONE, it) }
+                pwd?.let { putExtra(EXTRAS_PWD, it) }
             }
         }
     }

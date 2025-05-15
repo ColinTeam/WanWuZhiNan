@@ -27,6 +27,7 @@ class QuestionListFragment : AppFragment<FragmentQuestionListBinding, QuestionVi
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+        position = getExtrasPosition(bundle, savedInstanceState)
         viewBinding.apply {
 
         }

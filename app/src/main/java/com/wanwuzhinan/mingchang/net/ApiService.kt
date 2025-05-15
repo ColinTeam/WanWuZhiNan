@@ -24,6 +24,7 @@ import com.wanwuzhinan.mingchang.entity.LessonInfoResponse
 import com.wanwuzhinan.mingchang.entity.LessonSubject
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroupResponse
 import com.wanwuzhinan.mingchang.entity.QuestionListResponse
+import com.wanwuzhinan.mingchang.entity.QuestionResponse
 import com.wanwuzhinan.mingchang.entity.RegisterResponse
 import com.wanwuzhinan.mingchang.entity.SmsCodeResponse
 import com.wanwuzhinan.mingchang.entity.UploadImgData
@@ -126,6 +127,13 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/QuestionsBank/index")
     suspend fun newQuestionList(@Field("typeid") typeid: Int): QuestionListResponse
+
+    //题目详情分页
+    @FormUrlEncoded
+    @POST("/api/QuestionsBank/infoPage")
+    suspend fun newQuestionDetail(
+        @Field("id") id: Int, @Field("question_id") question_id: Int
+    ): QuestionResponse
 
 
     //获取年级
@@ -276,7 +284,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/QuestionsBank/infoPage")
     suspend fun questionPageDetail(
-        @Field("id") id: Int, @Field("question_id") question_id: String
+        @Field("id") id: Int, @Field("question_id") question_id: Int
     ): ApiResponse<ApiInfoResponse<QuestionListData>>
 
 
