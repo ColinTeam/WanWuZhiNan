@@ -14,10 +14,10 @@ object ConfigApp {
     const val VIDEO_AES_KEY = "W1a2n3W4u5Z6h7i8N9a0n"
     const val MMKY_KEY_TXLIVE = "TXLiveBaseLicence"
 
-    const val EXTRAS_URL = "EXTRAS_URL"
-    const val EXTRAS_POSITION = "EXTRAS_POSITION"
-    const val EXTRAS_TITLE = "EXTRAS_TITLE"
-    const val EXTRAS_HTML = "EXTRAS_HTML"
+    const val EXTRAS_URL = "url"
+    const val EXTRAS_POSITION = "position"
+    const val EXTRAS_TITLE = "title"
+    const val EXTRAS_HTML = "html"
 
     const val VIDEO_DEMO_1 =
         "https://s.wanwuzhinan.top/m3u8/1080p/1.1/100001/6fc6453a46e22186d989a50306c588a8.m3u8"//用户协议

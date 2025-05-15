@@ -1,6 +1,7 @@
 navigation:https://www.jianshu.com/p/e0f2092b4e49?mode=light
 
-Navigation在实现Fragment切换的时候，是通过FragmentTransaction的replace方法来实现，因此假设从一个Fragment A跳转到Fragment B，
+Navigation在实现Fragment切换的时候，是通过FragmentTransaction的replace方法来实现，因此假设从一个Fragment
+A跳转到Fragment B，
 那么Fragment A生命周期会走到onDestroyView，当返回到Fragment A，此时又会重新走到onCreateView。
 
 1.重写Fragment的onCreateView，加上相关判断，使其只会初始化一次View。
@@ -10,12 +11,14 @@ navigation
 graph文件的跟元素，必须设置id和startDestination。当NavHostFragment加载graph文件时，会根据startDestination导航到指定的页面上去。
 
 action
-表示一个跳转行为，可以作为navigation的子元素，也可以作为其他 destination(fragment或者activity)的子元素，必须设置id和destination属
+表示一个跳转行为，可以作为navigation的子元素，也可以作为其他 destination(fragment或者activity)
+的子元素，必须设置id和destination属
 性，其中id是提供给其他destination来寻找具体的跳转行为；destination表示跳转落到具体destination的id。除了这些属性，还有enterAnim和exitAnim用
 来定义页面入场和退场的动画，以及popUpTo和popUpToInclusive用来处理循 环跳转的情况。
 
 deepLink
-跟action类似，也表示一个跳转行为，可以作为navigation的子元素，也可以 作为其他destination(fragment或者activity)的子元素。可以通过设置uri或
+跟action类似，也表示一个跳转行为，可以作为navigation的子元素，也可以 作为其他destination(
+fragment或者activity)的子元素。可以通过设置uri或
 action属性来表示跳到哪个页面。
 
 fragment
@@ -29,21 +32,19 @@ navigation的子元素之一，表示一个页面，跟fragment类似。
 include
 navigation的子元素之一，用于引入另外一个graph文件。该元素有利于graph 文件的独立，从而便于跳转流程的拆分和复用。
 
-
-navigation元素的startDestination属性设置的是对应fragment或者activity元素的id，表示当首次加载或者跳转到该graph文件中去，默认跳到指定的页面上去。前面已经说了，navigation本身就是一个destination ，跟fragment和activity是同一级的东西。但是navigation本身不承载Ui，所以它需要一个有UI的destination。
+navigation元素的startDestination属性设置的是对应fragment或者activity元素的id，表示当首次加载或者跳转到该graph文件中去，默认跳到指定的页面上去。前面已经说了，navigation本身就是一个destination
+，跟fragment和activity是同一级的东西。但是navigation本身不承载Ui，所以它需要一个有UI的destination。
 action元素当作为fragment元素的子元素时，表示它只是一个局部action，仅限它所属fragment元素对应的Fragment页面才能使用；当action元素作为navigation的子元素时，表示它是一个全局action，它所属navigation元素下所有的fragment和action都可以使用。且其的destination属性设置的是对应fragment或者activity元素的id。
 deeLink元素可以设置在两个地方，分别是：作为fragment和activity元素的子元素；作为navigation的子元素。这两个地方表示含义是不一样的。其中，当作为fragment和activity元素的子元素时，表示其他页面可以使用对应的链接跳到它所属的fragment和activity页面，该链接就是在这里配置的deepLink；当作为navigation的子元素时，表示其他页面可以使用对应的链接跳到它所属graph的startDestination页面。注意，deepLink跳转方式并不支持转场动画，如果有需要，需要自行定义。
 如果我们想要从一个graph文件中的页面跳转到另一个graph文件的某一个页面，必须要在第一个graph文件使用include元素引入另外一个graph文件。
 
-作者：琼珶和予
-链接：https://www.jianshu.com/p/e0f2092b4e49
-来源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
-作者：琼珶和予
-链接：https://www.jianshu.com/p/e0f2092b4e49
-来源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
-作者：琼珶和予
-链接：https://www.jianshu.com/p/e0f2092b4e49
-来源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+    app:popUpTo：
+    跳转到目前页面的时候，会先在返回栈寻找是否已经有该页面的实例，
+    如果有的话，需要将该页面之上的页面都清空。
+    app:popUpToInclusive：
+    如果只配置app:popUpTo，是不会清空页面本身的实例，那么在返回栈中就有该页面的两个实例，
+    这个是不符合预期的。所以此时需要将app:popUpToInclusive设置为true，表示可以清空页面自身的实例。
+
+    假设，我从A页面跳转到B页面，再从B页面跳转到A页面。如果不使用popupTo属性的话，返回栈的实例是：A' B A''；
+    如果我们设置popupTo，返回栈的实例是：A' A''，因为从B跳转到A时，我们会清空A以上的实例，那个B的实例自然就被清空了；
+    如果我们同时配置了popupTo和popUpToInclusive，那么返回栈中的实例是：A''，需要注意的是，这里是A''，也就是新创建的实例。

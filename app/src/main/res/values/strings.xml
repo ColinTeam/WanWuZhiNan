@@ -53,17 +53,27 @@
     <string name="dialog_tips_title">提示</string>
     <string name="dialog_unregister">确定要注销账号吗？注销后您将无法使用该账号，并且个人信息将无法找回。</string>
     <string name="dialog_logout_title">退出登录</string>
-    <string name="dialog_logout_subtitle">您的数据随账号保存</string>
-    <string name="dialog_logout_tips">确定要退出登录吗？</string>
+    <string name="dialog_logout_subtitle">确定要退出登录吗？</string>
+    <string name="dialog_logout_msg">您的数据随账号保存</string>
+
+    <string name="dialog_question_title">提示</string>
+    <string name="dialog_exchange_title">兑换课程</string>
+    <string name="dialog_question_subtitle">哎呀，来早啦</string>
+    <string name="dialog_exchange_subtitle">哎呀，您还未开课哟～</string>
+    <string name="dialog_question_msg">暂时还不能探索</string>
+    <string name="dialog_exchange_msg">请先兑换课程后再学习</string>
+    <string name="dialog_exchange_cancel">联系客服</string>
+    <string name="dialog_exchange_sure">@string/dialog_exchange_title</string>
 
     <string name="dialog_upgrade_title">新版本</string>
-    <string name="dialog_upgrade_subtitle">请去应用商店下载最新版本！🚀</string>
-    <string name="dialog_upgrade_tips">✨新版本上线啦！</string>
+    <string name="dialog_upgrade_subtitle">✨新版本上线啦！</string>
+    <string name="dialog_upgrade_msg">请去应用商店下载最新版本！🚀</string>
     <string name="dialog_i_know">我知道啦</string>
 
     <string name="choose_title_sex">选择性别</string>
     <string name="choose_title_grade">选择年级</string>
     <string name="choose_title_area">选择地区</string>
+
     <string name="man">男</string>
     <string name="woman">女</string>
 

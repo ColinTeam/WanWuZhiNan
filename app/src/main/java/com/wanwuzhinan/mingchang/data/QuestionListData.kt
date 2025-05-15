@@ -46,7 +46,7 @@ data class QuestionListData(
         var update_time: String,//
         var create_time: String,//
         var is_select: Boolean,
-        var answersArr: MutableList<answerBean>,//
+        var answersArr: MutableList<AnswerBean>,//
         var answer_res_answer : String,
         var answer_res_true : String,
         var answer_res_time : String,
@@ -54,7 +54,7 @@ data class QuestionListData(
 
     ):BaseModel()
 
-    data class answerBean(
+    data class AnswerBean(
         var select: Boolean,//
         var answer: String,//
         var desc: String,//
@@ -64,4 +64,5 @@ data class QuestionListData(
         var answerType: Int
 
     ):BaseModel()
+
 }

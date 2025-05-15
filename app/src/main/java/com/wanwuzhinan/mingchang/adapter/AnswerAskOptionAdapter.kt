@@ -9,9 +9,9 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.QuestionListData
 
 
-class AnswerAskOptionAdapter : BaseQuickAdapter<QuestionListData.answerBean,QuickViewHolder>() {
+class AnswerAskOptionAdapter : BaseQuickAdapter<QuestionListData.AnswerBean,QuickViewHolder>() {
 
-    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: QuestionListData.answerBean?) {
+    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: QuestionListData.AnswerBean?) {
         holder.setText(R.id.tv_option,"${item!!.key}. ${item.answer}")
 
         // 0 正常 1 对 2错

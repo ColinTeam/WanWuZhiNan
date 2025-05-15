@@ -21,8 +21,6 @@ import com.wanwuzhinan.mingchang.ui.WebViewActivity
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
-import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
-import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
 import com.wanwuzhinan.mingchang.ui.phone.RankActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.PrivacyPop
@@ -103,14 +101,16 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
 
                     ivThreeBg -> {
                         activity?.let {
-                            QuestionListAskActivity.start(it)
+//                            QuestionListAskActivity.start(it)
+                            QuestionHomeFragment.navigate(this@HomeFragment,ConfigApp.TYPE_ASK)
 //                            findNavController().navigate(R.id.action_toVideoHome)
                         }
                     }
 
                     ivFourBg -> {
                         activity?.let {
-                            QuestionListPracticeActivity.start(it)
+                            QuestionHomeFragment.navigate(this@HomeFragment,ConfigApp.TYPE_PRACTICE)
+//                            QuestionListPracticeActivity.start(it)
                         }
                     }
                 }

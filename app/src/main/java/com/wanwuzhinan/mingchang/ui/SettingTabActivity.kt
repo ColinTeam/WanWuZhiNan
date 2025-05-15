@@ -3,7 +3,6 @@ package com.wanwuzhinan.mingchang.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.colin.library.android.utils.Log
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.SettingTabAdapter
 import com.wanwuzhinan.mingchang.adapter.TabFragmentAdapter
@@ -64,10 +63,6 @@ class SettingTabActivity : AppActivity<FragmentSettingTabBinding, UserInfoViewMo
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        viewModel.tabPosition.observe {
-            Log.i("tabPosition:$it")
-            selected(it)
-        }
         selected(getExtrasPosition(bundle, savedInstanceState))
     }
 

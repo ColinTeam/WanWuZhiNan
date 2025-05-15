@@ -23,6 +23,7 @@ import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.entity.LessonInfoResponse
 import com.wanwuzhinan.mingchang.entity.LessonSubject
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroupResponse
+import com.wanwuzhinan.mingchang.entity.QuestionListResponse
 import com.wanwuzhinan.mingchang.entity.RegisterResponse
 import com.wanwuzhinan.mingchang.entity.SmsCodeResponse
 import com.wanwuzhinan.mingchang.entity.UploadImgData
@@ -120,6 +121,11 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/User/edit")
     suspend fun newEditUserInfo(@FieldMap map: HashMap<String, String>): AppResponse<List<String>>
+
+    //题库列表
+    @FormUrlEncoded
+    @POST("/api/QuestionsBank/index")
+    suspend fun newQuestionList(@Field("typeid") typeid: Int): AppResponse<QuestionListResponse>
 
 
     //获取年级

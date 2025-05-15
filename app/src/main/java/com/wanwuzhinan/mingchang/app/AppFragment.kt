@@ -138,9 +138,12 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
         return (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[index] as Class<T>
     }
 
-    internal fun getExtrasPosition(bundle: Bundle?, savedInstanceState: Bundle?): Int {
-        return savedInstanceState?.getInt(ConfigApp.EXTRAS_POSITION, Constants.ZERO)
-            ?: bundle?.getInt(ConfigApp.EXTRAS_POSITION, Constants.ZERO) ?: Constants.ZERO
+    internal fun getExtrasPosition(
+        bundle: Bundle?, savedInstanceState: Bundle?, def: Int = Constants.ZERO
+    ): Int {
+        return savedInstanceState?.getInt(ConfigApp.EXTRAS_POSITION, def)
+            ?: bundle?.getInt(ConfigApp.EXTRAS_POSITION, def) ?: def
     }
+
 
 }

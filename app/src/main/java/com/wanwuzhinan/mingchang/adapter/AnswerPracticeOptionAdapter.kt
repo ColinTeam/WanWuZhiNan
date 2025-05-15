@@ -9,9 +9,9 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.data.QuestionListData
 
 
-class AnswerPracticeOptionAdapter : BaseQuickAdapter<QuestionListData.answerBean,QuickViewHolder>() {
+class AnswerPracticeOptionAdapter : BaseQuickAdapter<QuestionListData.AnswerBean,QuickViewHolder>() {
 
-    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: QuestionListData.answerBean?) {
+    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: QuestionListData.AnswerBean?) {
         holder.setText(R.id.tv_option,"${item!!.answer}")
 
         when(position){
