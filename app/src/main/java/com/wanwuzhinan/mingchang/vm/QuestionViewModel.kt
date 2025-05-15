@@ -2,9 +2,7 @@ package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.colin.library.android.network.request
 import com.wanwuzhinan.mingchang.app.AppViewModel
-import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.Question
 import com.wanwuzhinan.mingchang.entity.UserInfo
 
@@ -18,45 +16,22 @@ import com.wanwuzhinan.mingchang.entity.UserInfo
 class QuestionViewModel : AppViewModel() {
 
     private val _userInfo: MutableLiveData<UserInfo?> = MutableLiveData(null)
-    private val _configData: MutableLiveData<Config?> = MutableLiveData(null)
     private val _questionList: MutableLiveData<List<Question>?> = MutableLiveData(null)
 
     val userInfo: LiveData<UserInfo?> = _userInfo
-    val configData: LiveData<Config?> = _configData
     val questionList: LiveData<List<Question>?> = _questionList
-    fun getConfig() {
-        request({
-            service.newConfig()
-        }, success = {
-            if (it != configData.value) {
-                _configData.postValue(it)
-            }
-        }, failure = {
-            postError(type = it.code, it.msg)
-            _showToast.postValue(it)
-        })
-    }
+
 
     //获取用户信息
     fun getUserInfo() {
-        request({
-            service.newUserInfo()
-        }, success = {
-            _userInfo.postValue(it.info)
-        }, failure = {
-            postError(type = it.code, it.msg)
-            _showToast.postValue(it)
+        request(request = { service.newUserInfo() }, success = { it ->
+            it?.info?.let { _userInfo.postValue(it) }
         })
     }
 
     fun getQuestionList(type: Int) {
-        request({
-            service.newQuestionList(type)
-        }, success = {
-            _questionList.postValue(it.list)
-        }, failure = {
-            postError(type = it.code, it.msg)
-            _showToast.postValue(it)
+        request(request = { service.newQuestionList(type) }, success = { it ->
+            it?.list?.let { _questionList.postValue(it) }
         })
     }
 

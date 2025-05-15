@@ -25,7 +25,7 @@ open class AppResponse<T>(
     override fun getData() = data
 
     override fun toString(): String {
-        return "AppResponse(data=$data, code=$code, msg='$msg')"
+        return "AppResponse(isSuccess:${isSuccess()}:code=$code, msg='$msg\ndata=$data')"
     }
 
 

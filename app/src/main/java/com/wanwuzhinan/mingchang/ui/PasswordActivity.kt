@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.widget.doAfterTextChanged
+import com.colin.library.android.network.data.HttpResult
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.countDown
@@ -17,7 +18,6 @@ import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_FIND_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
-import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
@@ -58,18 +58,6 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
-            showLoading.observe {
-                Log.i("showLoading:$it")
-                showLoading(it)
-            }
-            showToast.observe {
-                Log.i("showToast:$it")
-                if (it.code == HTTP_CONFIRM) {
-                    showConfirmDialog(it.msg)
-                } else if (it.code == HTTP_SUCCESS) {
-                    passwordSuccess()
-                }
-            }
             smsSuccess.observe {
                 Log.i("smsSuccess:$it")
                 if (it) {
@@ -93,6 +81,13 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
         updateButton()
     }
 
+    override fun interceptorHttpAction(action: HttpResult.Action): Boolean {
+        if (action.code == HTTP_CONFIRM) {
+            showConfirmDialog(action.msg)
+            return true
+        }
+        return false
+    }
 
     override fun loadData(refresh: Boolean) {
     }

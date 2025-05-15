@@ -2,15 +2,11 @@ package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.colin.library.android.network.data.NetworkResult
-import com.colin.library.android.network.request
 import com.colin.library.android.utils.Constants
 import com.wanwuzhinan.mingchang.app.AppViewModel
-import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
 import com.wanwuzhinan.mingchang.entity.RegisterData
-import kotlinx.coroutines.delay
 
 /**
  * Author:ColinLu
@@ -20,57 +16,28 @@ import kotlinx.coroutines.delay
  * Des   :LoginViewModel
  */
 class LoginViewModel : AppViewModel() {
-    private val _configData: MutableLiveData<Config?> = MutableLiveData(null)
-    val configData: LiveData<Config?> = _configData
-    private val _RegisterData: MutableLiveData<RegisterData?> = MutableLiveData(null)
-    val registerData: LiveData<RegisterData?> = _RegisterData
+    private val _registerData: MutableLiveData<RegisterData?> = MutableLiveData(null)
+    val registerData: LiveData<RegisterData?> = _registerData
     private val _smsSuccess: MutableLiveData<Boolean> = MutableLiveData(false)
     val smsSuccess: LiveData<Boolean> = _smsSuccess
 
-    fun getConfig() {
-        request({
-            service.newConfig()
-        }, success = {
-            if (it != configData.value) {
-                _configData.postValue(it)
-            }
-        }, failure = {
-            postError(type = it.code, it.msg)
-            _showToast.postValue(it)
-        })
-    }
 
     fun getSms(phone: String) {
-        _showLoading.postValue(true)
-        request({
-            delay(Constants.ONE_SECOND.toLong())
-            service.newCode(phone)
-        }, success = {
-            _showToast.postValue(NetworkResult.failure(0, "登录成功"))
-            _showLoading.postValue(false)
-            _smsSuccess.postValue(true)
-        }, failure = {
-            postError(type = it.code, it.msg)
-            _showToast.postValue(it)
-            _showLoading.postValue(false)
-            _smsSuccess.postValue(false)
-        })
+        request(
+            loading = true,
+            request = { service.newCode(phone) },
+            success = { it -> _smsSuccess.postValue(true) },
+            delay = Constants.ONE_SECOND.toLong()
+        )
     }
 
     fun loginBySms(phone: String, code: String, type: Int, action: Int = HTTP_ACTION_LOGIN_SMS) {
-        _showLoading.postValue(true)
-        request({
-            delay(Constants.ONE_SECOND.toLong())
-            service.newLogin(phone, code, type, action)
-        }, success = {
-            _showToast.postValue(NetworkResult.failure(0, "登录成功"))
-            _RegisterData.postValue(it)
-            _showLoading.postValue(false)
-        }, failure = {
-            postError(type = it.code, it.msg)
-            _showToast.postValue(it)
-            _showLoading.postValue(false)
-        })
+        request(
+            loading = true,
+            request = { service.newLogin(phone, code, type, action) },
+            success = { it -> it?.let { _registerData.postValue(it) } },
+            delay = Constants.ONE_SECOND.toLong()
+        )
     }
 
     fun loginByPassword(
@@ -82,18 +49,12 @@ class LoginViewModel : AppViewModel() {
         type: Int,
         confirm: Int
     ) {
-        _showLoading.postValue(true)
-        request({
-            delay(Constants.ONE_SECOND.toLong())
-            service.newLoginPwd(phone, sms, pwd, pwds, action, type, confirm)
-        }, success = {
-            _RegisterData.postValue(it)
-            _showLoading.postValue(false)
-        }, failure = {
-            postError(type = it.code, it.msg)
-            _showToast.postValue(it)
-            _showLoading.postValue(false)
-        })
+        request(
+            loading = true,
+            request = { service.newLoginPwd(phone, sms, pwd, pwds, action, type, confirm) },
+            success = { it -> _registerData.postValue(it) },
+            delay = Constants.ONE_SECOND.toLong()
+        )
     }
 
 

@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
  * Des   :NetworkConfig
  */
 object NetworkConfig {
-    private val DELAY: Long = 500L
+    private val DELAY: Long = 0L
     private val RETRY: Int = 3
     private val TIMEOUT: Long = 10000L
     private val URL_DEBUG: String = "https://www.mxwsl.cn"

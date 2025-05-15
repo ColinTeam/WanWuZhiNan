@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
+import com.colin.library.android.network.data.HttpResult
 import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
@@ -46,15 +47,21 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    isEnabled = goBack()
+                    isEnabled = if (interceptorBack()) true else goBack()
                 }
             })
     }
 
     override fun onStart() {
         super.onStart()
+        viewModel.showLoading.observe {
+            showLoading(it)
+        }
         viewModel.showToast.observe {
             ToastUtil.show(it.msg)
+        }
+        viewModel.httpAction.observe {
+            if (interceptorHttpAction(it)) return@observe
             if (it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) {
                 activity?.let { act ->
                     LoginActivity.start(act)
@@ -95,6 +102,12 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
 
     /*如果想修改Store 可以重写此方法*/
     open fun bindViewModelStore() = viewModelStore
+
+    //是否拦截网络反馈code事件
+    internal open fun interceptorHttpAction(action: HttpResult.Action) = false
+
+    //是否拦截返回按钮事件
+    internal open fun interceptorBack() = false
 
     /**
      * add an observer within the [ViewLifecycleOwner] lifespan
@@ -142,8 +155,9 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
     internal fun getExtrasPosition(
         bundle: Bundle?, savedInstanceState: Bundle?, def: Int = Constants.ZERO
     ): Int {
-        return savedInstanceState?.getInt(ConfigApp.EXTRAS_POSITION, def)
-            ?: bundle?.getInt(ConfigApp.EXTRAS_POSITION, def) ?: def
+        return savedInstanceState?.getInt(ConfigApp.EXTRAS_POSITION, def) ?: bundle?.getInt(
+            ConfigApp.EXTRAS_POSITION, def
+        ) ?: def
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

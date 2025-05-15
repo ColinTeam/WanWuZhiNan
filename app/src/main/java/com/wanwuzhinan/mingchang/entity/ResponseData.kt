@@ -26,7 +26,7 @@ const val HTTP_CONFIRM = 9
 const val HTTP_TOKEN_ERROR = 4
 const val HTTP_TOKEN_EMPTY = 2
 
-class SmsCodeResponse() : AppResponse<String>()
+class SmsCodeResponse() : AppResponse<Any>()
 class RegisterResponse() : AppResponse<RegisterData>()
 class UserInfoResponse() : AppResponse<UserData>()
 class ConfigDataResponse() : AppResponse<Config>()

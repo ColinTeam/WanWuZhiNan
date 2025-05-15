@@ -8,8 +8,8 @@ package com.colin.library.android.network.data
  * Des   :INetworkResponse
  */
 interface INetworkResponse<T> {
-    abstract fun isSuccess(): Boolean
-    abstract fun getCode(): Int
-    abstract fun getMsg(): String
-    abstract fun getData(): T?
+    fun isSuccess(): Boolean
+    fun getCode(): Int
+    fun getMsg(): String
+    fun getData(): T?
 }

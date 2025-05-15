@@ -3,7 +3,6 @@ package com.wanwuzhinan.mingchang.vm
 import android.util.SparseArray
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.colin.library.android.network.request
 import com.wanwuzhinan.mingchang.app.AppViewModel
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.entity.Lesson
@@ -56,43 +55,33 @@ class MediaViewModel : AppViewModel() {
 //    }
 
     fun getMediaLessonSubjectGroup(groupID: Int = ConfigApp.TYPE_AUDIO) {
-        request({
-            service.newMediaLessonSubjectGroup(groupID)
-        }, success = {
-            _mediaLessonSubjectGroup.postValue(it)
-        }, failure = {
-            _showToast.postValue(it)
+        request(request = { service.newMediaLessonSubjectGroup(groupID) }, success = { it ->
+            it?.let { _mediaLessonSubjectGroup.postValue(it) }
         })
     }
 
     fun getMediaLessonInfo(groupID: Int, need: Int = 1) {
-        request({
-            service.newLessonSubject(groupID, need)
-        }, success = {
-            lessonInfoArray.put(groupID, it)
-            _mediaLessonInfo.postValue(it)
-        }, failure = {
-            _showToast.postValue(it)
+        request(request = { service.newLessonSubject(groupID, need) }, success = { it ->
+            it?.let {
+                lessonInfoArray.put(groupID, it)
+                _mediaLessonSubjectGroup.postValue(it)
+            }
         })
     }
 
     fun getMediaLessonQuarter(lessonID: Int, need: Int = 1) {
-        request({
-            service.newAudioLessonQuarter(lessonID, need)
-        }, success = {
-            _mediaLessonInfo.postValue(it)
-        }, failure = {
-            _showToast.postValue(it)
+        request(request = { service.newAudioLessonQuarter(lessonID, need) }, success = { it ->
+            it?.let {
+                _mediaLessonInfo.postValue(it)
+            }
         })
     }
 
     fun getLessonInfo(lessonID: Int) {
-        request({
-            service.newLessonInfo(lessonID)
-        }, success = {
-            _lessonInfo.postValue(it)
-        }, failure = {
-            _showToast.postValue(it)
+        request(request = { service.newLessonInfo(lessonID) }, success = { it ->
+            it?.let {
+                _lessonInfo.postValue(it)
+            }
         })
     }
 

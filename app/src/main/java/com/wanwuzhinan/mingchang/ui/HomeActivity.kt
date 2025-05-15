@@ -79,9 +79,6 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
             userInfo.observe {
                 Log.i("userInfo:$it")
             }
-            showToast.observe {
-                Log.i("showToast:$it")
-            }
         }
     }
 

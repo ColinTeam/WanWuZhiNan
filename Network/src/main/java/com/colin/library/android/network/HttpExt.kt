@@ -6,8 +6,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.colin.library.android.network.data.AppResponse
 import com.colin.library.android.network.data.HTTP_ERROR
+import com.colin.library.android.network.data.HttpResult
 import com.colin.library.android.network.data.INetworkResponse
 import com.colin.library.android.network.data.NetworkResult
+import com.colin.library.android.utils.Log
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +29,15 @@ import java.net.SocketException
  *
  * 该函数通过 `requestImpl` 实现具体的请求逻辑，并使用 `viewModelScope` 确保请求在 ViewModel 的生命周期内执行。
  */
+fun <T> ViewModel.request(
+    request: suspend () -> INetworkResponse<T>,
+    success: (suspend (T?) -> Unit) = { },
+    start: (suspend (HttpResult.Start) -> Unit) = { },
+    toast: (suspend (HttpResult.Toast) -> Unit) = { },
+    action: (suspend (HttpResult.Action) -> Unit) = { },
+    finish: (suspend (HttpResult.Finish) -> Unit) = { }
+) = requestImpl(viewModelScope, request, success, start, toast, action, finish)
+
 fun <T> ViewModel.request(
     request: suspend () -> INetworkResponse<T>,
     success: (suspend (T) -> Unit) = { },
@@ -75,6 +86,68 @@ suspend fun <T> CoroutineScope.request(
  * @param success 挂起函数，当请求成功时调用，接收请求结果[T]作为参数。
  * @param failure 挂起函数，当请求失败时调用，接收[NetworkResult.Failure]作为参数。
  */
+fun <T> requestImpl(
+    scope: CoroutineScope,
+    request: suspend () -> INetworkResponse<T>,
+    success: (suspend (T?) -> Unit) = { },
+    start: (suspend (HttpResult.Start) -> Unit) = { },
+    toast: (suspend (HttpResult.Toast) -> Unit) = { },
+    action: (suspend (HttpResult.Action) -> Unit) = { },
+    finish: (suspend (HttpResult.Finish) -> Unit) = { },
+    retry: Int = NetworkConfig.retry,
+    delay: Long = NetworkConfig.delay
+): Job {
+    return scope.launch(Dispatchers.IO) {
+        try {
+            start.invoke(HttpResult.Start(System.currentTimeMillis()))
+            if (delay > 0L) delay(delay)
+            requestImpl(request, success, toast, action, retry, delay)
+        } catch (e: Exception) {
+            //scope cancel 说明不需要了，所以直接退出即可
+            if (e is CancellationException) return@launch
+            toast.invoke(HttpResult.Toast(HTTP_ERROR, "$e"))
+            action.invoke(HttpResult.Action(HTTP_ERROR, "$e"))
+        } finally {
+            finish.invoke(HttpResult.Finish(System.currentTimeMillis()))
+        }
+    }
+}
+
+
+@Suppress("UNCHECKED_CAST")
+suspend fun <T> requestImpl(
+    request: suspend () -> INetworkResponse<T>,
+    success: (suspend (T?) -> Unit) = {},
+    toast: (suspend (HttpResult.Toast) -> Unit) = {},
+    action: (suspend (HttpResult.Action) -> Unit) = {},
+    retry: Int = NetworkConfig.retry,
+    delay: Long = NetworkConfig.delay
+) {
+    var response: INetworkResponse<T>? = null
+    var exception: Exception? = null
+    //尝试执行请求，最多重试[retry]次
+    for (i in 0 until retry) {
+        try {
+            response = request()
+            break
+        } catch (e: Exception) {
+            exception = e
+            //// 如果是SocketException或包含"reset"信息，则延迟[delay]毫秒后重试
+            if (e is SocketException || e.message?.contains("reset") == true) delay(delay)
+            else break
+        }
+    }
+
+    // 如果所有重试都失败，抛出异常
+    if (response == null) throw exception ?: SocketException("Request failed after $delay retries")
+    Log.e("okhttp-->>$response")
+    // 根据请求结果调用相应的回调函数
+    if (response.isSuccess()) success.invoke(response.getData())
+    toast.invoke(HttpResult.Toast(response.getCode(), response.getMsg()))
+    action.invoke(HttpResult.Action(response.getCode(), response.getMsg()))
+}
+
+
 fun <T> requestImpl(
     scope: CoroutineScope,
     request: suspend () -> INetworkResponse<T>,

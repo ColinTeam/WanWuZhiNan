@@ -38,7 +38,6 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModel>() 
 
     private var isLogin = false
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-//        isLogin = bundle?.getBoolean(EXTRA_LOGIN_STATE, false) == true
         val phone = MMKVUtils.decodeString(Constant.USER_MOBILE)
         isLogin = ConfigApp.token.isNotEmpty() && phone.isNotEmpty()
         viewBinding.apply {

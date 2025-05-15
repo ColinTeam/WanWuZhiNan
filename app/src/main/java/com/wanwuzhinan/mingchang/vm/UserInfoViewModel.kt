@@ -2,8 +2,7 @@ package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.colin.library.android.network.data.NetworkResult
-import com.colin.library.android.network.request
+import com.colin.library.android.utils.Log
 import com.wanwuzhinan.mingchang.app.AppViewModel
 import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.GradeInfo
@@ -30,47 +29,27 @@ class UserInfoViewModel : AppViewModel() {
 
     //获取用户信息
     fun getUserInfo() {
-        request({
-            service.newUserInfo()
-        }, success = {
-            _userInfo.postValue(it.info)
-        }, failure = {
-            postError(type = it.code, it.msg)
-            _showToast.postValue(it)
+        request(request = { service.newUserInfo() }, success = { it ->
+            it?.info?.let { _userInfo.postValue(it) }
         })
     }
 
 
     fun getCityInfo() {
-        request({
-            service.newCityInfo()
-        }, success = {
+        request(request = { service.newCityInfo() }, success = { it ->
             _cityInfo.postValue(it)
-        }, failure = {
-            postError(type = it.code, it.msg)
-            _showToast.postValue(it)
         })
     }
 
     fun getGradeInfo(id: Int = 16) {
-        request({
-            service.newGrade(id)
-        }, success = {
+        request(request = { service.newGrade(id) }, success = { it ->
             _gradeInfo.postValue(it)
-        }, failure = {
-            postError(type = it.code, it.msg)
-            _showToast.postValue(it)
         })
     }
 
     fun editUserInfo(map: HashMap<String, String>) {
-        request({
-            service.newEditUserInfo(map)
-        }, success = {
-            _showToast.postValue(NetworkResult.failure(0, "保存成功"))
-        }, failure = {
-            postError(type = it.code, it.msg)
-            _showToast.postValue(it)
+        request(request = { service.newEditUserInfo(map) }, success = { it ->
+            Log.e("success:$it")
         })
     }
 

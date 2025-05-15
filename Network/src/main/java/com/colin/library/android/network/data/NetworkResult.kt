@@ -52,3 +52,22 @@ open class AppResponse<T>(val code: Int, val msg: String = "", val data: T? = nu
     open fun toastMsg(): String = ""
 }
 
+
+sealed class HttpResult<out T> {
+    data class Success<out T>(val data: T) : HttpResult<T>()
+    data class Toast(val code: Int, val msg: String) : HttpResult<Nothing>()
+    data class Action(val code: Int, val msg: String) : HttpResult<Nothing>()
+    data class Start(val time: Long) : HttpResult<Nothing>()
+    data class Finish(val time: Long) : HttpResult<Nothing>()
+
+    override fun toString(): String {
+        return when (this) {
+            is Success<T> -> "Success[data=$data]"
+            is Toast -> "Toast[code=$code, msg=$msg]"
+            is Action -> "Action[code=$code, msg=$msg]"
+            is Start -> "Start[time=$time]"
+            is Finish -> "Finish[time=$time]"
+        }
+    }
+}
+

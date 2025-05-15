@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewbinding.ViewBinding
+import com.colin.library.android.network.data.HttpResult
 import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
@@ -40,13 +41,21 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
         showSystemBars(window, false)
         viewBinding = reflectViewBinding()
         setContentView(viewBinding.root, savedInstanceState)
-        viewBinding.root.findViewById<View>(R.id.ivBack)?.onClick { goBack() }
+        viewBinding.root.findViewById<View>(R.id.ivBack)?.onClick {
+            if (!interceptorBack()) goBack()
+        }
     }
 
     override fun onStart() {
         super.onStart()
+        viewModel.showLoading.observe {
+            showLoading(it)
+        }
         viewModel.showToast.observe {
             ToastUtil.show(it.msg)
+        }
+        viewModel.httpAction.observe {
+            if (interceptorHttpAction(it)) return@observe
             if (it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) {
                 LoginActivity.start(this@AppActivity)
                 this@AppActivity.finish()
@@ -66,6 +75,12 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
 
     /*如果想修改Store 可以重写此方法*/
     internal open fun bindViewModelStore() = viewModelStore
+
+    //是否拦截网络反馈code事件
+    internal open fun interceptorHttpAction(action: HttpResult.Action) = false
+
+    //是否拦截返回按钮事件
+    internal open fun interceptorBack() = false
 
 
     fun showLoading(show: Boolean = false) {

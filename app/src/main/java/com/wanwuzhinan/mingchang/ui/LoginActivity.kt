@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import com.colin.library.android.network.data.HttpResult
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.countDown
@@ -121,18 +122,8 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
             configData.observe {
                 Log.i("configData:$it")
             }
-            showToast.observe {
-                Log.e("showToast:$it")
-                if (it.code == HTTP_CONFIRM) {
-                    showConfirmDialog(it.msg)
-                }
-            }
-            showLoading.observe {
-                Log.i("showLoading:$it")
-                showLoading(it)
-            }
             smsSuccess.observe {
-                Log.i("smsSuccess:$it")
+                Log.e("smsSuccess:$it")
                 if (it) {
                     viewBinding.tvSmsSend.isEnabled = false
                     viewBinding.tvSmsSend.alpha = 0.3F
@@ -157,6 +148,14 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(EXTRAS_POSITION, tabIndex)
+    }
+
+    override fun interceptorHttpAction(action: HttpResult.Action): Boolean {
+        if (action.code == HTTP_CONFIRM) {
+            toPassword()
+            return true
+        }
+        return false
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
