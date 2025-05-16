@@ -6,6 +6,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
+import com.wanwuzhinan.mingchang.media.MediaHolder
 
 /**
  * Author:ColinLu
@@ -23,6 +24,7 @@ class MediaService : MediaSessionService(), Player.Listener {
     override fun onCreate() {
         super.onCreate()
         player = ExoPlayer.Builder(this).build()
-        player.audioSessionId
+        mediaSession = MediaSession.Builder(this, player).build()
+        MediaHolder.audioSessionID = player.audioSessionId
     }
 }
