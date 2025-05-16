@@ -95,7 +95,6 @@ class NetErrorPop(var context: Activity) :BasePop<PopNetErrorBinding>(context){
         mDataBinding.tvTipsSub.visibility = View.VISIBLE
         mDataBinding.tvSure.text = "我知道了"
         showHeightPop()
-
         setOnClickNoRepeat(mDataBinding.ivCancel,mDataBinding.tvSure){
             when(it){
                 mDataBinding.ivCancel->{

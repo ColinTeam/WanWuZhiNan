@@ -2,7 +2,6 @@ package com.wanwuzhinan.mingchang.ui.pop
 
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.wheel.ArrayWheelAdapter
@@ -19,11 +18,7 @@ import com.wanwuzhinan.mingchang.databinding.DialogChooseBinding
 class ChooseDialog private constructor(
     private val title: CharSequence, private val array: List<String>
 ) : AppDialogFragment<DialogChooseBinding>() {
-
-    var sure: ((Int) -> Unit) = { }
-    var cancel: ((View) -> Unit) = { }
-
-
+    var choose: ((Int) -> Unit) = { }
     private var selected = Constants.INVALID
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
@@ -41,7 +36,7 @@ class ChooseDialog private constructor(
                 }
 
                 viewBinding.textSure -> {
-                    sure.invoke(if (selected == Constants.INVALID) viewBinding.wheel.getSelectedPosition() else selected)
+                    choose.invoke(if (selected == Constants.INVALID) viewBinding.wheel.getSelectedPosition() else selected)
                     dismiss()
                 }
             }

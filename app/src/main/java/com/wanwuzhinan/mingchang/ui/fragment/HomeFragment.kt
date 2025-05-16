@@ -3,6 +3,9 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelStore
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.network.NetworkConfig
@@ -45,6 +48,7 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  */
 class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
     private var userDialog: UserInfoDialog? = null
+    private var pop: PrivacyPop? = null
 
     override fun bindViewModelStore(): ViewModelStore {
         return requireActivity().viewModelStore
@@ -58,6 +62,8 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
     override fun onDestroyView() {
         userDialog?.dismiss()
         userDialog = null
+        pop?.dismiss()
+        pop = null
         super.onDestroyView()
     }
 
@@ -148,7 +154,7 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
                 viewBinding.tvUserName.text = it.nickname
             }
         }
-        showPrivacyPop()
+
     }
 
     fun showEditUerInfo(info: UserInfo, config: Config? = viewModel.getConfigValue()) {
@@ -157,14 +163,11 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
         }
         val android_code = config?.info?.android_code ?: 0
         if (info.truename.isEmpty() && android_code >= getCurrentVersionCode()) {
-            UserInfoDialog.newInstance(info).apply {
-                success = {
-                    if (it) viewModel.getUserInfo()
-                }
-            }.show(this)
+            userDialog = UserInfoDialog.newInstance(info).apply {
+                success = { if (it) viewModel.getUserInfo() }
+            }
+            userDialog!!.show(this)
         }
-
-
     }
 
     fun updateConfigData(data: ConfigData) {
@@ -191,6 +194,7 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
         (requireActivity() as HomeActivity).changeADState(viewModel.getAdStateValue())
         super.onResume()
         viewModel.getUserInfo()
+        Handler(Looper.getMainLooper()).post { showPrivacyPop() }
     }
 
 
@@ -199,28 +203,42 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
         (requireActivity() as HomeActivity).changeADState(false)
     }
 
-    private fun showPrivacyPop() {
-        val currentActivity = activity ?: return
-        if (isShowPrivacy()) return
-        PrivacyPop(currentActivity).showPrivacyPop {
-            when (it) {
-                1 -> {
-                    WebViewActivity.start(
-                        currentActivity,
-                        url = ConfigApp.USER_AGREEMENT,
-                        title = getString(R.string.login_protocol_link_1)
-                    )
-                }
+    override fun onStop() {
+        super.onStop()
+        userDialog?.dismiss()
+        pop?.dismiss()
+    }
 
-                2 -> {
-                    WebViewActivity.start(
-                        currentActivity,
-                        url = ConfigApp.USER_AGREEMENT,
-                        title = getString(R.string.login_protocol_link_1)
-                    )
+    private fun showPrivacyPop() {
+        if (isShowPrivacy()) return
+        if (pop?.isShowing == true) return
+        val currentActivity = activity ?: return
+        if (!currentActivity.isFinishing && currentActivity.lifecycle.currentState.isAtLeast(
+                Lifecycle.State.RESUMED
+            )
+        ) {
+            pop = PrivacyPop(currentActivity)
+            pop!!.showPrivacyPop {
+                when (it) {
+                    1 -> {
+                        WebViewActivity.start(
+                            currentActivity,
+                            url = ConfigApp.USER_AGREEMENT,
+                            title = getString(R.string.login_protocol_link_1)
+                        )
+                    }
+
+                    2 -> {
+                        WebViewActivity.start(
+                            currentActivity,
+                            url = ConfigApp.USER_AGREEMENT,
+                            title = getString(R.string.login_protocol_link_1)
+                        )
+                    }
                 }
             }
         }
+
     }
 
 }

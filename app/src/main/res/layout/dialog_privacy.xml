@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/bg"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:background="@drawable/shape_ffffff_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintHeight_percent="0.85"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/text_black_18"
+            android:layout_marginTop="@dimen/dp_12"
+            android:text="@string/dialog_privacy_title"
+            app:layout_constraintEnd_toEndOf="@+id/bg"
+            app:layout_constraintStart_toStartOf="@+id/bg"
+            app:layout_constraintTop_toTopOf="@+id/bg" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btCancel"
+            style="@style/Style.Button.Cancel"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginHorizontal="@dimen/margin_default_half"
+            android:background="?attr/borderlessButtonStyle"
+            app:layout_constraintBottom_toBottomOf="@+id/bg"
+            app:layout_constraintEnd_toStartOf="@+id/btSure"
+            app:layout_constraintStart_toStartOf="@+id/bg" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btSure"
+            style="@style/Style.Button.Sure"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginHorizontal="@dimen/margin_default_half"
+            app:layout_constraintBottom_toBottomOf="@+id/bg"
+            app:layout_constraintEnd_toEndOf="@+id/bg"
+            app:layout_constraintStart_toEndOf="@+id/btCancel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProtocolLink1"
+            style="@style/text_black_12"
+            android:text="@string/login_protocol_link_1"
+            android:textColor="#F17800"
+            app:layout_constraintBottom_toTopOf="@+id/btSure"
+            app:layout_constraintEnd_toStartOf="@+id/and"
+            app:layout_constraintStart_toStartOf="@+id/bg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/and"
+            style="@style/text_999999_12"
+            android:text="@string/and"
+            app:layout_constraintBottom_toBottomOf="@+id/tvProtocolLink1"
+            app:layout_constraintEnd_toStartOf="@+id/tvProtocolLink2"
+            app:layout_constraintStart_toEndOf="@+id/tvProtocolLink1"
+            app:layout_constraintTop_toTopOf="@+id/tvProtocolLink1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProtocolLink2"
+            style="@style/text_black_12"
+            android:text="@string/login_protocol_link_2"
+            android:textColor="#F17800"
+            app:layout_constraintBottom_toBottomOf="@+id/tvProtocolLink1"
+            app:layout_constraintEnd_toEndOf="@+id/bg"
+            app:layout_constraintStart_toEndOf="@+id/and"
+            app:layout_constraintTop_toTopOf="@+id/tvProtocolLink1" />
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toTopOf="@+id/tvProtocolLink1"
+            app:layout_constraintEnd_toEndOf="@+id/bg"
+            app:layout_constraintStart_toStartOf="@+id/bg"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/text_333333_14"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/dp_20"
+                android:text="@string/splash_privacy_content" />
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

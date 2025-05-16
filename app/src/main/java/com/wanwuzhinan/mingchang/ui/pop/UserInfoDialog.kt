@@ -209,7 +209,7 @@ class UserInfoDialog private constructor(
         ChooseAreaDialog.newInstance(
             cityInfo.list, info?.province_name, info?.city_name, info?.area_name
         ).apply {
-            sure = { province, city, area ->
+            choose = { province, city, area ->
                 chooseArea(province, city, area, true)
             }
         }.show(this@UserInfoDialog)
@@ -236,7 +236,7 @@ class UserInfoDialog private constructor(
 
     private fun chooseGrade(info: GradeInfo) {
         ChooseDialog.newInstance(getString(R.string.choose_title_grade), info.listArr).apply {
-            sure = {
+            choose = {
                 if (it > Constants.INVALID) {
                     this@UserInfoDialog.viewBinding.tvGrade.text = info.listArr[it]
                     updateButton()
@@ -303,6 +303,7 @@ class UserInfoDialog private constructor(
 //        loadingDialog = loadingDialog ?: LoadingDialog.newInstance()
 //        ThreadHelper.post(Runnable { loadingDialog!!.show(this) })
     }
+
 
     companion object {
         @JvmStatic

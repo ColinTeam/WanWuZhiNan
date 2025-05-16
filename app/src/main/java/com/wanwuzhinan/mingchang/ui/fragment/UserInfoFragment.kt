@@ -19,7 +19,6 @@ import com.wanwuzhinan.mingchang.ui.PasswordActivity
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAvatarDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseDialog
-import com.wanwuzhinan.mingchang.ui.pop.UserInfoDialog
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.utils.load
 import com.wanwuzhinan.mingchang.vm.UserInfoViewModel
@@ -171,7 +170,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
         ChooseAreaDialog.newInstance(
             cityInfo.list, info?.province_name, info?.city_name, info?.area_name
         ).apply {
-            sure = { province, city, area ->
+            choose = { province, city, area ->
                 chooseArea(province, city, area, true)
             }
         }.show(this@UserInfoFragment)
@@ -198,7 +197,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
 
     private fun chooseGrade(info: GradeInfo) {
         ChooseDialog.newInstance(getString(R.string.choose_title_grade), info.listArr).apply {
-            sure = {
+            choose = {
                 if (it > Constants.INVALID) {
                     this@UserInfoFragment.viewBinding.tvGrade.text = info.listArr[it]
                     updateButton()

@@ -2,7 +2,6 @@ package com.wanwuzhinan.mingchang.ui.pop
 
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.wheel.ArrayWheelAdapter
@@ -26,8 +25,7 @@ class ChooseAreaDialog private constructor(
     private val area: String? = null
 ) : AppDialogFragment<DialogChooseAreaBinding>() {
 
-    var sure: ((String, String, String) -> Unit) = { _, _, _ -> Unit }
-    var cancel: ((View) -> Unit) = { }
+    var choose: ((String, String, String) -> Unit) = { _, _, _ -> Unit }
     var provinceIndex = -1
     var cityIndex = -1
     var areaIndex = -1
@@ -74,7 +72,7 @@ class ChooseAreaDialog private constructor(
                 }
 
                 viewBinding.textSure -> {
-                    sure.invoke(
+                    choose.invoke(
                         array[provinceIndex].label,
                         array[provinceIndex].children[cityIndex].label,
                         array[provinceIndex].children[cityIndex].children[areaIndex].label

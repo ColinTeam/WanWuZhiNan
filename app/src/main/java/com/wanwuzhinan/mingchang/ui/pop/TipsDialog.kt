@@ -1,7 +1,6 @@
 package com.wanwuzhinan.mingchang.ui.pop
 
 import android.os.Bundle
-import android.view.View
 import com.colin.library.android.utils.ResourcesUtil
 import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
@@ -18,8 +17,6 @@ import com.wanwuzhinan.mingchang.databinding.DialogTipsBinding
 class TipsDialog private constructor(
     private val title: CharSequence, private val tips: CharSequence
 ) : AppDialogFragment<DialogTipsBinding>() {
-    var sure: ((View) -> Unit) = { }
-    var cancel: ((View) -> Unit) = { }
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {

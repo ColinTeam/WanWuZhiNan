@@ -1,25 +1,38 @@
 package com.wanwuzhinan.mingchang.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
+import androidx.lifecycle.Lifecycle
+import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
-import com.ssm.comm.ext.getCurrentVersionCode
+import com.colin.library.android.widget.motion.MotionTouchLister
+import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.databinding.ActivityHomeBinding
+import com.wanwuzhinan.mingchang.databinding.FragmentHomeBinding
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigData
-import com.wanwuzhinan.mingchang.ext.getConfigData
-import com.wanwuzhinan.mingchang.ui.pop.NetErrorPop
+import com.wanwuzhinan.mingchang.entity.UserInfo
+import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
+import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
+import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
+import com.wanwuzhinan.mingchang.ui.phone.RankActivity
+import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
+import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
+import com.wanwuzhinan.mingchang.ui.pop.UserInfoDialog
+import com.wanwuzhinan.mingchang.utils.RATIO_16_9
+import com.wanwuzhinan.mingchang.utils.getRatio
+import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
 /**
@@ -29,9 +42,13 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  *
  * Des   :HomeActivity
  */
-class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    var needUpdate = false
+class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
+    var checkUpdate = false
+
+    override fun onDestroy() {
+        checkUpdate = false
+        super.onDestroy()
+    }
 
     /**
      * 重新启动 一般需要跳转到制定界面如Login
@@ -42,15 +59,73 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         loadData(true)
     }
 
-
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.R)
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        val navController = findNavController(R.id.nav_host)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        if (bundle == null) navController.navigate(R.id.action_toSplash)
         viewBinding.apply {
-            onClick(ivAd, ivAdclose) {
+            GlideImgManager.loadGif(ivAnim, R.raw.diqu)
+            ivOneBg.setOnTouchListener(MotionTouchLister())
+            ivTwoBg.setOnTouchListener(MotionTouchLister())
+            ivThreeBg.setOnTouchListener(MotionTouchLister())
+            ivFourBg.setOnTouchListener(MotionTouchLister())
+            tab0.setOnTouchListener(MotionTouchLister())
+            tab1.setOnTouchListener(MotionTouchLister())
+            tab2.setOnTouchListener(MotionTouchLister())
+            ivTabBg.setOnTouchListener(MotionTouchLister())
+            onClick(
+                ivOneBg,
+                ivTwoBg,
+                ivThreeBg,
+                ivFourBg,
+                ivTabBg,
+                tab0,
+                tab1,
+                tab2,
+                tvSetting,
+                ivAd,
+                ivAdclose
+            ) {
+                viewModel.getConfigValue() ?: return@onClick
                 when (it) {
+                    tvSetting -> {
+                        SettingTabActivity.start(this@HomeActivity)
+                    }
+
+                    ivTabBg, tab0 -> {
+                        ExchangeActivity.start(this@HomeActivity)
+                    }
+
+                    tab1 -> {
+                        RankActivity.start(this@HomeActivity)
+                    }
+
+                    tab2 -> {
+                        WebViewActivity.start(
+                            this@HomeActivity,
+                            url = ConfigApp.SCREEN_CASTING,
+                            title = viewModel.getConfigValue()?.info?.home_title5
+                                ?: getString(R.string.home_tab_2)
+                        )
+                    }
+
+                    ivOneBg -> {//video
+                        VideoHomeActivity.start(this@HomeActivity)
+                    }
+
+                    ivTwoBg -> {//audio
+                        val radio = this@HomeActivity.getRatio()
+                        if (radio > RATIO_16_9) AudioHomeActivity.start(this@HomeActivity)
+                        else AudioHomeIpadActivity.start(this@HomeActivity)
+                    }
+
+                    ivThreeBg -> {
+                        QuestionListAskActivity.start(this@HomeActivity)
+                    }
+
+                    ivFourBg -> {
+                        QuestionListPracticeActivity.start(this@HomeActivity)
+                    }
+
                     ivAd -> {
                         val url = viewModel.getConfigValue()?.info?.home_ad_link ?: return@onClick
                         WebViewActivity.start(
@@ -64,32 +139,42 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
                 }
             }
         }
+
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
+            configData.observe {
+                Log.d("configData:$it")
+                updateConfigData(it.info)
+            }
+            userInfo.observe {
+                Log.d("userInfo:$it")
+                ConfigApp.question_count_error = it.question_count_error
+                ConfigApp.question_compass = it.question_compass
+                setData(Constant.USER_INFO, NetworkConfig.gson.toJson(it))
+                GlideImgManager.get().loadImg(it.headimg, viewBinding.ivAvatar, R.mipmap.logo)
+                viewBinding.tvUserName.text = it.nickname
+                doNextAction()
+            }
             closeAD.observe {
                 Log.i("closeAD:$it")
                 changeADState(!it, getConfigValue())
             }
-            configData.observe {
-                Log.i("configData:$it")
-                updateTips(it.info)
-            }
-            userInfo.observe {
-                Log.i("userInfo:$it")
-            }
         }
+
     }
 
     override fun loadData(refresh: Boolean) {
         viewModel.getConfig()
+        viewModel.getUserInfo()
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+
+    override fun onResume() {
+        super.onResume()
     }
+
 
     fun changeADState(visible: Boolean, config: Config? = viewModel.getConfigValue()) {
         val isEmpty =
@@ -99,19 +184,57 @@ class HomeActivity : AppActivity<ActivityHomeBinding, HomeViewModel>() {
         viewBinding.ivAdclose.isVisible = isVisible
     }
 
-    fun updateTips(data: ConfigData) {
-        if (data.android_code > getCurrentVersionCode() && !needUpdate) {
-            window.decorView.post {
-                needUpdate = true
-                NetErrorPop(this@HomeActivity).showUpdate(
-                    getConfigData().android_update,
-                    onSure = {},
-                    onCancel = {
 
-                    })
-            }
+    fun doNextAction(
+        data: Config? = viewModel.getConfigValue(), user: UserInfo? = viewModel.getUserInfoValue()
+    ) {
+        user ?: return
+        val info = data?.info ?: return
+        //todo 版本升级，用户是否编辑昵称等
+        if (isFinishing || isDestroyed || !lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            return
         }
+        UserInfoDialog.newInstance(user).apply {
+            success = {
+                if (it) viewModel.getUserInfo()
+                checkUpdate(info)
+            }
+            cancel = {
+
+            }
+        }.show(this)
+
     }
+
+    fun checkUpdate(info: ConfigData) {
+        if (checkUpdate) return
+        checkUpdate = true
+        ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_UPGRADE, extra = info.android_update)
+            .apply {
+                sure = {}
+                cancel = {}
+            }.show(this)
+    }
+
+    fun updateConfigData(data: ConfigData) {
+        viewBinding.apply {
+            tvOneTitle.text = data.home_title1
+            tvTwoTitle.text = data.home_title2
+            tvThreeTitle.text = data.home_title3
+            tvFourTitle.text = data.home_title4
+            tab2.text = data.home_title5
+        }
+        if (!("huawei".equals(Build.BRAND, true) || "huawei".equals(
+                Build.MANUFACTURER, true
+            ) || "honor".equals(Build.BRAND, true) || "honor".equals(
+                Build.MANUFACTURER, true
+            ))
+        ) {
+            data.apple_is_audit = 0
+        }
+        setData(Constant.CONFIG_DATA, NetworkConfig.gson.toJson(data))
+    }
+
 
     companion object {
 

@@ -13,6 +13,7 @@ object ConfigApp {
     const val WE_CHAT_APP_ID = "wxd55ebb21dd8fe7a2"
     const val VIDEO_AES_KEY = "W1a2n3W4u5Z6h7i8N9a0n"
     const val MMKY_KEY_TXLIVE = "TXLiveBaseLicence"
+    const val MMKY_KEY_PRIVACY = "privacy_state"
 
     const val EXTRAS_URL = "url"
     const val EXTRAS_POSITION = "position"

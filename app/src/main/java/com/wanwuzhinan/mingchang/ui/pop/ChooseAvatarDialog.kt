@@ -24,8 +24,6 @@ class ChooseAvatarDialog private constructor(
     var tab: Int, var position: Int
 ) : AppDialogFragment<DialogChooseAvatarBinding>() {
     var adapter: ChooseAvatarAdapter? = null
-    var sure: ((Int) -> Unit) = { }
-    var cancel: ((View) -> Unit) = { }
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
 
@@ -69,7 +67,7 @@ class ChooseAvatarDialog private constructor(
                     }
 
                     btSure -> {
-                        sure.invoke(adapter?.selected ?: 0)
+//                        sure.invoke(adapter?.selected ?: 0)
                         dismiss()
                     }
                 }

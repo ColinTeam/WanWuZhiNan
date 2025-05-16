@@ -156,7 +156,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
                     ChooseAreaDialog.newInstance(
                         mAddressList!!, mProvinceName, mCityName, mAreaName
                     ).apply {
-                        sure = { province, city, area ->
+                        choose = { province, city, area ->
                             mProvinceName = province
                             mCityName = city
                             mAreaName = area
@@ -256,7 +256,7 @@ class SettingFragment : BaseFragment<FragmentEditFileBinding, UserViewModel>(Use
     fun showGradeDialog(data: GradeInfo?) {
         val list = data?.listArr ?: return
         ChooseDialog.newInstance(getString(R.string.choose_title_grade), list).apply {
-            sure = {
+            choose = {
                 mDataBinding.tvGrade.text = list[it]
             }
         }.show(this)

@@ -5,7 +5,6 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
-import android.view.View
 import android.widget.TextView
 import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
@@ -24,11 +23,9 @@ import com.wanwuzhinan.mingchang.ext.visible
 class ImageTipsDialog private constructor(
     private val type: Int,
     private val title: CharSequence? = null,
-    private val msg: CharSequence? = null
+    private val msg: CharSequence? = null,
+    private val extra: CharSequence? = null
 ) : AppDialogFragment<DialogImageTipsBinding>() {
-    var sure: ((View) -> Unit) = { }
-    var cancel: ((View) -> Unit) = { }
-
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
             displayText(tvTitle, title ?: getTitle(type))
@@ -37,13 +34,10 @@ class ImageTipsDialog private constructor(
             displayText(tvOther, getOther(type))
             displayText(btSure, getSureText(type))
             displayText(btCancel, getCancelText(type))
+            ivCancel.visible("1" != extra)
             onClick(ivCancel, btSure, btCancel) {
                 when (it) {
-                    ivCancel -> {
-                        dismiss()
-                    }
-
-                    btCancel -> {
+                    ivCancel, btCancel -> {
                         dismiss()
                         cancel.invoke(it)
                     }
@@ -71,6 +65,7 @@ class ImageTipsDialog private constructor(
         else if (type == TYPE_QUESTION) getString(R.string.dialog_i_know)
         else if (type == TYPE_EXCHANGE) getString(R.string.dialog_exchange_sure)
         else if (type == TYPE_PASSWORD) getString(R.string.sure)
+        else if (type == TYPE_UPGRADE && "1" != extra) getString(R.string.dialog_i_know)
         else null
     }
 
@@ -124,13 +119,16 @@ class ImageTipsDialog private constructor(
         const val TYPE_PASSWORD = 1 //修改密码，后台引起弹框提示
         const val TYPE_QUESTION = 2 //回答问题，点击异常提示
         const val TYPE_EXCHANGE = 3 //兑换课程提示
-        const val TYPE_UPGRADE = 4
+        const val TYPE_UPGRADE = 4  //版本升级
 
         @JvmStatic
         fun newInstance(
-            type: Int, title: CharSequence? = null, msg: CharSequence? = null
+            type: Int,
+            title: CharSequence? = null,
+            msg: CharSequence? = null,
+            extra: CharSequence? = null
         ): ImageTipsDialog {
-            return ImageTipsDialog(type, title, msg)
+            return ImageTipsDialog(type, title, msg, extra)
         }
 
     }

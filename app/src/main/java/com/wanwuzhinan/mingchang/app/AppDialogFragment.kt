@@ -16,6 +16,8 @@ abstract class AppDialogFragment<VB : ViewBinding>() : BaseDialogFragment(Consta
 
     private var _viewBinding: VB? = null
     internal val viewBinding: VB get() = _viewBinding!!
+    var sure: ((View) -> Unit) = { }
+    var cancel: ((View) -> Unit) = { }
 
     override fun createView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
