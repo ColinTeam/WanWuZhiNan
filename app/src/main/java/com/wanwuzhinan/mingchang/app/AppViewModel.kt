@@ -11,6 +11,7 @@ import com.colin.library.android.network.data.INetworkResponse
 import com.colin.library.android.network.requestImpl
 import com.wanwuzhinan.mingchang.data.ErrorLog
 import com.wanwuzhinan.mingchang.entity.Config
+import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,6 +43,8 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
     val httpAction: LiveData<HttpResult.Action?> = _httpAction
     private val _configData: MutableLiveData<Config?> = MutableLiveData(null)
     val configData: LiveData<Config?> = _configData
+    private val _userInfo: MutableLiveData<UserInfo?> = MutableLiveData(null)
+    val userInfo: LiveData<UserInfo?> = _userInfo
 
     /*app 配置*/
     fun getConfig() {
@@ -50,6 +53,14 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
         })
     }
 
+    //获取用户信息
+    fun getUserInfo() {
+        request(request = { service.newUserInfo() }, success = { it ->
+            it?.info?.let { _userInfo.postValue(it) }
+        })
+    }
+
+    //异常反馈
     fun postError(type: Int = 0, error: String) {
         viewModelScope.launch(Dispatchers.IO) {
             service.newErrorLog(
@@ -103,4 +114,7 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
         finish = { onFinish(loading, it) },
         delay = delay
     )
+
+    fun getConfigValue() = configData.value
+    fun getUserInfoValue() = userInfo.value
 }

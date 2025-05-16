@@ -14,7 +14,6 @@ import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.databinding.FragmentEditFileBinding
 import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.GradeInfo
-import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.ui.PasswordActivity
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
@@ -88,12 +87,6 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
             gradeInfo.observe {
                 Log.e("gradeInfo:$it")
                 chooseGrade(it)
-            }
-            showToast.observe {
-                Log.e("showToast:$it")
-                if (it.code == HTTP_SUCCESS) {
-                    viewModel.getUserInfo()
-                }
             }
         }
         viewModel.getUserInfo()

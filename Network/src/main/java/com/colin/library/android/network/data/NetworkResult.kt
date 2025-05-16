@@ -54,7 +54,8 @@ open class AppResponse<T>(val code: Int, val msg: String = "", val data: T? = nu
 
 
 sealed class HttpResult<out T> {
-    data class Success<out T>(val data: T) : HttpResult<T>()
+    data class Success<out T>(val code: Int = 0, val msg: String = "", val data: T) :
+        HttpResult<T>()
     data class Toast(val code: Int, val msg: String) : HttpResult<Nothing>()
     data class Action(val code: Int, val msg: String) : HttpResult<Nothing>()
     data class Start(val time: Long) : HttpResult<Nothing>()

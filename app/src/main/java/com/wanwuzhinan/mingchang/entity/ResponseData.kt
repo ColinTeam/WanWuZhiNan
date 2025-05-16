@@ -25,6 +25,7 @@ const val HTTP_SUCCESS = 0
 const val HTTP_CONFIRM = 9
 const val HTTP_TOKEN_ERROR = 4
 const val HTTP_TOKEN_EMPTY = 2
+const val HTTP_APP_TOAST = -3
 
 class SmsCodeResponse() : AppResponse<Any>()
 class RegisterResponse() : AppResponse<RegisterData>()

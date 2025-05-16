@@ -133,7 +133,7 @@ suspend fun <T> requestImpl(
         } catch (e: Exception) {
             exception = e
             //// 如果是SocketException或包含"reset"信息，则延迟[delay]毫秒后重试
-            if (e is SocketException || e.message?.contains("reset") == true) delay(delay)
+            if (e is SocketException || e.message?.contains("reset") == true) delay(500L)
             else break
         }
     }
