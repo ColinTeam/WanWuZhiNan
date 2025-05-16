@@ -19,10 +19,10 @@
             android:layout_height="@dimen/dp_0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintHeight_percent="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.9" />
+            app:layout_constraintWidth_percent="0.906" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivAvatar"
@@ -47,20 +47,22 @@
             app:layout_constraintDimensionRatio="w,1067:834"
             app:layout_constraintEnd_toEndOf="@+id/content"
             app:layout_constraintStart_toStartOf="@+id/content"
-            app:layout_constraintTop_toTopOf="@+id/tvTitle" />
+            app:layout_constraintTop_toTopOf="@+id/tvTitle"
+            app:layout_goneMarginBottom="@dimen/margin_default" />
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_40"
             android:layout_marginHorizontal="@dimen/dp_24"
-            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_45"
             android:background="@mipmap/alert_title_bg"
             android:gravity="center_horizontal"
             android:paddingTop="@dimen/dp_3"
             android:textAppearance="@style/Text"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_16"
+            app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
             app:layout_constraintEnd_toEndOf="@+id/ivBg"
             app:layout_constraintStart_toStartOf="@+id/ivBg"
@@ -70,82 +72,91 @@
 
         <TextView
             android:id="@+id/tvSubtitle"
-            android:layout_width="@dimen/dp_0"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_40"
             android:layout_marginHorizontal="@dimen/dp_24"
-            android:layout_marginTop="@dimen/margin_default_half"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:paddingTop="@dimen/dp_3"
             android:textAppearance="@style/Text"
             android:textSize="@dimen/sp_20"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/tvMsg"
             app:layout_constraintEnd_toEndOf="@+id/ivBg"
             app:layout_constraintStart_toStartOf="@+id/ivBg"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:layout_constraintVertical_chainStyle="spread"
             tools:text="@string/app_name" />
 
         <TextView
             android:id="@+id/tvMsg"
-            android:layout_width="@dimen/dp_184"
-            android:layout_height="@dimen/dp_56"
-            android:layout_margin="@dimen/margin_default"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginHorizontal="@dimen/margin_default"
             android:background="@mipmap/alert_content_bg"
             android:gravity="center"
+            android:paddingHorizontal="@dimen/dp_40"
             android:textAppearance="@style/Text"
             android:textSize="@dimen/sp_16"
             app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/tvOther"
             app:layout_constraintEnd_toEndOf="@+id/ivBg"
             app:layout_constraintStart_toStartOf="@+id/ivBg"
             app:layout_constraintTop_toBottomOf="@+id/tvSubtitle"
-            app:layout_goneMarginBottom="@dimen/margin_default"
-            app:layout_goneMarginTop="@dimen/margin_default"
+            app:layout_goneMarginBottom="@dimen/dp_100"
             tools:text="@string/app_name" />
 
         <TextView
             android:id="@+id/tvOther"
-            android:layout_width="@dimen/dp_184"
-            android:layout_height="@dimen/dp_56"
-            android:layout_marginHorizontal="@dimen/margin_default"
-            android:layout_marginTop="@dimen/margin_default"
-            android:layout_marginBottom="@dimen/dp_24"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginBottom="@dimen/dp_30"
             android:gravity="center"
             android:textAppearance="@style/Text"
             android:textSize="@dimen/sp_20"
             app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@+id/ivBg"
             app:layout_constraintEnd_toEndOf="@+id/ivBg"
             app:layout_constraintStart_toStartOf="@+id/ivBg"
             app:layout_constraintTop_toBottomOf="@+id/tvMsg"
+            app:layout_goneMarginTop="@dimen/dp_50"
             tools:text="@string/app_name" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btSure"
-            style="@style/Style.Button.Sure"
-            android:layout_width="150dp"
-            android:layout_height="@dimen/dp_46"
-            android:background="@mipmap/alert_btn_sure_bg"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/content"
-            app:layout_constraintEnd_toEndOf="@+id/content"
-            app:layout_constraintStart_toEndOf="@+id/btCancel"
-            app:layout_constraintTop_toBottomOf="@+id/ivBg"
-            tools:text="@string/dialog_i_know" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btCancel"
             style="@style/Style.Button.Cancel"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="@dimen/dp_46"
             android:background="@drawable/shape_ffffff_line_1"
             android:gravity="center"
+            android:maxWidth="@dimen/dp_150"
             android:textColor="@color/color_active"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/btSure"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="@+id/content"
             app:layout_constraintEnd_toStartOf="@+id/btSure"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="@+id/content"
-            app:layout_constraintTop_toTopOf="@+id/btSure"
+            app:layout_constraintWidth_percent="0.33"
             tools:text="@string/cancel" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btSure"
+            style="@style/Style.Button.Sure"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_46"
+            android:background="@mipmap/alert_btn_sure_bg"
+            android:gravity="center"
+            android:maxWidth="@dimen/dp_150"
+            android:textColor="@color/white"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="@+id/content"
+            app:layout_constraintEnd_toEndOf="@+id/content"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/btCancel"
+            app:layout_constraintWidth_percent="0.33"
+            tools:text="@string/dialog_i_know" />
+
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivCancel"
@@ -154,7 +165,7 @@
             android:layout_marginTop="@dimen/margin_default"
             android:layout_marginBottom="@dimen/margin_default"
             app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/content"
             app:layout_constraintTop_toTopOf="@+id/ivAvatar"
             app:srcCompat="@mipmap/alert_close" />
 

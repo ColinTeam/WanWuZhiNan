@@ -100,6 +100,7 @@ class ImageTipsDialog private constructor(
     private fun getMsg(type: Int): CharSequence? {
         return if (type == TYPE_LOGOUT) getString(R.string.dialog_logout_msg)
         else if (type == TYPE_QUESTION) getString(R.string.dialog_question_msg)
+        else if (type == TYPE_EXCHANGE) getString(R.string.dialog_question_subtitle)
         else if (type == TYPE_UPGRADE) getString(R.string.dialog_upgrade_msg)
         else null
     }
