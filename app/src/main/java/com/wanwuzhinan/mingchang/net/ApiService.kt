@@ -128,6 +128,7 @@ interface ApiService {
     @POST("/api/QuestionsBank/index")
     suspend fun newQuestionList(@Field("typeid") typeid: Int): QuestionListResponse
 
+
     //题目详情分页
     @FormUrlEncoded
     @POST("/api/QuestionsBank/infoPage")
@@ -135,6 +136,10 @@ interface ApiService {
         @Field("id") id: Int, @Field("question_id") question_id: Int
     ): QuestionResponse
 
+    //错题记
+    @POST("/api/QuestionsLogs/index")
+    suspend fun newQuestionErrorList(
+    ): QuestionListResponse
 
     //获取年级
     @FormUrlEncoded

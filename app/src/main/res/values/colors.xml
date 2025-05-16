@@ -7,6 +7,9 @@
 
     <color name="button_text_cancel">#AAAAAA</color>
     <color name="button_text_sure">@color/color_1684FC</color>
+    <color name="answer_no">#F76348</color>
+    <color name="answer_yes">#009E6C</color>
+    <color name="answer_def">@color/color_active</color>
 
     <color name="line">#DDDDDD</color>
 
@@ -38,6 +41,7 @@
     <color name="color_333333">#403210</color>
     <color name="transparents">#00ffffff</color>
     <color name="color_ff000000">#FF0000</color>
+    <color name="color_FFF9EA">#FFFFF9EA</color>
     <color name="color_999999">#999999</color>
     <color name="color_666666">#666666</color>
     <color name="color_dddddd">#dddddd</color>

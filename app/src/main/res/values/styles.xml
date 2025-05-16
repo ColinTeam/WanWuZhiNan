@@ -191,14 +191,14 @@
         <item name="android:paddingHorizontal">@dimen/margin_default_half</item>
         <item name="android:singleLine">true</item>
         <item name="android:textAppearance">@style/Text</item>
-        <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeStepGranularity">@dimen/text_home_step</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/sp_40</item>
-        <item name="android:autoSizeMinTextSize">@dimen/sp_20</item>
+        <!--        <item name="android:autoSizeTextType">uniform</item>-->
+        <!--        <item name="android:autoSizeStepGranularity">@dimen/text_home_step</item>-->
+        <!--        <item name="android:autoSizeMaxTextSize">@dimen/sp_40</item>-->
+        <!--        <item name="android:autoSizeMinTextSize">@dimen/sp_20</item>-->
         <item name="autoSizeTextType">uniform</item>
         <item name="autoSizeStepGranularity">@dimen/text_home_step</item>
         <item name="autoSizeMaxTextSize">@dimen/sp_40</item>
-        <item name="autoSizeMinTextSize">@dimen/sp_20</item>
+        <item name="autoSizeMinTextSize">@dimen/default_text_size</item>
         <item name="android:fontWeight">400</item>
         <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
     </style>
@@ -211,10 +211,10 @@
         <item name="android:paddingHorizontal">@dimen/margin_default</item>
         <item name="android:singleLine">true</item>
         <item name="android:textAppearance">@style/Text.Button</item>
-        <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeStepGranularity">@dimen/text_home_step</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/button_text_size</item>
-        <item name="android:autoSizeMinTextSize">@dimen/sp_14</item>
+        <!--        <item name="android:autoSizeTextType">uniform</item>-->
+        <!--        <item name="android:autoSizeStepGranularity">@dimen/text_home_step</item>-->
+        <!--        <item name="android:autoSizeMaxTextSize">@dimen/button_text_size</item>-->
+        <!--        <item name="android:autoSizeMinTextSize">@dimen/sp_14</item>-->
         <item name="autoSizeTextType">uniform</item>
         <item name="autoSizeStepGranularity">@dimen/text_home_step</item>
         <item name="autoSizeMaxTextSize">@dimen/button_text_size</item>

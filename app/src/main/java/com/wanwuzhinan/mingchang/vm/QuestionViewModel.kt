@@ -14,12 +14,28 @@ import com.wanwuzhinan.mingchang.entity.Question
  */
 class QuestionViewModel : AppViewModel() {
     private val _questionList: MutableLiveData<List<Question>?> = MutableLiveData(null)
+    private val _questionErrorList: MutableLiveData<List<Question>?> = MutableLiveData(null)
+    private val _questions: MutableLiveData<Question?> = MutableLiveData(null)
     val questionList: LiveData<List<Question>?> = _questionList
+    val questionErrorList: LiveData<List<Question>?> = _questionErrorList
+    val questions: LiveData<Question?> = _questions
 
 
     fun getQuestionList(type: Int) {
         request(request = { service.newQuestionList(type) }, success = { it ->
             it?.list?.let { _questionList.postValue(it) }
+        })
+    }
+
+    fun getQuestions(id: Int, lessonID: Int) {
+        request(request = { service.newQuestionDetail(id, lessonID) }, success = { it ->
+            it?.let { _questions.postValue(it) }
+        })
+    }
+
+    fun getQuestionErrorList() {
+        request(request = { service.newQuestionErrorList() }, success = { it ->
+            it?.list?.let { _questionErrorList.postValue(it) }
         })
     }
 

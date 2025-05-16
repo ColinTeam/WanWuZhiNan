@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/margin_default_half">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAnswerBg"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:background="@drawable/bg_answer_bg_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.8455"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.955" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivOptionBg"
+            android:layout_width="@dimen/dp_43"
+            android:layout_height="@dimen/dp_43"
+            android:src="@mipmap/ic_question_answer_bg_b"
+            app:layout_constraintBottom_toTopOf="@+id/ivAnswerBg"
+            app:layout_constraintStart_toStartOf="@+id/ivAnswerBg"
+            app:layout_constraintTop_toTopOf="@+id/ivAnswerBg" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivOption"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:src="@mipmap/ic_question_answer_a"
+            app:layout_constraintBottom_toBottomOf="@+id/ivOptionBg"
+            app:layout_constraintEnd_toEndOf="@+id/ivOptionBg"
+            app:layout_constraintStart_toStartOf="@+id/ivOptionBg"
+            app:layout_constraintTop_toTopOf="@+id/ivOptionBg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAnswer"
+            style="@style/Style.Text"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:gravity="center"
+            android:maxLines="4"
+            android:singleLine="false"
+            android:textColor="@color/color_active"
+            app:autoSizeMaxTextSize="200sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivAnswerBg"
+            app:layout_constraintEnd_toEndOf="@+id/ivAnswerBg"
+            app:layout_constraintStart_toStartOf="@+id/ivAnswerBg"
+            app:layout_constraintTop_toTopOf="@+id/ivAnswerBg"
+            tools:text="@string/login_toast_protocol" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivResult"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:src="@mipmap/ic_answer_no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

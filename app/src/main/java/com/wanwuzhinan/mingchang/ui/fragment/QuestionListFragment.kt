@@ -5,10 +5,13 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.colin.library.android.utils.Constants
+import com.colin.library.android.utils.Log
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentQuestionListBinding
+import com.wanwuzhinan.mingchang.entity.Question
 import com.wanwuzhinan.mingchang.vm.QuestionViewModel
 
 /**
@@ -17,17 +20,20 @@ import com.wanwuzhinan.mingchang.vm.QuestionViewModel
  * Create:2025-05-15 09:31
  *
  * Des   :QuestionHomeFragment
- * 错题集 position==-1
+ * 错题集 id==-1
  * 正常答题
  */
 class QuestionListFragment : AppFragment<FragmentQuestionListBinding, QuestionViewModel>() {
-    private var position = 0
+    private var id = 0
     private var title = ""
+    private var position = -1
+    private var optionSelected = -1
     override fun bindViewModelStore() = requireActivity().viewModelStore
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        position = getExtrasPosition(bundle, savedInstanceState)
+        id = getExtrasPosition(bundle, savedInstanceState)
+        title = bundle?.getString(ConfigApp.EXTRAS_TITLE) ?: ""
         viewBinding.apply {
 
         }
@@ -35,15 +41,48 @@ class QuestionListFragment : AppFragment<FragmentQuestionListBinding, QuestionVi
 
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        position = getExtrasPosition(bundle, savedInstanceState)
         viewModel.apply {
+            questions.observe {
+                Log.i("questions:$it")
+                showQuestion(it)
 
+            }
+            questionErrorList.observe {
+                Log.i("questionErrorList:$it")
+            }
         }
     }
 
     override fun loadData(refresh: Boolean) {
-        viewModel.getUserInfo()
-        viewModel.getQuestionList(position)
+        requestQuestion(position, 0)
+    }
+
+    private fun showQuestion(question: Question) {
+        if (question.questionsList.isEmpty()) {
+            // TODO: 空布局,显示完成弹框
+            if (position > 0) {
+                showCompleteDialog()
+            }
+            return
+        }
+
+
+
+    }
+
+    private fun showCompleteDialog() {
+
+    }
+
+    private fun requestQuestion(position: Int, question: Int) {
+        viewBinding.tvQuestion.text = ""
+        if (position != Constants.INVALID) {
+            viewModel.getQuestions(position, question)
+        } else {
+            viewModel.getQuestionErrorList()
+        }
+
+
     }
 
     private fun showExchangeCurseDialog() {
