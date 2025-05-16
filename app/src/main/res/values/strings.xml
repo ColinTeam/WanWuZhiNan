@@ -65,6 +65,9 @@
     <string name="dialog_exchange_cancel">联系客服</string>
     <string name="dialog_exchange_sure">@string/dialog_exchange_title</string>
 
+    <string name="dialog_exchange_other_pro">请先</string>
+    <string name="dialog_exchange_other_nex">后再学习</string>
+
     <string name="dialog_upgrade_title">新版本</string>
     <string name="dialog_upgrade_subtitle">✨新版本上线啦！</string>
     <string name="dialog_upgrade_msg">请去应用商店下载最新版本！🚀</string>

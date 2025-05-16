@@ -107,19 +107,17 @@ class ImageTipsDialog private constructor(
 
     private fun getOther(type: Int): CharSequence? {
         return if (type == TYPE_EXCHANGE) {
-            //请先兑换课程后再学习
-            val builder = SpannableStringBuilder("请先")
-            val coloredPart = SpannableString("兑换课程")
+            val builder = SpannableStringBuilder(getString(R.string.dialog_exchange_other_pro))
+            val coloredPart = SpannableString(getString(R.string.dialog_exchange_title))
             coloredPart.setSpan(
                 ForegroundColorSpan(resources.getColor(R.color.color_active, null)),
                 0,
                 coloredPart.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-            builder.append(coloredPart).append("后再学习")
+            builder.append(coloredPart).append(getString(R.string.dialog_exchange_other_nex))
         } else null
     }
-
 
 
     companion object {
