@@ -25,4 +25,5 @@ class HomeViewModel : AppViewModel() {
 
     fun getAdStateValue() = closeAD.value == true
 
+
 }

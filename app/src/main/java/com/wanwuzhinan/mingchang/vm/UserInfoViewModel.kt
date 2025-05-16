@@ -7,6 +7,10 @@ import com.wanwuzhinan.mingchang.app.AppViewModel
 import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.GradeInfo
 import com.wanwuzhinan.mingchang.entity.HTTP_APP_TOAST
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 /**
  * Author:ColinLu
@@ -20,10 +24,12 @@ class UserInfoViewModel : AppViewModel() {
     private val _tabPosition: MutableLiveData<Int> = MutableLiveData(0)
     private val _cityInfo: MutableLiveData<CityInfo?> = MutableLiveData(null)
     private val _gradeInfo: MutableLiveData<GradeInfo?> = MutableLiveData(null)
+    private val _updateFile: MutableLiveData<String?> = MutableLiveData(null)
 
     val tabPosition: LiveData<Int> = _tabPosition
     val cityInfo: LiveData<CityInfo?> = _cityInfo
     val gradeInfo: LiveData<GradeInfo?> = _gradeInfo
+    val updateFile: LiveData<String?> = _updateFile
 
     fun getCityInfo() {
         request(request = { service.newCityInfo() }, success = { it ->
@@ -41,6 +47,15 @@ class UserInfoViewModel : AppViewModel() {
         request(request = { service.newEditUserInfo(map) }, success = { it ->
             _showToast.postValue(HttpResult.Toast(HTTP_APP_TOAST, "修改成功"))
         })
+    }
+
+    //上传图片
+    fun uploadImage(file: File) {
+        val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
+        val part = MultipartBody.Part.createFormData("file", file.name, requestBody)
+        request(loading = true, request = { service.newUploadImage(part) }, success = { it ->
+            _updateFile.postValue(it?.file ?: "")
+        }, delay = 3000L)
     }
 
     fun tabPosition(position: Int) {

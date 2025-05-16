@@ -21,6 +21,7 @@ import com.wanwuzhinan.mingchang.config.ConfigApp.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
+import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM_1
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.ext.getConfigData
@@ -151,8 +152,8 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
     }
 
     override fun interceptorHttpAction(action: HttpResult.Action): Boolean {
-        if (action.code == HTTP_CONFIRM) {
-            toPassword()
+        if (action.code == HTTP_CONFIRM || action.code == HTTP_CONFIRM_1) {
+            showConfirmDialog(action.msg)
             return true
         }
         return false

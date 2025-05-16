@@ -22,6 +22,7 @@ const val HTTP_ACTION_LOGIN_FIND_PWD = 3
 const val HTTP_LOGIN_DEVICE_PHONE = 1
 const val HTTP_LOGIN_DEVICE_TABLET = 2
 const val HTTP_SUCCESS = 0
+const val HTTP_CONFIRM_1 = 1
 const val HTTP_CONFIRM = 9
 const val HTTP_TOKEN_ERROR = 4
 const val HTTP_TOKEN_EMPTY = 2
@@ -37,6 +38,7 @@ class CityInfoResponse() : AppResponse<CityInfo>()
 class GradeResponse() : AppResponse<GradeInfo>()
 class QuestionListResponse() : AppResponse<QuestionList>()
 class QuestionResponse() : AppResponse<Question>()
+class UploadFileResponse() : AppResponse<UploadFile>()
 
 data class LessonInfo(
     val info: MediaInfo
@@ -377,7 +379,7 @@ data class AnswerBean(
 
 )
 
-
+data class UploadFile(val file: String)
 
 
 

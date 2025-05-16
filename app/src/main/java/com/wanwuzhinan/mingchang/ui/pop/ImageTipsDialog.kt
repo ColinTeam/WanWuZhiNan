@@ -98,8 +98,7 @@ class ImageTipsDialog private constructor(
     }
 
     private fun getMsg(type: Int): CharSequence? {
-        return if (type == TYPE_LOGOUT) getString(R.string.dialog_logout_msg)
-        else if (type == TYPE_QUESTION) getString(R.string.dialog_question_msg)
+        return if (type == TYPE_QUESTION) getString(R.string.dialog_question_msg)
         else if (type == TYPE_EXCHANGE) getString(R.string.dialog_question_subtitle)
         else if (type == TYPE_UPGRADE) getString(R.string.dialog_upgrade_msg)
         else null
@@ -116,7 +115,7 @@ class ImageTipsDialog private constructor(
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             builder.append(coloredPart).append(getString(R.string.dialog_exchange_other_nex))
-        } else null
+        } else if (type == TYPE_LOGOUT) getString(R.string.dialog_logout_msg) else null
     }
 
 

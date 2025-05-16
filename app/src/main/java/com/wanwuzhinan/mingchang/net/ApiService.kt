@@ -27,6 +27,7 @@ import com.wanwuzhinan.mingchang.entity.QuestionListResponse
 import com.wanwuzhinan.mingchang.entity.QuestionResponse
 import com.wanwuzhinan.mingchang.entity.RegisterResponse
 import com.wanwuzhinan.mingchang.entity.SmsCodeResponse
+import com.wanwuzhinan.mingchang.entity.UploadFileResponse
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.entity.UserInfoResponse
@@ -140,6 +141,13 @@ interface ApiService {
     @POST("/api/QuestionsLogs/index")
     suspend fun newQuestionErrorList(
     ): QuestionListResponse
+
+    //上传图片
+    @Multipart
+    @POST("/api/Upload/one")
+    suspend fun newUploadImage(
+        @Part file: MultipartBody.Part
+    ): UploadFileResponse
 
     //获取年级
     @FormUrlEncoded

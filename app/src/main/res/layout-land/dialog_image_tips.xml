@@ -73,7 +73,7 @@
         <TextView
             android:id="@+id/tvSubtitle"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_56"
+            android:layout_height="@dimen/dp_40"
             android:layout_marginHorizontal="@dimen/dp_24"
             android:gravity="center"
             android:paddingTop="@dimen/dp_3"
@@ -83,46 +83,46 @@
             app:layout_constraintBottom_toTopOf="@+id/tvMsg"
             app:layout_constraintEnd_toEndOf="@+id/ivBg"
             app:layout_constraintStart_toStartOf="@+id/ivBg"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintTop_toBottomOf="@+id/ivAvatar"
+            app:layout_constraintVertical_chainStyle="spread_inside"
             tools:text="@string/app_name" />
 
         <TextView
             android:id="@+id/tvMsg"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_56"
-            android:layout_margin="@dimen/dp_20"
+            android:layout_margin="@dimen/margin_default_half"
             android:background="@mipmap/alert_content_bg"
             android:gravity="center"
             android:paddingHorizontal="@dimen/dp_40"
             android:textAppearance="@style/Text"
             android:textSize="@dimen/sp_16"
+            android:visibility="gone"
             app:layout_constrainedHeight="true"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toTopOf="@+id/tvOther"
             app:layout_constraintEnd_toEndOf="@+id/ivBg"
             app:layout_constraintStart_toStartOf="@+id/ivBg"
             app:layout_constraintTop_toBottomOf="@+id/tvSubtitle"
-            app:layout_goneMarginBottom="@dimen/dp_100"
+            app:layout_goneMarginBottom="@dimen/dp_56"
             tools:text="@string/app_name" />
 
         <TextView
             android:id="@+id/tvOther"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_56"
+            android:layout_height="@dimen/dp_40"
             android:layout_marginHorizontal="@dimen/dp_24"
-            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_default_half"
             android:layout_marginBottom="@dimen/dp_55"
             android:gravity="center"
             android:textAppearance="@style/Text"
-            android:textSize="@dimen/sp_20"
+            android:textSize="@dimen/sp_16"
             app:layout_constrainedHeight="true"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@+id/ivBg"
             app:layout_constraintEnd_toEndOf="@+id/ivBg"
             app:layout_constraintStart_toStartOf="@+id/ivBg"
             app:layout_constraintTop_toBottomOf="@+id/tvMsg"
-            app:layout_goneMarginTop="@dimen/dp_50"
             tools:text="@string/app_name" />
 
         <androidx.appcompat.widget.AppCompatButton

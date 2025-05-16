@@ -10,20 +10,26 @@ import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.ssm.comm.config.Constant
+import com.ssm.comm.ext.getCurrentVersionCode
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentHomeBinding
+import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigData
+import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.ui.HomeActivity
 import com.wanwuzhinan.mingchang.ui.SettingTabActivity
 import com.wanwuzhinan.mingchang.ui.WebViewActivity
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
 import com.wanwuzhinan.mingchang.ui.phone.RankActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.PrivacyPop
+import com.wanwuzhinan.mingchang.ui.pop.UserInfoDialog
 import com.wanwuzhinan.mingchang.utils.RATIO_16_9
 import com.wanwuzhinan.mingchang.utils.getRatio
 import com.wanwuzhinan.mingchang.utils.isShowPrivacy
@@ -38,6 +44,7 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  * Des   :HomeFragment
  */
 class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
+    private var userDialog: UserInfoDialog? = null
 
     override fun bindViewModelStore(): ViewModelStore {
         return requireActivity().viewModelStore
@@ -46,6 +53,12 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
     override fun goBack(): Boolean {
         activity?.finish()
         return true
+    }
+
+    override fun onDestroyView() {
+        userDialog?.dismiss()
+        userDialog = null
+        super.onDestroyView()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -101,16 +114,16 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
 
                     ivThreeBg -> {
                         activity?.let {
-//                            QuestionListAskActivity.start(it)
-                            QuestionHomeFragment.navigate(this@HomeFragment,ConfigApp.TYPE_ASK)
+                            QuestionListAskActivity.start(it)
+//                            QuestionHomeFragment.navigate(this@HomeFragment,ConfigApp.TYPE_ASK)
 //                            findNavController().navigate(R.id.action_toVideoHome)
                         }
                     }
 
                     ivFourBg -> {
                         activity?.let {
-                            QuestionHomeFragment.navigate(this@HomeFragment,ConfigApp.TYPE_PRACTICE)
-//                            QuestionListPracticeActivity.start(it)
+//                            QuestionHomeFragment.navigate(this@HomeFragment,ConfigApp.TYPE_PRACTICE)
+                            QuestionListPracticeActivity.start(it)
                         }
                     }
                 }
@@ -131,9 +144,26 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
                 ConfigApp.question_compass = it.question_compass
                 setData(Constant.USER_INFO, NetworkConfig.gson.toJson(it))
                 GlideImgManager.get().loadImg(it.headimg, viewBinding.ivAvatar, R.mipmap.logo)
+                showEditUerInfo(it)
                 viewBinding.tvUserName.text = it.nickname
             }
         }
+        showPrivacyPop()
+    }
+
+    fun showEditUerInfo(info: UserInfo, config: Config? = viewModel.getConfigValue()) {
+        if (userDialog?.isShowing() == true) {
+            return
+        }
+        val android_code = config?.info?.android_code ?: 0
+        if (info.truename.isEmpty() && android_code >= getCurrentVersionCode()) {
+            UserInfoDialog.newInstance(info).apply {
+                success = {
+                    if (it) viewModel.getUserInfo()
+                }
+            }.show(this)
+        }
+
 
     }
 
@@ -156,10 +186,6 @@ class HomeFragment : AppFragment<FragmentHomeBinding, HomeViewModel>() {
         setData(Constant.CONFIG_DATA, NetworkConfig.gson.toJson(data))
     }
 
-    override fun loadData(refresh: Boolean) {
-        super.loadData(refresh)
-        showPrivacyPop()
-    }
 
     override fun onResume() {
         (requireActivity() as HomeActivity).changeADState(viewModel.getAdStateValue())

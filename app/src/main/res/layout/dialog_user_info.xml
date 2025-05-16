@@ -37,14 +37,13 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/riv_head"
+                    android:id="@+id/ivAvatar"
                     style="@style/ImageCircle"
                     android:layout_width="@dimen/dp_55"
                     android:layout_height="@dimen/dp_55"
                     android:layout_marginStart="@dimen/dp_35"
                     android:layout_marginTop="@dimen/dp_20"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_head_upload"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,8 +51,8 @@
                     android:layout_width="@dimen/dp_18"
                     android:layout_height="@dimen/dp_18"
                     android:src="@mipmap/ic_head_car"
-                    app:layout_constraintBottom_toBottomOf="@id/riv_head"
-                    app:layout_constraintEnd_toEndOf="@id/riv_head" />
+                    app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
+                    app:layout_constraintEnd_toEndOf="@id/ivAvatar" />
 
 
                 <TextView
@@ -65,9 +64,9 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text=""
-                    app:layout_constraintBottom_toBottomOf="@id/riv_head"
-                    app:layout_constraintStart_toEndOf="@+id/riv_head"
-                    app:layout_constraintTop_toTopOf="@+id/riv_head" />
+                    app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
+                    app:layout_constraintStart_toEndOf="@+id/ivAvatar"
+                    app:layout_constraintTop_toTopOf="@+id/ivAvatar" />
 
 
                 <LinearLayout
@@ -77,10 +76,10 @@
                     android:layout_marginStart="@dimen/dp_332"
                     android:layout_marginEnd="@dimen/dp_28"
                     android:gravity="center_vertical"
-                    app:layout_constraintBottom_toBottomOf="@id/riv_head"
+                    app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/riv_head">
+                    app:layout_constraintTop_toTopOf="@id/ivAvatar">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -154,8 +153,8 @@
                     android:layout_marginEnd="@dimen/dp_7"
                     android:gravity="center_vertical"
                     app:layout_constraintEnd_toStartOf="@+id/ll_sex"
-                    app:layout_constraintStart_toStartOf="@id/riv_head"
-                    app:layout_constraintTop_toBottomOf="@id/riv_head">
+                    app:layout_constraintStart_toStartOf="@id/ivAvatar"
+                    app:layout_constraintTop_toBottomOf="@id/ivAvatar">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -166,7 +165,7 @@
 
 
                     <EditText
-                        android:id="@+id/tv_user_name"
+                        android:id="@+id/etNick"
                         style="@style/text_333333_14"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/dp_20"
@@ -253,7 +252,7 @@
                         android:gravity="center_vertical">
 
                         <TextView
-                            android:id="@+id/tv_grade"
+                            android:id="@+id/tvGrade"
                             style="@style/text_333333_14"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/dp_6"
@@ -299,7 +298,7 @@
                         android:gravity="center_vertical">
 
                         <EditText
-                            android:id="@+id/tv_school"
+                            android:id="@+id/etSchool"
                             style="@style/text_333333_14"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/dp_6"
@@ -325,7 +324,7 @@
                     android:layout_width="@dimen/dp_150"
                     android:layout_height="@dimen/dp_46"
                     android:layout_marginTop="@dimen/dp_26"
-                    android:background="@drawable/shape_ffd8b0_23"
+                    android:background="@drawable/bg_button"
                     android:gravity="center"
                     android:text="保存"
                     app:layout_constraintEnd_toEndOf="parent"

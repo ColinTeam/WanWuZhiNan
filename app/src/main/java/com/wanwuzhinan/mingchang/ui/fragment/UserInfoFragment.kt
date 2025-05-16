@@ -19,6 +19,7 @@ import com.wanwuzhinan.mingchang.ui.PasswordActivity
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAreaDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseAvatarDialog
 import com.wanwuzhinan.mingchang.ui.pop.ChooseDialog
+import com.wanwuzhinan.mingchang.ui.pop.UserInfoDialog
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.utils.load
 import com.wanwuzhinan.mingchang.vm.UserInfoViewModel
@@ -76,16 +77,16 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
             userInfo.observe {
-                Log.e("userInfo:$it")
+                Log.i("userInfo:$it")
                 updateUserInfo(it)
                 updateButton(it)
             }
             cityInfo.observe {
-                Log.e("cityInfo:$it")
+                Log.i("cityInfo:$it")
                 chooseArea(it)
             }
             gradeInfo.observe {
-                Log.e("gradeInfo:$it")
+                Log.i("gradeInfo:$it")
                 chooseGrade(it)
             }
         }
