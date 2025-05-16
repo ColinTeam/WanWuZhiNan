@@ -123,7 +123,7 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
                 Log.i("configData:$it")
             }
             smsSuccess.observe {
-                Log.e("smsSuccess:$it")
+                Log.i("smsSuccess:$it")
                 if (it) {
                     viewBinding.tvSmsSend.isEnabled = false
                     viewBinding.tvSmsSend.alpha = 0.3F

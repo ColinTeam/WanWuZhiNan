@@ -2,7 +2,6 @@ package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.colin.library.android.utils.Constants
 import com.wanwuzhinan.mingchang.app.AppViewModel
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
@@ -26,18 +25,14 @@ class LoginViewModel : AppViewModel() {
         request(
             loading = true,
             request = { service.newCode(phone) },
-            success = { it -> _smsSuccess.postValue(true) },
-            delay = Constants.ONE_SECOND.toLong()
-        )
+            success = { it -> _smsSuccess.postValue(true) })
     }
 
     fun loginBySms(phone: String, code: String, type: Int, action: Int = HTTP_ACTION_LOGIN_SMS) {
         request(
             loading = true,
             request = { service.newLogin(phone, code, type, action) },
-            success = { it -> it?.let { _registerData.postValue(it) } },
-            delay = Constants.ONE_SECOND.toLong()
-        )
+            success = { it -> it?.let { _registerData.postValue(it) } })
     }
 
     fun loginByPassword(
@@ -52,9 +47,7 @@ class LoginViewModel : AppViewModel() {
         request(
             loading = true,
             request = { service.newLoginPwd(phone, sms, pwd, pwds, action, type, confirm) },
-            success = { it -> _registerData.postValue(it) },
-            delay = Constants.ONE_SECOND.toLong()
-        )
+            success = { it -> _registerData.postValue(it) })
     }
 
 

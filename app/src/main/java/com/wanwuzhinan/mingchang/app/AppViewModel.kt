@@ -92,7 +92,7 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
         loading: Boolean = true,
         request: suspend () -> INetworkResponse<T>,
         success: (suspend (T?) -> Unit),
-        delay: Long = 500L
+        delay: Long = 1000L
     ) = requestImpl(
         viewModelScope,
         request = request,
