@@ -22,6 +22,7 @@ import com.colin.library.android.utils.helper.ThreadHelper
 import com.colin.library.android.widget.base.BaseActivity
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_EMPTY
 import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_ERROR
 import com.wanwuzhinan.mingchang.ui.LoginActivity
@@ -52,7 +53,9 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
             showLoading(it)
         }
         viewModel.showToast.observe {
-            ToastUtil.show(it.msg)
+           if (it.code!= HTTP_SUCCESS){
+               ToastUtil.show(it.msg)
+           }
         }
         viewModel.httpAction.observe {
             if (interceptorHttpAction(it)) return@observe

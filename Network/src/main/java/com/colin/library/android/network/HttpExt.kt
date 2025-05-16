@@ -142,7 +142,10 @@ suspend fun <T> requestImpl(
     if (response == null) throw exception ?: SocketException("Request failed after $delay retries")
     Log.e("okhttp-->>$response")
     // 根据请求结果调用相应的回调函数
-    if (response.isSuccess()) success.invoke(response.getData())
+    if (response.isSuccess()) {
+        Log.e("okhttp-->>response isSuccess")
+        success.invoke(response.getData())
+    }
     toast.invoke(HttpResult.Toast(response.getCode(), response.getMsg()))
     action.invoke(HttpResult.Action(response.getCode(), response.getMsg()))
 }

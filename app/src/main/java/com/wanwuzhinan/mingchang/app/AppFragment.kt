@@ -19,6 +19,7 @@ import com.colin.library.android.utils.helper.ThreadHelper
 import com.colin.library.android.widget.base.BaseFragment
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_EMPTY
 import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_ERROR
 import com.wanwuzhinan.mingchang.ui.LoginActivity
@@ -47,7 +48,7 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    isEnabled = if (interceptorBack()) true else goBack()
+                    isEnabled = goBack()
                 }
             })
     }
@@ -58,7 +59,9 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
             showLoading(it)
         }
         viewModel.showToast.observe {
-            ToastUtil.show(it.msg)
+            if (it.code != HTTP_SUCCESS) {
+                ToastUtil.show(it.msg)
+            }
         }
         viewModel.httpAction.observe {
             if (interceptorHttpAction(it)) return@observe
@@ -82,6 +85,9 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
     }
 
     override fun goBack(): Boolean {
+        if (interceptorBack()) {
+            return true
+        }
         return if (findNavController().popBackStack()) {
             true
         } else {
