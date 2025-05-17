@@ -59,6 +59,14 @@ class SplashActivity : AppActivity<FragmentSplashBinding, HomeViewModel>() {
 
     override fun loadData(refresh: Boolean) {
         viewModel.getConfig()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!viewBinding.video.isInPlayingState) {
+            viewBinding.video.startPlayLogic()
+        }
     }
 
     override fun onStop() {
