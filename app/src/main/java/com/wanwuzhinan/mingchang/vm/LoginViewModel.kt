@@ -24,15 +24,21 @@ class LoginViewModel : AppViewModel() {
     fun getSms(phone: String) {
         request(
             loading = true,
+            showToast = true,
             request = { service.newCode(phone) },
-            success = { it -> _smsSuccess.postValue(true) })
+            success = { it -> _smsSuccess.postValue(true) },
+            delay = 1000L
+        )
     }
 
     fun loginBySms(phone: String, code: String, type: Int, action: Int = HTTP_ACTION_LOGIN_SMS) {
         request(
             loading = true,
+            showToast = true,
             request = { service.newLogin(phone, code, type, action) },
-            success = { it -> it?.let { _registerData.postValue(it) } })
+            success = { it -> it?.let { _registerData.postValue(it) } },
+            delay = 1000L
+        )
     }
 
     fun loginByPassword(
@@ -46,8 +52,11 @@ class LoginViewModel : AppViewModel() {
     ) {
         request(
             loading = true,
+            showToast = true,
             request = { service.newLoginPwd(phone, sms, pwd, pwds, action, type, confirm) },
-            success = { it -> _registerData.postValue(it) })
+            success = { it -> _registerData.postValue(it) },
+            delay = 1000L
+        )
     }
 
 

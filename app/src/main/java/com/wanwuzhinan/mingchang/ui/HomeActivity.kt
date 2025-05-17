@@ -14,6 +14,7 @@ import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.ssm.comm.config.Constant
+import com.ssm.comm.ext.getCurrentVersionCode
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
@@ -191,28 +192,29 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
         if (isFinishing || isDestroyed || !lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
             return
         }
-        if (checkUpdate) return
-        checkUpdate = true
-        ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_UPGRADE, extra = info.android_update)
-            .apply {
-                isCancelable = false
-                sure = {
-                    editUserInfo(user)
-                }
-                cancel = {
-                    editUserInfo(user)
-                }
+        if (info.android_code.toInt() > getCurrentVersionCode() && !checkUpdate) {
+            checkUpdate = true
+            ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_UPGRADE, extra = info.android_update)
+                .apply {
+                    isCancelable = false
+                    sure = {
+                        editUserInfo(user)
+                    }
+                    cancel = {
+                        editUserInfo(user)
+                    }
 
-            }.show(this)
-
-
+                }.show(this)
+        } else {
+            editUserInfo(user)
+        }
     }
 
     fun editUserInfo(user: UserInfo) {
         if (isFinishing || isDestroyed || !lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
             return
         }
-        if (user.truename.isEmpty()) {
+        if (user.nickname.isNotEmpty()) {
             return
         }
         if (checkUserInfo) return

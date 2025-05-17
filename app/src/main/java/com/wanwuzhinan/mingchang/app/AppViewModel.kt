@@ -11,6 +11,7 @@ import com.colin.library.android.network.data.INetworkResponse
 import com.colin.library.android.network.requestImpl
 import com.wanwuzhinan.mingchang.data.ErrorLog
 import com.wanwuzhinan.mingchang.entity.Config
+import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.ApiService
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
  */
 interface INetworkFeedback {
     fun onStart(show: Boolean = false, start: HttpResult.Start)
-    fun onToast(toast: HttpResult.Toast)
+    fun onToast(showToast: Boolean, toast: HttpResult.Toast)
     fun onAction(action: HttpResult.Action)
     fun onFinish(show: Boolean = false, finish: HttpResult.Finish)
 }
@@ -73,14 +74,17 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
         if (show) _showLoading.postValue(true)
     }
 
-    override fun onToast(toast: HttpResult.Toast) {
-        if (toast.code != 0 && toast.msg.isNotEmpty() == true) {
-            postError(toast.code, toast.msg)
+    override fun onToast(showToast: Boolean, toast: HttpResult.Toast) {
+        if (!showToast && toast.code == HTTP_SUCCESS) {
+            return
         }
         _showToast.postValue(toast)
     }
 
     override fun onAction(action: HttpResult.Action) {
+        if (action.code != 0 && action.msg.isNotEmpty() == true) {
+            postError(action.code, action.msg)
+        }
         _httpAction.postValue(action)
     }
 
@@ -88,28 +92,46 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
         if (show) _showLoading.postValue(false)
     }
 
-    fun <T> ViewModel.request(
-        request: suspend () -> INetworkResponse<T>, success: (suspend (T?) -> Unit)
-    ) = requestImpl(
-        viewModelScope,
-        request = request,
-        success = success,
-        start = { onStart(false, it) },
-        toast = { onToast(it) },
-        action = { onAction(it) },
-        finish = { onFinish(false, it) })
+//    fun <T> ViewModel.request(
+//        request: suspend () -> INetworkResponse<T>, success: (suspend (T?) -> Unit)
+//    ) = requestImpl(
+//        viewModelScope,
+//        request = request,
+//        success = success,
+//        start = { onStart(false, it) },
+//        toast = { onToast(false, it) },
+//        action = { onAction(it) },
+//        finish = { onFinish(false, it) })
+//
+//    fun <T> ViewModel.request(
+//        loading: Boolean = true,
+//        successToast: Boolean = false,
+//        request: suspend () -> INetworkResponse<T>,
+//        success: (suspend (T?) -> Unit),
+//        delay: Long = 1000L
+//    ) = requestImpl(
+//        viewModelScope,
+//        request = request,
+//        success = success,
+//        start = { onStart(loading, it) },
+//        toast = { onToast(successToast, it) },
+//        action = { onAction(it) },
+//        finish = { onFinish(loading, it) },
+//        delay = delay
+//    )
 
     fun <T> ViewModel.request(
-        loading: Boolean = true,
+        loading: Boolean = false,
+        showToast: Boolean = false,
         request: suspend () -> INetworkResponse<T>,
         success: (suspend (T?) -> Unit),
-        delay: Long = 1000L
+        delay: Long = 0L
     ) = requestImpl(
         viewModelScope,
         request = request,
         success = success,
         start = { onStart(loading, it) },
-        toast = { onToast(it) },
+        toast = { onToast(showToast, it) },
         action = { onAction(it) },
         finish = { onFinish(loading, it) },
         delay = delay

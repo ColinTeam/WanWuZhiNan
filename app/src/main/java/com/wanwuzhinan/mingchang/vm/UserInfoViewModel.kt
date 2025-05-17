@@ -2,11 +2,9 @@ package com.wanwuzhinan.mingchang.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.colin.library.android.network.data.HttpResult
 import com.wanwuzhinan.mingchang.app.AppViewModel
 import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.GradeInfo
-import com.wanwuzhinan.mingchang.entity.HTTP_APP_TOAST
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -44,18 +42,30 @@ class UserInfoViewModel : AppViewModel() {
     }
 
     fun editUserInfo(map: HashMap<String, String>) {
-        request(request = { service.newEditUserInfo(map) }, success = { it ->
-            _showToast.postValue(HttpResult.Toast(HTTP_APP_TOAST, "修改成功"))
-        })
+        request(
+            loading = true,
+            showToast = true,
+            request = { service.newEditUserInfo(map) },
+            success = { it ->
+
+            },
+            delay = 1000L
+        )
     }
 
     //上传图片
     fun uploadImage(file: File) {
         val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, requestBody)
-        request(loading = true, request = { service.newUploadImage(part) }, success = { it ->
-            _updateFile.postValue(it?.file ?: "")
-        }, delay = 3000L)
+        request(
+            loading = true,
+            showToast = true,
+            request = { service.newUploadImage(part) },
+            success = { it ->
+                _updateFile.postValue(it?.file ?: "")
+            },
+            delay = 3000L
+        )
     }
 
     fun tabPosition(position: Int) {

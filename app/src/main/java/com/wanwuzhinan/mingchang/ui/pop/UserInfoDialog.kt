@@ -99,21 +99,16 @@ class UserInfoDialog private constructor(
                 updateButton()
             }
             showToast.observe {
-                //更新图片
-                if (!updateUser && it.code == HTTP_SUCCESS) {
-                    ToastUtil.show(it.msg)
-                    return@observe
-                }
-                //更新个人信息
-                if (updateUser) {
-                    success.invoke(it.code == HTTP_SUCCESS)
-                    dismiss()
-                    return@observe
-                }
                 ToastUtil.show(it.msg)
             }
             showLoading.observe {
                 showLoading(it)
+            }
+            httpAction.observe {
+                if (updateUser) {
+                    success.invoke(it.code == HTTP_SUCCESS)
+                    dismiss()
+                }
             }
         }
         updateUserInfo(user)
