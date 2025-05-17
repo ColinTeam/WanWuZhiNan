@@ -15,9 +15,6 @@ import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.ApiService
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 /**
@@ -41,10 +38,10 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
     }
     protected val _showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val showLoading: LiveData<Boolean> = _showLoading
-    protected val _showToast: MutableSharedFlow<HttpResult.Toast> = MutableSharedFlow(1, 10)
-    val showToast = _showToast.asSharedFlow().distinctUntilChanged()
-    protected val _httpAction: MutableSharedFlow<HttpResult.Action> = MutableSharedFlow(1, 10)
-    val httpAction = _httpAction.asSharedFlow().distinctUntilChanged()
+    protected val _showToast: MutableLiveData<HttpResult.Toast?> = MutableLiveData(null)
+    val showToast: LiveData<HttpResult.Toast?> = _showToast
+    protected val _httpAction: MutableLiveData<HttpResult.Action?> = MutableLiveData(null)
+    val httpAction: LiveData<HttpResult.Action?> = _httpAction
     private val _configData: MutableLiveData<Config?> = MutableLiveData(null)
     val configData: LiveData<Config?> = _configData
     private val _userInfo: MutableLiveData<UserInfo?> = MutableLiveData(null)
@@ -81,51 +78,20 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
         if (!showToast && toast.code == HTTP_SUCCESS) {
             return
         }
-        viewModelScope.launch {
-            _showToast.emit(toast)
-        }
+        if (toast != this@AppViewModel.showToast.value) _showToast.postValue(toast)
     }
 
     override fun onAction(action: HttpResult.Action) {
         if (action.code != 0 && action.msg.isNotEmpty() == true) {
             postError(action.code, action.msg)
         }
-        viewModelScope.launch {
-            _httpAction.emit(action)
-        }
+        _httpAction.postValue(action)
     }
 
     override fun onFinish(show: Boolean, finish: HttpResult.Finish) {
         if (show) _showLoading.postValue(false)
     }
 
-//    fun <T> ViewModel.request(
-//        request: suspend () -> INetworkResponse<T>, success: (suspend (T?) -> Unit)
-//    ) = requestImpl(
-//        viewModelScope,
-//        request = request,
-//        success = success,
-//        start = { onStart(false, it) },
-//        toast = { onToast(false, it) },
-//        action = { onAction(it) },
-//        finish = { onFinish(false, it) })
-//
-//    fun <T> ViewModel.request(
-//        loading: Boolean = true,
-//        successToast: Boolean = false,
-//        request: suspend () -> INetworkResponse<T>,
-//        success: (suspend (T?) -> Unit),
-//        delay: Long = 1000L
-//    ) = requestImpl(
-//        viewModelScope,
-//        request = request,
-//        success = success,
-//        start = { onStart(loading, it) },
-//        toast = { onToast(successToast, it) },
-//        action = { onAction(it) },
-//        finish = { onFinish(loading, it) },
-//        delay = delay
-//    )
 
     fun <T> ViewModel.request(
         loading: Boolean = false,
