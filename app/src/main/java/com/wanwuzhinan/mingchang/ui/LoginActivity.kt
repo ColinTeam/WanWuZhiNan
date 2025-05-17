@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import com.colin.library.android.network.data.HttpResult
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.countDown
@@ -20,13 +19,11 @@ import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.config.ConfigApp.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
-import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
+import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.isPhone
-import com.wanwuzhinan.mingchang.ui.fragment.LoginFragment
-import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.vm.LoginViewModel
 
@@ -40,7 +37,7 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModel
 class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
 
 
-    private var tabIndex = LoginFragment.Companion.TAB_SMS
+    private var tabIndex = TAB_SMS
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
@@ -105,7 +102,7 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
             tabLogin.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     val isSms = tab?.text == getString(R.string.login_by_sms)
-                    updateTab(if (isSms) LoginFragment.Companion.TAB_SMS else LoginFragment.Companion.TAB_PWD)
+                    updateTab(if (isSms) TAB_SMS else TAB_PWD)
                 }
 
 
@@ -145,17 +142,10 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
         }
     }
 
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(EXTRAS_POSITION, tabIndex)
-    }
-
-    override fun interceptorHttpAction(action: HttpResult.Action): Boolean {
-        if (action.code == HTTP_CONFIRM) {
-            showConfirmDialog(action.msg)
-            return true
-        }
-        return false
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
@@ -169,7 +159,7 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
 
     private fun updateTab(index: Int) {
         this.tabIndex = index
-        val isSms = index == LoginFragment.Companion.TAB_SMS
+        val isSms = index == TAB_SMS
         viewBinding.tvSmsTips.isVisible = isSms
         viewBinding.etSMS.isVisible = isSms
         viewBinding.tvSmsSend.isVisible = isSms
@@ -182,7 +172,7 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
     private fun updateButton() {
         viewBinding.apply {
             val phoneNotEmpty = etPhone.text.toString().trim().isNotEmpty()
-            if (tabIndex == LoginFragment.Companion.TAB_SMS) {
+            if (tabIndex == TAB_SMS) {
                 tvSmsSend.isEnabled = phoneNotEmpty
                 btLogin.isSelected = phoneNotEmpty && etSMS.text.toString().trim()
                     .isNotEmpty() && rbProtocolTips.isChecked
@@ -198,7 +188,7 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
             ToastUtil.show(R.string.login_toast_phone)
             return
         }
-        if (phone.length < LoginFragment.Companion.PHONE_LENGTH) {
+        if (phone.length < PHONE_LENGTH) {
             ToastUtil.show(R.string.login_toast_short)
             return
         }
@@ -211,7 +201,7 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
             ToastUtil.show(R.string.login_toast_phone)
             return
         }
-        if (phone.length < LoginFragment.Companion.PHONE_LENGTH) {
+        if (phone.length < PHONE_LENGTH) {
             ToastUtil.show(R.string.login_toast_short)
             return
         }
@@ -220,20 +210,20 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
             ToastUtil.show(R.string.login_toast_protocol)
             return
         }
-        val text = if (tabIndex == LoginFragment.Companion.TAB_SMS) {
-            viewBinding.etSMS.text.toString().trim()
-        } else viewBinding.etPassword.text.toString().trim()
-        if (text.isEmpty()) {
-            ToastUtil.show(if (tabIndex == LoginFragment.Companion.TAB_SMS) R.string.login_toast_sms else R.string.login_toast_pwd)
+        val sms = viewBinding.etSMS.text.toString().trim()
+        if (tabIndex == TAB_SMS && sms.isEmpty()) {
+            ToastUtil.show(getString(R.string.login_toast_sms))
+            return
+        }
+        val pwd = viewBinding.etPassword.text.toString().trim()
+        if (tabIndex == TAB_PWD && pwd.isEmpty()) {
+            ToastUtil.show(getString(R.string.login_toast_pwd))
             return
         }
         val type = if (isPhone()) HTTP_LOGIN_DEVICE_PHONE else HTTP_LOGIN_DEVICE_TABLET
-        if (tabIndex == LoginFragment.Companion.TAB_SMS) {
-            viewModel.loginBySms(phone, text, type)
-        } else {
-            viewModel.loginByPassword(phone, null, text, text, HTTP_ACTION_LOGIN_PWD, type, 0)
-        }
-
+        val action = if (tabIndex == TAB_SMS) HTTP_ACTION_LOGIN_SMS else HTTP_ACTION_LOGIN_PWD
+        Log.e("phone:$phone sms:$sms pwd:$pwd type:$type action:$action")
+        viewModel.login(phone, sms, pwd, type, action)
     }
 
     private fun startCountDown() {
@@ -256,12 +246,6 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
             )
             context.startActivity(starter)
         }
-    }
-
-    private fun showConfirmDialog(smg: String) {
-        ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_PASSWORD, msg = smg).apply {
-            sure = { toPassword() }
-        }.show(this)
     }
 
     fun toPassword() {

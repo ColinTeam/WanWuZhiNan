@@ -15,6 +15,9 @@ import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.ApiService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 /**
@@ -38,10 +41,10 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
     }
     protected val _showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val showLoading: LiveData<Boolean> = _showLoading
-    protected val _showToast: MutableLiveData<HttpResult.Toast?> = MutableLiveData(null)
-    val showToast: LiveData<HttpResult.Toast?> = _showToast
-    protected val _httpAction: MutableLiveData<HttpResult.Action?> = MutableLiveData(null)
-    val httpAction: LiveData<HttpResult.Action?> = _httpAction
+    protected val _showToast: MutableSharedFlow<HttpResult.Toast> = MutableSharedFlow(1, 10)
+    val showToast = _showToast.asSharedFlow().distinctUntilChanged()
+    protected val _httpAction: MutableSharedFlow<HttpResult.Action> = MutableSharedFlow(1, 10)
+    val httpAction = _httpAction.asSharedFlow().distinctUntilChanged()
     private val _configData: MutableLiveData<Config?> = MutableLiveData(null)
     val configData: LiveData<Config?> = _configData
     private val _userInfo: MutableLiveData<UserInfo?> = MutableLiveData(null)
@@ -78,14 +81,18 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
         if (!showToast && toast.code == HTTP_SUCCESS) {
             return
         }
-        _showToast.postValue(toast)
+        viewModelScope.launch {
+            _showToast.emit(toast)
+        }
     }
 
     override fun onAction(action: HttpResult.Action) {
         if (action.code != 0 && action.msg.isNotEmpty() == true) {
             postError(action.code, action.msg)
         }
-        _httpAction.postValue(action)
+        viewModelScope.launch {
+            _httpAction.emit(action)
+        }
     }
 
     override fun onFinish(show: Boolean, finish: HttpResult.Finish) {

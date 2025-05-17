@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.colin.library.android.network.data.HttpResult
@@ -19,11 +22,13 @@ import com.colin.library.android.utils.helper.ThreadHelper
 import com.colin.library.android.widget.base.BaseFragment
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
 import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_EMPTY
 import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_ERROR
 import com.wanwuzhinan.mingchang.ui.LoginActivity
 import com.wanwuzhinan.mingchang.ui.pop.LoadingDialog
 import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.launch
 import java.lang.reflect.ParameterizedType
 
 
@@ -50,24 +55,34 @@ abstract class AppFragment<VB : ViewBinding, VM : AppViewModel> : BaseFragment()
                     isEnabled = goBack()
                 }
             })
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.showToast.collect {
+                    if (it.code != HTTP_CONFIRM) {
+                        ToastUtil.show(it.msg)
+                    }
+                }
+                viewModel.httpAction.collect {
+                    httpAction(it)
+                }
+            }
+        }
+    }
+
+    private fun httpAction(action: HttpResult.Action) {
+        if (interceptorHttpAction(action)) return
+        if (action.code == HTTP_TOKEN_ERROR || action.code == HTTP_TOKEN_EMPTY) {
+            activity?.let { act ->
+                LoginActivity.start(act)
+                act.finish()
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
         viewModel.showLoading.observe {
             showLoading(it)
-        }
-        viewModel.showToast.observe {
-            ToastUtil.show(it.msg)
-        }
-        viewModel.httpAction.observe {
-            if (interceptorHttpAction(it)) return@observe
-            if (it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) {
-                activity?.let { act ->
-                    LoginActivity.start(act)
-                    act.finish()
-                }
-            }
         }
     }
 

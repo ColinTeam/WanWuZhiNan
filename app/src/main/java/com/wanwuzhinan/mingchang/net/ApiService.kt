@@ -19,6 +19,8 @@ import com.wanwuzhinan.mingchang.entity.ConfigDataResponse
 import com.wanwuzhinan.mingchang.entity.CourseInfoData
 import com.wanwuzhinan.mingchang.entity.GradeInfo
 import com.wanwuzhinan.mingchang.entity.GradeResponse
+import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
+import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.entity.LessonInfoResponse
 import com.wanwuzhinan.mingchang.entity.LessonSubject
@@ -56,8 +58,11 @@ interface ApiService {
     suspend fun newLogin(
         @Field("phone") phone: String,
         @Field("phone_code") phone_code: String,
-        @Field("device_type") device_type: Int,
-        @Field("action") action: Int
+        @Field("pwd") pwd: String?,
+        @Field("pwds") pwds: String?,
+        @Field("device_type") device_type: Int = HTTP_LOGIN_DEVICE_PHONE,
+        @Field("action") action: Int = HTTP_ACTION_LOGIN_SMS,
+        @Field("confirm") confirm: Int = 0
     ): RegisterResponse
 
     @FormUrlEncoded

@@ -3,7 +3,7 @@ package com.wanwuzhinan.mingchang.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.wanwuzhinan.mingchang.app.AppViewModel
-import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
+import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_FIND_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
 import com.wanwuzhinan.mingchang.entity.RegisterData
 
@@ -31,34 +31,36 @@ class LoginViewModel : AppViewModel() {
         )
     }
 
-    fun loginBySms(phone: String, code: String, type: Int, action: Int = HTTP_ACTION_LOGIN_SMS) {
+    fun login(
+        phone: String,
+        sms: String,
+        pwd: String,
+        type: Int,
+        action: Int = HTTP_ACTION_LOGIN_SMS,
+        confirm: Int = 0
+    ) {
         request(
             loading = true,
             showToast = true,
-            request = { service.newLogin(phone, code, type, action) },
+            request = { service.newLogin(phone, sms, pwd, pwd, type, action, confirm) },
             success = { it -> it?.let { _registerData.postValue(it) } },
             delay = 1000L
         )
     }
 
-    fun loginByPassword(
+    fun confirm(
         phone: String,
-        sms: String?,
+        sms: String,
         pwd: String,
-        pwds: String,
-        action: Int = HTTP_ACTION_LOGIN_PWD,
         type: Int,
-        confirm: Int
+        action: Int = HTTP_ACTION_LOGIN_FIND_PWD,
+        confirm: Int = 1
     ) {
         request(
-            loading = true,
-            showToast = true,
-            request = { service.newLoginPwd(phone, sms, pwd, pwds, action, type, confirm) },
-            success = { it -> _registerData.postValue(it) },
-            delay = 1000L
+            request = { service.newLogin(phone, sms, pwd, pwd, type, action, confirm) },
+            success = { it -> it?.let { _registerData.postValue(it) } }
         )
     }
-
 
     fun updateSuccess(state: Boolean = false) {
         if (smsSuccess.value != state) _smsSuccess.value = state

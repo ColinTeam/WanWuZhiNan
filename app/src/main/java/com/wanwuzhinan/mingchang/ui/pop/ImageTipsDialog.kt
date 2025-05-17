@@ -64,21 +64,21 @@ class ImageTipsDialog private constructor(
         return if (type == TYPE_LOGOUT) getString(R.string.confirm)
         else if (type == TYPE_QUESTION) getString(R.string.dialog_i_know)
         else if (type == TYPE_EXCHANGE) getString(R.string.dialog_exchange_sure)
-        else if (type == TYPE_PASSWORD) getString(R.string.sure)
+        else if (type == TYPE_PASSWORD_CONFIRM) getString(R.string.sure)
         else if (type == TYPE_UPGRADE && "1" != extra) getString(R.string.dialog_i_know)
         else null
     }
 
     private fun getCancelText(type: Int): CharSequence? {
         return if (type == TYPE_EXCHANGE) getString(R.string.dialog_exchange_cancel)
-        else if (type == TYPE_PASSWORD) getString(R.string.cancel)
+        else if (type == TYPE_PASSWORD_CONFIRM) getString(R.string.cancel)
         else null
     }
 
 
     private fun getTitle(type: Int): CharSequence? {
         return if (type == TYPE_LOGOUT) getString(R.string.dialog_logout_title)
-        else if (type == TYPE_PASSWORD) getString(R.string.dialog_question_title)
+        else if (type == TYPE_PASSWORD_CONFIRM) getString(R.string.dialog_question_title)
         else if (type == TYPE_QUESTION) getString(R.string.dialog_question_title)
         else if (type == TYPE_UPGRADE) getString(R.string.dialog_upgrade_title)
         else null
@@ -116,7 +116,7 @@ class ImageTipsDialog private constructor(
 
     companion object {
         const val TYPE_LOGOUT = 0   //退出登录提示
-        const val TYPE_PASSWORD = 1 //修改密码，后台引起弹框提示
+        const val TYPE_PASSWORD_CONFIRM = 1 //修改密码，后台引起弹框提示
         const val TYPE_QUESTION = 2 //回答问题，点击异常提示
         const val TYPE_EXCHANGE = 3 //兑换课程提示
         const val TYPE_UPGRADE = 4  //版本升级

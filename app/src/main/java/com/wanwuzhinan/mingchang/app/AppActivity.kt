@@ -9,9 +9,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.colin.library.android.network.data.HttpResult
 import com.colin.library.android.utils.Constants
@@ -28,6 +31,7 @@ import com.wanwuzhinan.mingchang.entity.HTTP_TOKEN_ERROR
 import com.wanwuzhinan.mingchang.ui.LoginActivity
 import com.wanwuzhinan.mingchang.ui.pop.LoadingDialog
 import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.launch
 import java.lang.reflect.ParameterizedType
 
 
@@ -45,6 +49,19 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
         viewBinding.root.findViewById<View>(R.id.ivBack)?.onClick {
             if (!interceptorBack()) goBack()
         }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.showToast.collect {
+                    if (it.code != HTTP_CONFIRM) {
+                        ToastUtil.show(it.msg)
+                    }
+                }
+                viewModel.httpAction.collect {
+                    httpAction(it)
+                }
+            }
+        }
     }
 
     override fun onStart() {
@@ -52,18 +69,13 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
         viewModel.showLoading.observe {
             showLoading(it)
         }
-        viewModel.showToast.observe {
-            if (it.code == HTTP_CONFIRM) {
-                return@observe
-            }
-            ToastUtil.show(it.msg)
-        }
-        viewModel.httpAction.observe {
-            if (interceptorHttpAction(it)) return@observe
-            if (it.code == HTTP_TOKEN_ERROR || it.code == HTTP_TOKEN_EMPTY) {
-                LoginActivity.start(this@AppActivity)
-                this@AppActivity.finish()
-            }
+    }
+
+    private fun httpAction(action: HttpResult.Action) {
+        if (interceptorHttpAction(action)) return
+        if (action.code == HTTP_TOKEN_ERROR || action.code == HTTP_TOKEN_EMPTY) {
+            LoginActivity.start(this)
+            finish()
         }
     }
 

@@ -11,11 +11,8 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentPasswordBinding
-import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_FIND_PWD
-import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
-import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.ui.fragment.LoginFragment.Companion.PHONE_LENGTH
 import com.wanwuzhinan.mingchang.ui.pop.TipsDialog
@@ -63,14 +60,6 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModel>() 
             showLoading.observe {
                 Log.d("showLoading:$it")
                 showLoading(it)
-            }
-            showToast.observe {
-                Log.d("showToast:$it")
-                if (it.code == HTTP_CONFIRM) {
-                    showConfirmDialog(it.msg)
-                } else if (it.code == HTTP_SUCCESS) {
-//                    HomeFragment.navigate(this@PasswordFragment)
-                }
             }
             smsSuccess.observe {
                 Log.d("smsSuccess:$it")
@@ -150,9 +139,9 @@ class PasswordFragment : AppFragment<FragmentPasswordBinding, LoginViewModel>() 
         }
         val type = if (isPhone()) HTTP_LOGIN_DEVICE_PHONE else HTTP_LOGIN_DEVICE_TABLET
 
-        viewModel.loginByPassword(
-            phone, sms, pwd, confirmPWD, HTTP_ACTION_LOGIN_FIND_PWD, type, confirm
-        )
+//        viewModel.loginByPassword(
+//            phone, sms, pwd, confirmPWD, HTTP_ACTION_LOGIN_FIND_PWD, type, confirm
+//        )
     }
 
     private fun startSendSms(phone: String) {

@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
@@ -18,11 +21,13 @@ import com.wanwuzhinan.mingchang.app.AppDialogFragment
 import com.wanwuzhinan.mingchang.databinding.DialogUserInfoBinding
 import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.GradeInfo
+import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
 import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.utils.load
 import com.wanwuzhinan.mingchang.view.GlideEngine
 import com.wanwuzhinan.mingchang.vm.UserInfoViewModel
+import kotlinx.coroutines.launch
 import java.io.File
 
 /**
@@ -40,13 +45,14 @@ class UserInfoDialog private constructor(
     private var cityName: String? = null
     private var areaName: String? = null
     private var updateUser = false
+    var success: ((Boolean) -> Unit) = { false }
 
     private val viewModel by lazy {
         ViewModelProvider.create(requireActivity())[UserInfoViewModel::class.java]
     }
 
-    var success: ((Boolean) -> Unit) = { false }
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+
         viewBinding.apply {
             etNick.doAfterTextChanged { updateButton() }
             etSchool.doAfterTextChanged { updateButton() }
@@ -80,6 +86,22 @@ class UserInfoDialog private constructor(
                 }
             }
         }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.showToast.collect {
+                    if (it.code != HTTP_CONFIRM) {
+                        ToastUtil.show(it.msg)
+                    }
+                }
+                viewModel.httpAction.collect {
+                    if (updateUser) {
+                        success.invoke(it.code == HTTP_SUCCESS)
+                        dismiss()
+                    }
+                }
+            }
+        }
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
@@ -98,17 +120,9 @@ class UserInfoDialog private constructor(
                 viewBinding.ivAvatar.load(it, R.mipmap.default_icon)
                 updateButton()
             }
-            showToast.observe {
-                ToastUtil.show(it.msg)
-            }
+
             showLoading.observe {
                 showLoading(it)
-            }
-            httpAction.observe {
-                if (updateUser) {
-                    success.invoke(it.code == HTTP_SUCCESS)
-                    dismiss()
-                }
             }
         }
         updateUserInfo(user)

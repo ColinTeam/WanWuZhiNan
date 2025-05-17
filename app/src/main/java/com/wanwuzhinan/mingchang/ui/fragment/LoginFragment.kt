@@ -20,7 +20,6 @@ import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.config.ConfigApp.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
-import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.ext.getConfigData
@@ -246,11 +245,11 @@ class LoginFragment : AppFragment<FragmentLoginBinding, LoginViewModel>() {
             return
         }
         val type = if (isPhone()) HTTP_LOGIN_DEVICE_PHONE else HTTP_LOGIN_DEVICE_TABLET
-        if (tabIndex == TAB_SMS) {
-            viewModel.loginBySms(phone, text, type)
-        } else {
-            viewModel.loginByPassword(phone, null, text, text, HTTP_ACTION_LOGIN_PWD, type, 0)
-        }
+//        if (tabIndex == TAB_SMS) {
+//            viewModel.loginBySms(phone, text, type)
+//        } else {
+//            viewModel.loginByPassword(phone, null, text, text, HTTP_ACTION_LOGIN_PWD, type, 0)
+//        }
 
     }
 
