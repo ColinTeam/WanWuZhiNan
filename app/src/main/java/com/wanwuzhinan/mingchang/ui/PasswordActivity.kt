@@ -176,9 +176,11 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
 
     private fun passwordSuccess() {
         val phone = viewBinding.etPhone.text.toString().trim()
+        val pwd = viewBinding.etPasswordConfirm.text.toString().trim()
         MMKVUtils.set(Constant.USER_MOBILE, phone)
         val intent = Intent().apply {
-            putExtra(Constant.USER_MOBILE, phone)
+            putExtra(EXTRAS_PHONE, phone)
+            putExtra(EXTRAS_PWD, pwd)
         }
         setResult(Activity.RESULT_OK, intent)
         finish()

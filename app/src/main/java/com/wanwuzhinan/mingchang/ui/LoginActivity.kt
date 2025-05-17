@@ -279,11 +279,10 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
     ) { result ->
         Log.e("result:${result.resultCode} $result")
         if (result.resultCode == Activity.RESULT_OK) {
-            val phone = result.data?.getStringExtra(Constant.USER_MOBILE) ?: ""
-            if (!phone.isEmpty()) {
-                viewBinding.etPhone.setText(phone)
-                MMKVUtils.encode(Constant.USER_MOBILE, phone)
-            }
+            val phone = result.data?.getStringExtra(PasswordActivity.EXTRAS_PHONE) ?: ""
+            val pwd = result.data?.getStringExtra(PasswordActivity.EXTRAS_PWD) ?: ""
+            viewBinding.etPhone.setText(phone)
+            viewBinding.etPassword.setText(pwd)
         }
     }
 }
