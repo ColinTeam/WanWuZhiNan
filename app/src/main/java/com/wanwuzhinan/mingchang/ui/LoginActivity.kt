@@ -138,6 +138,7 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
                 MMKVUtils.encode(Constant.TOKEN, it.token)
                 MMKVUtils.encode(Constant.USER_MOBILE, viewBinding.etPhone.text.toString())
                 HomeActivity.start(this@LoginActivity)
+                finish()
             }
         }
     }
