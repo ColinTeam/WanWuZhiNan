@@ -25,21 +25,29 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
-            style="@style/text_black_18"
+            style="@style/Style.Text"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_12"
+            android:gravity="center"
             android:text="@string/dialog_privacy_title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18"
             app:layout_constraintEnd_toEndOf="@+id/bg"
             app:layout_constraintStart_toStartOf="@+id/bg"
             app:layout_constraintTop_toTopOf="@+id/bg" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btCancel"
-            style="@style/Style.Button.Cancel"
+            style="@style/Style.Button"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_48"
             android:layout_marginHorizontal="@dimen/margin_default_half"
-            android:background="?attr/borderlessButtonStyle"
+            android:background="@null"
+            android:text="@string/dialog_privacy_cancel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="@+id/bg"
             app:layout_constraintEnd_toStartOf="@+id/btSure"
             app:layout_constraintStart_toStartOf="@+id/bg" />
@@ -47,10 +55,14 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btSure"
-            style="@style/Style.Button.Sure"
+            style="@style/Style.Button"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_48"
             android:layout_marginHorizontal="@dimen/margin_default_half"
+            android:background="@null"
+            android:text="@string/dialog_privacy_sure"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/bg"
             app:layout_constraintEnd_toEndOf="@+id/bg"
             app:layout_constraintStart_toEndOf="@+id/btCancel" />
@@ -58,10 +70,12 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvProtocolLink1"
             style="@style/text_black_12"
+            android:layout_marginBottom="@dimen/margin_default"
             android:text="@string/login_protocol_link_1"
             android:textColor="#F17800"
             app:layout_constraintBottom_toTopOf="@+id/btSure"
             app:layout_constraintEnd_toStartOf="@+id/and"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/bg" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -85,21 +99,24 @@
 
 
         <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
-            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginVertical="@dimen/dp_12"
             android:layout_weight="1"
             app:layout_constraintBottom_toTopOf="@+id/tvProtocolLink1"
             app:layout_constraintEnd_toEndOf="@+id/bg"
             app:layout_constraintStart_toStartOf="@+id/bg"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle">
 
-            <TextView
-                android:id="@+id/tv_title"
-                style="@style/text_333333_14"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="@dimen/dp_20"
-                android:text="@string/splash_privacy_content" />
+                android:singleLine="false"
+                android:text="@string/splash_privacy_content"
+                android:textColor="@color/color_333333" />
         </androidx.core.widget.NestedScrollView>
 
 

@@ -53,15 +53,12 @@ class SplashActivity : AppActivity<FragmentSplashBinding, HomeViewModel>() {
             setVideoAllCallBack(callback)
         }
         builder!!.build(viewBinding.video)
+        viewBinding.video.startPlayLogic()
+
     }
 
     override fun loadData(refresh: Boolean) {
         viewModel.getConfig()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewBinding.video.startPlayLogic()
     }
 
     override fun onStop() {
@@ -98,6 +95,7 @@ class SplashActivity : AppActivity<FragmentSplashBinding, HomeViewModel>() {
         } else {
             HomeActivity.start(this)
         }
+        finish()
     }
 
     private val callback = object : GSYSampleCallBack() {

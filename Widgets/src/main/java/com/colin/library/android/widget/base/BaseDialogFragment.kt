@@ -42,8 +42,6 @@ abstract class BaseDialogFragment(
 
     constructor() : this(Constants.ZERO)
 
-    val TAG = this::class.simpleName!!
-
     @StyleRes
     var animation: Int = android.R.style.Animation_Dialog
 
@@ -83,49 +81,50 @@ abstract class BaseDialogFragment(
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        Log.d(TAG, "onCreateView layoutRes:${layoutRes()}")
+        Log.d("onCreateView layoutRes:${layoutRes()}")
         return if (layoutRes() != Constants.ZERO) {
             inflater.inflate(layoutRes(), container, false)
         } else createView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d(TAG, "onViewCreated")
+        Log.d("onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         initView(arguments, savedInstanceState)
         initData(arguments, savedInstanceState)
     }
 
+
     override fun onStart() {
-        Log.d(TAG, "onStart")
+        Log.d("onStart")
         dialog?.window?.let { initWindow(dialog!!, it) }
         super.onStart()
     }
 
     override fun onResume() {
-        Log.d(TAG, "onResume")
+        Log.d("onResume")
         super.onResume()
     }
 
     override fun onPause() {
-        Log.d(TAG, "onPause")
+        Log.d("onPause")
         super.onPause()
     }
 
     override fun onStop() {
-        Log.d(TAG, "onStop")
+        Log.d("onStop")
         super.onStop()
     }
 
     fun show(activity: FragmentActivity?) {
-        Log.d(TAG, "show activity.isFinishing:${activity?.isFinishing}")
+        Log.d("show activity.isFinishing:${activity?.isFinishing} isShowing:${isShowing()}")
         activity.takeIf { it?.isFinishing == false }?.let {
             show(it.supportFragmentManager, it::class.java.simpleName)
         }
     }
 
     fun show(fragment: Fragment?) {
-        Log.d(TAG, "show fragment.isAdded:${fragment?.isAdded}")
+        Log.d("show fragment.isAdded:${fragment?.isAdded} isShowing:${isShowing()}")
         fragment.takeIf { it?.isAdded == true }?.let {
             show(it.childFragmentManager, it::class.java.simpleName)
         }
@@ -136,7 +135,7 @@ abstract class BaseDialogFragment(
 
     override fun show(manager: FragmentManager, tag: String?) {
         val show = isRepeatedShow(tag)
-        Log.d(TAG, "show manager:${manager.isDestroyed} isRepeatedShow:$show")
+        Log.d("show manager:${manager.isDestroyed} isRepeatedShow:$show isShowing:${isShowing()}")
         manager.takeIf { it.isDestroyed.not() && show.not() }?.let {
             super.show(manager, tag)
         }
@@ -144,13 +143,13 @@ abstract class BaseDialogFragment(
 
     override fun show(transaction: FragmentTransaction, tag: String?): Int {
         val show = isRepeatedShow(tag)
-        Log.d(TAG, "show isRepeatedShow:$show")
+        Log.d("show isRepeatedShow:$show isShowing:${isShowing()}")
         return if (show.not()) super.show(transaction, tag) else -1
     }
 
     override fun showNow(manager: FragmentManager, tag: String?) {
         val show = isRepeatedShow(tag)
-        Log.d(TAG, "showNow manager:${manager.isDestroyed} isRepeatedShow:$show")
+        Log.d("showNow manager:${manager.isDestroyed} isRepeatedShow:$show isShowing:${isShowing()}")
         if (manager.isDestroyed.not() && show.not()) super.showNow(manager, tag)
     }
 

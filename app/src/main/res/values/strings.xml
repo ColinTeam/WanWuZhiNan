@@ -5,8 +5,8 @@
     <string name="confirm">确定</string>
     <!--splash-->
     <string name="splash_jump">跳过</string>
-    <string name="dialog_privacy">不同意</string>
-    <string name="dialog_agree">同意并继续</string>
+    <string name="dialog_privacy_cancel">不同意</string>
+    <string name="dialog_privacy_sure">同意并继续</string>
     <string name="dialog_privacy_title">平台使用规则</string>
     <string name="splash_privacy_content">\t\t\t\t平台所提供的各项服务的所有权和运作权归平台所有。除法律法规或者本平台另有规定/约定外，任何单位或者个人不得将本网站的任何知识产权对象进行任何目的的使用，任何单位或个人不得以任何方式以任何文字对本站资料作全部和局部复制、转载、引用和链接，任何单位或者个人不得以任何方式引诱、要求本网站注册用户或者第三方复制转载本网站内容或者同意该单位或者个人复制转载本网站内容，亦不得通过技术手段抓取本网站内容。任何注册用户将在本网站注册用户名和密码提供给任何第三方用于许可其复制本站内容的，将构成对注册协议的违反，并可能导致其账户被关闭或者处罚。 会员保证不会将已发表于本站的信息资料，以任何形式发布或授权其它网站（及媒体）使用。任何违反本站知识产权声明的行为，本站保留追究其行为人法律责任的权利。</string>
 

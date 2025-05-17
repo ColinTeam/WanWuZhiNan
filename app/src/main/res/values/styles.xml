@@ -208,6 +208,7 @@
         <item name="android:layout_height">@dimen/dp_48</item>
         <item name="android:background">@drawable/bg_button</item>
         <item name="android:maxLines">1</item>
+        <item name="android:gravity">center</item>
         <item name="android:paddingHorizontal">@dimen/margin_default</item>
         <item name="android:singleLine">true</item>
         <item name="android:textAppearance">@style/Text.Button</item>

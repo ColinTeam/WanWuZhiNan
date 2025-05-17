@@ -12,8 +12,6 @@ import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.ext.onClick
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
-import com.ssm.comm.ext.dismissLoadingExt
-import com.ssm.comm.ext.showLoadingExt
 import com.ssm.comm.media.MediaManager
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppDialogFragment
@@ -38,9 +36,15 @@ class UserInfoDialog private constructor(
     private var user: UserInfo
 ) : AppDialogFragment<DialogUserInfoBinding>() {
     private var image: String? = null
+    private var provinceName: String? = null
+    private var cityName: String? = null
+    private var areaName: String? = null
+    private var updateUser = false
+
     private val viewModel by lazy {
-        ViewModelProvider.create(this)[UserInfoViewModel::class.java]
+        ViewModelProvider.create(requireActivity())[UserInfoViewModel::class.java]
     }
+
     var success: ((Boolean) -> Unit) = { false }
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
@@ -180,7 +184,7 @@ class UserInfoDialog private constructor(
 
     private fun chooseAvatar() {
         MediaManager.selectSinglePhoto(
-            activity,
+            requireActivity(),
             GlideEngine.createGlideEngine(),
             object : OnResultCallbackListener<LocalMedia> {
                 @SuppressLint("NotifyDataSetChanged")
@@ -257,9 +261,7 @@ class UserInfoDialog private constructor(
         }
     }
 
-    private var provinceName: String? = null
-    private var cityName: String? = null
-    private var areaName: String? = null
+
     private fun updateUserInfo() {
         var name = viewBinding.etNick.text.toString().trim()
         var sex = viewBinding.llSex.tag as? String ?: ""
@@ -286,22 +288,6 @@ class UserInfoDialog private constructor(
         map["grade_name"] = grade
         updateUser = true
         viewModel.editUserInfo(map)
-    }
-
-    private var updateUser = false
-    fun showLoading(show: Boolean = false) {
-        if (show) {
-            activity?.showLoadingExt()
-        } else {
-            dismissLoadingExt()
-        }
-//        if (loadingDialog?.isShowing() == show) return
-//        if (!show) {
-//            loadingDialog?.dismiss()
-//            return
-//        }
-//        loadingDialog = loadingDialog ?: LoadingDialog.newInstance()
-//        ThreadHelper.post(Runnable { loadingDialog!!.show(this) })
     }
 
 

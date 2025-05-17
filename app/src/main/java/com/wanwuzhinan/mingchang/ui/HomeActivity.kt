@@ -32,6 +32,7 @@ import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
 import com.wanwuzhinan.mingchang.ui.pop.UserInfoDialog
 import com.wanwuzhinan.mingchang.utils.RATIO_16_9
 import com.wanwuzhinan.mingchang.utils.getRatio
+import com.wanwuzhinan.mingchang.utils.load
 import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
@@ -44,9 +45,11 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  */
 class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     var checkUpdate = false
+    var checkUserInfo = false
 
     override fun onDestroy() {
         checkUpdate = false
+        checkUserInfo = false
         super.onDestroy()
     }
 
@@ -145,16 +148,17 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
             configData.observe {
-                Log.d("configData:$it")
-                updateConfigData(it.info)
+                Log.i("configData:$it")
+                updateHomeContent(it.info)
+                doNextAction()
             }
             userInfo.observe {
-                Log.d("userInfo:$it")
+                Log.i("userInfo:$it")
+                viewBinding.ivAvatar.load(it.headimg, R.mipmap.logo)
+                viewBinding.tvUserName.text = it.nickname
                 ConfigApp.question_count_error = it.question_count_error
                 ConfigApp.question_compass = it.question_compass
                 setData(Constant.USER_INFO, NetworkConfig.gson.toJson(it))
-                GlideImgManager.get().loadImg(it.headimg, viewBinding.ivAvatar, R.mipmap.logo)
-                viewBinding.tvUserName.text = it.nickname
                 doNextAction()
             }
             closeAD.observe {
@@ -170,12 +174,6 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
         viewModel.getUserInfo()
     }
 
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-
     fun changeADState(visible: Boolean, config: Config? = viewModel.getConfigValue()) {
         val isEmpty =
             config?.info?.home_ad.isNullOrEmpty() or config?.info?.home_ad_link.isNullOrEmpty()
@@ -190,33 +188,46 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     ) {
         user ?: return
         val info = data?.info ?: return
-        //todo 版本升级，用户是否编辑昵称等
         if (isFinishing || isDestroyed || !lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
             return
         }
-        UserInfoDialog.newInstance(user).apply {
-            success = {
-                if (it) viewModel.getUserInfo()
-                checkUpdate(info)
-            }
-            cancel = {
-
-            }
-        }.show(this)
-
-    }
-
-    fun checkUpdate(info: ConfigData) {
         if (checkUpdate) return
         checkUpdate = true
         ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_UPGRADE, extra = info.android_update)
             .apply {
-                sure = {}
-                cancel = {}
+                isCancelable = false
+                sure = {
+                    editUserInfo(user)
+                }
+                cancel = {
+                    editUserInfo(user)
+                }
+
             }.show(this)
+
+
     }
 
-    fun updateConfigData(data: ConfigData) {
+    fun editUserInfo(user: UserInfo) {
+        if (isFinishing || isDestroyed || !lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            return
+        }
+        if (user.truename.isEmpty()) {
+            return
+        }
+        if (checkUserInfo) return
+        checkUserInfo = true
+        UserInfoDialog.newInstance(user).apply {
+            success = {
+                if (it) {
+                    viewModel.getUserInfo()
+                    SettingTabActivity.start(this@HomeActivity)
+                }
+            }
+        }.show(this)
+    }
+
+    fun updateHomeContent(data: ConfigData) {
         viewBinding.apply {
             tvOneTitle.text = data.home_title1
             tvTwoTitle.text = data.home_title2
@@ -232,6 +243,7 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
         ) {
             data.apple_is_audit = 0
         }
+        //全局实用
         setData(Constant.CONFIG_DATA, NetworkConfig.gson.toJson(data))
     }
 
