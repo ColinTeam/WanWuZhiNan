@@ -9,8 +9,10 @@ import com.colin.library.android.network.NetworkHelper
 import com.colin.library.android.network.data.HttpResult
 import com.colin.library.android.network.data.INetworkResponse
 import com.colin.library.android.network.requestImpl
+import com.colin.library.android.widget.base.SingleLiveEvent
 import com.wanwuzhinan.mingchang.data.ErrorLog
 import com.wanwuzhinan.mingchang.entity.Config
+import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
 import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.net.ApiService
@@ -38,7 +40,7 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
     }
     protected val _showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val showLoading: LiveData<Boolean> = _showLoading
-    protected val _showToast: MutableLiveData<HttpResult.Toast?> = MutableLiveData(null)
+    protected val _showToast: SingleLiveEvent<HttpResult.Toast?> = SingleLiveEvent()
     val showToast: LiveData<HttpResult.Toast?> = _showToast
     protected val _httpAction: MutableLiveData<HttpResult.Action?> = MutableLiveData(null)
     val httpAction: LiveData<HttpResult.Action?> = _httpAction
@@ -75,10 +77,14 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
     }
 
     override fun onToast(showToast: Boolean, toast: HttpResult.Toast) {
+        //显示dialog
+        if (toast.code == HTTP_CONFIRM) {
+            return
+        }
         if (!showToast && toast.code == HTTP_SUCCESS) {
             return
         }
-        if (toast != this@AppViewModel.showToast.value) _showToast.postValue(toast)
+        _showToast.postValue(toast)
     }
 
     override fun onAction(action: HttpResult.Action) {

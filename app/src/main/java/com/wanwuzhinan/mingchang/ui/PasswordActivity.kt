@@ -17,6 +17,7 @@ import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_FIND_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
+import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
 import com.wanwuzhinan.mingchang.vm.LoginViewModel
@@ -32,7 +33,6 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
 
     private var phone: String? = null
     private var pwd: String? = null
-    private var confirmRequest = false
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         phone = if (savedInstanceState != null) savedInstanceState.getString(EXTRAS_PHONE)
         else bundle?.getString(EXTRAS_PHONE)
@@ -48,11 +48,7 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
             etPasswordConfirm.doAfterTextChanged { updateButton() }
             onClick(tvSmsSend, btConfirm) {
                 when (it) {
-                    tvSmsSend -> {
-                        confirmRequest = false
-                        startSendSms(etPhone.text.toString().trim())
-                    }
-
+                    tvSmsSend -> startSendSms(etPhone.text.toString().trim())
                     btConfirm -> startConfirm()
                 }
             }
@@ -76,7 +72,7 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
                 }
             }
             registerData.observe {
-                if (it.status == 0) {
+                if (it.status == HTTP_SUCCESS) {
                     passwordSuccess()
                 }
             }
@@ -145,11 +141,7 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
             return
         }
         val type = if (isPhone()) HTTP_LOGIN_DEVICE_PHONE else HTTP_LOGIN_DEVICE_TABLET
-        if (confirm==1){
-            viewModel.confirm(phone, sms, pwd, type, HTTP_ACTION_LOGIN_FIND_PWD, confirm)
-        }else{
-            viewModel.login(phone, sms, pwd, type, HTTP_ACTION_LOGIN_FIND_PWD, confirm)
-        }
+        viewModel.login(phone, sms, pwd, type, HTTP_ACTION_LOGIN_FIND_PWD, confirm)
     }
 
     private fun startSendSms(phone: String) {
@@ -196,7 +188,6 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
         const val PHONE_LENGTH = 11
         const val EXTRAS_PHONE = "phone"
         const val EXTRAS_PWD = "pwd"
-        const val EXTRAS_CONFIRM = "confirm"
 
         @JvmStatic
         fun start(context: Context, phone: String?) {
