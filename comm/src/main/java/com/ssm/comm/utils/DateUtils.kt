@@ -3,7 +3,9 @@ package com.ssm.comm.utils
 import com.ssm.comm.ext.toastNormal
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 /**
  * Company:AD
@@ -43,19 +45,19 @@ object DateUtils {
         var time = ""
         //小于1分钟
         time = if(s < 60L){
-            String.format("00:%02d",s % 60)
+            String.format(Locale.US,"00:%02d",s % 60)
         }
         //小于1个小时
         else if(s < 3600L){
-            String.format("%02d:%02d",s / 60,s % 60)
+            String.format(Locale.US,"%02d:%02d",s / 60,s % 60)
         }
         //小于一天
         else if(s < 3600 * 24){
-            String.format("%02d:%02d:%02d",s / 3600,s % 3600 / 60,s % 60)
+            String.format(Locale.US,"%02d:%02d:%02d",s / 3600,s % 3600 / 60,s % 60)
         }
         //大于一天
         else {
-            String.format("%02d天%02d:%02d:%02d",s / 86400,s % 86400 / 3600,s % 86400 % 3600 / 60,s % 86400 % 3600 % 60)
+            String.format(Locale.US,"%02d天%02d:%02d:%02d",s / 86400,s % 86400 / 3600,s % 86400 % 3600 / 60,s % 86400 % 3600 % 60)
         }
         return time
     }

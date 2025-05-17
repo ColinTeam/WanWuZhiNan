@@ -44,7 +44,7 @@ class UserInfoViewModel : AppViewModel() {
     fun editUserInfo(map: HashMap<String, String>) {
         request(
             loading = true,
-            showToast = true,
+            toast = true,
             request = { service.newEditUserInfo(map) },
             success = { it ->
 
@@ -59,7 +59,7 @@ class UserInfoViewModel : AppViewModel() {
         val part = MultipartBody.Part.createFormData("file", file.name, requestBody)
         request(
             loading = true,
-            showToast = true,
+            toast = true,
             request = { service.newUploadImage(part) },
             success = { it ->
                 _updateFile.postValue(it?.file ?: "")

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.network.NetworkHelper
+import com.colin.library.android.network.callback.INetworkFeedback
 import com.colin.library.android.network.data.HttpResult
 import com.colin.library.android.network.data.INetworkResponse
 import com.colin.library.android.network.requestImpl
@@ -26,23 +27,17 @@ import kotlinx.coroutines.launch
  *
  * Des   :AppViewModel
  */
-interface INetworkFeedback {
-    fun onStart(show: Boolean = false, start: HttpResult.Start)
-    fun onToast(showToast: Boolean, toast: HttpResult.Toast)
-    fun onAction(action: HttpResult.Action)
-    fun onFinish(show: Boolean = false, finish: HttpResult.Finish)
-}
 
 open class AppViewModel : ViewModel(), INetworkFeedback {
 
-    val service: ApiService by lazy {
+    protected val service: ApiService by lazy {
         NetworkHelper.create(ApiService::class.java)
     }
-    protected val _showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val showLoading: LiveData<Boolean> = _showLoading
-    protected val _showToast: SingleLiveEvent<HttpResult.Toast?> = SingleLiveEvent()
+    private val _showToast: SingleLiveEvent<HttpResult.Toast?> = SingleLiveEvent()
     val showToast: LiveData<HttpResult.Toast?> = _showToast
-    protected val _httpAction: MutableLiveData<HttpResult.Action?> = MutableLiveData(null)
+    private val _httpAction: MutableLiveData<HttpResult.Action?> = MutableLiveData(null)
     val httpAction: LiveData<HttpResult.Action?> = _httpAction
     private val _configData: MutableLiveData<Config?> = MutableLiveData(null)
     val configData: LiveData<Config?> = _configData
@@ -76,12 +71,13 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
         if (show) _showLoading.postValue(true)
     }
 
-    override fun onToast(showToast: Boolean, toast: HttpResult.Toast) {
+    override fun onToast(show: Boolean, toast: HttpResult.Toast) {
         //显示dialog
         if (toast.code == HTTP_CONFIRM) {
             return
         }
-        if (!showToast && toast.code == HTTP_SUCCESS) {
+        //一般情况下无需弹框
+        if (!show && toast.code == HTTP_SUCCESS) {
             return
         }
         _showToast.postValue(toast)
@@ -101,7 +97,7 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
 
     fun <T> ViewModel.request(
         loading: Boolean = false,
-        showToast: Boolean = false,
+        toast: Boolean = false,
         request: suspend () -> INetworkResponse<T>,
         success: (suspend (T?) -> Unit),
         delay: Long = 0L
@@ -110,7 +106,7 @@ open class AppViewModel : ViewModel(), INetworkFeedback {
         request = request,
         success = success,
         start = { onStart(loading, it) },
-        toast = { onToast(showToast, it) },
+        toast = { onToast(toast, it) },
         action = { onAction(it) },
         finish = { onFinish(loading, it) },
         delay = delay

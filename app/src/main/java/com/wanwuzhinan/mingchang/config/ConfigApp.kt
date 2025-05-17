@@ -36,11 +36,6 @@ object ConfigApp {
     const val INTENT_ID = "id"
     const val INTENT_NUMBER = "number"
 
-    //支付方式
-    const val PAY_TYPE_ALIPAY = 1//支付支付
-    const val PAY_TYPE_WECHAT = 2//微信支付
-    const val PAY_TYPE_BANK = 3//银行卡
-
     //播放类型
     const val TYPE_VIDEO = 1//视频
     const val TYPE_AUDIO = 2//音频

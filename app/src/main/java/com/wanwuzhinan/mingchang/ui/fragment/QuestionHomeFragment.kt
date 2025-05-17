@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.wanwuzhinan.mingchang.R
@@ -135,14 +133,14 @@ class QuestionHomeFragment : AppFragment<FragmentQuestionHomeBinding, QuestionVi
         fun navigate(
             fragment: Fragment, type: Int = ConfigApp.TYPE_ASK, title: String = ""
         ) {
-            fragment.findNavController().apply {
-                navigate(
-                    R.id.action_toQuestionHome, Bundle().apply {
-                        putInt(ConfigApp.EXTRAS_POSITION, type)
-                        putString(ConfigApp.EXTRAS_TITLE, title)
-                    }, NavOptions.Builder().build()
-                )
-            }
+//            fragment.findNavController().apply {
+//                navigate(
+//                    R.id.action_toQuestionHome, Bundle().apply {
+//                        putInt(ConfigApp.EXTRAS_POSITION, type)
+//                        putString(ConfigApp.EXTRAS_TITLE, title)
+//                    }, NavOptions.Builder().build()
+//                )
+//            }
         }
     }
 

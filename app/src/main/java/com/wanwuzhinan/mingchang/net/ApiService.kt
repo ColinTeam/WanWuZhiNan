@@ -11,7 +11,6 @@ import com.wanwuzhinan.mingchang.data.MedalListData
 import com.wanwuzhinan.mingchang.data.QuestionListData
 import com.wanwuzhinan.mingchang.data.QuestionLogData
 import com.wanwuzhinan.mingchang.data.RankHomeData
-import com.wanwuzhinan.mingchang.data.RegisterData
 import com.wanwuzhinan.mingchang.entity.CityInfo
 import com.wanwuzhinan.mingchang.entity.CityInfoResponse
 import com.wanwuzhinan.mingchang.entity.Config
@@ -63,18 +62,6 @@ interface ApiService {
         @Field("device_type") device_type: Int = HTTP_LOGIN_DEVICE_PHONE,
         @Field("action") action: Int = HTTP_ACTION_LOGIN_SMS,
         @Field("confirm") confirm: Int = 0
-    ): RegisterResponse
-
-    @FormUrlEncoded
-    @POST("/api/UserLogin/index")
-    suspend fun newLoginPwd(
-        @Field("phone") phone: String,
-        @Field("phone_code") sms: String?,
-        @Field("pwd") pwd: String,
-        @Field("pwds") pwds: String,
-        @Field("action") action: Int,
-        @Field("device_type") device_type: Int,
-        @Field("confirm") confirm: Int
     ): RegisterResponse
 
     //音频视频科目
@@ -165,15 +152,6 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/SmsCode/send")
     fun getCode(@Field("phone") mobile: String): Call<ResponseBody>
-
-    //登录
-    @FormUrlEncoded
-    @POST("/api/UserLogin/index")
-    suspend fun login(
-        @Field("phone") phone: String,
-        @Field("phone_code") phone_code: String,
-        @Field("device_type") device_type: String
-    ): ApiResponse<RegisterData>
 
     //获取用户信息
     @POST("/api/User/info")

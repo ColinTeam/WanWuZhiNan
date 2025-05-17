@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.utils.Log
@@ -43,6 +42,8 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  * Create:2025-04-23 21:57
  *
  * Des   :HomeActivity
+ * 获取配置信息，->渲染界面，内容赋值->判断是否需要升级
+ * 获取用户信息，判断是否已编辑用户信息 ->弹框->编辑用户
  */
 class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     var checkUpdate = false
@@ -189,9 +190,6 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     ) {
         user ?: return
         val info = data?.info ?: return
-        if (isFinishing || isDestroyed || !lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            return
-        }
         if (info.android_code.toInt() > getCurrentVersionCode() && !checkUpdate) {
             checkUpdate = true
             ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_UPGRADE, extra = info.android_update)
@@ -211,9 +209,6 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     }
 
     fun editUserInfo(user: UserInfo) {
-        if (isFinishing || isDestroyed || !lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            return
-        }
         if (user.nickname.isNotEmpty()) {
             return
         }
@@ -253,10 +248,8 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     companion object {
 
         @JvmStatic
-        fun start(context: Context, id: Int = R.id.action_toHome) {
-            val starter = Intent(
-                context, HomeActivity::class.java
-            ).putExtra(ConfigApp.EXTRAS_POSITION, id)
+        fun start(context: Context) {
+            val starter = Intent(context, HomeActivity::class.java)
             context.startActivity(starter)
         }
     }

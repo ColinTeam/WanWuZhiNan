@@ -11,6 +11,4 @@ data class UploadProgressEvent(
     var lesson_id: String = "0",
     var start_second: Int = 0,
     var end_second: Int = 0,
-) : BaseModel(){
-
-}
+) : BaseModel()

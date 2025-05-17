@@ -23,6 +23,9 @@ import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
  * Create:2025-05-16 22:50
  *
  * Des   :SplashActivity
+ * 1.隐私协议需要同意
+ * 2.通过token判断当前用户是否登录，未登录跳转到登录界面，已登录跳转到首页
+ * 3.提供强制跳转
  */
 class SplashActivity : AppActivity<FragmentSplashBinding, HomeViewModel>() {
     var playCompleted = false

@@ -587,7 +587,6 @@ public class CoverFlowLayoutManger extends RecyclerView.LayoutManager {
     }
 
     /**
-     * 该方法主要用于{@link RecyclerCoverFlow#getChildDrawingOrder(int, int)}判断中间位置
      * @param index child 在 RecyclerCoverFlow 中的位置
      * @return child 的实际位置，如果 {@link #mIsLoop} 为 true ，返回结果可能为负值
      */

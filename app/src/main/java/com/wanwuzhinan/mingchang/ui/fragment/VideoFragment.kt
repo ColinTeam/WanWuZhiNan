@@ -33,7 +33,6 @@ class VideoFragment : AppFragment<FragmentVideoBinding, MediaViewModel>() {
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-
         play(ConfigApp.VIDEO_DEMO_2)
     }
 

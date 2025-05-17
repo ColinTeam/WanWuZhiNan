@@ -114,9 +114,22 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="Style.Image" parent="Widget.AppCompat.ImageButton">
+    <style name="Style.Image">
         <item name="android:layout_width">@dimen/image_width</item>
         <item name="android:layout_height">@dimen/image_height</item>
+        <item name="android:contentDescription">@string/app_name</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="contentDescription">@string/app_name</item>
+    </style>
+
+    <style name="Style.Image.Back">
+        <item name="android:layout_width">@dimen/image_back</item>
+        <item name="android:layout_height">@dimen/image_back</item>
+        <item name="android:layout_marginStart">@dimen/dp_12</item>
+        <item name="android:layout_marginTop">@dimen/dp_42</item>
+        <item name="android:src">@mipmap/ic_back_mian</item>
+        <item name="srcCompat">@mipmap/ic_back_mian</item>
+        <item name="android:elevation">@dimen/dp_2</item>
         <item name="android:contentDescription">@string/app_name</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="contentDescription">@string/app_name</item>

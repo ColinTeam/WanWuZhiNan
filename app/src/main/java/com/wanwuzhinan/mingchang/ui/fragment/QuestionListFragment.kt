@@ -3,11 +3,8 @@ package com.wanwuzhinan.mingchang.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import com.colin.library.android.utils.Constants
 import com.colin.library.android.utils.Log
-import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentQuestionListBinding
@@ -93,14 +90,14 @@ class QuestionListFragment : AppFragment<FragmentQuestionListBinding, QuestionVi
         fun navigate(
             fragment: Fragment, type: Int = 0, title: String = ""
         ) {
-            fragment.findNavController().apply {
-                navigate(
-                    R.id.action_toQuestionList, Bundle().apply {
-                        putInt(ConfigApp.EXTRAS_POSITION, type)
-                        putString(ConfigApp.EXTRAS_TITLE, title)
-                    }, NavOptions.Builder().build()
-                )
-            }
+//            fragment.findNavController().apply {
+//                navigate(
+//                    R.id.action_toQuestionList, Bundle().apply {
+//                        putInt(ConfigApp.EXTRAS_POSITION, type)
+//                        putString(ConfigApp.EXTRAS_TITLE, title)
+//                    }, NavOptions.Builder().build()
+//                )
+//            }
         }
     }
 
