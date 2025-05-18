@@ -39,11 +39,11 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
         else bundle?.getString(EXTRAS_PHONE)
         pwd = if (savedInstanceState != null) savedInstanceState.getString(EXTRAS_PWD)
         else bundle?.getString(EXTRAS_PWD)
-        login = if (savedInstanceState != null) savedInstanceState.getBoolean(EXTRAS_LOGIN, false)
-        else bundle?.getBoolean(EXTRAS_LOGIN) ?: false
+        login = savedInstanceState?.getBoolean(EXTRAS_LOGIN, false) ?: (bundle?.getBoolean(EXTRAS_LOGIN) == true)
         viewBinding.apply {
             etPhone.apply {
                 setText(phone ?: "")
+                //登录不能编辑，非登录可以编辑
                 if (login) this.clearFocus()
                 else this.doAfterTextChanged { updateButton() }
                 isFocusableInTouchMode = !login
@@ -174,7 +174,7 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
     }
 
     private fun showConfirmDialog(smg: String) {
-        ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_PASSWORD_CONFIRM, msg = smg).apply {
+        ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_PASSWORD_CONFIRM, bgMsg = smg).apply {
             isCancelable = false
             sure = { startConfirm(1) }
         }.show(this)

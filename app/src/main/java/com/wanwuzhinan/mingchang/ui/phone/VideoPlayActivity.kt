@@ -5,20 +5,11 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
-import androidx.mediarouter.media.MediaControlIntent
-import androidx.mediarouter.media.MediaRouteSelector
-import androidx.mediarouter.media.MediaRouter
 import com.colin.library.android.image.glide.GlideImgManager
-import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.encrypt.DecryptUtil
 import com.colin.library.android.utils.ext.onClick
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.hpplay.sdk.source.api.LelinkSourceSDK
-import com.hpplay.sdk.source.browse.api.LelinkServiceInfo
-import com.hpplay.sdk.source.easycast.IEasyCastListener
-import com.hpplay.sdk.source.easycast.bean.EasyCastBean
 import com.ssm.comm.event.MessageEvent
 import com.ssm.comm.ext.dismissLoadingExt
 import com.ssm.comm.ext.observeState
@@ -52,8 +43,6 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
     var mPosition = 0
     var mVideoList: ArrayList<Lesson>? = null
     var seek = 0L
-    lateinit var startBtn: ImageView
-
     var mData: CourseInfoData? = null
 
     var errorPro = 0.0F
@@ -183,56 +172,6 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                 }
             }
         }
-    }
-
-    fun initShare() {
-        mDataBinding.detailPlayer.onPause()
-        mDataBinding.llShare.visibility = View.VISIBLE
-
-        LelinkSourceSDK.getInstance()
-            .setSdkInitInfo(getApplicationContext(), "23294", "250b751fc44ca5a443fd9e55679e67b1")
-            .easyPush(mDataBinding.llShare)
-
-        LelinkSourceSDK.getInstance().setEasyCastListener(object : IEasyCastListener {
-            override fun onCast(p0: LelinkServiceInfo?): EasyCastBean {
-                val bean = EasyCastBean()
-                bean.url = DecryptUtil.aes(mData?.info?.videoAes!!, ConfigApp.VIDEO_AES_KEY)
-                return bean
-            }
-
-            override fun onCastError(p0: LelinkServiceInfo?, p1: EasyCastBean?, p2: Int, p3: Int) {
-
-            }
-
-            override fun onCastLoading(p0: LelinkServiceInfo?, p1: EasyCastBean?) {
-
-            }
-
-            override fun onCastPause(p0: LelinkServiceInfo?, p1: EasyCastBean?) {
-
-            }
-
-            override fun onCastStart(p0: LelinkServiceInfo?, p1: EasyCastBean?) {
-
-            }
-
-            override fun onCastCompletion(p0: LelinkServiceInfo?, p1: EasyCastBean?) {
-
-            }
-
-            override fun onCastPositionUpdate(
-                p0: LelinkServiceInfo?, p1: EasyCastBean?, p2: Long, p3: Long
-            ) {
-            }
-
-            override fun onCastStop(p0: LelinkServiceInfo?, p1: EasyCastBean?) {
-            }
-
-            override fun onDismiss() {
-                mDataBinding.llShare.visibility = View.GONE
-            }
-
-        })
     }
 
     override fun onPause() {
@@ -465,9 +404,9 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
 
 
     override fun onDestroy() {
+        mDataBinding.detailPlayer.resetPlayer()
         super.onDestroy()
 
-        mDataBinding.detailPlayer.resetPlayer()
     }
 
     override fun getLayoutId(): Int {
@@ -475,41 +414,4 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
     }
 
 
-    fun initRouter() {
-
-        var mediaRouter = MediaRouter.getInstance(applicationContext)
-
-
-        // 定义要查找的媒体路由类型
-        var mediaRouteSelector =
-            MediaRouteSelector.Builder().addControlCategory(MediaControlIntent.CATEGORY_LIVE_VIDEO)
-                .build()
-
-        // 设置MediaRouteButton
-        mDataBinding.btnMediaRoute.routeSelector = mediaRouteSelector
-
-        // 创建回调处理路由选择事件
-        var mediaRouterCallback = object : MediaRouter.Callback() {
-            @Suppress("DEPRECATION")
-            override fun onRouteSelected(router: MediaRouter, info: MediaRouter.RouteInfo) {
-                super.onRouteSelected(router, info)
-                // 当用户选择了投屏目标时触发
-
-                Log.d("MediaRouter", "Selected route: " + info.name)
-                // 在这里你可以开始投屏过程
-
-            }
-
-            @Suppress("DEPRECATION")
-            override fun onRouteUnselected(router: MediaRouter, info: MediaRouter.RouteInfo) {
-                super.onRouteUnselected(router, info)
-                // 当用户取消选择投屏目标时触发
-                Log.d("MediaRouter", "Unselected route: " + info.name)
-                // 在这里你可以停止投屏过程
-            }
-        }
-
-        mediaRouter.addCallback(mediaRouteSelector, mediaRouterCallback)
-
-    }
 }

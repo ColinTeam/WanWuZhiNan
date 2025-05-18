@@ -23,18 +23,19 @@ import com.wanwuzhinan.mingchang.ext.visible
 class ImageTipsDialog private constructor(
     private val type: Int,
     private val title: CharSequence? = null,
-    private val msg: CharSequence? = null,
+    private val bgMsg: CharSequence? = null,
     private val extra: CharSequence? = null
 ) : AppDialogFragment<DialogImageTipsBinding>() {
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
             displayText(tvTitle, title ?: getTitle(type))
             displayText(tvSubtitle, getSubtitle(type))
-            displayText(tvMsg, msg ?: getMsg(type))
-            displayText(tvOther, getOther(type))
-            displayText(btSure, getSureText(type))
-            displayText(btCancel, getCancelText(type))
+            displayText(tvBgMsg, bgMsg ?: geBgMsg(type))
+            displayText(tvMsg, getMsg(type))
+            displayText(btSure, getSureText(type), "1" != extra)
+            displayText(btCancel, getCancelText(type), "1" != extra)
             ivCancel.visible("1" != extra)
+
             onClick(ivCancel, btSure, btCancel) {
                 when (it) {
                     ivCancel, btCancel -> {
@@ -51,9 +52,9 @@ class ImageTipsDialog private constructor(
         }
     }
 
-    private fun displayText(view: TextView, title: CharSequence?) {
+    private fun displayText(view: TextView, title: CharSequence?, visible: Boolean = true) {
         view.text = title ?: ""
-        view.visible(!title.isNullOrEmpty())
+        view.visible(!title.isNullOrEmpty() && visible)
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
@@ -92,14 +93,14 @@ class ImageTipsDialog private constructor(
 
     }
 
-    private fun getMsg(type: Int): CharSequence? {
+    private fun geBgMsg(type: Int): CharSequence? {
         return if (type == TYPE_QUESTION) getString(R.string.dialog_question_msg)
         else if (type == TYPE_EXCHANGE) getString(R.string.dialog_question_subtitle)
         else if (type == TYPE_UPGRADE) getString(R.string.dialog_upgrade_msg)
         else null
     }
 
-    private fun getOther(type: Int): CharSequence? {
+    private fun getMsg(type: Int): CharSequence? {
         return if (type == TYPE_EXCHANGE) {
             val builder = SpannableStringBuilder(getString(R.string.dialog_exchange_other_pro))
             val coloredPart = SpannableString(getString(R.string.dialog_exchange_title))
@@ -125,10 +126,10 @@ class ImageTipsDialog private constructor(
         fun newInstance(
             type: Int,
             title: CharSequence? = null,
-            msg: CharSequence? = null,
+            bgMsg: CharSequence? = null,
             extra: CharSequence? = null
         ): ImageTipsDialog {
-            return ImageTipsDialog(type, title, msg, extra)
+            return ImageTipsDialog(type, title, bgMsg, extra)
         }
 
     }
