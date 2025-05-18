@@ -18,7 +18,7 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.config.ConfigApp.EXTRAS_POSITION
-import com.wanwuzhinan.mingchang.databinding.FragmentLoginBinding
+import com.wanwuzhinan.mingchang.databinding.ActivityLoginBinding
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
@@ -36,7 +36,7 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModel
  *
  * Des   :LoginActivity
  */
-class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
+class LoginActivity : AppActivity<ActivityLoginBinding, LoginViewModel>() {
 
 
     private var tabIndex = TAB_SMS

@@ -12,30 +12,28 @@
         android:layout_height="match_parent"
         android:background="@mipmap/bg_login">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivContentBg"
+        <View
+            android:id="@+id/contentBg"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
-            android:layout_marginTop="@dimen/margin_default"
-            android:background="@color/white"
+            android:background="@drawable/bg_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="@fraction/login_tab_height"
+            app:layout_constraintHeight_percent="@fraction/content_height"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="@fraction/login_tab_width"
-            app:shapeAppearanceOverlay="@style/Image.Radius_20" />
+            app:layout_constraintWidth_percent="@fraction/content_width" />
 
         <ImageView
             android:id="@+id/ivAvatar"
             android:layout_width="@dimen/dp_75"
             android:layout_height="@dimen/dp_120"
             android:layout_marginStart="@dimen/dp_24"
-            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginTop="-24dp"
             android:contentDescription="@string/app_name"
             android:src="@mipmap/ic_login_a"
-            app:layout_constraintStart_toStartOf="@+id/ivContentBg"
-            app:layout_constraintTop_toTopOf="@+id/ivContentBg" />
+            app:layout_constraintStart_toStartOf="@+id/contentBg"
+            app:layout_constraintTop_toTopOf="@+id/etPhone" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLogin"
@@ -45,7 +43,7 @@
             android:layout_marginTop="@dimen/margin_default"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@+id/ivAvatar"
-            app:layout_constraintTop_toTopOf="@+id/ivContentBg"
+            app:layout_constraintTop_toTopOf="@+id/contentBg"
             app:tabBackground="@color/white"
             app:tabIndicator="@drawable/tab_indicator_login"
             app:tabIndicatorAnimationMode="elastic"
@@ -156,8 +154,8 @@
             android:layout_marginBottom="@dimen/margin_default"
             android:text="@string/login"
             app:layout_constraintBottom_toTopOf="@id/rbProtocolTips"
-            app:layout_constraintEnd_toEndOf="@id/ivContentBg"
-            app:layout_constraintStart_toStartOf="@id/ivContentBg" />
+            app:layout_constraintEnd_toEndOf="@id/contentBg"
+            app:layout_constraintStart_toStartOf="@id/contentBg" />
 
 
         <androidx.appcompat.widget.AppCompatCheckBox
@@ -170,10 +168,10 @@
             android:text="@string/login_protocol_tips"
             android:textAppearance="@style/Text.Tips"
             android:textColor="@color/text_color_default"
-            app:layout_constraintBottom_toBottomOf="@+id/ivContentBg"
+            app:layout_constraintBottom_toBottomOf="@+id/contentBg"
             app:layout_constraintEnd_toStartOf="@+id/tvProtocolLink1"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@+id/ivContentBg" />
+            app:layout_constraintStart_toStartOf="@+id/contentBg" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvProtocolLink1"
@@ -207,7 +205,7 @@
             android:text="@string/login_protocol_link_3"
             android:textAppearance="@style/Text.Tips.Link"
             app:layout_constraintBottom_toBottomOf="@+id/rbProtocolTips"
-            app:layout_constraintEnd_toEndOf="@+id/ivContentBg"
+            app:layout_constraintEnd_toEndOf="@+id/contentBg"
             app:layout_constraintStart_toEndOf="@+id/tvProtocolLink2"
             app:layout_constraintTop_toTopOf="@+id/rbProtocolTips" />
 

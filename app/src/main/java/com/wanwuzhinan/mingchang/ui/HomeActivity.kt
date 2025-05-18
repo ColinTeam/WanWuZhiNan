@@ -23,6 +23,7 @@ import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
+import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
@@ -114,7 +115,6 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
 
                     ivOneBg -> {//video
                         VideoHomeActivity.start(this@HomeActivity)
-//                        com.wanwuzhinan.mingchang.ui.VideoHomeActivity.start(this@HomeActivity)
                     }
 
                     ivTwoBg -> {//audio
@@ -137,6 +137,7 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
                             this@HomeActivity, url = url, title = getString(R.string.home_detail)
                         )
                     }
+
                     ivAdclose -> {
                         viewModel.updateAD(true)
                     }

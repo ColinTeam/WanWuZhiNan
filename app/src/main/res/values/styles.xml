@@ -190,6 +190,15 @@
         <item name="android:textSize">@dimen/button_text_size</item>
     </style>
 
+    <style name="Style.Item.Bg" parent="Style">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">@dimen/item_height</item>
+        <item name="android:minHeight">@dimen/item_height</item>
+        <item name="android:maxHeight">@dimen/item_height</item>
+        <item name="android:layout_marginVertical">@dimen/margin_default_half</item>
+        <item name="android:background">@drawable/shape_sex_n</item>
+    </style>
+
     <style name="Style.Item.Label" parent="Style.Item">
         <item name="android:layout_width">@dimen/dp_0</item>
         <item name="android:layout_height">@dimen/item_height</item>

@@ -19,34 +19,85 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivContentBg"
+        <View
+            android:id="@+id/viewBg"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
-            android:background="@color/white"
+            android:background="@drawable/bg_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="@fraction/login_tab_height"
+            app:layout_constraintHeight_percent="@fraction/content_height"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="@fraction/login_tab_width"
-            app:shapeAppearanceOverlay="@style/Image.Radius_20" />
+            app:layout_constraintWidth_percent="@fraction/content_width" />
 
 
         <View
             android:id="@+id/viewUserBg"
+            style="@style/Style.Item.Bg"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
-            android:layout_marginHorizontal="@dimen/dp_40"
-            android:layout_marginTop="@dimen/dp_20"
-            android:background="@drawable/shape_sex_n"
-            android:maxHeight="@dimen/edit_height"
-            android:minHeight="@dimen/dp_40"
+            android:layout_marginHorizontal="@dimen/margin_default"
+            app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toTopOf="@+id/viewPrivacyBg"
-            app:layout_constraintEnd_toEndOf="@+id/ivContentBg"
-            app:layout_constraintStart_toStartOf="@+id/ivContentBg"
-            app:layout_constraintTop_toTopOf="@+id/ivContentBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewBg"
+            app:layout_constraintHeight_max="@dimen/dp_60"
+            app:layout_constraintStart_toStartOf="@+id/viewBg"
+            app:layout_constraintTop_toTopOf="@+id/viewBg"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintWidth_max="@dimen/dp_600" />
+
+        <View
+            android:id="@+id/viewPrivacyBg"
+            style="@style/Style.Item.Bg"
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintBottom_toTopOf="@+id/viewChildBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
+            app:layout_constraintHeight_max="@dimen/dp_60"
+            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewUserBg"
             app:layout_constraintVertical_weight="1" />
+
+        <View
+            android:id="@+id/viewChildBg"
+            style="@style/Style.Item.Bg"
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintBottom_toTopOf="@+id/viewPwdBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
+            app:layout_constraintHeight_max="@dimen/dp_60"
+            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewPrivacyBg"
+            app:layout_constraintVertical_weight="1" />
+
+        <View
+            android:id="@+id/viewPwdBg"
+            style="@style/Style.Item.Bg"
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintBottom_toTopOf="@+id/btLogout"
+            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
+            app:layout_constraintHeight_max="@dimen/dp_60"
+            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewChildBg"
+            app:layout_constraintVertical_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btLogout"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@drawable/bg_fff9f2_s_1_ff9424"
+            android:text="@string/setting_logout"
+            android:textAppearance="@style/Text.Button"
+            android:textColor="@color/color_active"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="@id/viewBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
+            app:layout_constraintHeight_max="@dimen/dp_80"
+            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewPwdBg"
+            app:layout_constraintVertical_weight="1.3" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvUserLabel"
@@ -74,18 +125,6 @@
             app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
             app:layout_constraintTop_toTopOf="@+id/viewUserBg" />
 
-        <View
-            android:id="@+id/viewPrivacyBg"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_0"
-            android:layout_marginTop="@dimen/margin_default"
-            android:background="@drawable/shape_sex_n"
-            android:minHeight="@dimen/dp_40"
-            app:layout_constraintBottom_toTopOf="@+id/viewChildBg"
-            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
-            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
-            app:layout_constraintTop_toBottomOf="@+id/viewUserBg"
-            app:layout_constraintVertical_weight="1" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPrivacyLabel"
@@ -113,18 +152,6 @@
             app:layout_constraintEnd_toEndOf="@+id/viewPrivacyBg"
             app:layout_constraintTop_toTopOf="@+id/viewPrivacyBg" />
 
-        <View
-            android:id="@+id/viewChildBg"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_0"
-            android:layout_marginTop="@dimen/margin_default"
-            android:background="@drawable/shape_sex_n"
-            android:minHeight="@dimen/dp_40"
-            app:layout_constraintBottom_toTopOf="@+id/viewPwdBg"
-            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
-            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
-            app:layout_constraintTop_toBottomOf="@+id/viewPrivacyBg"
-            app:layout_constraintVertical_weight="1" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvChildLabel"
@@ -152,18 +179,6 @@
             app:layout_constraintEnd_toEndOf="@+id/viewChildBg"
             app:layout_constraintTop_toTopOf="@+id/viewChildBg" />
 
-        <View
-            android:id="@+id/viewPwdBg"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_0"
-            android:layout_marginTop="@dimen/margin_default"
-            android:background="@drawable/shape_sex_n"
-            android:minHeight="@dimen/dp_40"
-            app:layout_constraintBottom_toTopOf="@+id/btLogout"
-            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
-            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
-            app:layout_constraintTop_toBottomOf="@+id/viewChildBg"
-            app:layout_constraintVertical_weight="1" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPwdLabel"
@@ -190,23 +205,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/viewPwdBg"
             app:layout_constraintEnd_toEndOf="@+id/viewPwdBg"
             app:layout_constraintTop_toTopOf="@+id/viewPwdBg" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btLogout"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_0"
-            android:layout_marginTop="@dimen/margin_default"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:background="@drawable/bg_fff9f2_s_1_ff9424"
-            android:text="@string/setting_logout"
-            android:textAppearance="@style/Text.Button"
-            android:textColor="@color/color_active"
-            android:textSize="@dimen/sp_14"
-            app:layout_constraintBottom_toBottomOf="@id/ivContentBg"
-            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
-            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
-            app:layout_constraintTop_toBottomOf="@+id/viewPwdBg"
-            app:layout_constraintVertical_weight="1.2" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,7 @@ import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
-import com.wanwuzhinan.mingchang.databinding.FragmentSettingOtherBinding
+import com.wanwuzhinan.mingchang.databinding.ActivityProtocolBinding
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.utils.clearAllData
@@ -23,7 +23,7 @@ import com.wanwuzhinan.mingchang.vm.HomeViewModel
  *
  * Des   :ProtocolActivity
  */
-class ProtocolActivity : AppActivity<FragmentSettingOtherBinding, HomeViewModel>() {
+class ProtocolActivity : AppActivity<ActivityProtocolBinding, HomeViewModel>() {
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {

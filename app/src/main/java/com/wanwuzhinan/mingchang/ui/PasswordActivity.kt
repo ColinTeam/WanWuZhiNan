@@ -12,7 +12,7 @@ import com.colin.library.android.utils.countDown
 import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
-import com.wanwuzhinan.mingchang.databinding.FragmentPasswordBinding
+import com.wanwuzhinan.mingchang.databinding.ActivityPasswordBinding
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_FIND_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_CONFIRM
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
@@ -29,7 +29,7 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModel
  *
  * Des   :PasswordActivity
  */
-class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() {
+class PasswordActivity : AppActivity<ActivityPasswordBinding, LoginViewModel>() {
 
     private var phone: String? = null
     private var pwd: String? = null
@@ -39,7 +39,9 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
         else bundle?.getString(EXTRAS_PHONE)
         pwd = if (savedInstanceState != null) savedInstanceState.getString(EXTRAS_PWD)
         else bundle?.getString(EXTRAS_PWD)
-        login = savedInstanceState?.getBoolean(EXTRAS_LOGIN, false) ?: (bundle?.getBoolean(EXTRAS_LOGIN) == true)
+        login = savedInstanceState?.getBoolean(EXTRAS_LOGIN, false) ?: (bundle?.getBoolean(
+            EXTRAS_LOGIN
+        ) == true)
         viewBinding.apply {
             etPhone.apply {
                 setText(phone ?: "")
