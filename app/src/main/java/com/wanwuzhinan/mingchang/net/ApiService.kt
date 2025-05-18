@@ -67,14 +67,14 @@ interface ApiService {
     //音频视频科目
     @FormUrlEncoded
     @POST("/api/LessonSubject/index")
-    suspend fun newMediaLessonSubjectGroup(
+    suspend fun newMediaLessonTab(
         @Field("group_id") group_id: Int
     ): LessonSubjectGroupResponse
 
     //音频视频科目列表
     @FormUrlEncoded
     @POST("/api/LessonSubject/info")
-    suspend fun newLessonSubject(
+    suspend fun newMediaLessonTabChild(
         @Field("id") id: Int, @Field("need_lesson") need_lesson: Int
     ): LessonSubjectGroupResponse
 

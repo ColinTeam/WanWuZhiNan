@@ -5,6 +5,7 @@ import com.colin.library.android.utils.Log
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentAudioBinding
+import com.wanwuzhinan.mingchang.entity.LessonSubject
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
 import com.wanwuzhinan.mingchang.vm.MediaViewModel
 
@@ -16,42 +17,57 @@ import com.wanwuzhinan.mingchang.vm.MediaViewModel
  * Des   :AudioHomeFragment
  */
 class AudioHomeFragment : AppFragment<FragmentAudioBinding, MediaViewModel>() {
-
+    private var tab = 0
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+        tab = getExtrasPosition(bundle, savedInstanceState)
+
         viewModel.apply {
-            mediaLessonSubjectGroup.observe {
-                Log.i("mediaLessonSubjectGroup:$it")
-                val groupSize = it.list.size
-                var position = getPositionValue()
-                if (position >= groupSize) position = groupSize - 1
-                else if (position < 0) position = 0
-                updatePosition(position)
+            mediaLessonTab.observe {
+                Log.i("mediaLessonTab:$it")
+                selectedGroup(tab, it)
             }
-            positionData.observe {
-                Log.i("groupPosition:$it")
-                val group = getMediaLessonSubjectGroupValue() ?: return@observe
-                getMediaLessonQuarter(group.list[it].groupId, 1)
-                displayGroup(group)
-            }
-            mediaLessonInfo.observe {
-                Log.i("mediaLessonQuarter:$it")
-                displayLesson(it)
+
+            mediaLessonTab.observe {
+                Log.i("mediaLessonTab:$it")
+                updateLessonUI(it.list)
             }
         }
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        val position = getExtrasPosition(bundle, savedInstanceState)
-        viewModel.getMediaLessonSubjectGroup(ConfigApp.TYPE_AUDIO)
+        viewModel.getMediaLessonTab(ConfigApp.TYPE_AUDIO)
     }
 
-    fun displayGroup(group: LessonSubjectGroup) {
+    private fun selectedGroup(
+        selected: Int, group: LessonSubjectGroup? = viewModel.getMediaLessonTabValue()
+    ) {
+        if (group == null || group.list.isEmpty()) {
+            viewModel.getMediaLessonTab(ConfigApp.TYPE_AUDIO)
+            return
+        }
+        //校验tab有效性
+        val groupSize = group.list.size
+        var tab = selected
+        if (tab >= groupSize) tab = groupSize - 1
+        if (tab < 0) tab = 0
+        this.tab = tab
+        val lesson = group.list[tab]
+        selectedLesson(lesson.id)
+        updateGroupUI(tab, group)
+    }
 
+    fun selectedLesson(id: Int) {
+        val lessonInfo = viewModel.getMediaLessonTabChildValue(id)
+        if (lessonInfo == null || lessonInfo.list.isEmpty()) {
+            viewModel.getMediaQuarterChild(id)
+        } else updateLessonUI(lessonInfo.list)
+    }
+
+    private fun updateGroupUI(tab: Int, group: LessonSubjectGroup) {
 
     }
 
-
-    fun displayLesson(lesson: LessonSubjectGroup) {
+    private fun updateLessonUI(list: List<LessonSubject>) {
 
     }
 }

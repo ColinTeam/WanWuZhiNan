@@ -18,11 +18,11 @@ import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
  */
 class MediaViewModel : AppViewModel() {
 
-    private val _mediaLessonSubjectGroup: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
-    val mediaLessonSubjectGroup: LiveData<LessonSubjectGroup> = _mediaLessonSubjectGroup
+    private val _mediaLessonTab: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
+    val mediaLessonTab: LiveData<LessonSubjectGroup> = _mediaLessonTab
 
-    private val _mediaLessonInfo: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
-    val mediaLessonInfo: LiveData<LessonSubjectGroup> = _mediaLessonInfo
+    private val _mediaLessonTabChild: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
+    val mediaLessonTabChild: LiveData<LessonSubjectGroup> = _mediaLessonTabChild
 
     private val _lessonInfo: MutableLiveData<LessonInfo> = MutableLiveData()
     val lessonInfo: LiveData<LessonInfo> = _lessonInfo
@@ -32,7 +32,7 @@ class MediaViewModel : AppViewModel() {
 
     private val _lessonsData: MutableLiveData<List<Lesson?>?> = MutableLiveData(null)
     val lessonsData: LiveData<List<Lesson?>?> = _lessonsData
-    private val lessonInfoArray: SparseArray<LessonSubjectGroup> = SparseArray()
+    private val mediaLessonTabChildArray: SparseArray<LessonSubjectGroup> = SparseArray()
 
 
     //第一个请求的为第二个请求的值
@@ -54,25 +54,26 @@ class MediaViewModel : AppViewModel() {
 //        }
 //    }
 
-    fun getMediaLessonSubjectGroup(groupID: Int = ConfigApp.TYPE_AUDIO) {
-        request(request = { service.newMediaLessonSubjectGroup(groupID) }, success = { it ->
-            it?.let { _mediaLessonSubjectGroup.postValue(it) }
+    fun getMediaLessonTab(groupID: Int = ConfigApp.TYPE_AUDIO) {
+        request(request = { service.newMediaLessonTab(groupID) }, success = { it ->
+            it?.let { _mediaLessonTab.postValue(it) }
         })
     }
 
-    fun getMediaLessonInfo(groupID: Int, need: Int = 1) {
-        request(request = { service.newLessonSubject(groupID, need) }, success = { it ->
+    fun getMediaLessonTabChild(groupID: Int, need: Int = 1) {
+        request(request = { service.newMediaLessonTabChild(groupID, need) }, success = { it ->
             it?.let {
-                lessonInfoArray.put(groupID, it)
-                _mediaLessonSubjectGroup.postValue(it)
+                mediaLessonTabChildArray.put(groupID, it)
+                _mediaLessonTabChild.postValue(it)
             }
         })
     }
 
-    fun getMediaLessonQuarter(lessonID: Int, need: Int = 1) {
-        request(request = { service.newAudioLessonQuarter(lessonID, need) }, success = { it ->
+    fun getMediaQuarterChild(groupID: Int, need: Int = 1) {
+        request(request = { service.newAudioLessonQuarter(groupID, need) }, success = { it ->
             it?.let {
-                _mediaLessonInfo.postValue(it)
+                mediaLessonTabChildArray.put(groupID, it)
+                _mediaLessonTabChild.postValue(it)
             }
         })
     }
@@ -100,9 +101,8 @@ class MediaViewModel : AppViewModel() {
     fun getPositionValue() = positionData.value ?: 0
     fun getLessons() = lessonsData.value
     fun getLessonInfoValue() = lessonInfo.value
-    fun getMediaLessonSubjectGroupValue() = mediaLessonSubjectGroup.value
-    fun getMediaLessonInfoValue() = mediaLessonInfo.value
-    fun getMediaLessonInfoValue(id: Int) = lessonInfoArray.get(id, null)
+    fun getMediaLessonTabValue() = mediaLessonTab.value
+    fun getMediaLessonTabChildValue(id: Int) = mediaLessonTabChildArray.get(id, null)
 
 
 }

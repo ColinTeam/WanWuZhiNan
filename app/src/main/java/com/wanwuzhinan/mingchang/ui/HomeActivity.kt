@@ -23,11 +23,10 @@ import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.entity.UserInfo
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
-import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
-import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
 import com.wanwuzhinan.mingchang.ui.phone.RankActivity
+import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
 import com.wanwuzhinan.mingchang.ui.pop.UserInfoDialog
 import com.wanwuzhinan.mingchang.utils.RATIO_16_9
@@ -124,7 +123,8 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
                     }
 
                     ivThreeBg -> {
-                        QuestionListAskActivity.start(this@HomeActivity)
+                        com.wanwuzhinan.mingchang.ui.VideoHomeActivity.start(this@HomeActivity)
+//                        QuestionListAskActivity.start(this@HomeActivity)
                     }
 
                     ivFourBg -> {

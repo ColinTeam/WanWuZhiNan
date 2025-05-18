@@ -19,34 +19,30 @@ class AudioFragment : AppFragment<FragmentAudioBinding, MediaViewModel>() {
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
-            mediaLessonSubjectGroup.observe {
+            mediaLessonTab.observe {
                 Log.i("mediaLessonSubjectGroup:$it")
-                val groupSize = it.list.size
-                var position = getPositionValue()
-                if (position >= groupSize) position = groupSize - 1
-                else if (position < 0) position = 0
-                updatePosition(position)
+                selectLessonTab(it,0)
             }
-            positionData.observe {
-                Log.i("groupPosition:$it")
-                val group = getMediaLessonSubjectGroupValue() ?: return@observe
-                getMediaLessonQuarter(group.list[it].groupId, 1)
-                displayGroup(group)
-            }
-            mediaLessonInfo.observe {
-                Log.i("mediaLessonQuarter:$it")
-                displayLesson(it)
-            }
+//            positionData.observe {
+//                Log.i("groupPosition:$it")
+//                val group = getMediaLessonSubjectGroupValue() ?: return@observe
+//                getMediaLessonQuarter(group.list[it].groupId, 1)
+//                displayGroup(group)
+//            }
+//            mediaLessonInfo.observe {
+//                Log.i("mediaLessonQuarter:$it")
+//                displayLesson(it)
+//            }
         }
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
-            getMediaLessonSubjectGroup(ConfigApp.TYPE_AUDIO)
+            getMediaLessonTab(ConfigApp.TYPE_AUDIO)
         }
     }
 
-    fun displayGroup(group: LessonSubjectGroup) {
+    fun selectLessonTab(group: LessonSubjectGroup, tab: Int) {
 
 
     }
