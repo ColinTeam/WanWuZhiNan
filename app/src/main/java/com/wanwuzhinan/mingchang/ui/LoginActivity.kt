@@ -223,7 +223,7 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
         }
         val type = if (isPhone()) HTTP_LOGIN_DEVICE_PHONE else HTTP_LOGIN_DEVICE_TABLET
         val action = if (tabIndex == TAB_SMS) HTTP_ACTION_LOGIN_SMS else HTTP_ACTION_LOGIN_PWD
-        Log.e("phone:$phone sms:$sms pwd:$pwd type:$type action:$action")
+        Log.i("phone:$phone sms:$sms pwd:$pwd type:$type action:$action")
         viewModel.login(phone, sms, pwd, type, action)
     }
 

@@ -485,12 +485,12 @@ class RoundDrawable(private val bitmap: Bitmap) : Drawable() {
     }
 
     fun setScaleType(scaleType: ImageView.ScaleType?): RoundDrawable {
-        var scaleType = scaleType
-        if (scaleType == null) {
-            scaleType = ImageView.ScaleType.FIT_CENTER
+        var type = scaleType
+        if (type == null) {
+            type = ImageView.ScaleType.FIT_CENTER
         }
-        if (mScaleType != scaleType) {
-            mScaleType = scaleType
+        if (mScaleType != type) {
+            mScaleType = type
             updateShaderMatrix()
         }
         return this

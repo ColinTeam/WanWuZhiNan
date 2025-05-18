@@ -1,0 +1,56 @@
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        def processManifest = output.getProcessManifestProvider().get()
+        processManifest.doLast { task ->
+            def outputDir = task.multiApkManifestOutputDirectory
+            File outputDirectory
+            if (outputDir instanceof File) {
+                outputDirectory = outputDir
+            } else {
+                outputDirectory = outputDir.get().asFile
+            }
+
+            File manifestOutFile = file("$outputDirectory/AndroidManifest.xml")
+            println("-----------ℹ️ ${manifestOutFile} ℹ️----------- ")
+
+            if (manifestOutFile.exists() && manifestOutFile.canRead() && manifestOutFile.canWrite()) {
+                def xml = new XmlParser(false, false).parse(manifestOutFile)
+                def exportedTag = "android:exported"
+                def nameTag = "android:name"
+
+                def nodes = xml.application[0].'*'.findAll {
+                    ['activity', 'receiver', 'service'].contains(it.name()) &&
+                            it.attribute(exportedTag) == null
+                }
+
+                boolean modified = false
+
+                nodes.each { node ->
+                    def androidName = node.attribute(nameTag)
+                    def isMain = false
+                    node.'intent-filter'?.each { intentFilter ->
+                        intentFilter.'action'?.each { action ->
+                            if (action.attribute(nameTag) == "android.intent.action.MAIN") {
+                                isMain = true
+                            }
+                        }
+                    }
+                    if (node.attribute(exportedTag) != "$isMain") {
+                        node.attributes().put(exportedTag, "$isMain".toLowerCase())
+                        modified = true
+                        println("ℹ️..................${androidName}:${node.name()} exported = $isMain..................")
+                    }
+                }
+
+                if (modified) {
+                    PrintWriter pw = new PrintWriter(manifestOutFile)
+                    pw.write(groovy.xml.XmlUtil.serialize(xml))
+                    pw.close()
+                    println("✅ Successfully updated AndroidManifest.xml")
+                } else {
+                    println("ℹ️ No changes needed in AndroidManifest.xml")
+                }
+            }
+        }
+    }
+}

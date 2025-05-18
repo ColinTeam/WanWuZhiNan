@@ -209,7 +209,7 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     }
 
     fun editUserInfo(user: UserInfo) {
-        if (user.nickname.isNotEmpty()) {
+        if (user.nickname.isNotEmpty() && user.truename.isNotEmpty()) {
             return
         }
         if (checkUserInfo) return

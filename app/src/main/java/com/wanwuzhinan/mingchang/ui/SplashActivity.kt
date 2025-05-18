@@ -7,7 +7,6 @@ import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.player.PlayerFactory
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType
-import com.wanwuzhinan.mingchang.BuildConfig
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
@@ -44,7 +43,7 @@ class SplashActivity : AppActivity<FragmentSplashBinding, HomeViewModel>() {
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
-        val path = "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.raw.splash1
+        val path = "android.resource://${this.packageName}/${R.raw.splash1}"
         PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_FULL)
         GSYVideoType.disableMediaCodec()

@@ -34,56 +34,6 @@ fun getCurrentPackageName(): String {
     return appContext.packageName
 }
 
-fun isNeedUpdate(data: VersionData): Boolean {
-    val android = data.android
-    //获得最新 versionCode
-    var newVersion = data.android.version_code
-    newVersion = newVersion.filterNot { it == "."[0] }
-    var curVersion = getCurrentVersionName()
-    curVersion = curVersion.filterNot { it == "."[0] }
-    LogUtils.e("newVersion====================>$newVersion")
-    LogUtils.e("curVersion====================>$curVersion")
-    if (isEmpty(newVersion) || isEmpty(curVersion)) {
-        return false
-    }
-    val b1 = BigDecimal(newVersion)
-    val b2 = BigDecimal(curVersion)
-    return b1 > b2
-}
-
-//0代表相等，1代表version1大于version2，-1代表version1小于version2
-private fun compareVersion(newVersion: String, curVersion: String): Int {
-    if (isEqualStr(newVersion, curVersion)) {
-        return 0
-    }
-    val v1Array = newVersion.split("\\.")
-    val v2Array = curVersion.split("\\.")
-    var index = 0
-    // 获取最小长度值
-    val minLen: Int = v1Array.size.coerceAtMost(v2Array.size)
-    var diff = 0
-    // 循环判断每位的大小
-    while (index < minLen && v1Array[index].toInt() - v2Array.get(index).toInt()
-            .also { diff = it } == 0
-    ) {
-        index++
-    }
-    if (diff == 0) {
-        // 如果位数不一致，比较多余位数
-        for (i in index until v1Array.size) {
-            if (v1Array[i].toInt() > 0) {
-                return 1
-            }
-        }
-        for (i in index until v2Array.size) {
-            if (v2Array[i].toInt() > 0) {
-                return -1
-            }
-        }
-        return 0
-    }
-    return if (diff > 0) 1 else -1
-}
 
 fun installApk(file: File) {
     setPermission()

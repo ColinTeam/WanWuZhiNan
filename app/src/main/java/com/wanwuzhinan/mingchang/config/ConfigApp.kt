@@ -4,7 +4,9 @@ import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 
 object ConfigApp {
-    const val IS_SPLASH_VODEI = false
+    const val URL_DEBUG: String = "https://www.mxwsl.cn"
+    const val URL_RELEASE: String = "https://www.mxwsl.cn"
+//    const val URL_RELEASE: String = "https://app.wanwuzhinan.top"
     const val BUGLY_APP_ID = "7531451148"
     const val LIVE_LICENSE_KEY = "d025b928c9f91abb9a3a354cad87af4b"
     const val WE_CHAT_APP_STATE = "wechat_sdk_demo_test_neng"

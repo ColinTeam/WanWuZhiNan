@@ -3,13 +3,12 @@ package com.wanwuzhinan.mingchang.media
 import android.content.ComponentName
 import android.content.Context
 import android.media.AudioFormat
+import androidx.core.content.ContextCompat
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import com.colin.library.android.utils.helper.ThreadHelper
 import com.google.common.util.concurrent.ListenableFuture
 import com.wanwuzhinan.mingchang.media.service.MediaService
-import kotlinx.coroutines.Runnable
 
 /**
  * Author:ColinLu
@@ -26,7 +25,7 @@ object MediaHolder {
         val token = SessionToken(context, ComponentName(context, MediaService::class.java))
         val cf = MediaController.Builder(context, token).buildAsync().also { future = it }
         val listener = Runnable { player = cf.get() }
-        cf.addListener(listener, ThreadHelper.single())
+        cf.addListener(listener, ContextCompat.getMainExecutor(context))
     }
 
     fun getPlayer() = player

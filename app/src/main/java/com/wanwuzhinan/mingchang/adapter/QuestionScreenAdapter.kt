@@ -14,7 +14,7 @@ class QuestionScreenAdapter : BaseQuickAdapter<QuestionScreenData?,QuickViewHold
     override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: QuestionScreenData?) {
 
         holder.setText(R.id.tv_title,"第${item!!.page+1}节")
-            .setSelected(R.id.tv_title,item!!.isSelect)
+            .setSelected(R.id.tv_title, item.isSelect)
 
     }
 

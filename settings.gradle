@@ -1,5 +1,8 @@
 pluginManagement {
     repositories {
+//        maven { url = uri("https://mirrors.tencent.com/nexus/repository/maven-public/") }
+//        maven { url = uri("https://mirrors.tencent.com/repository/maven/YoutuEntertainment") }
+//        maven { url = uri("https://mirrors.tencent.com/repository/maven/thirdparty") }
         maven { url = uri("https://info-maven.apps.saic-gm.com/repository/maven-public/") }
         maven { url = uri("https://jitpack.io") }
         google {
@@ -16,6 +19,9 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+//        maven { url = uri("https://mirrors.tencent.com/nexus/repository/maven-public/") }
+//        maven { url = uri("https://mirrors.tencent.com/repository/maven/YoutuEntertainment") }
+//        maven { url = uri("https://mirrors.tencent.com/repository/maven/thirdparty") }
         maven { url = uri("https://info-maven.apps.saic-gm.com/repository/maven-public/") }
         maven { url = uri("https://jitpack.io") }
         google()

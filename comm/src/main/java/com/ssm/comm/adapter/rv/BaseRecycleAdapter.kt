@@ -227,8 +227,8 @@ class BaseRecycleAdapter<T : Any, VB : ViewDataBinding> constructor(
         var footerLayoutResId: () -> Int = { R.layout.base_empty_layout }
         var emptyLayoutResId: () -> Int = { R.layout.base_empty_layout }
         var onBindViewHolder: (bind: VB, data: T, position: Int) -> Unit =
-            { bind, data, position -> }
-        var onBindView: (bind: ViewDataBinding) -> Unit = { bind -> }
+            { _, _, _ -> }
+        var onBindView: (bind: ViewDataBinding) -> Unit = { _ -> }
         var isShowHeader: () -> Boolean = { false }
         var isShowFooter: () -> Boolean = { false }
         var isShowEmpty: () -> Boolean = { true }
@@ -237,12 +237,12 @@ class BaseRecycleAdapter<T : Any, VB : ViewDataBinding> constructor(
         var isOpenLongClickListener: () -> Boolean = { false }
 
         var onItemClick: (data: T, position: Int, adapter: BaseRecycleAdapter<T, VB>) -> Unit =
-            { data, position, adapter -> }
+            { _, _, _ -> }
 
         var onItemClick2: (bind: VB, data: T, position: Int, adapter: BaseRecycleAdapter<T, VB>) -> Unit =
-            { bind,data, position, adapter -> }
+            { _,_, _, _ -> }
 
         var onItemLongClick: (data: T, position: Int) -> Boolean =
-            { data, position -> false }
+            { _, _ -> false }
     }
 }

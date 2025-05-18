@@ -40,7 +40,7 @@ class UserInfoFragment : AppFragment<FragmentEditFileBinding, UserInfoViewModel>
             ) {
                 when (it) {
                     ivAvatar -> {
-                        chooseAvatar()
+                        //chooseAvatar()
                     }
 
                     tvMan -> {

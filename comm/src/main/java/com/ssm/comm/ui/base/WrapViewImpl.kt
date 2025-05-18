@@ -9,9 +9,9 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.ssm.comm.ext.copyString
 import com.ssm.comm.ext.dismissLoadingExt
-import com.ssm.comm.ext.isEmpty
 import com.ssm.comm.ext.showLoadingExt
 import com.ssm.comm.ext.toastNormal
 import com.ssm.comm.ui.widget.dialog.CommDialog
@@ -106,23 +106,21 @@ class WrapViewImpl(private var activity: AppCompatActivity) : IWrapView {
     }
 
     override fun performLaunchWebPage(url: String?) {
-        if (isEmpty(url)) {
+        if (url.isNullOrEmpty()) {
             toastNormal("url地址不能为空")
             return
         }
         val dialog = CommDialog("确定是否立即跳转外部浏览器?", callback = {
             onConfirm = {
-                val uri: Uri = Uri.parse(url)
+                val uri: Uri = url.toUri()
                 val intent = Intent()
                 intent.action = Intent.ACTION_VIEW
                 intent.data = uri
                 //是否安装浏览器
                 if (intent.resolveActivity(activity.packageManager) != null) {
-                    val componentName = intent.resolveActivity(activity.packageManager)
+                   // val componentName = intent.resolveActivity(activity.packageManager)
                     //默认浏览器
                     activity.startActivity(intent);
-                } else {
-
                 }
             }
         })

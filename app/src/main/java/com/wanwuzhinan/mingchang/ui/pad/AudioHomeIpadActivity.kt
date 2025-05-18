@@ -44,12 +44,11 @@ import com.wanwuzhinan.mingchang.utils.AnimationUtils
 import com.wanwuzhinan.mingchang.utils.getAudioData
 import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.UserViewModel
-import me.jessyan.autosize.internal.CustomAdapt
 import java.text.SimpleDateFormat
 
 //音频主页
 class AudioHomeIpadActivity :
-    BaseActivity<ActivityAudioHomePadBinding, UserViewModel>(UserViewModel()), CustomAdapt {
+    BaseActivity<ActivityAudioHomePadBinding, UserViewModel>(UserViewModel()) {
     companion object {
         @JvmStatic
         fun start(activity: Activity) {
@@ -219,7 +218,7 @@ class AudioHomeIpadActivity :
         }
 
         mViewModel.getLessonInfoLiveData.observeForever {
-            if (mActivity!!.isFinishing || mActivity!!.isDestroyed) return@observeForever
+            if (mActivity.isFinishing || mActivity.isDestroyed) return@observeForever
             dismissLoadingExt()
             if (it.data != null) {
                 mPlayData = it.data!!
@@ -230,7 +229,7 @@ class AudioHomeIpadActivity :
         }
 
         mViewModel.courseStudyLiveData.observeForever {
-            if (mActivity!!.isFinishing || mActivity!!.isDestroyed) return@observeForever
+            if (mActivity.isFinishing || mActivity.isDestroyed) return@observeForever
             dismissLoadingExt()
             if (it.data != null) {
                 Log.e("TAG", "UPDATE_NIGHT: 2")
@@ -241,8 +240,8 @@ class AudioHomeIpadActivity :
                         nextPlay()
                     })
                 } else {
-                    if (data.medalList.size > 0) {
-                        showCardImage(data.medalList.get(0).image, complete = {
+                    if (data.medalList.isNotEmpty()) {
+                        showCardImage(data.medalList[0].image, complete = {
                             post(MessageEvent.UPDATE_NIGHT)
                             nextPlay()
                         })
@@ -578,11 +577,11 @@ class AudioHomeIpadActivity :
         return R.layout.activity_audio_home_pad
     }
 
-    override fun isBaseOnWidth(): Boolean {
-        return false
-    }
-
-    override fun getSizeInDp(): Float {
-        return 375F;
-    }
+//    override fun isBaseOnWidth(): Boolean {
+//        return false
+//    }
+//
+//    override fun getSizeInDp(): Float {
+//        return 375F;
+//    }
 }

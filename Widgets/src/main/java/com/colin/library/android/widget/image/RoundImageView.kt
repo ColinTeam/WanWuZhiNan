@@ -93,11 +93,11 @@ class RoundImageView @JvmOverloads constructor(
 
             if (!any) {
                 if (cornerRadiusOverride < 0) cornerRadiusOverride = DEFAULT_RADIUS
-                var i = 0
-                val len = mCornerRadii.size
-                while (i < len) {
-                    mCornerRadii[i] = cornerRadiusOverride
-                    i++
+                var j = 0
+                val size = mCornerRadii.size
+                while (j < size) {
+                    mCornerRadii[j] = cornerRadiusOverride
+                    j++
                 }
             }
 

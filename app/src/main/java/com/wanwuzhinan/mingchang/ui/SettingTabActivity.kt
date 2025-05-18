@@ -32,7 +32,7 @@ class SettingTabActivity : AppActivity<FragmentSettingTabBinding, UserInfoViewMo
         val tabs = getTabList()
         tabAdapter = SettingTabAdapter()
         tabAdapter!!.submitList(tabs)
-        tabAdapter!!.onItemClickListener = { v, it, position ->
+        tabAdapter!!.onItemClickListener = { _, _, position ->
             selected(position)
         }
         viewBinding.list.adapter = tabAdapter

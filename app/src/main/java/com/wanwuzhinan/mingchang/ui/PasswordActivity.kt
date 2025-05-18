@@ -33,16 +33,25 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
 
     private var phone: String? = null
     private var pwd: String? = null
+    private var login: Boolean = false
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         phone = if (savedInstanceState != null) savedInstanceState.getString(EXTRAS_PHONE)
         else bundle?.getString(EXTRAS_PHONE)
         pwd = if (savedInstanceState != null) savedInstanceState.getString(EXTRAS_PWD)
         else bundle?.getString(EXTRAS_PWD)
+        login = if (savedInstanceState != null) savedInstanceState.getBoolean(EXTRAS_LOGIN, false)
+        else bundle?.getBoolean(EXTRAS_LOGIN) ?: false
         viewBinding.apply {
-            etPhone.setText(phone ?: "")
+            etPhone.apply {
+                setText(phone ?: "")
+                if (login) this.clearFocus()
+                else this.doAfterTextChanged { updateButton() }
+                isFocusableInTouchMode = !login
+                isCursorVisible = !login
+                isEnabled = !login
+            }
             etPassword.setText(pwd ?: "")
             etPasswordConfirm.setText(pwd ?: "")
-            etPhone.doAfterTextChanged { updateButton() }
             etSMS.doAfterTextChanged { updateButton() }
             etPassword.doAfterTextChanged { updateButton() }
             etPasswordConfirm.doAfterTextChanged { updateButton() }
@@ -188,18 +197,19 @@ class PasswordActivity : AppActivity<FragmentPasswordBinding, LoginViewModel>() 
         const val PHONE_LENGTH = 11
         const val EXTRAS_PHONE = "phone"
         const val EXTRAS_PWD = "pwd"
+        const val EXTRAS_LOGIN = "login"
 
         @JvmStatic
         fun start(context: Context, phone: String?) {
-            val starter = Intent(context, PasswordActivity::class.java).putExtra(
-                EXTRAS_PHONE, phone ?: ""
-            )
-            context.startActivity(starter)
+            context.startActivity(getIntent(context, phone, null, true))
         }
 
         @JvmStatic
-        fun getIntent(context: Context, phone: String? = null, pwd: String? = null): Intent {
+        fun getIntent(
+            context: Context, phone: String? = null, pwd: String? = null, login: Boolean = false
+        ): Intent {
             return Intent(context, PasswordActivity::class.java).apply {
+                putExtra(EXTRAS_LOGIN, login)
                 phone?.let { putExtra(EXTRAS_PHONE, it) }
                 pwd?.let { putExtra(EXTRAS_PWD, it) }
             }

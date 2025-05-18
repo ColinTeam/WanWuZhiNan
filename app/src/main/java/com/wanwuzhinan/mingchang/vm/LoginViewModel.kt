@@ -25,7 +25,7 @@ class LoginViewModel : AppViewModel() {
             loading = true,
             toast = true,
             request = { service.newCode(phone) },
-            success = { it -> _smsSuccess.postValue(true) },
+            success = { _smsSuccess.postValue(true) },
             delay = 1000L
         )
     }
@@ -39,7 +39,8 @@ class LoginViewModel : AppViewModel() {
         confirm: Int = 0
     ) {
         request(
-            loading = true, toast = true,
+            loading = true,
+            toast = true,
             request = { service.newLogin(phone, sms, pwd, pwd, type, action, confirm) },
             success = { it -> it?.let { _registerData.postValue(it) } },
             delay = 1000L

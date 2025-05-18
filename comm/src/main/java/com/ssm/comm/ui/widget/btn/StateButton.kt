@@ -28,8 +28,10 @@ class StateButton : AppCompatButton {
 
     @ColorInt
     private var mNormalTextColor = 0
+
     @ColorInt
     private var mPressedTextColor = 0
+
     @ColorInt
     private var mUnableTextColor = 0
 
@@ -51,16 +53,20 @@ class StateButton : AppCompatButton {
 
     @ColorInt
     private var mNormalStrokeColor = 0
+
     @ColorInt
     private var mPressedStrokeColor = 0
+
     @ColorInt
     private var mUnableStrokeColor = 0
 
     //background color
     @ColorInt
     private var mNormalBackgroundColor = 0
+
     @ColorInt
     private var mPressedBackgroundColor = 0
+
     @ColorInt
     private var mUnableBackgroundColor = 0
 
@@ -78,15 +84,19 @@ class StateButton : AppCompatButton {
     private var mPressedBackground: GradientDrawable? = null
     private var mUnableBackground: GradientDrawable? = null
 
-    private val states = Array(4){IntArray(0)}
+    private val states = Array(4) { IntArray(0) }
 
     private var mStateBackground: StateListDrawable? = null
 
-    constructor(mContext: Context) : this(mContext,null)
+    constructor(mContext: Context) : this(mContext, null)
 
-    constructor(mContext: Context,mAttributeSet: AttributeSet?) : this(mContext,mAttributeSet,0)
+    constructor(mContext: Context, mAttributeSet: AttributeSet?) : this(mContext, mAttributeSet, 0)
 
-    constructor(mContext: Context,mAttributeSet: AttributeSet?,mDefStyleAttr: Int) : super(mContext,mAttributeSet,mDefStyleAttr){
+    constructor(mContext: Context, mAttributeSet: AttributeSet?, mDefStyleAttr: Int) : super(
+        mContext,
+        mAttributeSet,
+        mDefStyleAttr
+    ) {
         //set text color
         this.mTextColorStateList = textColors
         this.gravity = Gravity.CENTER
@@ -94,11 +104,11 @@ class StateButton : AppCompatButton {
         initViews(mContext, mAttributeSet)
     }
 
-    private fun initViews(context: Context,attr: AttributeSet?){
+    private fun initViews(context: Context, attr: AttributeSet?) {
         val drawable = background
-        mStateBackground = if(drawable is StateListDrawable){
+        mStateBackground = if (drawable is StateListDrawable) {
             drawable
-        }else{
+        } else {
             StateListDrawable()
         }
         mNormalBackground = GradientDrawable()
@@ -186,7 +196,7 @@ class StateButton : AppCompatButton {
     }
 
     //设置渐变参数
-    private fun setGradient(a: TypedArray){
+    private fun setGradient(a: TypedArray) {
         //设置渐变方向
         mNormalBackground!!.orientation = getOrientation(normalOrientation)
         mPressedBackground!!.orientation = getOrientation(pressedOrientation)
@@ -244,7 +254,7 @@ class StateButton : AppCompatButton {
     }
 
     //setBackGroundColor
-    private fun setBackGroundColor(a: TypedArray){
+    private fun setBackGroundColor(a: TypedArray) {
         mNormalBackgroundColor = a.getColor(R.styleable.StateButton_normalBackgroundColor, 0)
         mPressedBackgroundColor = a.getColor(R.styleable.StateButton_pressedBackgroundColor, 0)
         mUnableBackgroundColor = a.getColor(R.styleable.StateButton_unableBackgroundColor, 0)
@@ -254,7 +264,7 @@ class StateButton : AppCompatButton {
     }
 
     //set shapeType
-    private fun setShapeType(){
+    private fun setShapeType() {
         if (normalShapeType != -1) {
             mNormalBackground!!.shape = normalShapeType
         }
@@ -266,9 +276,8 @@ class StateButton : AppCompatButton {
         }
     }
 
-    private fun getOrientation(orientation: Int) : GradientDrawable.Orientation{
-        var o: GradientDrawable.Orientation? = null
-        o = when (orientation) {
+    private fun getOrientation(orientation: Int): GradientDrawable.Orientation {
+        return when (orientation) {
             0 -> GradientDrawable.Orientation.BL_TR
             1 -> GradientDrawable.Orientation.BOTTOM_TOP
             2 -> GradientDrawable.Orientation.BR_TL
@@ -279,7 +288,6 @@ class StateButton : AppCompatButton {
             7 -> GradientDrawable.Orientation.TR_BL
             else -> GradientDrawable.Orientation.BL_TR
         }
-        return o
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -288,68 +296,72 @@ class StateButton : AppCompatButton {
     }
 
     /****************** stroke color *********************/
-    fun setNormalStrokeColor(@ColorInt normalStrokeColor: Int){
+    fun setNormalStrokeColor(@ColorInt normalStrokeColor: Int) {
         this.mNormalStrokeColor = normalStrokeColor
         mNormalBackground?.let { setStroke(it, mNormalStrokeColor, mNormalStrokeWidth) }
     }
 
-    fun setPressedStrokeWidth(pressedStrokeWidth: Int){
+    fun setPressedStrokeWidth(pressedStrokeWidth: Int) {
         this.mPressedStrokeWidth = pressedStrokeWidth
         mPressedBackground?.let { setStroke(it, mPressedStrokeColor, mPressedStrokeWidth) }
     }
 
-    fun setUnableStrokeWidth(unableStrokeWidth: Int){
+    fun setUnableStrokeWidth(unableStrokeWidth: Int) {
         this.mUnableStrokeWidth = unableStrokeWidth
         mUnableBackground?.let { setStroke(it, mUnableStrokeColor, mUnableStrokeWidth) }
     }
 
-    fun setStateStrokeWidth(normal: Int,pressed: Int,unable: Int){
+    fun setStateStrokeWidth(normal: Int, pressed: Int, unable: Int) {
         this.mNormalStrokeWidth = normal
         this.mPressedStrokeWidth = pressed
         this.mUnableStrokeWidth = unable
         setStroke()
     }
 
-    fun setStrokeDash(strokeDashWidth: Float,strokeDashGap: Float){
+    fun setStrokeDash(strokeDashWidth: Float, strokeDashGap: Float) {
         this.mStrokeDashWidth = strokeDashWidth
         this.mStrokeDashGap = strokeDashGap
         setStroke()
     }
 
-    private fun setStroke(){
+    private fun setStroke() {
         setStroke(mNormalBackground!!, mNormalStrokeColor, mNormalStrokeWidth)
         setStroke(mPressedBackground!!, mPressedStrokeColor, mPressedStrokeWidth)
         setStroke(mUnableBackground!!, mUnableStrokeColor, mUnableStrokeWidth)
     }
 
-    private fun setStroke(mBackground: GradientDrawable,mStrokeColor: Int,mStrokeWidth: Int){
-        mBackground.setStroke(mStrokeWidth,mStrokeColor,mStrokeDashWidth,mStrokeDashGap)
+    private fun setStroke(mBackground: GradientDrawable, mStrokeColor: Int, mStrokeWidth: Int) {
+        mBackground.setStroke(mStrokeWidth, mStrokeColor, mStrokeDashWidth, mStrokeDashGap)
     }
 
     /********************   radius  *******************************/
-    private fun setRadius(@FloatRange(from = 0.0) radius: Float){
+    private fun setRadius(@FloatRange(from = 0.0) radius: Float) {
         this.mRadius = radius
         mNormalBackground!!.cornerRadius = mRadius
         mPressedBackground!!.cornerRadius = mRadius
         mUnableBackground!!.cornerRadius = mRadius
     }
 
-    private fun setRound(round: Boolean){
+    private fun setRound(round: Boolean) {
         this.mRound = round
         val h = measuredHeight
-        if(mRound){
-          setRadius(h / 2f)
+        if (mRound) {
+            setRadius(h / 2f)
         }
     }
 
-    fun setRadius(radii: FloatArray){
+    fun setRadius(radii: FloatArray) {
         this.mNormalBackground!!.cornerRadii = radii
         this.mPressedBackground!!.cornerRadii = radii
         this.mUnableBackground!!.cornerRadii = radii
     }
 
     /********************  background color  **********************/
-    fun setStateBackgroundColor(@ColorInt normal: Int,@ColorInt pressed: Int,@ColorInt unable: Int){
+    fun setStateBackgroundColor(
+        @ColorInt normal: Int,
+        @ColorInt pressed: Int,
+        @ColorInt unable: Int
+    ) {
         this.mNormalBackgroundColor = normal
         this.mPressedBackgroundColor = pressed
         this.mUnableBackgroundColor = unable
@@ -358,53 +370,53 @@ class StateButton : AppCompatButton {
         this.mUnableBackground?.setColor(mUnableBackgroundColor)
     }
 
-    fun setNormalBackgroundColor(@ColorInt normalBackgroundColor: Int){
+    fun setNormalBackgroundColor(@ColorInt normalBackgroundColor: Int) {
         this.mNormalBackgroundColor = normalBackgroundColor
         this.mNormalBackground?.setColor(mNormalBackgroundColor)
     }
 
-    fun setPressedBackgroundColor(@ColorInt pressedBackgroundColor: Int){
+    fun setPressedBackgroundColor(@ColorInt pressedBackgroundColor: Int) {
         this.mPressedBackgroundColor = pressedBackgroundColor
         this.mPressedBackground?.setColor(mPressedBackgroundColor)
     }
 
-    fun setUnableBackgroundColor(@ColorInt unableBackgroundColor: Int){
+    fun setUnableBackgroundColor(@ColorInt unableBackgroundColor: Int) {
         this.mUnableBackgroundColor = unableBackgroundColor
         this.mUnableBackground?.setColor(mUnableBackgroundColor)
     }
 
     /*******************alpha animation duration********************/
-    fun setAnimationDuration(@androidx.annotation.IntRange(from = 0) duration: Int){
+    fun setAnimationDuration(@androidx.annotation.IntRange(from = 0) duration: Int) {
         this.mDuration = duration
         this.mStateBackground?.setEnterFadeDuration(mDuration)
     }
 
     /***************  text color   ***********************/
-    private fun setTextColor(){
+    private fun setTextColor() {
         val colors =
             intArrayOf(mPressedTextColor, mPressedTextColor, mNormalTextColor, mUnableTextColor)
         mTextColorStateList = ColorStateList(states, colors)
         setTextColor(mTextColorStateList)
     }
 
-    fun setStateTextColor(@ColorInt normal: Int,@ColorInt pressed: Int,@ColorInt unable: Int){
+    fun setStateTextColor(@ColorInt normal: Int, @ColorInt pressed: Int, @ColorInt unable: Int) {
         this.mNormalTextColor = normal
         this.mPressedTextColor = pressed
         this.mUnableTextColor = unable
         setTextColor()
     }
 
-    fun setNormalTextColor(@ColorInt normalTextColor: Int){
+    fun setNormalTextColor(@ColorInt normalTextColor: Int) {
         this.mNormalTextColor = normalTextColor
         setTextColor()
     }
 
-    fun setPressedTextColor(@ColorInt pressedTextColor: Int){
+    fun setPressedTextColor(@ColorInt pressedTextColor: Int) {
         this.mPressedTextColor = pressedTextColor
         setTextColor()
     }
 
-    fun setUnableTextColor(@ColorInt unableTextColor: Int){
+    fun setUnableTextColor(@ColorInt unableTextColor: Int) {
         this.mUnableTextColor = unableTextColor
         setTextColor()
     }

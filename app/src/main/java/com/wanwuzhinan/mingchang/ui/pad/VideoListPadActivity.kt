@@ -255,11 +255,11 @@ class VideoListPadActivity :
             onSuccess = { data, msg ->
                 for (obj in data!!.list!!) {
                     if (obj.id == mSelectId) {
-                        mPosition = data!!.list!!.indexOf(obj)
+                        mPosition = data.list!!.indexOf(obj)
                     }
                 }
-                if (mPosition <= data!!.list!!.size - 1) {
-                    data.list!!.get(mPosition).select = true
+                if (mPosition <= data.list!!.size - 1) {
+                    data.list!![mPosition].select = true
                 }
                 mLeftAdapter.submitList(data.list)
 

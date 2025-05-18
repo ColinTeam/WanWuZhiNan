@@ -21,13 +21,10 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
-import com.shuyu.gsyvideoplayer.player.PlayerFactory
-import com.shuyu.gsyvideoplayer.player.SystemPlayerManager
 import com.ssm.comm.app.CommApplication
-import com.ssm.comm.app.appContext
-import com.ssm.comm.global.AppActivityManager
 import com.tencent.rtmp.TXLiveBase
 import com.tencent.rtmp.TXLiveBaseListener
+import com.wanwuzhinan.mingchang.BuildConfig
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.entity.RegisterData
@@ -52,16 +49,14 @@ class BaseApplication : CommApplication() {
         super.onCreate()
         UtilHelper.init(UtilConfig.newBuilder(this, true).build())
         initNetwork()
-        AppActivityManager.getInstance().init(appContext)
         initMMKV(this)
-//        MediaHolder.initialize(this)
         initImageLoader()
         initDownload()
+//        MediaHolder.initialize(this)
         DialogX.init(this);
         initX5Environment()
         enterInApp()
         Log.e("BaseApplication", "onCreate: ")
-
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(object : DefaultRefreshHeaderCreator {
             override fun createRefreshHeader(
                 context: Context, layout: RefreshLayout
@@ -80,24 +75,20 @@ class BaseApplication : CommApplication() {
                 return ClassicsFooter(context).setDrawableSize(20f)
             }
         })
-        PlayerFactory.setPlayManager(SystemPlayerManager::class.java)
     }
 
     private fun initNetwork() {
-        val gson =
-            GsonBuilder().setLenient().registerTypeAdapter(Int::class.java, IntegerTypeAdapter())
-                .registerTypeAdapter(String::class.java, StringTypeAdapter())
-                .registerTypeAdapter(
-                    RegisterData::class.java,
-                    ObjectTypeAdapter(Gson(), RegisterData::class.java)
-                )
-                .registerTypeAdapter(
-                    AppResponse::class.java,
-                    ObjectTypeAdapter(Gson(), AppResponse::class.java)
-                )
-                .create()
-        NetworkConfig.gson = gson
-        NetworkConfig.addInterceptor(HeaderInterceptor())
+        NetworkConfig.apply {
+            gson = GsonBuilder().setLenient()
+                .registerTypeAdapter(Int::class.java, IntegerTypeAdapter())
+                .registerTypeAdapter(String::class.java, StringTypeAdapter()).registerTypeAdapter(
+                    RegisterData::class.java, ObjectTypeAdapter(Gson(), RegisterData::class.java)
+                ).registerTypeAdapter(
+                    AppResponse::class.java, ObjectTypeAdapter(Gson(), AppResponse::class.java)
+                ).create()
+            baseUrl = if (BuildConfig.DEBUG) ConfigApp.URL_DEBUG else ConfigApp.URL_RELEASE
+            addInterceptor(HeaderInterceptor())
+        }
     }
 
     fun enterInApp() {
@@ -107,7 +98,7 @@ class BaseApplication : CommApplication() {
             override fun onLicenceLoaded(result: Int, reason: String) {
                 Log.i("TAG", "onLicenceLoaded: result:$result, reason:$reason")
                 if (result == 0) {
-                    MMKVUtils.encode(ConfigApp.MMKY_KEY_TXLIVE,1)
+                    MMKVUtils.encode(ConfigApp.MMKY_KEY_TXLIVE, 1)
                 } else {
                     initLive()
                 }

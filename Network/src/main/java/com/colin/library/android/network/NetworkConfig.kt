@@ -26,7 +26,7 @@ object NetworkConfig {
         GsonBuilder().setLenient().registerTypeAdapter(Int::class.java, IntegerTypeAdapter())
             .registerTypeAdapter(String::class.java, StringTypeAdapter()).create()
 
-    var baseUrl: String = if (BuildConfig.DEBUG) URL_DEBUG else URL_RELEASE
+    var baseUrl: String = URL_DEBUG
 
     var retry: Int = RETRY
 
@@ -38,7 +38,7 @@ object NetworkConfig {
     var networkInterceptors = mutableListOf<Interceptor>(createLoggingInterceptor())
 
     private fun createLoggingInterceptor() = HttpLoggingInterceptor().setLevel(
-        if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
+        HttpLoggingInterceptor.Level.BODY
     )
 
     fun addInterceptor(interceptor: Interceptor) = apply {
@@ -62,4 +62,5 @@ object NetworkConfig {
         }
         return builder.build()
     }
+
 }

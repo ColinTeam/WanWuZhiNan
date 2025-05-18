@@ -7,11 +7,11 @@ import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.adapter.RankAdapter
 import com.wanwuzhinan.mingchang.databinding.FragmentRankPadBinding
 import com.wanwuzhinan.mingchang.vm.UserViewModel
-import me.jessyan.autosize.internal.CustomAdapt
+//import me.jessyan.autosize.internal.CustomAdapt
 
 //
 class RankIPadFragment :
-    BaseFragment<FragmentRankPadBinding, UserViewModel>(UserViewModel()),CustomAdapt {
+    BaseFragment<FragmentRankPadBinding, UserViewModel>(UserViewModel()) {
     private var TAG = "RankFragment"
 
     lateinit var mAdapter:RankAdapter
@@ -46,7 +46,7 @@ class RankIPadFragment :
             onSuccess={data, msg ->
                 mAdapter.submitList(data!!.list)
                 mDataBinding.tvMyNum.text = "${data.info.index}"
-                mDataBinding.tvMyName.text = "${data.info.truename}"
+                mDataBinding.tvMyName.text = data.info.truename
                 mDataBinding.tvMyCompassNum.text = "${data.info.question_compass}"
                 GlideImgManager.get().loadImg(data.info.headimg,mDataBinding.rivHead,R.drawable.img_default_icon)
 
@@ -76,12 +76,12 @@ class RankIPadFragment :
         return R.layout.fragment_rank_pad
     }
 
-    override fun isBaseOnWidth(): Boolean {
-        return false
-    }
-
-    override fun getSizeInDp(): Float {
-        return 375.0f
-    }
+//    override fun isBaseOnWidth(): Boolean {
+//        return false
+//    }
+//
+//    override fun getSizeInDp(): Float {
+//        return 375.0f
+//    }
 
 }

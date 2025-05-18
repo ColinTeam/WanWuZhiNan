@@ -3,9 +3,9 @@ plugins {
 }
 android {
     namespace 'com.tencent.liteav.demo.superplayer'
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInteger()
     defaultConfig {
-        minSdk = 27
+        minSdk = libs.versions.minSdk.get().toInteger()
         consumerProguardFiles("consumer-rules.pro")
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 

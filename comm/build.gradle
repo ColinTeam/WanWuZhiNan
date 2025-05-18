@@ -5,18 +5,17 @@ plugins {
 }
 android {
     namespace 'com.ssm.comm'
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdk.get().toInteger()
     defaultConfig {
-        minSdk = 27
+        minSdk = libs.versions.minSdk.get().toInteger()
         consumerProguardFiles("consumer-rules.pro")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {}
         release {
             minifyEnabled = false
-            proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
@@ -27,6 +26,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     dataBinding {
@@ -75,21 +75,21 @@ dependencies {
     api libs.html.textview
 
     // PictureSelector basic (Necessary)
-    api 'io.github.lucksiege:pictureselector:v3.11.2'
+    api libs.pictureselector
     // image compress library (Not necessary)
-    api 'io.github.lucksiege:compress:v3.11.2'
+    api libs.compress
     // uCrop library (Not necessary)
-    api 'io.github.lucksiege:ucrop:v3.11.2'
+    api libs.ucrop
     // simple camerax library (Not necessary)
-    api 'io.github.lucksiege:camerax:v3.11.2'
+    api libs.camerax
 
     //列表刷新框架
-    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-27'
-    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-27'
+    api libs.smartrefreshlayout
+    api libs.smartrefreshheader
 
 
     //Eventbus
-    api 'org.greenrobot:eventbus:3.2.0'
+    api libs.eventbus
     //ToastUtils
     implementation libs.toastutils
 
@@ -98,14 +98,14 @@ dependencies {
     //支付宝支付
 //    implementation 'com.alipay.sdk:alipaysdk-android:+@aar'
 
-    api 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
+//    api libs.androidautosize
 
-    api "com.kongzue.dialogx:DialogX:0.0.49"
+    api libs.dialogx
     api libs.xxpermissions
 
 
     //腾讯bug管理平台
-    api 'com.tencent.bugly:crashreport:latest.release'
-    implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
+    api libs.crashreport
+    implementation libs.nativecrashreport
 
 }

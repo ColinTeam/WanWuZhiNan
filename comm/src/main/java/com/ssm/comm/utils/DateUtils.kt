@@ -42,9 +42,8 @@ object DateUtils {
     }
 
     fun timeParse(s: Long): String{
-        var time = ""
         //小于1分钟
-        time = if(s < 60L){
+        return if(s < 60L){
             String.format(Locale.US,"00:%02d",s % 60)
         }
         //小于1个小时
@@ -59,7 +58,6 @@ object DateUtils {
         else {
             String.format(Locale.US,"%02d天%02d:%02d:%02d",s / 86400,s % 86400 / 3600,s % 86400 % 3600 / 60,s % 86400 % 3600 % 60)
         }
-        return time
     }
 
     //获取以后第N天的时间戳

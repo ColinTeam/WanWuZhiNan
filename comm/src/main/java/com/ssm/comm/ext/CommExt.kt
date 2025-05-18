@@ -6,7 +6,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -134,7 +133,7 @@ fun Activity.toUri(url: String) {
  * @param type Int
  * @param isShow Boolean 设置是否是明文 还是密码显示
  */
-fun setEidTextInputType(editText: EditText, type: Int, isShow: Boolean) {
+fun Int.setEidTextInputType(editText: EditText, isShow: Boolean) {
     //editText.addInputType(type)
     if (isShow) {//明文显示密码
         editText.transformationMethod = HideReturnsTransformationMethod.getInstance()
@@ -313,60 +312,6 @@ fun TextView.drawabImg(id: Int, type: Int = Gravity.LEFT): TextView {
         }
     }
     return this
-}
-
-/**
- * 保存图片到指定路径  保存二维码到本地
- * @param bitmap   要保存的图片
- * @param fileName 自定义图片名称
- * @param context
- * @return
- */
-fun saveBitmapToFile(bitmap: Bitmap, activity: Activity): Boolean {
-    return true
-    /*
-    // 保存图片至指定路径
-    if(bitmap == null)
-        return false
-    val storePath = AppConfig.APP_CACHE_PIC_PATH //图片保存地址
-    val fileName = System.currentTimeMillis().toString() + ".jpg"
-    val appDir = File(storePath)
-    if (!appDir.exists()) {
-        appDir.mkdirs()
-    }
-    val path = File(appDir, fileName)
-    try {
-        val fos = FileOutputStream(path)
-        //通过io流的方式来压缩保存图片(80代表压缩20%)
-        val isSuccess = bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos) //CompressFormat.PNG
-        fos.flush()
-        fos.close()
-        //发送广播通知系统图库刷新数据
-//        val uri: Uri = Uri.fromFile(path)
-//        context?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
-
-//        val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-//        val uri = Uri.fromFile(path)
-//        intent.data = uri
-//        activity?.sendBroadcast(intent)
-        // 其次把文件插入到系统图库
-        try {
-            MediaStore.Images.Media.insertImage(
-                activity?.contentResolver,
-                path.absolutePath, fileName, null
-            )
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-        activity?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.fromFile(File(path.path))) )
-
-        return isSuccess
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-    return false
-
-    */
 }
 
 fun EditText.setMaxInput(len: Int) {

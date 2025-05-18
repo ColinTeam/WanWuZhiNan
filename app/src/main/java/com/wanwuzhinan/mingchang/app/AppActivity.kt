@@ -150,7 +150,7 @@ abstract class AppActivity<VB : ViewBinding, VM : AppViewModel> : BaseActivity()
         super.onConfigurationChanged(newConfig)
         // 自定义处理逻辑，避免 Activity 被重建
         if (viewBinding?.root != null) {
-            viewBinding!!.root.requestLayout()
+            viewBinding.root.requestLayout()
         }
     }
 }

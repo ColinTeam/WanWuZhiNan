@@ -8,7 +8,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_bg"
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/bg_login">
@@ -19,18 +19,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@id/ivBg"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivContentBg"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
-            android:layout_marginBottom="@dimen/margin_default"
-            android:background="@drawable/shape_dd770a_20_5"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintHeight_percent="@fraction/login_tab_height"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ivBack"
-            app:layout_constraintWidth_percent="0.82" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="@fraction/login_tab_width"
+            app:shapeAppearanceOverlay="@style/Image.Radius_20" />
 
 
         <View
@@ -40,11 +40,12 @@
             android:layout_marginHorizontal="@dimen/dp_40"
             android:layout_marginTop="@dimen/dp_20"
             android:background="@drawable/shape_sex_n"
+            android:maxHeight="@dimen/edit_height"
             android:minHeight="@dimen/dp_40"
             app:layout_constraintBottom_toTopOf="@+id/viewPrivacyBg"
-            app:layout_constraintEnd_toEndOf="@+id/ivBg"
-            app:layout_constraintStart_toStartOf="@+id/ivBg"
-            app:layout_constraintTop_toTopOf="@+id/ivBg"
+            app:layout_constraintEnd_toEndOf="@+id/ivContentBg"
+            app:layout_constraintStart_toStartOf="@+id/ivContentBg"
+            app:layout_constraintTop_toTopOf="@+id/ivContentBg"
             app:layout_constraintVertical_weight="1" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -201,7 +202,7 @@
             android:textAppearance="@style/Text.Button"
             android:textColor="@color/color_active"
             android:textSize="@dimen/sp_14"
-            app:layout_constraintBottom_toBottomOf="@id/ivBg"
+            app:layout_constraintBottom_toBottomOf="@id/ivContentBg"
             app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
             app:layout_constraintStart_toStartOf="@+id/viewUserBg"
             app:layout_constraintTop_toBottomOf="@+id/viewPwdBg"

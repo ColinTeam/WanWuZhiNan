@@ -157,7 +157,29 @@
         <item name="android:singleLine">true</item>
         <item name="android:textAppearance">@style/Text.Edit</item>
     </style>
-
+    <style name="Style.Text.Dialog" parent="Style.Text">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">@dimen/dp_0</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingHorizontal">@dimen/margin_default_half</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:textAppearance">@style/Text</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeStepGranularity">@dimen/text_home_step</item>
+        <item name="autoSizeMaxTextSize">@dimen/sp_28</item>
+        <item name="autoSizeMinTextSize">@dimen/default_text_size</item>
+    </style>
+    <style name="Style.Text.Dialog.Title" parent="Style.Text.Dialog">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">@dimen/dp_0</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="autoSizeMaxTextSize">@dimen/sp_20</item>
+        <item name="autoSizeMinTextSize">@dimen/default_text_size</item>
+    </style>
     <style name="Style.Item" parent="Style">
         <item name="android:layout_width">@dimen/dp_0</item>
         <item name="android:layout_height">@dimen/item_height</item>
@@ -204,10 +226,6 @@
         <item name="android:paddingHorizontal">@dimen/margin_default_half</item>
         <item name="android:singleLine">true</item>
         <item name="android:textAppearance">@style/Text</item>
-        <!--        <item name="android:autoSizeTextType">uniform</item>-->
-        <!--        <item name="android:autoSizeStepGranularity">@dimen/text_home_step</item>-->
-        <!--        <item name="android:autoSizeMaxTextSize">@dimen/sp_40</item>-->
-        <!--        <item name="android:autoSizeMinTextSize">@dimen/sp_20</item>-->
         <item name="autoSizeTextType">uniform</item>
         <item name="autoSizeStepGranularity">@dimen/text_home_step</item>
         <item name="autoSizeMaxTextSize">@dimen/sp_40</item>

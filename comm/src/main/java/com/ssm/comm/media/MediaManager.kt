@@ -1,19 +1,14 @@
 package com.ssm.comm.media
 
-import android.R
 import android.app.Activity
-import android.content.pm.ActivityInfo
 import android.os.Build
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
-import com.hjq.permissions.XXPermissions
 import com.kongzue.dialogx.dialogs.CustomDialog
 import com.kongzue.dialogx.interfaces.OnBindView
 import com.luck.picture.lib.basic.PictureSelector
@@ -124,17 +119,17 @@ object MediaManager {
             .setPermissionsInterceptListener(object : OnPermissionsInterceptListener{
                 override fun requestPermission(
                     fragment: Fragment?,
-                    permissionArray: Array<out String>?,
+                    permissionArray: Array<String>?,
                     call: OnRequestPermissionListener?
                 ) {
                     Log.e("TAG", "requestPermission: "+permissionArray )
                     if (permissionArray == null || fragment == null || fragment.context == null) return
-                    call?.let { requestPermissions(fragment!!, permissionArray as Array<String>, it) }
+                    call?.let { requestPermissions(fragment, permissionArray, it) }
                 }
 
                 override fun hasPermissions(
-                    fragment: Fragment?,
-                    permissionArray: Array<out String>?
+                    fragment: Fragment,
+                    permissionArray: Array<String>?
                 ): Boolean {
                     return false
                 }
@@ -284,8 +279,7 @@ object MediaManager {
 
     //单选图片的路径//单选图片的路径
     fun getSinglePhotoUri(localMedia: LocalMedia): String? {
-        var photo = ""
-        photo = if (localMedia.isCompressed) {
+        var photo = if (localMedia.isCompressed) {
             localMedia.compressPath
         } else {
             val version = Build.VERSION.SDK_INT

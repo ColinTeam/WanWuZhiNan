@@ -50,11 +50,6 @@ abstract class AppDialogFragment<VB : ViewBinding>() : BaseDialogFragment(Consta
     }
 
     fun showLoading(show: Boolean = false) {
-//        if (show) {
-//            activity?.showLoadingExt()
-//        } else {
-//            dismissLoadingExt()
-//        }
         if (loadingDialog?.isShowing() == show) return
         if (!show) {
             loadingDialog?.dismiss()
