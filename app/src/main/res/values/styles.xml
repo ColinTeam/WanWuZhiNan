@@ -302,7 +302,7 @@
     </style>
 
     <style name="Style.Edit.Password" parent="Style.Edit">
-        <item name="android:inputType">textPassword</item>
+        <item name="android:inputType">textCapCharacters|number</item>
         <item name="android:maxLength">@integer/password_length_max</item>
         <item name="android:hint">@string/login_password_hint</item>
     </style>

@@ -19,13 +19,13 @@ import com.wanwuzhinan.mingchang.vm.MediaViewModel
  * Des   :VideoHomeFragment
  */
 class VideoHomeFragment : AppFragment<FragmentVideoHomeBinding, MediaViewModel>() {
-    var position = 0
+    var tab = 0
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        position = getExtrasPosition(bundle, savedInstanceState)
+        tab = getExtrasPosition(bundle, savedInstanceState)
         viewBinding.apply {
             onClick(ivPro, ivNext) {
-                if (it == ivPro) selectedGroup(position + 1)
-                else selectedGroup(position - 1)
+                if (it == ivPro) selectedGroup(tab + 1)
+                else selectedGroup(tab - 1)
             }
         }
     }
@@ -34,7 +34,7 @@ class VideoHomeFragment : AppFragment<FragmentVideoHomeBinding, MediaViewModel>(
         viewModel.apply {
             mediaLessonSubjectGroup.observe {
                 Log.i("mediaLessonSubjectGroup:$it")
-                selectedGroup(position, it)
+                selectedGroup(tab, it)
             }
             mediaLessonInfo.observe {
                 Log.i("mediaLessonInfo:$it")
@@ -46,23 +46,27 @@ class VideoHomeFragment : AppFragment<FragmentVideoHomeBinding, MediaViewModel>(
 
 
     private fun selectedGroup(
-        selected: Int, group: LessonSubjectGroup? = viewModel.getMediaLessonSubjectGroupValue()
+        selectedTab: Int, group: LessonSubjectGroup? = viewModel.getMediaLessonSubjectGroupValue()
     ) {
         if (group == null || group.list.isEmpty()) {
             viewModel.getMediaLessonSubjectGroup(ConfigApp.TYPE_AUDIO)
             return
         }
-        val groupSize = group.list.size
-        var position = selected
-        if (position >= groupSize) position = groupSize - 1
-        if (selected < 0) position = 0
-        this.position = position
-        val group = group.list[position]
+        val tabSize = group.list.size
+        var selected = selectedTab
+        if (selected >= tabSize) selected = tabSize - 1
+        if (selected <= 0) selected = 0
+        this.tab = selected
+        val group = group.list[selected]
         selectedLesson(group.id)
     }
 
-    fun selectedLesson(id: Int) {
-        val lessonInfo = viewModel.getMediaLessonInfoValue(id)
+    /**
+     * 实现缓存
+     * 缓存中获取，无网络请求
+     */
+    fun selectedLesson(groupId: Int) {
+        val lessonInfo = viewModel.getMediaLessonInfoValue(groupId)
         if (lessonInfo == null || lessonInfo.list.isEmpty()) {
             viewModel.getMediaLessonInfo(id)
         } else updateLessonUI(lessonInfo.list)

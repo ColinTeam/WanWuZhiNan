@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.colin.library.android.utils.Log
@@ -24,6 +25,7 @@ import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.isPhone
+import com.wanwuzhinan.mingchang.ext.visible
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.vm.LoginViewModel
 
@@ -161,13 +163,24 @@ class LoginActivity : AppActivity<FragmentLoginBinding, LoginViewModel>() {
     private fun updateTab(index: Int) {
         this.tabIndex = index
         val isSms = index == TAB_SMS
-        viewBinding.tvSmsTips.isVisible = isSms
-        viewBinding.etSMS.isVisible = isSms
-        viewBinding.tvSmsSend.isVisible = isSms
-        viewBinding.tvPwdTips.isVisible = !isSms
-        viewBinding.etPassword.isVisible = !isSms
-        viewBinding.tabLogin.getTabAt(tabIndex)?.select()
+        viewBinding.apply {
+            tvSmsSend.isVisible = isSms
+            tvSmsTips.isVisible = isSms
+            tvPwdTips.isVisible = !isSms
+            setActivated(etSMS, isSms)
+            setActivated(etPassword, !isSms)
+            tabLogin.getTabAt(tabIndex)?.select()
+        }
         updateButton()
+    }
+
+    private fun setActivated(
+        view: AppCompatEditText, activated: Boolean
+    ) {
+        view.isFocusableInTouchMode = activated
+        view.isCursorVisible = activated
+        view.isEnabled = activated
+        view.visible(activated)
     }
 
     private fun updateButton() {

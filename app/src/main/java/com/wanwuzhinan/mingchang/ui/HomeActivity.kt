@@ -27,7 +27,6 @@ import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
 import com.wanwuzhinan.mingchang.ui.phone.QuestionListPracticeActivity
 import com.wanwuzhinan.mingchang.ui.phone.RankActivity
-import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
 import com.wanwuzhinan.mingchang.ui.pop.UserInfoDialog
 import com.wanwuzhinan.mingchang.utils.RATIO_16_9
@@ -115,6 +114,7 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
 
                     ivOneBg -> {//video
                         VideoHomeActivity.start(this@HomeActivity)
+//                        com.wanwuzhinan.mingchang.ui.VideoHomeActivity.start(this@HomeActivity)
                     }
 
                     ivTwoBg -> {//audio
@@ -137,7 +137,6 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
                             this@HomeActivity, url = url, title = getString(R.string.home_detail)
                         )
                     }
-
                     ivAdclose -> {
                         viewModel.updateAD(true)
                     }

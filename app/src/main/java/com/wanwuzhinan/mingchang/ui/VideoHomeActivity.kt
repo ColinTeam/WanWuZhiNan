@@ -1,5 +1,7 @@
 package com.wanwuzhinan.mingchang.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
@@ -19,13 +21,14 @@ import com.wanwuzhinan.mingchang.vm.MediaViewModel
  * Des   :VideoHomeActivity
  */
 class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>() {
-    var position = 0
+    var tab = 0
+
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
-        position = getExtrasPosition(bundle, savedInstanceState)
+        tab = getExtrasPosition(bundle, savedInstanceState)
         viewBinding.apply {
             onClick(ivPro, ivNext) {
-                if (it == ivPro) selectedGroup(position + 1)
-                else selectedGroup(position - 1)
+                if (it == ivPro) selectedGroup(tab + 1)
+                else selectedGroup(tab - 1)
             }
         }
     }
@@ -34,16 +37,20 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
         viewModel.apply {
             mediaLessonSubjectGroup.observe {
                 Log.i("mediaLessonSubjectGroup:$it")
-                selectedGroup(position, it)
+                selectedGroup(tab, it)
             }
             mediaLessonInfo.observe {
                 Log.i("mediaLessonInfo:$it")
                 updateLessonUI(it.list)
             }
         }
-        viewModel.getMediaLessonSubjectGroup(ConfigApp.TYPE_AUDIO)
+
     }
 
+    override fun loadData(refresh: Boolean) {
+        super.loadData(refresh)
+        viewModel.getMediaLessonSubjectGroup(ConfigApp.TYPE_AUDIO)
+    }
 
     private fun selectedGroup(
         selected: Int, group: LessonSubjectGroup? = viewModel.getMediaLessonSubjectGroupValue()
@@ -52,24 +59,25 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
             viewModel.getMediaLessonSubjectGroup(ConfigApp.TYPE_AUDIO)
             return
         }
+        //校验tab有效性
         val groupSize = group.list.size
-        var position = selected
-        if (position >= groupSize) position = groupSize - 1
-        if (selected < 0) position = 0
-        this.position = position
-        val group = group.list[position]
-        selectedLesson(group.id)
+        var tab = selected
+        if (tab >= groupSize) tab = groupSize - 1
+        if (tab < 0) tab = 0
+        this.tab = tab
+        val lesson = group.list[tab]
+        selectedLesson(lesson.id)
+        updateGroupUI(tab, group)
     }
 
-    fun selectedLesson( id: Int) {
+    fun selectedLesson(id: Int) {
         val lessonInfo = viewModel.getMediaLessonInfoValue(id)
         if (lessonInfo == null || lessonInfo.list.isEmpty()) {
             viewModel.getMediaLessonInfo(id)
         } else updateLessonUI(lessonInfo.list)
-
     }
 
-    private fun updateGroupUI(group: LessonSubjectGroup) {
+    private fun updateGroupUI(tab: Int, group: LessonSubjectGroup) {
         val size = group.list.size
         if (size > 1) {
             viewBinding.progress.max = size
@@ -87,5 +95,15 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
 
     private fun updateLessonUI(subject: List<LessonSubject>) {
 
+    }
+
+    companion object {
+        @JvmStatic
+        fun start(context: Context, tab: Int = 0) {
+            val starter = Intent(context, VideoHomeActivity::class.java).putExtra(
+                ConfigApp.EXTRAS_POSITION, tab
+            )
+            context.startActivity(starter)
+        }
     }
 }

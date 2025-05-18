@@ -30,16 +30,13 @@ class SplashActivity : AppActivity<FragmentSplashBinding, HomeViewModel>() {
     var playCompleted = false
     var builder: GSYVideoOptionBuilder? = null
     override fun goBack(): Boolean {
-        if (playCompleted) {
-            doNextAction()
-        }
+        doNextAction()
         return true
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.ivBack.setOnTouchListener(MotionTouchLister())
-        viewBinding.ivBack.isEnabled = false
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
@@ -56,12 +53,10 @@ class SplashActivity : AppActivity<FragmentSplashBinding, HomeViewModel>() {
         }
         builder!!.build(viewBinding.video)
         viewBinding.video.startPlayLogic()
-
     }
 
     override fun loadData(refresh: Boolean) {
         viewModel.getConfig()
-
     }
 
     override fun onResume() {
