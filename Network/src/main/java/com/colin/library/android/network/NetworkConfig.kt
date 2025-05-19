@@ -17,25 +17,31 @@ import java.util.concurrent.TimeUnit
  * Des   :NetworkConfig
  */
 object NetworkConfig {
-    private val DELAY: Long = 0L
-    private val RETRY: Int = 3
-    private val TIMEOUT: Long = 10000L
-    private val URL_DEBUG: String = "https://www.mxwsl.cn"
-    private val URL_RELEASE: String = "https://app.wanwuzhinan.top"
-    var gson: Gson =
-        GsonBuilder().setLenient().registerTypeAdapter(Int::class.java, IntegerTypeAdapter())
-            .registerTypeAdapter(String::class.java, StringTypeAdapter()).create()
+    private const val DELAY: Long = 0L
+    private const val RETRY: Int = 3
+    private const val TIMEOUT: Long = 10000L
+    private const val URL_DEBUG: String = "https://www.mxwsl.cn"
+    private const val URL_RELEASE: String = "https://app.wanwuzhinan.top"
 
+    var gson: Gson = GsonBuilder().setLenient()
+        .registerTypeAdapter(Int::class.java, IntegerTypeAdapter())
+        .registerTypeAdapter(String::class.java, StringTypeAdapter()).create()
+
+
+    @Volatile
     var baseUrl: String = URL_DEBUG
 
+    @Volatile
     var retry: Int = RETRY
 
+    @Volatile
     var delay: Long = DELAY
 
+    @Volatile
     var timeout: Long = TIMEOUT
 
-    var interceptors = mutableListOf<Interceptor>()
-    var networkInterceptors = mutableListOf<Interceptor>(createLoggingInterceptor())
+    val interceptors = mutableListOf<Interceptor>()
+    val networkInterceptors = mutableListOf<Interceptor>(createLoggingInterceptor())
 
     private fun createLoggingInterceptor() = HttpLoggingInterceptor().setLevel(
         HttpLoggingInterceptor.Level.BODY
@@ -62,5 +68,4 @@ object NetworkConfig {
         }
         return builder.build()
     }
-
 }

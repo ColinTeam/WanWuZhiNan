@@ -1,14 +1,10 @@
 package com.colin.library.android.network
 
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
-import com.colin.library.android.network.data.AppResponse
 import com.colin.library.android.network.data.HTTP_ERROR
 import com.colin.library.android.network.data.HttpResult
 import com.colin.library.android.network.data.INetworkResponse
-import com.colin.library.android.network.data.NetworkResult
 import com.colin.library.android.utils.Log
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -20,14 +16,20 @@ import java.net.SocketException
 
 
 /**
- * 在 ViewModel 中发起一个挂起请求，并处理请求的成功和失败回调。
+ * 发起一个网络请求，并在请求的不同阶段执行相应的回调函数。
  *
- * @param request 挂起函数，用于发起请求并返回 `AppResponse<T>` 类型的结果。
- * @param success 可选的挂起函数，用于处理请求成功时的逻辑，默认不执行任何操作。
- * @param failure 可选的挂起函数，用于处理请求失败时的逻辑，默认不执行任何操作。
- * @return 无返回值，该函数通过回调处理请求结果。
+ * 该函数是一个挂起函数，用于在 ViewModel 中发起网络请求，并根据请求的不同阶段（如开始、成功、失败等）执行相应的回调操作。
+ * 通过传入的 `request` 函数发起网络请求，并根据请求结果执行 `success`、`start`、`toast`、`action` 和 `finish` 等回调。
  *
- * 该函数通过 `requestImpl` 实现具体的请求逻辑，并使用 `viewModelScope` 确保请求在 ViewModel 的生命周期内执行。
+ * @param T 网络请求返回的数据类型。
+ * @param request 一个挂起函数，用于发起网络请求并返回 `INetworkResponse<T>` 类型的结果。
+ * @param success 一个挂起函数，当请求成功时执行，接收请求返回的数据 `T?` 作为参数。
+ * @param start 一个挂起函数，当请求开始时执行，接收 `HttpResult.Start` 作为参数。
+ * @param toast 一个挂起函数，当需要显示 Toast 消息时执行，接收 `HttpResult.Toast` 作为参数。
+ * @param action 一个挂起函数，当需要执行特定操作时执行，接收 `HttpResult.Action` 作为参数。
+ * @param finish 一个挂起函数，当请求结束时执行，接收 `HttpResult.Finish` 作为参数。
+ *
+ * 该函数内部调用了 `requestImpl` 函数，将 `viewModelScope` 作为协程作用域，并将所有回调函数传递给 `requestImpl` 进行处理。
  */
 fun <T> ViewModel.request(
     request: suspend () -> INetworkResponse<T>,
@@ -38,53 +40,20 @@ fun <T> ViewModel.request(
     finish: (suspend (HttpResult.Finish) -> Unit) = { }
 ) = requestImpl(viewModelScope, request, success, start, toast, action, finish)
 
-fun <T> ViewModel.request(
-    request: suspend () -> INetworkResponse<T>,
-    success: (suspend (T) -> Unit) = { },
-    failure: (suspend (NetworkResult.Failure) -> Unit) = { }
-) = requestImpl(viewModelScope, request, success, failure)
-
 
 /**
- * 在 Activity/Fragment 中发起一个挂起请求，并处理请求的成功和失败回调。
+ * 执行网络请求的实现函数，支持重试机制和延迟启动。
  *
- * @param request 挂起函数，用于发起请求并返回 `AppResponse<T>` 类型的结果。
- * @param success 可选的挂起函数，用于处理请求成功时的逻辑，默认不执行任何操作。
- * @param failure 可选的挂起函数，用于处理请求失败时的逻辑，默认不执行任何操作。
- * @return 无返回值，该函数通过回调处理请求结果。
- *
- * 该函数通过 `requestImpl` 实现具体的请求逻辑，并使用 `lifecycleScope` 确保请求在 ViewModel 的生命周期内执行。
- */
-fun <T> LifecycleOwner.request(
-    request: suspend () -> INetworkResponse<T>,
-    success: (suspend (T) -> Unit) = { },
-    failure: (suspend (NetworkResult.Failure) -> Unit) = { }
-) = requestImpl(lifecycleScope, request, success, failure)
-
-/**
- * 在 CoroutineScope 中发起一个挂起请求，并处理请求的成功和失败回调。
- *
- * @param request 挂起函数，用于发起请求并返回 `AppResponse<T>` 类型的结果。
- * @param success 可选的挂起函数，用于处理请求成功时的逻辑，默认不执行任何操作。
- * @param failure 可选的挂起函数，用于处理请求失败时的逻辑，默认不执行任何操作。
- * @return 无返回值，该函数通过回调处理请求结果。
- *
- * 该函数通过 `requestImpl` 实现具体的请求逻辑，并使用 `viewModelScope` 确保请求在 ViewModel 的生命周期内执行。
- */
-suspend fun <T> CoroutineScope.request(
-    request: suspend () -> INetworkResponse<T>,
-    success: (suspend (T) -> Unit) = { },
-    failure: (suspend (NetworkResult.Failure) -> Unit) = { }
-) = requestImpl(this, request, success, failure)
-
-/**
- * 执行网络请求的实现函数，处理请求的成功和失败回调。
- * 该函数在指定的协程作用域中启动一个IO线程来执行请求，并处理可能的异常。
- *
- * @param scope 协程作用域，用于启动和管理协程的生命周期。
- * @param request 挂起函数，执行实际的网络请求并返回[AppResponse]类型的结果。
- * @param success 挂起函数，当请求成功时调用，接收请求结果[T]作为参数。
- * @param failure 挂起函数，当请求失败时调用，接收[NetworkResult.Failure]作为参数。
+ * @param scope 协程作用域，用于控制请求的生命周期。
+ * @param request 挂起函数，执行实际的网络请求并返回 [INetworkResponse] 类型的结果。
+ * @param success 挂起函数，当请求成功时调用，接收请求结果 [T] 作为参数。
+ * @param start 挂起函数，在请求开始时调用，接收 [HttpResult.Start] 作为参数。
+ * @param toast 挂起函数，当需要显示提示信息时调用，接收 [HttpResult.Toast] 作为参数。
+ * @param action 挂起函数，当需要执行特定操作时调用，接收 [HttpResult.Action] 作为参数。
+ * @param finish 挂起函数，在请求结束时调用，接收 [HttpResult.Finish] 作为参数。
+ * @param retry 请求失败时的重试次数，默认为 [NetworkConfig.retry]。
+ * @param delay 请求启动前的延迟时间，默认为 [NetworkConfig.delay]。
+ * @return 返回一个 [Job] 对象，用于控制请求的取消和状态。
  */
 fun <T> requestImpl(
     scope: CoroutineScope,
@@ -99,22 +68,40 @@ fun <T> requestImpl(
 ): Job {
     return scope.launch(Dispatchers.IO) {
         try {
+            // 通知请求开始，并记录开始时间
             start.invoke(HttpResult.Start(System.currentTimeMillis()))
+
+            // 如果设置了延迟，则等待指定时间
             if (delay > 0L) delay(delay)
+
+            // 执行实际的网络请求逻辑
             requestImpl(request, success, toast, action, retry, delay)
         } catch (e: Exception) {
-            //scope cancel 说明不需要了，所以直接退出即可
+            // 如果协程被取消，则直接退出
             if (e is CancellationException) return@launch
+
+            // 处理异常，显示提示信息并执行相关操作
             toast.invoke(HttpResult.Toast(HTTP_ERROR, "$e"))
             action.invoke(HttpResult.Action(HTTP_ERROR, "$e"))
         } finally {
+            // 无论请求成功或失败，最终都会通知请求结束，并记录结束时间
             finish.invoke(HttpResult.Finish(System.currentTimeMillis()))
         }
     }
 }
 
-
-@Suppress("UNCHECKED_CAST")
+/**
+ * 执行网络请求的实现函数，支持重试机制，并根据请求结果调用相应的回调函数。
+ *
+ * @param request 实际的网络请求函数，返回一个[INetworkResponse]对象。
+ * @param success 请求成功时的回调函数，接收请求返回的数据[T]。
+ * @param toast 请求完成后显示提示信息的回调函数，接收[HttpResult.Toast]对象。
+ * @param action 请求完成后执行特定操作的回调函数，接收[HttpResult.Action]对象。
+ * @param retry 请求失败时的重试次数，默认为[NetworkConfig.retry]。
+ * @param delay 请求失败后的重试延迟时间（毫秒），默认为[NetworkConfig.delay]。
+ *
+ * @throws Exception 如果所有重试都失败，抛出最后一次捕获的异常或默认的[SocketException]。
+ */
 suspend fun <T> requestImpl(
     request: suspend () -> INetworkResponse<T>,
     success: (suspend (T?) -> Unit) = {},
@@ -125,14 +112,15 @@ suspend fun <T> requestImpl(
 ) {
     var response: INetworkResponse<T>? = null
     var exception: Exception? = null
-    //尝试执行请求，最多重试[retry]次
+
+    // 尝试执行请求，最多重试[retry]次
     for (i in 0 until retry) {
         try {
             response = request()
             break
         } catch (e: Exception) {
             exception = e
-            //// 如果是SocketException或包含"reset"信息，则延迟[delay]毫秒后重试
+            // 如果是SocketException或包含"reset"信息，则延迟[delay]毫秒后重试
             if (e is SocketException || e.message?.contains("reset") == true) delay(500L)
             else break
         }
@@ -141,82 +129,11 @@ suspend fun <T> requestImpl(
     // 如果所有重试都失败，抛出异常
     if (response == null) throw exception ?: SocketException("Request failed after $delay retries")
     Log.i("okhttp-->>$response")
+
     // 根据请求结果调用相应的回调函数
     if (response.isSuccess()) success.invoke(response.getData())
     toast.invoke(HttpResult.Toast(response.getCode(), response.getMsg()))
     action.invoke(HttpResult.Action(response.getCode(), response.getMsg()))
-}
-
-
-fun <T> requestImpl(
-    scope: CoroutineScope,
-    request: suspend () -> INetworkResponse<T>,
-    success: (suspend (T) -> Unit) = {},
-    failure: (suspend (NetworkResult.Failure) -> Unit) = {},
-    retry: Int = NetworkConfig.retry,
-    delay: Long = 2000
-): Job {
-    return scope.launch(Dispatchers.IO) {
-        try {
-            requestImpl(request, success, failure, retry, delay)
-        } catch (e: Exception) {
-            //scope cancel 说明不需要了，所以直接退出即可
-            if (e is CancellationException) return@launch
-            failure.invoke(NetworkResult.failure(HTTP_ERROR, "$e"))
-        }
-    }
-}
-
-/**
- * 执行网络请求的实现函数，支持重试机制。
- *
- * @param request 挂起函数，用于执行实际的网络请求，返回[AppResponse]对象。
- * @param success 挂起函数，当请求成功时调用，接收请求成功的数据[T]。
- * @param failure 挂起函数，当请求失败时调用，接收[NetworkResult.Failure]对象。
- * @param retry 请求失败时的重试次数，默认为[NetworkConfig.retry]。
- * @param delay 重试之间的延迟时间（毫秒），默认为2000毫秒。
- * @throws Exception 如果所有重试都失败，抛出最后一次捕获的异常或自定义的[SocketException]。
- */
-@Suppress("UNCHECKED_CAST")
-suspend fun <T> requestImpl(
-    request: suspend () -> INetworkResponse<T>,
-    success: (suspend (T) -> Unit) = {},
-    failure: (suspend (NetworkResult.Failure) -> Unit) = {},
-    retry: Int = NetworkConfig.retry,
-    delay: Long = 2000
-) {
-    var response: INetworkResponse<T>? = null
-    var exception: Exception? = null
-    //尝试执行请求，最多重试[retry]次
-    for (i in 0 until retry) {
-        try {
-            response = request()
-            break
-        } catch (e: Exception) {
-            exception = e
-            //// 如果是SocketException或包含"reset"信息，则延迟[delay]毫秒后重试
-            if (e is SocketException || e.message?.contains("reset") == true) delay(delay)
-            else break
-        }
-    }
-    // 如果所有重试都失败，抛出异常
-    if (response == null) throw exception ?: SocketException("Request failed after $delay retries")
-    // 根据请求结果调用相应的回调函数
-    when {
-        !response.isSuccess() -> failure.invoke(
-            NetworkResult.failure(
-                response.getCode(), response.getMsg()
-            )
-        )
-
-        response.getData() == null -> failure.invoke(
-            NetworkResult.failure(
-                response.getCode(), response.getMsg()
-            )
-        )
-
-        else -> success.invoke(response.getData()!!)
-    }
 }
 
 

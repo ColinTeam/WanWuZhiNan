@@ -25,14 +25,21 @@ class IntegerTypeAdapter : JsonSerializer<Int>, JsonDeserializer<Int> {
     }
 
     override fun deserialize(
-        json: JsonElement, typeOfT: Type, context: JsonDeserializationContext?
+        json: JsonElement?, typeOfT: Type, context: JsonDeserializationContext?
     ): Int {
-        //定义为int类型,如果后台返回""或者null,则返回0
-        try {
-            if (json.asString == "" || json.asString == "null") return Constants.ZERO
-        } catch (e: Exception) {
-            e.printStackTrace()
+        // 处理json为null的情况
+        if (json == null) return Constants.ZERO
+
+        // 处理空字符串或"null"的情况
+        val jsonString = try {
+            json.asString
+        } catch (e: IllegalStateException) {
+            return Constants.ZERO
         }
+
+        if (jsonString == "" || jsonString == "null") return Constants.ZERO
+
+        // 尝试将json转换为Int
         return try {
             json.asInt
         } catch (e: NumberFormatException) {

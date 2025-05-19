@@ -14,17 +14,22 @@ import com.google.gson.stream.JsonWriter
  */
 class StringTypeAdapter : TypeAdapter<String>() {
 
-    override fun write(out: JsonWriter, value: String?) {
-        if (value == null) out.nullValue() else out.value(value)
+    override fun write(write: JsonWriter, value: String?) {
+        if (value == null) write.nullValue() else write.value(value)
     }
 
-    override fun read(`in`: JsonReader?): String {
-        if (`in`!!.peek() == JsonToken.NULL) {
-            `in`.nextNull()
-            //原先是返回Null，这里改为返回空字符串
-            return ""
+    override fun read(read: JsonReader): String {
+        return try {
+            if (read.peek() == JsonToken.NULL) {
+                read.nextNull()
+                ""
+            } else {
+                val json = read.nextString()
+                if (json == "null") "" else json
+            }
+        } catch (e: Exception) {
+            // 处理可能的异常，例如 JsonSyntaxException
+            ""
         }
-        val json = `in`.nextString()
-        return if (json == "null") "" else json
     }
 }
