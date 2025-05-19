@@ -1199,7 +1199,6 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onPlayProgress(long current, long duration, long playable) {
-            Log.i(TAG, "onPlayProgress:" + current);
             mProgress = current;
             mDuration = duration;
             mPlayAble = playable;
@@ -1273,7 +1272,7 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onVideoImageSpriteAndKeyFrameChanged(PlayImageSpriteInfo info, List<PlayKeyFrameDescInfo> list) {
-            Log.i(TAG, "onVideoImageSpriteAndKeyFrameChanged:" + info.toString());
+            Log.i(TAG, "onVideoImageSpriteAndKeyFrameChanged:" + (info==null?"info==null":info.toString()));
             mFullScreenPlayer.updateImageSpriteInfo(info);
             mFullScreenPlayer.updateKeyFrameDescInfo(list);
         }
