@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import androidx.core.widget.doAfterTextChanged
 import com.colin.library.android.network.data.HttpResult
 import com.colin.library.android.utils.Log
@@ -20,7 +21,9 @@ import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_TABLET
 import com.wanwuzhinan.mingchang.entity.HTTP_SUCCESS
 import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
+import com.wanwuzhinan.mingchang.utils.removeChinese
 import com.wanwuzhinan.mingchang.vm.LoginViewModel
+import java.util.regex.Pattern
 
 /**
  * Author:ColinLu
@@ -30,7 +33,18 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModel
  * Des   :PasswordActivity
  */
 class PasswordActivity : AppActivity<ActivityPasswordBinding, LoginViewModel>() {
-
+    // 自定义 InputFilter，过滤中文字符
+    val filterChinese = InputFilter { source, start, end, dest, dstart, dend ->
+        val regex = "[\\u4e00-\\u9fa5]" // 匹配中文字符的正则表达式
+        val pattern = Pattern.compile(regex)
+        val matcher = pattern.matcher(source)
+        if (matcher.find()) {
+            "" // 如果包含中文字符，返回空字符串
+        } else {
+            null // 否则保留输入
+        }
+    }
+    private val filters = arrayOf(filterChinese)
     private var phone: String? = null
     private var pwd: String? = null
     private var login: Boolean = false
@@ -56,7 +70,10 @@ class PasswordActivity : AppActivity<ActivityPasswordBinding, LoginViewModel>() 
             etPasswordConfirm.setText(pwd ?: "")
             etSMS.doAfterTextChanged { updateButton() }
             etPassword.doAfterTextChanged { updateButton() }
+            etPassword.doAfterTextChanged { it.removeChinese() }
             etPasswordConfirm.doAfterTextChanged { updateButton() }
+            etPassword.filters = filters
+            etPasswordConfirm.filters = filters
             onClick(tvSmsSend, btConfirm) {
                 when (it) {
                     tvSmsSend -> startSendSms(etPhone.text.toString().trim())

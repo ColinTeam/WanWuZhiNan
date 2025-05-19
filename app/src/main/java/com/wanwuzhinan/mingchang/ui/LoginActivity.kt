@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isVisible
@@ -28,6 +29,7 @@ import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.ext.visible
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.vm.LoginViewModel
+import java.util.regex.Pattern
 
 /**
  * Author:ColinLu
@@ -38,6 +40,17 @@ import com.wanwuzhinan.mingchang.vm.LoginViewModel
  */
 class LoginActivity : AppActivity<ActivityLoginBinding, LoginViewModel>() {
 
+    // 自定义 InputFilter，过滤中文字符
+    val filterChinese = InputFilter { source, start, end, dest, dstart, dend ->
+        val regex = "[\\u4e00-\\u9fa5]" // 匹配中文字符的正则表达式
+        val pattern = Pattern.compile(regex)
+        val matcher = pattern.matcher(source)
+        if (matcher.find()) {
+            "" // 如果包含中文字符，返回空字符串
+        } else {
+            null // 否则保留输入
+        }
+    }
 
     private var tabIndex = TAB_SMS
 
@@ -47,6 +60,7 @@ class LoginActivity : AppActivity<ActivityLoginBinding, LoginViewModel>() {
             etPhone.doAfterTextChanged { updateButton() }
             etSMS.doAfterTextChanged { updateButton() }
             etPassword.doAfterTextChanged { updateButton() }
+            etPassword.filters = arrayOf(filterChinese)
             onClick(
                 tvSmsTips,
                 tvPwdTips,
