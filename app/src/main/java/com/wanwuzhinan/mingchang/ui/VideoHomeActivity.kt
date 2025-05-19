@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.viewpager2.widget.ViewPager2
 import com.colin.library.android.utils.Log
-import com.colin.library.android.widget.banner.transformer.VideoPageTransformer
+import com.colin.library.android.widget.page.transformer.VideoPageTransformer
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentVideoHomeBinding

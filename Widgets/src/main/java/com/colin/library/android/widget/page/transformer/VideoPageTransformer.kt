@@ -1,4 +1,4 @@
-package com.colin.library.android.widget.banner.transformer
+package com.colin.library.android.widget.page.transformer
 
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
