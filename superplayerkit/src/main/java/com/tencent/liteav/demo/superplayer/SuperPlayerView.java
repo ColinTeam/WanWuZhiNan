@@ -240,7 +240,6 @@ public class SuperPlayerView extends RelativeLayout
     }
 
     /**
-     *
      * Play video list
      * Note: Starting from version 10.7, you need to set the License through
      * {@link com.tencent.rtmp.TXLiveBase#setLicence} to play successfully. Otherwise, the playback will fail
@@ -1118,6 +1117,7 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onPlayPrepare() {
+            Log.i(TAG, "onPlayPrepare");
             mWindowPlayer.updatePlayState(SuperPlayerDef.PlayerState.INIT);
             mFullScreenPlayer.updatePlayState(SuperPlayerDef.PlayerState.INIT);
             actonOfPreloadOnPlayPrepare();
@@ -1128,6 +1128,7 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onPlayBegin(String name) {
+            Log.i(TAG, "onPlayBegin:" + name);
             mWindowPlayer.updatePlayState(SuperPlayerDef.PlayerState.PLAYING);
             mFullScreenPlayer.updatePlayState(SuperPlayerDef.PlayerState.PLAYING);
             // sync Start-State to PIP when automatically playing the next episode
@@ -1146,12 +1147,14 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onPlayPause() {
+            Log.i(TAG, "onPlayPause:" );
             mWindowPlayer.updatePlayState(SuperPlayerDef.PlayerState.PAUSE);
             mFullScreenPlayer.updatePlayState(SuperPlayerDef.PlayerState.PAUSE);
         }
 
         @Override
         public void onPlayStop() {
+            Log.i(TAG, "onPlayStop:");
             if (mCurrentSuperPlayerModel != null/* && mCurrentSuperPlayerModel.dynamicWaterConfig != null*/) {
                 mDynamicWatermarkView.hide();
             }
@@ -1172,12 +1175,14 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onPlayError() {
+            Log.i(TAG, "onPlayError:");
             mWindowPlayer.updatePlayState(SuperPlayerDef.PlayerState.ERROR);
             mFullScreenPlayer.updatePlayState(SuperPlayerDef.PlayerState.ERROR);
         }
 
         @Override
         public void onPlayLoading() {
+            Log.i(TAG, "onPlayLoading:" );
             if (mPlayAction == PLAY_ACTION_PRELOAD) {
                 if (isCallResume) {
                     mWindowPlayer.updatePlayState(SuperPlayerDef.PlayerState.LOADING);
@@ -1194,16 +1199,18 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onPlayProgress(long current, long duration, long playable) {
+            Log.i(TAG, "onPlayProgress:" + current);
             mProgress = current;
             mDuration = duration;
             mPlayAble = playable;
-            mWindowPlayer.updateVideoProgress(current, duration,playable);
-            mFullScreenPlayer.updateVideoProgress(current, duration,playable);
-            mFloatPlayer.updateVideoProgress(current, duration,playable);
+            mWindowPlayer.updateVideoProgress(current, duration, playable);
+            mFullScreenPlayer.updateVideoProgress(current, duration, playable);
+            mFloatPlayer.updateVideoProgress(current, duration, playable);
         }
 
         @Override
         public void onSeek(int position) {
+            Log.i(TAG, "onSeek:" + position);
             if (mSuperPlayer.getPlayerType() != SuperPlayerDef.PlayerType.VOD) {
                 if (mWatcher != null) {
                     mWatcher.stop();
@@ -1217,6 +1224,7 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onSwitchStreamStart(boolean success, SuperPlayerDef.PlayerType playerType, VideoQuality quality) {
+            Log.i(TAG, "onSwitchStreamStart:" + success);
             if (playerType == SuperPlayerDef.PlayerType.LIVE) {
                 if (success) {
                     Toast.makeText(mContext, "Switching to" + quality.title + "...", Toast.LENGTH_SHORT).show();
@@ -1229,6 +1237,7 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onSwitchStreamEnd(boolean success, SuperPlayerDef.PlayerType playerType, VideoQuality quality) {
+            Log.i(TAG, "onSwitchStreamEnd:");
             if (playerType == SuperPlayerDef.PlayerType.LIVE) {
                 if (success) {
                     Toast.makeText(mContext, "Successfully switched video quality", Toast.LENGTH_SHORT).show();
@@ -1240,6 +1249,7 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onPlayerTypeChange(SuperPlayerDef.PlayerType playType) {
+            Log.i(TAG, "onPlayerTypeChange:" + playType);
             mWindowPlayer.updatePlayType(playType);
             mFullScreenPlayer.updatePlayType(playType);
             mFloatPlayer.updatePlayType(playType);
@@ -1247,6 +1257,7 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onPlayTimeShiftLive(TXLivePlayer player, String url) {
+            Log.i(TAG, "onPlayTimeShiftLive:" + url);
             if (mWatcher == null) {
                 mWatcher = new NetWatcher(mContext);
             }
@@ -1255,27 +1266,31 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onVideoQualityListChange(List<VideoQuality> videoQualities, VideoQuality defaultVideoQuality) {
+            Log.i(TAG, "onVideoQualityListChange:");
             mFullScreenPlayer.setVideoQualityList(videoQualities);
             mFullScreenPlayer.updateVideoQuality(defaultVideoQuality);
         }
 
         @Override
         public void onVideoImageSpriteAndKeyFrameChanged(PlayImageSpriteInfo info, List<PlayKeyFrameDescInfo> list) {
+            Log.i(TAG, "onVideoImageSpriteAndKeyFrameChanged:" + info.toString());
             mFullScreenPlayer.updateImageSpriteInfo(info);
             mFullScreenPlayer.updateKeyFrameDescInfo(list);
         }
 
         @Override
         public void onError(int code, String message) {
+            Log.i(TAG, "onError:code" + code+"\tmessage:"+message);
 //            showToast(message);
             notifyCallbackPlayError(code);
         }
 
         @Override
         public void onRcvFirstIframe() {
+            Log.i(TAG, "onRcvFirstIframe:");
             super.onRcvFirstIframe();
             mWindowPlayer.toggleCoverView(false);
-            boolean curIsInPipMode = mPictureInPictureHelper!=null && mPictureInPictureHelper.isInPipMode();
+            boolean curIsInPipMode = mPictureInPictureHelper != null && mPictureInPictureHelper.isInPipMode();
             if (!TextUtils.isEmpty(mCurrentSuperPlayerModel.coverPictureUrl) && !curIsInPipMode) {
                 mWindowPlayer.showPIPIV(mCurrentSuperPlayerModel.vipWatchMode == null);
             }
@@ -1287,6 +1302,7 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onRcvTrackInformation(List<TXTrackInfo> infoList, TXTrackInfo lastSelected) {
+            Log.i(TAG, "onRcvTrackInformation:");
             super.onRcvTrackInformation(infoList, lastSelected);
             mFullScreenPlayer.setVodSelectionViewPositionAndData(infoList, lastSelected);
         }
@@ -1294,12 +1310,14 @@ public class SuperPlayerView extends RelativeLayout
 
         @Override
         public void onRcvSubTitleTrackInformation(List<TXTrackInfo> infoList) {
+            Log.i(TAG, "onRcvSubTitleTrackInformation:");
             super.onRcvSubTitleTrackInformation(infoList);
             mFullScreenPlayer.setVodSubtitlesViewPositionAndData(infoList);
         }
 
         @Override
         public void onRcvWaterMark(String text, long duration) {
+            Log.i(TAG, "onRcvWaterMark:" + text);
             if (!TextUtils.isEmpty(text)) {
                 DynamicWaterConfig dynamicWaterConfig = new DynamicWaterConfig(text, 30, Color.parseColor("#30FFFFFF"));
                 dynamicWaterConfig.durationInSecond = duration;
@@ -1414,7 +1432,7 @@ public class SuperPlayerView extends RelativeLayout
 
     /**
      * Set whether to display the video quality, default is to display.
-     *
+     * <p>
      * 设置是否显示清晰度，默认显示
      */
     public void setQualityVisible(boolean isShow) {
@@ -1470,7 +1488,7 @@ public class SuperPlayerView extends RelativeLayout
     public long getDuration() {
         return mDuration;
     }
-    
+
     @Override
     public void onClickPIPPlay() {
         mSuperPlayer.resume();
