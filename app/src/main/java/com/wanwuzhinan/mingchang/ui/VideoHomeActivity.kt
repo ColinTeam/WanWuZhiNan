@@ -24,10 +24,10 @@ import com.wanwuzhinan.mingchang.vm.MediaViewModel
  * Des   :VideoHomeActivity
  */
 class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>() {
-   private var tab = 0
-   private lateinit var bgAdapter: VideoHomeAdapter
-   private lateinit var cardAdapter: VideoHomeAdapter
-   private val pagerSnapHelper: PagerSnapHelper by lazy {
+    private var tab = 0
+    private lateinit var bgAdapter: VideoHomeAdapter
+    private lateinit var cardAdapter: VideoHomeAdapter
+    private val pagerSnapHelper: PagerSnapHelper by lazy {
         PagerSnapHelper()
     }
 
@@ -87,8 +87,8 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
     fun selectedChild(
         id: Int, smooth: Boolean = false
     ) {
-        val lessonInfo = viewModel.getMediaLessonTabChildValue(id).info
-        if (lessonInfo.lessonQuarter.isEmpty()) {
+        val lessonInfo = viewModel.getMediaLessonTabChildValue(id)?.info
+        if (lessonInfo?.lessonQuarter.isNullOrEmpty()) {
             viewModel.getMediaLessonTabChild(id, 0)
         } else updateChildUI(lessonInfo.lessonQuarter, 0, smooth = smooth)
     }

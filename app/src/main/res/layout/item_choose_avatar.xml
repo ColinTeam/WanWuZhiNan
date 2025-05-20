@@ -6,15 +6,24 @@
 
     </data>
 
-    <com.colin.library.android.widget.image.RectangleImageView
-        android:id="@+id/ivAvatar"
-        android:layout_width="@dimen/dp_98"
-        android:layout_height="@dimen/dp_98"
-        android:padding="@dimen/dp_3"
-        android:src="@mipmap/stat_avater_2"
-        app:byWidth="false"
-        app:shapeAppearanceOverlay="@style/ImageCircle">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
 
-    </com.colin.library.android.widget.image.RectangleImageView>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:minHeight="@dimen/dp_98"
+            android:padding="@dimen/dp_3"
+            android:src="@mipmap/stat_avater_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ImageCircle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

@@ -1,5 +1,6 @@
 package com.wanwuzhinan.mingchang.ui.adapter
 
+import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.base.BaseAdapter
 import com.colin.library.android.widget.base.BaseViewHolder
 import com.wanwuzhinan.mingchang.R
@@ -34,5 +35,8 @@ class VideoHomeAdapter(val layoutRes: Int = R.layout.item_video_home_bg) :
         holder: BaseViewHolder, item: LessonQuarter, position: Int, payloads: MutableList<Any>
     ) {
         holder.getImageView(R.id.ivBg).load(item.image, R.mipmap.bg_video_home)
+        holder.itemView.onClick {
+            onItemClickListener?.invoke(it, item, position)
+        }
     }
 }

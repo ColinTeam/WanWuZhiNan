@@ -59,7 +59,7 @@ class AudioHomeFragment : AppFragment<FragmentAudioBinding, MediaViewModel>() {
     fun selectedLesson(id: Int) {
         val list = viewModel.getMediaLessonTabChildValue(id).info.lessonQuarter
         if (list.isEmpty()) {
-            viewModel.getMediaQuarterChild(id)
+            viewModel.getMediaLessonQuarter(id)
         } else updateLessonUI(list)
     }
 

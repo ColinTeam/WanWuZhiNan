@@ -25,6 +25,8 @@ class VideoListActivity : AppActivity<FragmentVideoListBinding, MediaViewModel>(
     private lateinit var tabAdapter: VideoListTabAdapter
     private lateinit var listAdapter: VideoListAdapter
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+        id = bundle?.getInt(ConfigApp.EXTRAS_ID, 0) ?: 0
+        position = getExtrasPosition(bundle, savedInstanceState)
         tabAdapter = VideoListTabAdapter()
         listAdapter = VideoListAdapter()
         viewBinding.apply {
@@ -55,11 +57,10 @@ class VideoListActivity : AppActivity<FragmentVideoListBinding, MediaViewModel>(
         var tab = selected
         if (tab >= groupSize) tab = groupSize - 1
         if (tab < 0) tab = 0
-        this.position = tab
-        val lesson = group.list[tab]
-        tabAdapter.submitList(group.list)
-        tabAdapter.selected = position
-        updateGroupUI(tab, group)
+//        this.position = tab
+//        tabAdapter.submitList(group.list)
+//        tabAdapter.selected = position
+//        updateGroupUI(tab, group)
     }
 
     private fun updateGroupUI(position: Int, group: LessonSubjectGroup) {
