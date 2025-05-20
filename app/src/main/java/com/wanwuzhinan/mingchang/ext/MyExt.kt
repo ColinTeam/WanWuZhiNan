@@ -121,7 +121,6 @@ fun createQRCodeBitmap(
 }
 
 
-
 fun editTips(vararg edit: TextView?): Boolean {
     edit.forEach {
         val text = it?.text.toString()
@@ -136,12 +135,9 @@ fun editTips(vararg edit: TextView?): Boolean {
 }
 
 
-
-
-
 fun showCardImage(image: String, complete: () -> Unit) {
     EaseThreadManager.getInstance().runOnMainThread {
-        val dialog = CustomDialog.build()
+        CustomDialog.build()
             .setCustomView(object : OnBindView<CustomDialog>(R.layout.pop_card_medal) {
                 override fun onBind(dialog: CustomDialog, v: View) {
                     var imageView = v.findViewById<ImageView>(R.id.iv_cover)

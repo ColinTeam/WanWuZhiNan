@@ -33,6 +33,7 @@ class RegisterResponse() : AppResponse<RegisterData>()
 class UserInfoResponse() : AppResponse<UserData>()
 class ConfigDataResponse() : AppResponse<Config>()
 class LessonSubjectGroupResponse() : AppResponse<LessonSubjectGroup>()
+class LessonSubjectChildResponse() : AppResponse<LessonSubjectChild>()
 class LessonInfoResponse() : AppResponse<LessonInfo>()
 class CityInfoResponse() : AppResponse<CityInfo>()
 class GradeResponse() : AppResponse<GradeInfo>()
@@ -202,32 +203,9 @@ data class LessonSubjectGroup(
     val list: List<LessonSubject> = emptyList<LessonSubject>()
 )
 
-//
-//val id: String,//
-//val select: Boolean,//
-//val group_id: String,
-//val type_id: String,
-//val name: String,
-//val image: String,
-//val photos: String,
-//val content: String,
-//val sort: String,
-//val is_open: String,
-//val update_time: String,
-//val create_time: String,
-//val del: String,
-//val delName: String,
-//val delColor: String,
-//val photosArr: List<PhotosBean>,
-//val lessonList: List<Lesson>,
-//val group_idName: String,
-//val group_idColor: String,
-//val type_idName: String,
-//val lesson_quarterCount: String,
-//val lesson_subject_name: String,
-//val lessonCount: String,
-//val lessonCountStar: Int,
-//val lesson_quarterList: List<DataBean>
+data class LessonSubjectChild(
+    val info: LessonSubject
+)
 
 data class LessonSubject(
     @SerializedName("id") val id: Int = 0,

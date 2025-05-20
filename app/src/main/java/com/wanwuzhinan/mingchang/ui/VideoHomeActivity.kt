@@ -3,17 +3,16 @@ package com.wanwuzhinan.mingchang.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import androidx.viewpager2.widget.ViewPager2
 import com.colin.library.android.utils.Log
-import com.colin.library.android.widget.page.transformer.VideoPageTransformer
+import com.colin.library.android.utils.ext.onClick
+import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentVideoHomeBinding
-import com.wanwuzhinan.mingchang.entity.LessonSubject
+import com.wanwuzhinan.mingchang.entity.LessonQuarter
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
-import com.wanwuzhinan.mingchang.ui.adapter.BannerAdapter
+import com.wanwuzhinan.mingchang.ext.visible
+import com.wanwuzhinan.mingchang.ui.adapter.VideoHomeAdapter
 import com.wanwuzhinan.mingchang.vm.MediaViewModel
 
 /**
@@ -25,40 +24,32 @@ import com.wanwuzhinan.mingchang.vm.MediaViewModel
  */
 class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>() {
     var tab = 0
-//    var bgAdapter:VideoH
+    lateinit var bgAdapter: VideoHomeAdapter
+    lateinit var cardAdapter: VideoHomeAdapter
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
+        bgAdapter = VideoHomeAdapter(R.layout.item_video_home_bg)
+        cardAdapter = VideoHomeAdapter(R.layout.item_video_home_item)
         tab = getExtrasPosition(bundle, savedInstanceState)
         viewBinding.apply {
+            page.adapter = bgAdapter
+            list.adapter = cardAdapter
             onClick(ivPro, ivNext) {
-                if (it == ivPro) selectedGroup(tab + 1)
-                else selectedGroup(tab - 1)
+                if (it == ivPro) selectedGroup(selected = tab + 1, smooth = true)
+                else selectedGroup(selected = tab - 1, smooth = true)
             }
         }
-
-
-        val adapter = BannerAdapter()
-        viewBinding.pager.adapter = adapter
-        viewBinding.pager.setPageTransformer(VideoPageTransformer())
-        viewBinding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                handler.removeCallbacks(runnable)
-                handler.postDelayed(runnable, delayMillis)
-            }
-        })
-        viewBinding.pager.offscreenPageLimit = 5 // 预加载前后各一页
-        handler.postDelayed(runnable, delayMillis)
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
             mediaLessonTab.observe {
                 Log.i("mediaLessonTab:$it")
-                selectedGroup(tab, it)
+                selectedGroup(it, tab, false)
             }
             mediaLessonTabChild.observe {
                 Log.i("mediaLessonTabChild:$it")
-                updateLessonUI(it.list)
+                updateChildUI(it.info.lessonQuarter, 0, false)
             }
         }
     }
@@ -69,7 +60,9 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
     }
 
     private fun selectedGroup(
-        selected: Int, group: LessonSubjectGroup? = viewModel.getMediaLessonTabValue()
+        group: LessonSubjectGroup? = viewModel.getMediaLessonTabValue(),
+        selected: Int,
+        smooth: Boolean = false
     ) {
         if (group == null || group.list.isEmpty()) {
             viewModel.getMediaLessonTab(ConfigApp.TYPE_VIDEO)
@@ -82,29 +75,38 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
         if (tab < 0) tab = 0
         this.tab = tab
         val lesson = group.list[tab]
-        selectedLesson(lesson.id)
         updateGroupUI(tab, group)
+        selectedChild(lesson.id, smooth)
     }
 
-    fun selectedLesson(id: Int) {
-        val lessonInfo = viewModel.getMediaLessonTabChildValue(id)
-        if (lessonInfo == null || lessonInfo.list.isEmpty()) {
+    fun selectedChild(
+        id: Int,
+        smooth: Boolean = false
+    ) {
+        val lessonInfo = viewModel.getMediaLessonTabChildValue(id).info
+        if (lessonInfo.lessonQuarter.isEmpty()) {
             viewModel.getMediaLessonTabChild(id, 0)
-        } else updateLessonUI(lessonInfo.list)
+        } else updateChildUI(lessonInfo.lessonQuarter, 0, smooth = smooth)
     }
 
     private fun updateGroupUI(tab: Int, group: LessonSubjectGroup) {
         val size = group.list.size
         val isMultiPage = size > 1
         viewBinding.progress.max = size
+        viewBinding.tvPage.text = "$tab"
         viewBinding.ivPro.visible(isMultiPage)
         viewBinding.ivNext.visible(isMultiPage)
         viewBinding.progress.visible(isMultiPage)
         viewBinding.tvPage.visible(isMultiPage)
     }
 
-    private fun updateLessonUI(list: List<LessonSubject>) {
-
+    private fun updateChildUI(
+        list: List<LessonQuarter>, position: Int = 0, smooth: Boolean = false
+    ) {
+        bgAdapter.submitList(list)
+        cardAdapter.submitList(list)
+        viewBinding.page.offscreenPageLimit = 2
+        viewBinding.page.setCurrentItem(position, smooth)
     }
 
     companion object {

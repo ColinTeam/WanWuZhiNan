@@ -7,6 +7,7 @@ import com.wanwuzhinan.mingchang.app.AppViewModel
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.entity.LessonInfo
+import com.wanwuzhinan.mingchang.entity.LessonSubjectChild
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
 
 /**
@@ -21,8 +22,8 @@ class MediaViewModel : AppViewModel() {
     private val _mediaLessonTab: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
     val mediaLessonTab: LiveData<LessonSubjectGroup> = _mediaLessonTab
 
-    private val _mediaLessonTabChild: MutableLiveData<LessonSubjectGroup> = MutableLiveData()
-    val mediaLessonTabChild: LiveData<LessonSubjectGroup> = _mediaLessonTabChild
+    private val _mediaLessonTabChild: MutableLiveData<LessonSubjectChild> = MutableLiveData()
+    val mediaLessonTabChild: LiveData<LessonSubjectChild> = _mediaLessonTabChild
 
     private val _lessonInfo: MutableLiveData<LessonInfo> = MutableLiveData()
     val lessonInfo: LiveData<LessonInfo> = _lessonInfo
@@ -32,7 +33,7 @@ class MediaViewModel : AppViewModel() {
 
     private val _lessonsData: MutableLiveData<List<Lesson?>?> = MutableLiveData(null)
     val lessonsData: LiveData<List<Lesson?>?> = _lessonsData
-    private val mediaLessonTabChildArray: SparseArray<LessonSubjectGroup> = SparseArray()
+    private val mediaLessonTabChildArray: SparseArray<LessonSubjectChild> = SparseArray()
 
 
     //第一个请求的为第二个请求的值
@@ -72,8 +73,8 @@ class MediaViewModel : AppViewModel() {
     fun getMediaQuarterChild(groupID: Int, need: Int = 1) {
         request(request = { service.newAudioLessonQuarter(groupID, need) }, success = { it ->
             it?.let {
-                mediaLessonTabChildArray.put(groupID, it)
-                _mediaLessonTabChild.postValue(it)
+//                mediaLessonTabChildArray.put(groupID, it)
+//                _mediaLessonTabChild.postValue(it)
             }
         })
     }

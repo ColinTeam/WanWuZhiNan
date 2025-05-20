@@ -62,7 +62,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
         }
         var selected = lessons.indexOfFirst { (it?.id ?: 0) == position }
         if (selected < 0) selected = 0
-        play(lessons[position]!!)
+        play(lessons[selected]!!)
     }
 
     private fun play(lesson: Lesson) {

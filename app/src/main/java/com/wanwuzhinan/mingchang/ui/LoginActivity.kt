@@ -41,7 +41,7 @@ import java.util.regex.Pattern
 class LoginActivity : AppActivity<ActivityLoginBinding, LoginViewModel>() {
 
     // 自定义 InputFilter，过滤中文字符
-    val filterChinese = InputFilter { source, start, end, dest, dstart, dend ->
+    val filterChinese = InputFilter { source, _, _, _, _, _ ->
         val regex = "[\\u4e00-\\u9fa5]" // 匹配中文字符的正则表达式
         val pattern = Pattern.compile(regex)
         val matcher = pattern.matcher(source)

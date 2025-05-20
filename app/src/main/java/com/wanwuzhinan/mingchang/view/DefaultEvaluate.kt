@@ -60,7 +60,7 @@ class DefaultEvaluate : ConstraintLayout {
     }
 
     private fun init(context: Context) {
-        LayoutInflater.from(getContext()).inflate(R.layout.view_evaluate, this, true)
+        LayoutInflater.from(context).inflate(R.layout.view_evaluate, this, true)
         val reList = findViewById<RecyclerView>(R.id.reList)
         mAdapter= EvaluateAdapter()
         mList= mutableListOf<Boolean>()

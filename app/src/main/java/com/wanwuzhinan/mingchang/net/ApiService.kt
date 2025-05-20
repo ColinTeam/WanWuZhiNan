@@ -23,6 +23,7 @@ import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
 import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.entity.LessonInfoResponse
 import com.wanwuzhinan.mingchang.entity.LessonSubject
+import com.wanwuzhinan.mingchang.entity.LessonSubjectChildResponse
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroupResponse
 import com.wanwuzhinan.mingchang.entity.QuestionListResponse
 import com.wanwuzhinan.mingchang.entity.QuestionResponse
@@ -76,7 +77,7 @@ interface ApiService {
     @POST("/api/LessonSubject/info")
     suspend fun newMediaLessonTabChild(
         @Field("id") id: Int, @Field("need_lesson") need_lesson: Int
-    ): LessonSubjectGroupResponse
+    ): LessonSubjectChildResponse
 
     //音频视频科目季度列表
     @FormUrlEncoded

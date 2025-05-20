@@ -14,6 +14,8 @@ import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.getCurrentVersionCode
+import com.ssm.comm.ext.getScreenHeight2
+import com.ssm.comm.ext.getScreenWidth2
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
@@ -30,8 +32,6 @@ import com.wanwuzhinan.mingchang.ui.phone.RankActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
 import com.wanwuzhinan.mingchang.ui.pop.UserInfoDialog
-import com.wanwuzhinan.mingchang.utils.RATIO_16_9
-import com.wanwuzhinan.mingchang.utils.getRatio
 import com.wanwuzhinan.mingchang.utils.load
 import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
@@ -118,9 +118,15 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
                     }
 
                     ivTwoBg -> {//audio
-                        val radio = this@HomeActivity.getRatio()
-                        if (radio > RATIO_16_9) AudioHomeActivity.start(this@HomeActivity)
-                        else AudioHomeIpadActivity.start(this@HomeActivity)
+                        val dd = getScreenWidth2() / (getScreenHeight2() * 1.0f)
+                        if (dd >= (16 / 9.0)) {
+                            AudioHomeActivity.start(this@HomeActivity)
+                        } else {
+                            AudioHomeIpadActivity.start(this@HomeActivity)
+                        }
+//                        val radio = this@HomeActivity.getRatio()
+//                        if (radio > RATIO_16_9) AudioHomeActivity.start(this@HomeActivity)
+//                        else AudioHomeIpadActivity.start(this@HomeActivity)
                     }
 
                     ivThreeBg -> {

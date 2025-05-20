@@ -3,7 +3,8 @@ package com.wanwuzhinan.mingchang.ui.adapter
 import com.colin.library.android.widget.base.BaseAdapter
 import com.colin.library.android.widget.base.BaseViewHolder
 import com.wanwuzhinan.mingchang.R
-import com.wanwuzhinan.mingchang.entity.LessonSubject
+import com.wanwuzhinan.mingchang.entity.LessonQuarter
+import com.wanwuzhinan.mingchang.utils.load
 
 /**
  * Author:ColinLu
@@ -12,7 +13,8 @@ import com.wanwuzhinan.mingchang.entity.LessonSubject
  *
  * Des   :VideoHomeListAdapter
  */
-class VideoHomeCardAdapter() : BaseAdapter<LessonSubject>(layoutRes = R.layout.item_video_home) {
+class VideoHomeAdapter(val layoutRes: Int = R.layout.item_video_home_bg) :
+    BaseAdapter<LessonQuarter>(layoutRes = layoutRes) {
     //    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: SubjectListData.dataBean?) {
 //        GlideImgManager.get().loadImg(item!!.image,holder.getView(R.id.riv_image),R.drawable.img_default_icon)
 //        holder.setText(R.id.tv_number,"共${item.lessonCount}节")
@@ -29,7 +31,8 @@ class VideoHomeCardAdapter() : BaseAdapter<LessonSubject>(layoutRes = R.layout.i
 //    }
 
     override fun bindListViewHolder(
-        holder: BaseViewHolder, item: LessonSubject, postion: Int, payloads: MutableList<Any>
+        holder: BaseViewHolder, item: LessonQuarter, position: Int, payloads: MutableList<Any>
     ) {
+        holder.getImageView(R.id.ivBg).load(item.image, R.mipmap.bg_video_home)
     }
 }

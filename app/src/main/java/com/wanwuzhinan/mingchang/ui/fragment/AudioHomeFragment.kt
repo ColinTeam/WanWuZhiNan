@@ -5,7 +5,7 @@ import com.colin.library.android.utils.Log
 import com.wanwuzhinan.mingchang.app.AppFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.FragmentAudioBinding
-import com.wanwuzhinan.mingchang.entity.LessonSubject
+import com.wanwuzhinan.mingchang.entity.LessonQuarter
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
 import com.wanwuzhinan.mingchang.vm.MediaViewModel
 
@@ -29,7 +29,7 @@ class AudioHomeFragment : AppFragment<FragmentAudioBinding, MediaViewModel>() {
 
             mediaLessonTab.observe {
                 Log.i("mediaLessonTab:$it")
-                updateLessonUI(it.list)
+//                updateLessonUI(null)
             }
         }
     }
@@ -57,17 +57,17 @@ class AudioHomeFragment : AppFragment<FragmentAudioBinding, MediaViewModel>() {
     }
 
     fun selectedLesson(id: Int) {
-        val lessonInfo = viewModel.getMediaLessonTabChildValue(id)
-        if (lessonInfo == null || lessonInfo.list.isEmpty()) {
+        val list = viewModel.getMediaLessonTabChildValue(id).info.lessonQuarter
+        if (list.isEmpty()) {
             viewModel.getMediaQuarterChild(id)
-        } else updateLessonUI(lessonInfo.list)
+        } else updateLessonUI(list)
     }
 
     private fun updateGroupUI(tab: Int, group: LessonSubjectGroup) {
 
     }
 
-    private fun updateLessonUI(list: List<LessonSubject>) {
+    private fun updateLessonUI(list: List<LessonQuarter>) {
 
     }
 }
