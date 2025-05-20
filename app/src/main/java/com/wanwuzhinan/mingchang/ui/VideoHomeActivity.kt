@@ -33,7 +33,13 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         bgAdapter = VideoHomeAdapter(R.layout.item_video_home_bg)
-        cardAdapter = VideoHomeAdapter(R.layout.item_video_home_item)
+        cardAdapter = VideoHomeAdapter(R.layout.item_video_home_item).apply {
+            onItemClickListener = { _, item, position ->
+                VideoListActivity.start(
+                    this@VideoHomeActivity, item.lesson_subject_id.toInt(), position
+                )
+            }
+        }
         tab = getExtrasPosition(bundle, savedInstanceState)
         viewBinding.apply {
             page.adapter = bgAdapter
