@@ -17,6 +17,7 @@ object ConfigApp {
     const val MMKY_KEY_TXLIVE = "TXLiveBaseLicence"
     const val MMKY_KEY_PRIVACY = "privacy_state"
 
+    const val EXTRAS_ID = "id"
     const val EXTRAS_URL = "url"
     const val EXTRAS_POSITION = "position"
     const val EXTRAS_TITLE = "title"

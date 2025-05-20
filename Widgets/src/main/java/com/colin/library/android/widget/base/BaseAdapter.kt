@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.colin.library.android.utils.Constants
 import java.util.Collections
@@ -21,8 +22,17 @@ import java.util.Collections
 
 
 abstract class BaseAdapter<ITEM>(
-    val items: ArrayList<ITEM> = arrayListOf(), @LayoutRes private val layoutRes: Int
+    val items: ArrayList<ITEM> = arrayListOf(),
+    @LayoutRes private val layoutRes: Int,
 ) : RecyclerView.Adapter<BaseViewHolder>() {
+    private val defaultDiff = object : ItemCallback<ITEM>() {
+        override fun areItemsTheSame(oldItem: ITEM & Any, newItem: ITEM & Any) = oldItem == newItem
+
+        @SuppressLint("DiffUtilEquals")
+        override fun areContentsTheSame(oldItem: ITEM & Any, newItem: ITEM & Any) =
+            oldItem == newItem
+
+    }
 
     constructor(@LayoutRes layoutRes: Int) : this(arrayListOf(), layoutRes)
 

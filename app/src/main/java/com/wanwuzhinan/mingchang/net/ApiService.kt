@@ -82,7 +82,7 @@ interface ApiService {
     //音频视频科目季度列表
     @FormUrlEncoded
     @POST("/api/LessonQuarter/index")
-    suspend fun newAudioLessonQuarter(
+    suspend fun newMediaLessonQuarter(
         @Field("lesson_subject_id") lesson_subject_id: Int, @Field("need_lesson") need_lesson: Int
     ): LessonSubjectGroupResponse
 

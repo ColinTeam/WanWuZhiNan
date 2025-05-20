@@ -27,7 +27,6 @@
                 app:layout_constrainedHeight="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="h,16:9"
-                app:layout_constraintHeight_max="@dimen/dp_360"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@mipmap/bg_main" />

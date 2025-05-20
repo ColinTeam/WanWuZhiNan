@@ -3,6 +3,7 @@ package com.wanwuzhinan.mingchang.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
 import com.wanwuzhinan.mingchang.R
@@ -23,9 +24,12 @@ import com.wanwuzhinan.mingchang.vm.MediaViewModel
  * Des   :VideoHomeActivity
  */
 class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>() {
-    var tab = 0
-    lateinit var bgAdapter: VideoHomeAdapter
-    lateinit var cardAdapter: VideoHomeAdapter
+   private var tab = 0
+   private lateinit var bgAdapter: VideoHomeAdapter
+   private lateinit var cardAdapter: VideoHomeAdapter
+   private val pagerSnapHelper: PagerSnapHelper by lazy {
+        PagerSnapHelper()
+    }
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         bgAdapter = VideoHomeAdapter(R.layout.item_video_home_bg)
@@ -34,6 +38,7 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
         viewBinding.apply {
             page.adapter = bgAdapter
             list.adapter = cardAdapter
+            pagerSnapHelper.attachToRecyclerView(list)
             onClick(ivPro, ivNext) {
                 if (it == ivPro) selectedGroup(selected = tab + 1, smooth = true)
                 else selectedGroup(selected = tab - 1, smooth = true)
@@ -80,8 +85,7 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
     }
 
     fun selectedChild(
-        id: Int,
-        smooth: Boolean = false
+        id: Int, smooth: Boolean = false
     ) {
         val lessonInfo = viewModel.getMediaLessonTabChildValue(id).info
         if (lessonInfo.lessonQuarter.isEmpty()) {

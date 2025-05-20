@@ -19,7 +19,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/re_left"
             android:layout_width="@dimen/dp_76"

@@ -55,27 +55,24 @@ class MediaViewModel : AppViewModel() {
 //        }
 //    }
 
-    fun getMediaLessonTab(groupID: Int = ConfigApp.TYPE_AUDIO) {
-        request(request = { service.newMediaLessonTab(groupID) }, success = { it ->
+    fun getMediaLessonTab(type: Int = ConfigApp.TYPE_AUDIO) {
+        request(request = { service.newMediaLessonTab(type) }, success = { it ->
             it?.let { _mediaLessonTab.postValue(it) }
         })
     }
 
-    fun getMediaLessonTabChild(groupID: Int, need: Int = 1) {
-        request(request = { service.newMediaLessonTabChild(groupID, need) }, success = { it ->
+    fun getMediaLessonTabChild(id: Int, need: Int = 1) {
+        request(request = { service.newMediaLessonTabChild(id, need) }, success = { it ->
             it?.let {
-                mediaLessonTabChildArray.put(groupID, it)
+                mediaLessonTabChildArray.put(id, it)
                 _mediaLessonTabChild.postValue(it)
             }
         })
     }
 
-    fun getMediaQuarterChild(groupID: Int, need: Int = 1) {
-        request(request = { service.newAudioLessonQuarter(groupID, need) }, success = { it ->
-            it?.let {
-//                mediaLessonTabChildArray.put(groupID, it)
-//                _mediaLessonTabChild.postValue(it)
-            }
+    fun getMediaLessonQuarter(id: Int, need: Int = 1) {
+        request(request = { service.newMediaLessonQuarter(id, need) }, success = { it ->
+            it?.let { _mediaLessonTab.postValue(it) }
         })
     }
 
