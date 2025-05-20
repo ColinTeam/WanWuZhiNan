@@ -25,21 +25,15 @@ import com.wanwuzhinan.mingchang.vm.MediaViewModel
  */
 class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>() {
     var tab = 0
-    var adapter: BannerAdapter? = null
-    val delayMillis: Long = 3000 // 3 seconds
-    val handler = Handler(Looper.getMainLooper())
-    val runnable = Runnable {
-        adapter ?: return@Runnable
-        viewBinding.pager.setCurrentItem((viewBinding.pager.currentItem + 1) % 4, true)
-    }
+//    var bgAdapter:VideoH
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         tab = getExtrasPosition(bundle, savedInstanceState)
         viewBinding.apply {
-//            onClick(ivPro, ivNext) {
-//                if (it == ivPro) selectedGroup(tab + 1)
-//                else selectedGroup(tab - 1)
-//            }
+            onClick(ivPro, ivNext) {
+                if (it == ivPro) selectedGroup(tab + 1)
+                else selectedGroup(tab - 1)
+            }
         }
 
 
@@ -71,14 +65,14 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
 
     override fun loadData(refresh: Boolean) {
         super.loadData(refresh)
-        viewModel.getMediaLessonTab(ConfigApp.TYPE_AUDIO)
+        viewModel.getMediaLessonTab(ConfigApp.TYPE_VIDEO)
     }
 
     private fun selectedGroup(
         selected: Int, group: LessonSubjectGroup? = viewModel.getMediaLessonTabValue()
     ) {
         if (group == null || group.list.isEmpty()) {
-            viewModel.getMediaLessonTab(ConfigApp.TYPE_AUDIO)
+            viewModel.getMediaLessonTab(ConfigApp.TYPE_VIDEO)
             return
         }
         //校验tab有效性
@@ -101,21 +95,15 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
 
     private fun updateGroupUI(tab: Int, group: LessonSubjectGroup) {
         val size = group.list.size
-//        if (size > 1) {
-//            viewBinding.progress.max = size
-//            viewBinding.ivPro.visible(true)
-//            viewBinding.ivNext.visible(true)
-//            viewBinding.progress.visible(true)
-//            viewBinding.tvPage.visible(true)
-//        } else {
-//            viewBinding.ivPro.visible(false)
-//            viewBinding.ivNext.visible(false)
-//            viewBinding.progress.visible(false)
-//            viewBinding.tvPage.visible(false)
-//        }
+        val isMultiPage = size > 1
+        viewBinding.progress.max = size
+        viewBinding.ivPro.visible(isMultiPage)
+        viewBinding.ivNext.visible(isMultiPage)
+        viewBinding.progress.visible(isMultiPage)
+        viewBinding.tvPage.visible(isMultiPage)
     }
 
-    private fun updateLessonUI(subject: List<LessonSubject>) {
+    private fun updateLessonUI(list: List<LessonSubject>) {
 
     }
 

@@ -12,7 +12,7 @@ import com.wanwuzhinan.mingchang.entity.LessonSubject
  *
  * Des   :VideoHomeListAdapter
  */
-class VideoHomeListAdapter() : BaseAdapter<LessonSubject>(layoutRes = R.layout.item_video_home) {
+class VideoHomeListAdapter() : BaseAdapter<Lesson>(layoutRes = R.layout.item_video_home) {
     //    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: SubjectListData.dataBean?) {
 //        GlideImgManager.get().loadImg(item!!.image,holder.getView(R.id.riv_image),R.drawable.img_default_icon)
 //        holder.setText(R.id.tv_number,"共${item.lessonCount}节")
