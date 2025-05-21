@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.SocketException
 
 
@@ -40,6 +41,27 @@ fun <T> ViewModel.request(
     finish: (suspend (HttpResult.Finish) -> Unit) = { }
 ) = requestImpl(viewModelScope, request, success, start, toast, action, finish)
 
+inline fun <T> CoroutineScope.request(
+    crossinline request: suspend () -> INetworkResponse<T>,
+    crossinline success: (T) -> Unit = { },
+    crossinline error: (code: Int, msg: String) -> Unit = { _, _ -> }
+): Job {
+    return launch {
+        try {
+            val response = withContext(Dispatchers.IO) { request() }
+            withContext(Dispatchers.Main) {
+                if (response.isSuccess() && response.getData() != null) {
+                    success(response.getData()!!)
+                } else {
+                    error(response.getCode(), response.getMsg())
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            withContext(Dispatchers.Main) { error(-1, "$e") }
+        }
+    }
+}
 
 /**
  * 执行网络请求的实现函数，支持重试机制和延迟启动。
@@ -70,16 +92,13 @@ fun <T> requestImpl(
         try {
             // 通知请求开始，并记录开始时间
             start.invoke(HttpResult.Start(System.currentTimeMillis()))
-
             // 如果设置了延迟，则等待指定时间
             if (delay > 0L) delay(delay)
-
             // 执行实际的网络请求逻辑
             requestImpl(request, success, toast, action, retry, delay)
         } catch (e: Exception) {
             // 如果协程被取消，则直接退出
             if (e is CancellationException) return@launch
-
             // 处理异常，显示提示信息并执行相关操作
             toast.invoke(HttpResult.Toast(HTTP_ERROR, "$e"))
             action.invoke(HttpResult.Action(HTTP_ERROR, "$e"))
