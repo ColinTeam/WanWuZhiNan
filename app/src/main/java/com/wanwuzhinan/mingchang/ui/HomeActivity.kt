@@ -38,6 +38,7 @@ import com.wanwuzhinan.mingchang.ui.pop.UserInfoDialog
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.utils.load
 import com.wanwuzhinan.mingchang.utils.setData
+import com.wanwuzhinan.mingchang.utils.updateConfig
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
 
 /**
@@ -250,6 +251,7 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     }
 
     fun updateHomeContent(data: ConfigData) {
+        updateConfig(data)
         viewBinding.apply {
             tvOneTitle.text = data.home_title1
             tvTwoTitle.text = data.home_title2
@@ -257,16 +259,6 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
             tvFourTitle.text = data.home_title4
             tab2.text = data.home_title5
         }
-        if (!("huawei".equals(Build.BRAND, true) || "huawei".equals(
-                Build.MANUFACTURER, true
-            ) || "honor".equals(Build.BRAND, true) || "honor".equals(
-                Build.MANUFACTURER, true
-            ))
-        ) {
-            data.apple_is_audit = 0
-        }
-        //全局实用
-        setData(Constant.CONFIG_DATA, NetworkConfig.gson.toJson(data))
     }
 
 

@@ -3,12 +3,14 @@ package com.wanwuzhinan.mingchang.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ToastUtil
 import com.colin.library.android.utils.countDown
@@ -20,6 +22,7 @@ import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.config.ConfigApp.EXTRAS_POSITION
 import com.wanwuzhinan.mingchang.databinding.ActivityLoginBinding
+import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_PWD
 import com.wanwuzhinan.mingchang.entity.HTTP_ACTION_LOGIN_SMS
 import com.wanwuzhinan.mingchang.entity.HTTP_LOGIN_DEVICE_PHONE
@@ -28,6 +31,8 @@ import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.isPhone
 import com.wanwuzhinan.mingchang.ext.visible
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
+import com.wanwuzhinan.mingchang.utils.setData
+import com.wanwuzhinan.mingchang.utils.updateConfig
 import com.wanwuzhinan.mingchang.vm.LoginViewModel
 import java.util.regex.Pattern
 
@@ -134,6 +139,7 @@ class LoginActivity : AppActivity<ActivityLoginBinding, LoginViewModel>() {
         viewModel.apply {
             configData.observe {
                 Log.i("configData:$it")
+                updateConfig(it.info)
             }
             smsSuccess.observe {
                 Log.i("smsSuccess:$it")
@@ -170,8 +176,8 @@ class LoginActivity : AppActivity<ActivityLoginBinding, LoginViewModel>() {
             updateTab(savedInstanceState.getInt(EXTRAS_POSITION, tabIndex))
         } else {
             updateTab(tabIndex)
-            viewModel.getConfig()
         }
+        viewModel.getConfig()
     }
 
     private fun updateTab(index: Int) {
@@ -297,4 +303,5 @@ class LoginActivity : AppActivity<ActivityLoginBinding, LoginViewModel>() {
             viewBinding.etPassword.setText(pwd)
         }
     }
+
 }

@@ -10,7 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.colin.library.android.image.glide.GlideImgManager
+import com.colin.library.android.network.NetworkConfig
+import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.R
+import com.wanwuzhinan.mingchang.entity.ConfigData
 import java.util.regex.Pattern
 
 /**
@@ -56,6 +59,20 @@ fun Editable?.removeChinese(): Editable? {
     }
     return this
 }
+
+fun Context.updateConfig(data: ConfigData) {
+    if (!("huawei".equals(Build.BRAND, true) || "huawei".equals(
+            Build.MANUFACTURER, true
+        ) || "honor".equals(Build.BRAND, true) || "honor".equals(
+            Build.MANUFACTURER, true
+        ))
+    ) {
+        data.apple_is_audit = 0
+    }
+    //全局实用
+    setData(Constant.CONFIG_DATA, NetworkConfig.gson.toJson(data))
+}
+
 //    return run {
 //        val text = this.toString()
 //        val result = text.replace("[\\u4e00-\\u9fa5]".toRegex(), "")
