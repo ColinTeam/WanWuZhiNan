@@ -241,8 +241,8 @@
         <item name="android:textAppearance">@style/Text</item>
         <item name="autoSizeTextType">uniform</item>
         <item name="autoSizeStepGranularity">@dimen/text_home_step</item>
-        <item name="autoSizeMaxTextSize">@dimen/sp_40</item>
-        <item name="autoSizeMinTextSize">@dimen/default_text_size</item>
+        <item name="autoSizeMaxTextSize">@dimen/text_size_max</item>
+        <item name="autoSizeMinTextSize">@dimen/text_size_min</item>
         <item name="android:fontWeight">400</item>
         <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
     </style>
@@ -282,8 +282,6 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_home_title</item>
         <item name="android:textAppearance">@style/Text.Home</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/text_home_max</item>
-        <item name="android:autoSizeMinTextSize">@dimen/text_home_min</item>
         <item name="android:fontWeight">400</item>
         <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
         <item name="autoSizeMaxTextSize">@dimen/text_home_max</item>

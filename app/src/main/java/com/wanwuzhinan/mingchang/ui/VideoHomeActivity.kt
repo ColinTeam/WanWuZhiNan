@@ -96,7 +96,7 @@ class VideoHomeActivity : AppActivity<FragmentVideoHomeBinding, MediaViewModel>(
         val lessonInfo = viewModel.getMediaLessonTabChildValue(id)?.info
         if (lessonInfo?.lessonQuarter.isNullOrEmpty()) {
             viewModel.getMediaLessonTabChild(id, 0)
-        } else updateChildUI(lessonInfo.lessonQuarter, 0, smooth = smooth)
+        } else updateChildUI(lessonInfo!!.lessonQuarter, 0, smooth = smooth)
     }
 
     private fun updateGroupUI(tab: Int, group: LessonSubjectGroup) {

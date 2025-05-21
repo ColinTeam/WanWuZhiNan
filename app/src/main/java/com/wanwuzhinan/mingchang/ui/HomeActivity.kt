@@ -11,11 +11,14 @@ import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
+import com.colin.library.android.utils.helper.UtilHelper
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.getCurrentVersionCode
 import com.ssm.comm.ext.getScreenHeight2
 import com.ssm.comm.ext.getScreenWidth2
+import com.tencent.rtmp.TXLiveBase
+import com.tencent.rtmp.TXLiveBaseListener
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
@@ -32,6 +35,7 @@ import com.wanwuzhinan.mingchang.ui.phone.RankActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoHomeActivity
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
 import com.wanwuzhinan.mingchang.ui.pop.UserInfoDialog
+import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.utils.load
 import com.wanwuzhinan.mingchang.utils.setData
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
@@ -175,7 +179,21 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
                 changeADState(!it, getConfigValue())
             }
         }
-
+        //确认是否初始化成功
+        TXLiveBase.setListener(object : TXLiveBaseListener() {
+            override fun onLicenceLoaded(result: Int, reason: String) {
+                Log.e("TXLive onLicenceLoaded: result:$result, reason:$reason")
+                if (result == 0) {
+                    MMKVUtils.encode(ConfigApp.MMKY_KEY_TXLIVE, 1)
+                } else {
+                    TXLiveBase.getInstance().setLicence(
+                        UtilHelper.getApplication(),
+                        ConfigApp.TXLIVE_LICENSE_URL,
+                        ConfigApp.TXLIVE_LICENSE_KEY
+                    )
+                }
+            }
+        })
     }
 
     override fun loadData(refresh: Boolean) {
@@ -253,7 +271,6 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
 
 
     companion object {
-
         @JvmStatic
         fun start(context: Context) {
             val starter = Intent(context, HomeActivity::class.java)

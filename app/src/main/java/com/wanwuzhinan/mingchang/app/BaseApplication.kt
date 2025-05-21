@@ -22,14 +22,11 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.ssm.comm.app.CommApplication
-import com.tencent.rtmp.TXLiveBase
-import com.tencent.rtmp.TXLiveBaseListener
 import com.wanwuzhinan.mingchang.BuildConfig
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.entity.RegisterData
 import com.wanwuzhinan.mingchang.net.HeaderInterceptor
-import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.zjh.download.SimpleDownload
 
 
@@ -47,7 +44,7 @@ class BaseApplication : CommApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        UtilHelper.init(UtilConfig.newBuilder(this, true).build())
+        UtilHelper.init(UtilConfig.newBuilder(this, BuildConfig.DEBUG).build())
         initNetwork()
         initMMKV(this)
         initImageLoader()
@@ -55,7 +52,6 @@ class BaseApplication : CommApplication() {
 //        MediaHolder.initialize(this)
         DialogX.init(this);
         initX5Environment()
-        enterInApp()
         Log.e("BaseApplication", "onCreate: ")
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(object : DefaultRefreshHeaderCreator {
             override fun createRefreshHeader(
@@ -91,21 +87,6 @@ class BaseApplication : CommApplication() {
         }
     }
 
-    fun enterInApp() {
-        initBugly()
-        initLive()
-        TXLiveBase.setListener(object : TXLiveBaseListener() {
-            override fun onLicenceLoaded(result: Int, reason: String) {
-                Log.i("TAG", "onLicenceLoaded: result:$result, reason:$reason")
-                if (result == 0) {
-                    MMKVUtils.encode(ConfigApp.MMKY_KEY_TXLIVE, 1)
-                } else {
-                    initLive()
-                }
-            }
-        })
-    }
-
     private fun initImageLoader() {
         GlideImageLoader.getDefault().diskCacheOptions.withContext(this).loadPlaceholderRes(-1)
             .loadErrorRes(-2).loadFallbackRes(-3)
@@ -120,12 +101,5 @@ class BaseApplication : CommApplication() {
         SimpleDownload.instance.init(this)
     }
 
-
-    private fun initLive() {
-        val licenseURL =
-            "https://license.vod2.myqcloud.com/license/v2/1353990201_1/v_cube.license" // 获取到的 license url
-        val licenseKey = "d025b928c9f91abb9a3a354cad87af4b" // 获取到的 license key
-        TXLiveBase.getInstance().setLicence(this, licenseURL, licenseKey)
-    }
 
 }

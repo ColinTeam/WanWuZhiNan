@@ -247,12 +247,11 @@
             android:clickable="false"
             android:gravity="center_vertical"
             android:text="@string/home_two_title"
-            android:textSize="@dimen/text_home_title"
             app:layout_constraintBottom_toBottomOf="@+id/ivTwoBg"
             app:layout_constraintDimensionRatio="h,5:2"
             app:layout_constraintStart_toStartOf="@+id/ivTwoBg"
             app:layout_constraintTop_toTopOf="@+id/ivTwoBg"
-            app:layout_constraintWidth_percent="0.15"
+            app:layout_constraintWidth_percent="0.18"
             tools:ignore="UnusedAttribute" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -396,7 +395,7 @@
             android:layout_marginBottom="@dimen/dp_60"
             android:src="@mipmap/ic_home_ad"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/ivOneBg"
             app:layout_constraintStart_toStartOf="parent"
             tools:visibility="visible" />
 

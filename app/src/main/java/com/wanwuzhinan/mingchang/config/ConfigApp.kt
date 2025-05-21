@@ -4,11 +4,13 @@ import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 
 object ConfigApp {
+    const val TXLIVE_LICENSE_URL = "https://license.vod2.myqcloud.com/license/v2/1353990201_1/v_cube.license" // 获取到的 license url
+    const val TXLIVE_LICENSE_KEY = "d025b928c9f91abb9a3a354cad87af4b" // 获取到的 license key
     const val URL_DEBUG: String = "https://www.mxwsl.cn"
-    const val URL_RELEASE: String = "https://www.mxwsl.cn"
-//    const val URL_RELEASE: String = "https://app.wanwuzhinan.top"
+    const val URL_RELEASE: String = "https://app.wanwuzhinan.top"
+
+    //    const val URL_RELEASE: String = "https://app.wanwuzhinan.top"
     const val BUGLY_APP_ID = "7531451148"
-    const val LIVE_LICENSE_KEY = "d025b928c9f91abb9a3a354cad87af4b"
     const val WE_CHAT_APP_STATE = "wechat_sdk_demo_test_neng"
     const val WE_CHAT_APP_SCOPE = "snsapi_userinfo"
     const val WE_CHAT_APP_SECRET = "72e067e19f371d8dc3ac4bc9d9e69687"

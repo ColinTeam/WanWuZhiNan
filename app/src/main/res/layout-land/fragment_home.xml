@@ -247,12 +247,11 @@
             android:clickable="false"
             android:gravity="center_vertical"
             android:text="@string/home_two_title"
-            android:textSize="@dimen/text_home_title"
             app:layout_constraintBottom_toBottomOf="@+id/ivTwoBg"
             app:layout_constraintDimensionRatio="h,5:2"
             app:layout_constraintStart_toStartOf="@+id/ivTwoBg"
             app:layout_constraintTop_toTopOf="@+id/ivTwoBg"
-            app:layout_constraintWidth_percent="0.175"
+            app:layout_constraintWidth_percent="0.18"
             tools:ignore="UnusedAttribute" />
 
         <androidx.appcompat.widget.AppCompatImageView

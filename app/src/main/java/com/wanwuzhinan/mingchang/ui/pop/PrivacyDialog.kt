@@ -2,6 +2,9 @@ package com.wanwuzhinan.mingchang.ui.pop
 
 import android.os.Bundle
 import com.colin.library.android.utils.ext.onClick
+import com.colin.library.android.utils.helper.UtilHelper
+import com.tencent.bugly.crashreport.CrashReport
+import com.tencent.rtmp.TXLiveBase
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppDialogFragment
 import com.wanwuzhinan.mingchang.config.ConfigApp
@@ -38,13 +41,23 @@ class PrivacyDialog private constructor(
                     }
 
                     btCancel -> {
-                        dismiss()
                         cancel.invoke(it)
+                        dismiss()
                     }
 
                     btSure -> {
-                        dismiss()
+                        CrashReport.initCrashReport(
+                            UtilHelper.getApplication(),
+                            ConfigApp.BUGLY_APP_ID,
+                            false
+                        )
+                        TXLiveBase.getInstance().setLicence(
+                            UtilHelper.getApplication(),
+                            ConfigApp.TXLIVE_LICENSE_URL,
+                            ConfigApp.TXLIVE_LICENSE_KEY
+                        )
                         sure.invoke(it)
+                        dismiss()
                     }
                 }
             }
