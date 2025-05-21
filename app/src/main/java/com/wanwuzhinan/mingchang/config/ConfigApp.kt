@@ -4,7 +4,6 @@ import com.ssm.comm.config.Constant
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 
 object ConfigApp {
-    const val CHANNEL_BBK = true
     const val TXLIVE_LICENSE_URL = "https://license.vod2.myqcloud.com/license/v2/1353990201_1/v_cube.license" // 获取到的 license url
     const val TXLIVE_LICENSE_KEY = "d025b928c9f91abb9a3a354cad87af4b" // 获取到的 license key
     const val URL_DEBUG: String = "https://www.mxwsl.cn"

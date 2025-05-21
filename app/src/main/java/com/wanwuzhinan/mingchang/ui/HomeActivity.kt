@@ -16,6 +16,7 @@ import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.getCurrentVersionCode
 import com.ssm.comm.ext.getScreenHeight2
 import com.ssm.comm.ext.getScreenWidth2
+import com.wanwuzhinan.mingchang.BuildConfig
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
@@ -71,7 +72,7 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
             GlideImgManager.loadGif(ivAnim, R.raw.diqu)
-            tab1.visible(!ConfigApp.CHANNEL_BBK)
+            tab1.visible(BuildConfig.DISPLAY_RANK)
             ivOneBg.setOnTouchListener(MotionTouchLister())
             ivTwoBg.setOnTouchListener(MotionTouchLister())
             ivThreeBg.setOnTouchListener(MotionTouchLister())

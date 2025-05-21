@@ -18,6 +18,7 @@ static String releaseTime() {
 android {
     namespace = "com.wanwuzhinan.mingchang"
     compileSdk = libs.versions.compileSdk.get().toInteger()
+    flavorDimensions += ["rank"]
     defaultConfig {
         applicationId = "com.wanwuzhinan.mingchang"
         minSdk = libs.versions.minSdk.get().toInteger()
@@ -61,6 +62,36 @@ android {
         }
     }
 
+    productFlavors {
+        rank_yes {
+            dimension "rank"
+            buildConfigField("Boolean", "DISPLAY_RANK", "true")
+        }
+        rank_no {
+            dimension "rank"
+            buildConfigField("Boolean", "DISPLAY_RANK", "false")
+        }
+    }
+    //自定义打包输出文件名
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            def flavorName = variant.flavorName
+            def fileName
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                if (variant.buildType.name == 'release') {
+                    fileName = "wwzn_${defaultConfig.versionName}_${releaseTime()}_release_${flavorName}.apk"
+                } else if (variant.buildType.name == 'debug') {
+                    fileName = "wwzn_${defaultConfig.versionName}_${releaseTime()}_debug_${flavorName}.apk"
+                }
+                // 打印输出路径和文件名
+                def outputDir = outputFile.parentFile.absolutePath
+                println "Variant:${variant.buildType.name} apk:$outputDir/$fileName"
+                output.outputFileName = fileName
+            }
+        }
+    }
+
     sourceSets {
         getByName("main") {
             jniLibs.srcDirs("libs")
@@ -80,25 +111,6 @@ android {
         //noinspection DataBindingWithoutKapt
         enabled = true
     }
-    //自定义打包输出文件名
-    applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            def outputFile = output.outputFile
-            def fileName
-            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                if (variant.buildType.name == 'release') {
-                    fileName = "wwzn_${defaultConfig.versionName}_${releaseTime()}_release.apk"
-                } else if (variant.buildType.name == 'debug') {
-                    fileName = "wwzn_${defaultConfig.versionName}_${releaseTime()}_debug.apk"
-                }
-                // 打印输出路径和文件名
-                def outputDir = outputFile.parentFile.absolutePath
-                println "Variant:${variant.buildType.name} apk:$outputDir/$fileName"
-                output.outputFileName = fileName
-            }
-        }
-    }
-
 }
 
 dependencies {
