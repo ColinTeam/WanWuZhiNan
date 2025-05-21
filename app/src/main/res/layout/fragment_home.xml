@@ -88,21 +88,37 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tabHome"
             android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_50"
-            android:layout_marginStart="@dimen/margin_default"
-            android:layout_marginTop="@dimen/margin_default"
-            android:clipChildren="true"
+            android:layout_height="@dimen/dp_75"
+            android:layout_marginTop="@dimen/margin_default_half"
             android:orientation="horizontal"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="@+id/line_margin_end"
             app:layout_constraintStart_toStartOf="@+id/line_margin_start"
             app:layout_constraintTop_toBottomOf="@+id/ivAvatar">
 
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tab_0"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:layout_marginVertical="@dimen/margin_default_half"
+                android:clickable="false"
+                android:elevation="1dp"
+                android:gravity="center"
+                android:text="@string/home_tab_0"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tab_1"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.3" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivTabBg"
                 android:layout_width="@dimen/dp_0"
-                android:layout_height="@dimen/dp_60"
-                android:layout_marginTop="@dimen/dp_6"
+                android:layout_height="@dimen/dp_0"
+                android:layout_marginTop="@dimen/margin_default_half"
                 android:scaleType="fitXY"
                 android:src="@mipmap/ic_main_exchange_bg"
                 app:layout_constraintBottom_toBottomOf="@+id/tab_0"
@@ -113,26 +129,11 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tab_0"
-                android:layout_width="@dimen/dp_0"
-                android:layout_height="@dimen/dp_0"
-                android:layout_marginVertical="@dimen/dp_5"
-                android:layout_marginEnd="@dimen/margin_default"
-                android:clickable="false"
-                android:gravity="center"
-                android:text="@string/home_tab_0"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tab_1"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tab_1"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_0"
-                android:layout_marginHorizontal="@dimen/margin_default"
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginVertical="@dimen/dp_12"
                 android:layout_weight="1"
                 android:background="@drawable/shape_ff9424_22_line_1"
                 android:gravity="center"
@@ -142,12 +143,14 @@
                 app:layout_constraintEnd_toStartOf="@+id/tab_2"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/tab_0"
-                app:layout_constraintTop_toTopOf="@+id/tab_0" />
+                app:layout_constraintTop_toTopOf="@+id/tab_0"
+                app:layout_constraintWidth_percent="0.25" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tab_2"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="@dimen/dp_0"
+                android:layout_marginVertical="@dimen/dp_12"
                 android:layout_marginStart="@dimen/margin_default"
                 android:layout_weight="1"
                 android:background="@drawable/shape_ff9424_22_line_1"
@@ -158,7 +161,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/tab_1"
-                app:layout_constraintTop_toTopOf="@+id/tab_0" />
+                app:layout_constraintTop_toTopOf="@+id/tab_0"
+                app:layout_constraintWidth_percent="0.25" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

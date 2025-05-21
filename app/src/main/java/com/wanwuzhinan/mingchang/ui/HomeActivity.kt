@@ -23,6 +23,7 @@ import com.wanwuzhinan.mingchang.databinding.FragmentHomeBinding
 import com.wanwuzhinan.mingchang.entity.Config
 import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.entity.UserInfo
+import com.wanwuzhinan.mingchang.ext.visible
 import com.wanwuzhinan.mingchang.ui.pad.AudioHomeIpadActivity
 import com.wanwuzhinan.mingchang.ui.phone.AudioHomeActivity
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
@@ -70,6 +71,7 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
             GlideImgManager.loadGif(ivAnim, R.raw.diqu)
+            tab1.visible(!ConfigApp.CHANNEL_BBK)
             ivOneBg.setOnTouchListener(MotionTouchLister())
             ivTwoBg.setOnTouchListener(MotionTouchLister())
             ivThreeBg.setOnTouchListener(MotionTouchLister())
