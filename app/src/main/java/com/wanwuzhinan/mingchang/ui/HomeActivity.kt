@@ -201,7 +201,7 @@ class HomeActivity : AppActivity<FragmentHomeBinding, HomeViewModel>() {
     ) {
         user ?: return
         val info = data?.info ?: return
-        if (info.android_code.toInt() > getCurrentVersionCode() && !checkUpdate) {
+        if (info.android_code > getCurrentVersionCode() && !checkUpdate) {
             checkUpdate = true
             ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_UPGRADE, extra = info.android_update)
                 .apply {

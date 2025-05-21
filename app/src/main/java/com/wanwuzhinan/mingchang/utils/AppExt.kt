@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.colin.library.android.image.glide.GlideImgManager
 import com.colin.library.android.network.NetworkConfig
 import com.ssm.comm.config.Constant
+import com.ssm.comm.ext.getCurrentVersionCode
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.entity.ConfigData
 import java.util.regex.Pattern
@@ -61,23 +62,16 @@ fun Editable?.removeChinese(): Editable? {
 }
 
 fun Context.updateConfig(data: ConfigData) {
-    if (!("huawei".equals(Build.BRAND, true) || "huawei".equals(
-            Build.MANUFACTURER, true
-        ) || "honor".equals(Build.BRAND, true) || "honor".equals(
-            Build.MANUFACTURER, true
-        ))
-    ) {
+    //不是华为，或者发布的版本大于安装的版本 不需要审核（0）
+    if (!isHuawei() || data.android_code > getCurrentVersionCode()) {
         data.apple_is_audit = 0
     }
     //全局实用
     setData(Constant.CONFIG_DATA, NetworkConfig.gson.toJson(data))
 }
 
-//    return run {
-//        val text = this.toString()
-//        val result = text.replace("[\\u4e00-\\u9fa5]".toRegex(), "")
-//        this.replace(0, this.length, result)
+fun isHuawei() = ("huawei".equals(Build.BRAND, true) || "huawei".equals(
+    Build.MANUFACTURER, true
+) || "honor".equals(Build.BRAND, true) || "honor".equals(Build.MANUFACTURER, true))
 
-//    }
-//}
 
