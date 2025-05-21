@@ -7,6 +7,7 @@ import android.os.Bundle
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.ssm.comm.config.Constant
+import com.ssm.comm.global.AppActivityManager
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
@@ -83,7 +84,7 @@ class ProtocolActivity : AppActivity<ActivityProtocolBinding, HomeViewModel>() {
     fun logout() {
         clearAllData()
         LoginActivity.start(this)
-        finish()
+        AppActivityManager.getInstance().finishAllActivities()
     }
 
     companion object {

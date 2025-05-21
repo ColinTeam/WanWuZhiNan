@@ -22,11 +22,14 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.ssm.comm.app.CommApplication
+import com.tencent.rtmp.TXLiveBase
+import com.tencent.rtmp.TXLiveBaseListener
 import com.wanwuzhinan.mingchang.BuildConfig
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.entity.RegisterData
 import com.wanwuzhinan.mingchang.net.HeaderInterceptor
+import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.zjh.download.SimpleDownload
 
 
@@ -44,7 +47,7 @@ class BaseApplication : CommApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        UtilHelper.init(UtilConfig.newBuilder(this, BuildConfig.DEBUG).build())
+        UtilHelper.init(UtilConfig.newBuilder(this, true).build())
         initNetwork()
         initMMKV(this)
         initImageLoader()
@@ -71,6 +74,25 @@ class BaseApplication : CommApplication() {
                 return ClassicsFooter(context).setDrawableSize(20f)
             }
         })
+
+        //确认是否初始化成功
+        TXLiveBase.setListener(object : TXLiveBaseListener() {
+            override fun onLicenceLoaded(result: Int, reason: String) {
+                Log.e("TXLive onLicenceLoaded: result:$result, reason:$reason")
+                if (result == 0) {
+                    MMKVUtils.encode(ConfigApp.MMKY_KEY_TXLIVE, 1)
+                } else {
+                    initTXLive()
+                }
+            }
+        })
+        initTXLive()
+    }
+
+    private fun initTXLive() {
+        TXLiveBase.getInstance().setLicence(
+            this, ConfigApp.TXLIVE_LICENSE_URL, ConfigApp.TXLIVE_LICENSE_KEY
+        )
     }
 
     private fun initNetwork() {
