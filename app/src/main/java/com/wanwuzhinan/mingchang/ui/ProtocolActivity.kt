@@ -4,18 +4,24 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
+import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.ssm.comm.config.Constant
+import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.global.AppActivityManager
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.databinding.ActivityProtocolBinding
 import com.wanwuzhinan.mingchang.ui.pop.ImageTipsDialog
+import com.wanwuzhinan.mingchang.ui.pop.TipsDialog
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 import com.wanwuzhinan.mingchang.utils.clearAllData
 import com.wanwuzhinan.mingchang.vm.HomeViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Author:ColinLu
@@ -34,7 +40,7 @@ class ProtocolActivity : AppActivity<ActivityProtocolBinding, HomeViewModel>() {
             viewPwdBg.setOnTouchListener(MotionTouchLister())
             viewChildBg.setOnTouchListener(MotionTouchLister())
             btLogout.setOnTouchListener(MotionTouchLister())
-            onClick(viewUserBg, viewPrivacyBg, viewChildBg, viewPwdBg, btLogout) {
+            onClick(viewUserBg, viewPrivacyBg, viewChildBg, viewPwdBg, btLogout, btLogoff) {
                 when (it) {
                     viewUserBg -> {
                         WebViewActivity.start(
@@ -72,12 +78,22 @@ class ProtocolActivity : AppActivity<ActivityProtocolBinding, HomeViewModel>() {
                             sure = { logout() }
                         }.show(this@ProtocolActivity)
                     }
+
+                    btLogoff -> {
+                        TipsDialog.newInstance(TipsDialog.TIPS_LOGOFF).apply {
+                            sure = { viewModel.updateLogoff(true) }
+                        }.show(this@ProtocolActivity)
+                    }
                 }
             }
         }
     }
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
+        viewModel.logoff.observe {
+            Log.i("logoff:$it")
+            if (it) logoff()
+        }
         viewModel.getConfig()
     }
 
@@ -85,6 +101,19 @@ class ProtocolActivity : AppActivity<ActivityProtocolBinding, HomeViewModel>() {
         clearAllData()
         LoginActivity.start(this)
         AppActivityManager.getInstance().finishAllActivities()
+    }
+
+    fun logoff() {
+        lifecycleScope.launch {
+            showLoading(true)
+            clearAllData(true)
+            delay(1000L)
+            showLoading(false)
+            toastSuccess("注销成功")
+            LoginActivity.start(this@ProtocolActivity)
+            AppActivityManager.getInstance().finishAllActivities()
+        }
+
     }
 
     companion object {

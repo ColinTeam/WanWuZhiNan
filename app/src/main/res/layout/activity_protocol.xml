@@ -19,6 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <View
             android:id="@+id/viewBg"
             android:layout_width="@dimen/dp_0"
@@ -46,7 +47,7 @@
             app:layout_constraintHeight_min="@dimen/dp_25"
             app:layout_constraintStart_toStartOf="@+id/viewBg"
             app:layout_constraintTop_toTopOf="@+id/viewBg"
-            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintVertical_weight="1"
             app:layout_constraintWidth_max="@dimen/dp_600" />
 
@@ -54,6 +55,7 @@
             android:id="@+id/viewPrivacyBg"
             style="@style/Style.Item.Bg"
             android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/dp_16"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@+id/viewChildBg"
             app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
@@ -67,6 +69,7 @@
             android:id="@+id/viewChildBg"
             style="@style/Style.Item.Bg"
             android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/dp_16"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@+id/viewPwdBg"
             app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
@@ -80,6 +83,7 @@
             android:id="@+id/viewPwdBg"
             style="@style/Style.Item.Bg"
             android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/dp_16"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@+id/btLogout"
             app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
@@ -94,9 +98,27 @@
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
             android:layout_marginTop="@dimen/margin_default"
-            android:layout_marginBottom="@dimen/dp_20"
             android:background="@drawable/bg_fff9f2_s_1_ff9424"
             android:text="@string/setting_logout"
+            android:textAppearance="@style/Text.Button"
+            android:textColor="@color/color_active"
+            android:textSize="@dimen/sp_14"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toTopOf="@id/btLogoff"
+            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
+            app:layout_constraintHeight_max="@dimen/dp_60"
+            app:layout_constraintHeight_min="@dimen/dp_30"
+            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewPwdBg"
+            app:layout_constraintVertical_weight="1.1" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btLogoff"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/margin_default_half"
+            android:background="@drawable/bg_fff9f2_s_1_ff9424"
+            android:text="@string/setting_logoff"
             android:textAppearance="@style/Text.Button"
             android:textColor="@color/color_active"
             android:textSize="@dimen/sp_14"
@@ -106,7 +128,7 @@
             app:layout_constraintHeight_max="@dimen/dp_60"
             app:layout_constraintHeight_min="@dimen/dp_30"
             app:layout_constraintStart_toStartOf="@+id/viewUserBg"
-            app:layout_constraintTop_toBottomOf="@+id/viewPwdBg"
+            app:layout_constraintTop_toBottomOf="@+id/btLogout"
             app:layout_constraintVertical_weight="1.1" />
 
         <androidx.appcompat.widget.AppCompatTextView

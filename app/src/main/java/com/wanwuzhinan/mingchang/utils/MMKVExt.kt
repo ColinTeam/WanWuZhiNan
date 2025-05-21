@@ -10,9 +10,11 @@ fun getToken(): String {
 fun getUID(): String {
     return MMKVUtils.decodeString(Constant.USER_ID)
 }
+
 fun getClearAccount(): String {
     return MMKVUtils.decodeString(Constant.CLEAR_ACCOUNT)
 }
+
 fun getUIMG(): String {
     return MMKVUtils.decodeString(Constant.USER_IMG)
 }
@@ -46,11 +48,12 @@ fun removeKey(key: String = "") {
 }
 
 
-fun clearAllData() {
+fun clearAllData(all: Boolean = false) {
     MMKVUtils.removeKey(Constant.TOKEN)
     MMKVUtils.removeKey(Constant.USER_ID)
     MMKVUtils.removeKey(Constant.USER_IS_VIP)
     MMKVUtils.removeKey(Constant.IS_SET_PW)
     MMKVUtils.removeKey(Constant.IS_REAL_NAME)
+    if (all) MMKVUtils.removeKey(Constant.USER_MOBILE)
     ConfigApp.token = ""
 }

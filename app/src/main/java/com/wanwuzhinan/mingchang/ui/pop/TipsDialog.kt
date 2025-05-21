@@ -43,25 +43,18 @@ class TipsDialog private constructor(
     }
 
     companion object {
-        const val TYPE_UNREGISTER = 0
-        const val TYPE_VERSION = 1
+        const val TIPS_LOGOFF = 0
         internal const val EXTRAS_TITLE = "extras_title"
         internal const val EXTRAS_TIPS = "extras_tips"
 
         @JvmStatic
         fun newInstance(type: Int): TipsDialog {
             val value = getTips(type)
-            val bundle = Bundle().apply {
-                putCharSequence(EXTRAS_TITLE, value.first)
-                putCharSequence(EXTRAS_TIPS, value.second)
-            }
-            val fragment = TipsDialog(value.first, value.second)
-            fragment.arguments = bundle
-            return fragment
+            return newInstance(value.first,value.second)
         }
 
         @JvmStatic
-        fun newInstance(title: String, smg: String): TipsDialog {
+        fun newInstance(title: CharSequence, smg: CharSequence): TipsDialog {
             val bundle = Bundle().apply {
                 putCharSequence(EXTRAS_TITLE, title)
                 putCharSequence(EXTRAS_TIPS, smg)

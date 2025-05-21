@@ -51,6 +51,7 @@
     <string name="setting_login_pwd">登录密码</string>
     <string name="setting_look">查看</string>
     <string name="setting_logout">退出登录</string>
+    <string name="setting_logoff">注销账户</string>
 
     <string name="password_tips">设置密码|密码为6–20个数字、英文字母组合</string>
     <string name="password_new_hint">输入新密码</string>
