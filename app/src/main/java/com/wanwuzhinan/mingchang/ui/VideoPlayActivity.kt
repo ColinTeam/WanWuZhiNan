@@ -131,6 +131,10 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_SECURE)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
     private val superPlayerListener = object : ISuperPlayerListener {
         override fun onVodPlayEvent(
             player: TXVodPlayer?, event: Int, param: Bundle?

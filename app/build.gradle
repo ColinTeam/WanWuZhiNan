@@ -155,5 +155,9 @@ dependencies {
     implementation libs.liteavsdk.player.premium
     implementation libs.gsyvideoplayer
     implementation libs.shapeview
+    implementation libs.media.exoplayer.hls
+    implementation libs.media.exoplayer
+    implementation libs.media.session
+    implementation libs.media.ui
 
 }
