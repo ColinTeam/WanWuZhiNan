@@ -35,6 +35,7 @@ class ConfigDataResponse() : AppResponse<Config>()
 class LessonSubjectGroupResponse() : AppResponse<LessonSubjectGroup>()
 class LessonSubjectChildResponse() : AppResponse<LessonSubjectChild>()
 class LessonInfoResponse() : AppResponse<LessonInfo>()
+class StudyLogResponse() : AppResponse<LessonStudyLog>()
 class CityInfoResponse() : AppResponse<CityInfo>()
 class GradeResponse() : AppResponse<GradeInfo>()
 class QuestionListResponse() : AppResponse<QuestionList>()
@@ -236,19 +237,19 @@ data class LessonSubject(
 
 @Parcelize
 data class Lesson(
-    val id: String,//
-    val lesson_quarter_id: String,//
+    val id: Int = 0,//
+    val lesson_quarter_id: Int = 0,//
     val name: String,//
     val image: String,
     val video: String,
     val video_duration: String,
-    val is_video: String,
+    val is_video: Int = 0,
     val sort: String,
     val is_open: String,
     val update_time: String,
     val create_time: String,
     val del: String,
-    val has_power: String,
+    val has_power: Int = 0,
     val has_power_msg: String,
     val study_is_success: Int,
     val answerAccuracy: Int,

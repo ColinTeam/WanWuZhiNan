@@ -64,7 +64,7 @@ fun IWrapView.launchAudioPlayInfoActivity(data: String, title: String) {
 }
 
 //视频播放
-fun IWrapView.launchVideoPlayActivity(list: ArrayList<Lesson>, id: String) {
+fun IWrapView.launchVideoPlayActivity(list: ArrayList<Lesson>, id: Int) {
     if (MMKVUtils.decodeInt(ConfigApp.MMKY_KEY_TXLIVE) == 1) {
         launchActivity(
             VideoPlayActivity::class.java,
@@ -78,7 +78,7 @@ fun IWrapView.launchVideoPlayActivity(list: ArrayList<Lesson>, id: String) {
 }
 
 //视频播放
-fun IWrapView.launchVideoAnswerActivity(id: String) {
+fun IWrapView.launchVideoAnswerActivity(id: Int) {
     launchActivity(
         VideoAnswerActivity::class.java,
         Pair(ConfigApp.INTENT_ID, id)

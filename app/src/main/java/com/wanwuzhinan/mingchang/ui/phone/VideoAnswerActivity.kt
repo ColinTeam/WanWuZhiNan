@@ -1,6 +1,8 @@
 package com.wanwuzhinan.mingchang.ui.phone
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.media.MediaPlayer
 import android.text.TextUtils
 import android.view.View
@@ -28,8 +30,15 @@ import com.wanwuzhinan.mingchang.vm.UserViewModel
 //答题 视频题库
 class VideoAnswerActivity :
     BaseActivity<ActivityAnswerPracticeBinding, UserViewModel>(UserViewModel()) {
-
-    var mId = ""
+    companion object{
+        @JvmStatic
+        fun start(context: Context,id: Int) {
+            val starter = Intent(context, VideoAnswerActivity::class.java)
+                .putExtra(ConfigApp.INTENT_ID,id)
+            context.startActivity(starter)
+        }
+    }
+    var mId = 0
     var mPosition = 0
     var mSelectPosition = 0
     var mType = 1//1选择状态 2显示状态
@@ -40,7 +49,7 @@ class VideoAnswerActivity :
     lateinit var logModel: QuestionLogData
 
     override fun initView() {
-        mId = intent.getStringExtra(ConfigApp.INTENT_ID).toString()
+        mId = intent.getIntExtra(ConfigApp.INTENT_ID,0)
         mMediaPlayer = MediaPlayer()
 
         initQuestionList()
@@ -132,9 +141,9 @@ class VideoAnswerActivity :
     override fun initRequest() {
         mViewModel.getLessonInfoLiveData.observeState(this) {
             onSuccess = { data, msg ->
-                if (data!!.info.questionsList.size > 0) {
+                if (data!!.info.questionsList.isNotEmpty()) {
                     mPosition = 0
-                    mQuestionList = data!!.info.questionsList
+                    mQuestionList = data.info.questionsList
                     initQuestionArray()
                 } else {
                     mDataBinding.llNoData.visibility = View.VISIBLE
@@ -183,8 +192,8 @@ class VideoAnswerActivity :
                 }
                 if (data != null) {
                     mDataBinding.tvAdd.visibility = View.VISIBLE
-                    mDataBinding.tvAdd.text = "${data.compass_this}"
-                    mDataBinding.tvErrorNum.text = "${data.compass_total}"
+                    mDataBinding.tvAdd.text = data.compass_this
+                    mDataBinding.tvErrorNum.text = data.compass_total
                     ConfigApp.question_compass = data.compass_total.toInt()
                 }
                 mType = 2
@@ -193,11 +202,11 @@ class VideoAnswerActivity :
                 changeButtonState()
                 mAdapter.notifyDataSetChanged()
 
-                if (data.medalCardList.size > 0) {
+                if (data.medalCardList.isNotEmpty()) {
                     AudioCardPop(mActivity, onSure = {
                     }).showPop(data.medalCardList.get(0).name, data.medalCardList.get(0).image, 1)
                 } else {
-                    if (data.medalList.size > 0) {
+                    if (data.medalList.isNotEmpty()) {
                         AudioCardPop(mActivity, onSure = {
                         }).showPop(data.medalList.get(0).name, data.medalList.get(0).image, 2)
                     }

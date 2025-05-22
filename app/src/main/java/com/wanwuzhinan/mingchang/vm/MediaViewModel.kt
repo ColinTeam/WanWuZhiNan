@@ -7,6 +7,7 @@ import com.wanwuzhinan.mingchang.app.AppViewModel
 import com.wanwuzhinan.mingchang.config.ConfigApp
 import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.entity.LessonInfo
+import com.wanwuzhinan.mingchang.entity.LessonStudyLog
 import com.wanwuzhinan.mingchang.entity.LessonSubjectChild
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
 
@@ -27,12 +28,13 @@ class MediaViewModel : AppViewModel() {
 
     private val _lessonInfo: MutableLiveData<LessonInfo> = MutableLiveData()
     val lessonInfo: LiveData<LessonInfo> = _lessonInfo
-
+    private val _studyLog: MutableLiveData<LessonStudyLog> = MutableLiveData()
+    val studyLog: LiveData<LessonStudyLog> = _studyLog
     private val _positionData: MutableLiveData<Int> = MutableLiveData(0)
     val positionData: LiveData<Int> = _positionData
 
-    private val _lessonsData: MutableLiveData<List<Lesson?>?> = MutableLiveData(null)
-    val lessonsData: LiveData<List<Lesson?>?> = _lessonsData
+    private val _lessonsData: MutableLiveData<List<Lesson>?> = MutableLiveData(null)
+    val lessonsData: LiveData<List<Lesson>?> = _lessonsData
     private val mediaLessonTabChildArray: SparseArray<LessonSubjectChild> = SparseArray()
 
 
@@ -84,6 +86,15 @@ class MediaViewModel : AppViewModel() {
         })
     }
 
+    fun study(id: Int, duration: Int) {
+        request(request = { service.newLessonStudyLog(id, duration, duration) }, success = { it ->
+            it?.let {
+                _studyLog.postValue(it)
+            }
+        })
+
+    }
+
     fun updatePosition(position: Int) {
         if (position != getPositionValue()) {
             _positionData.value = position
@@ -96,8 +107,9 @@ class MediaViewModel : AppViewModel() {
         }
     }
 
+
     fun getPositionValue() = positionData.value ?: 0
-    fun getLessons() = lessonsData.value
+    fun getLessonsValue() = lessonsData.value
     fun getLessonInfoValue() = lessonInfo.value
     fun getMediaLessonTabValue() = mediaLessonTab.value
     fun getMediaLessonTabChildValue(id: Int) = mediaLessonTabChildArray.get(id, null)

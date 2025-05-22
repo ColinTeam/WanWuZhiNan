@@ -29,6 +29,7 @@ import com.wanwuzhinan.mingchang.entity.QuestionListResponse
 import com.wanwuzhinan.mingchang.entity.QuestionResponse
 import com.wanwuzhinan.mingchang.entity.RegisterResponse
 import com.wanwuzhinan.mingchang.entity.SmsCodeResponse
+import com.wanwuzhinan.mingchang.entity.StudyLogResponse
 import com.wanwuzhinan.mingchang.entity.UploadFileResponse
 import com.wanwuzhinan.mingchang.entity.UploadImgData
 import com.wanwuzhinan.mingchang.entity.UserInfo
@@ -92,14 +93,15 @@ interface ApiService {
         @Field("id") id: Int,
     ): LessonInfoResponse
 
+
     //学习课程 记录
     @FormUrlEncoded
     @POST("/api/LessonStudyLog/add")
     suspend fun newLessonStudyLog(
-        @Field("lesson_id") lesson_id: String,
+        @Field("lesson_id") lesson_id: Int,
         @Field("video_duration") start_second: Int,
         @Field("end_second") end_second: Int
-    ): ApiResponse<CourseStudyData>
+    ): StudyLogResponse
 
     //获取全部省份
     @POST("/api/District/indexPicker")
@@ -247,7 +249,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/api/Lesson/infoV2")
     suspend fun getLessonInfo(
-        @Field("id") id: String,
+        @Field("id") id: Int,
     ): ApiResponse<CourseInfoData>
 
     //题库列表

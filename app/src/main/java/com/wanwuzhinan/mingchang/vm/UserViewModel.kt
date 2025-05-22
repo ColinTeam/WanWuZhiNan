@@ -185,10 +185,10 @@ class UserViewModel : BaseViewModel<UserInfo, UserRepository>(UserRepository()) 
 
 
     //题目详情
-    fun getLessonInfo(info: String) {
+    fun getLessonInfo(id: Int) {
         viewModelScope.launch {
             //请求到的数据用livedata包裹
-            getLessonInfoLiveData.value = repository.getLessonInfo(info)
+            getLessonInfoLiveData.value = repository.getLessonInfo(id)
         }
     }
 

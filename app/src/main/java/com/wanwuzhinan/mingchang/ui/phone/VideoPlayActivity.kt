@@ -60,12 +60,12 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
     override fun initView() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        val videoCourseId = intent.getStringExtra(ConfigApp.INTENT_ID)
+        val videoCourseId = intent.getIntExtra(ConfigApp.INTENT_ID,0)
         val json = intent.getStringExtra(ConfigApp.INTENT_DATA)
         val listType = object : TypeToken<ArrayList<Lesson>>() {}.type
         mVideoList = Gson().fromJson(json, listType)
         mVideoList?.removeIf { it.is_video.toInt() == 0 }
-        mPosition = mVideoList?.indexOfFirst { it.id == videoCourseId } ?: 0
+        mPosition = mVideoList?.indexOfFirst { it.id == videoCourseId }?:0
 
         if (mPosition < 0) {
             mPosition = 0
@@ -75,7 +75,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             finish()
         } else {
             val videoData = mVideoList?.get(mPosition)
-            if (videoData?.has_power == "0") {
+            if (videoData?.has_power == 0) {
                 ExchangeCoursePop(mActivity).showPop(onSure = {
                     finish()
                     launchExchangeActivity()
@@ -85,7 +85,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                 return
             }
             showBaseLoading()
-            mViewModel.getLessonInfo(videoData?.id ?: "")
+            mViewModel.getLessonInfo(videoData?.id ?: 0)
             initVideo()
         }
     }
@@ -138,7 +138,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                 mDataBinding.tvReload -> {
                     mDataBinding.clNoNet.visibility = View.GONE
                     val videoData = mVideoList?.get(mPosition)
-                    if (videoData?.has_power == "0") {
+                    if (videoData?.has_power == 0) {
                         viewModel.postError(error = "has_power->$videoData")
                         ExchangeCoursePop(mActivity).showPop(onSure = {
                             finish()
@@ -148,7 +148,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                         })
                     } else {
                         showBaseLoading()
-                        mViewModel.getLessonInfo(videoData?.id ?: "")
+                        mViewModel.getLessonInfo(videoData?.id ?: 0)
                     }
                 }
 
@@ -323,13 +323,13 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
                         "0", 0, 0
                     )
                 )
-                if (data!!.medalCardList.size > 0) {
-                    showCardImage(data.medalCardList.get(0).image_selected, complete = {
+                if (data!!.medalCardList.isNotEmpty()) {
+                    showCardImage(data.medalCardList[0].image_selected, complete = {
                         getVideo()
                     })
                 } else {
-                    if (data.medalList.size > 0) {
-                        showCardImage(data.medalList.get(0).image, complete = {
+                    if (data.medalList.isNotEmpty()) {
+                        showCardImage(data.medalList[0].image, complete = {
                             getVideo()
                         })
                     } else {
@@ -351,7 +351,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
         }
         mPosition++
         val videoData = mVideoList?.get(mPosition)
-        if (videoData?.has_power == "0") {
+        if (videoData?.has_power == 0) {
             ExchangeCoursePop(mActivity).showPop(onSure = {
                 finish()
                 launchExchangeActivity()
@@ -361,7 +361,7 @@ class VideoPlayActivity : BaseActivity<ActivityVideoPlayBinding, UserViewModel>(
             return
         }
         if (!this.isFinishing && !this.isDestroyed) showBaseLoading()
-        mViewModel.getLessonInfo(videoData?.id ?: "")
+        mViewModel.getLessonInfo(videoData?.id ?: 0)
         initVideo()
     }
 

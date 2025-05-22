@@ -102,7 +102,7 @@ class UserRepository : CommRepository() {
         return executeHttp { mService.courseStudy(lesson_id, start_second, end_second) }
     }
 
-    suspend fun getLessonInfo(id: String): ApiResponse<CourseInfoData> {
+    suspend fun getLessonInfo(id: Int): ApiResponse<CourseInfoData> {
         return executeHttp { mService.getLessonInfo(id) }
     }
 

@@ -1,22 +1,31 @@
 package com.wanwuzhinan.mingchang.ui
 
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import com.colin.library.android.network.NetworkConfig
 import com.colin.library.android.utils.Log
+import com.colin.library.android.utils.countDown
 import com.colin.library.android.utils.encrypt.DecryptUtil
+import com.colin.library.android.utils.ext.onClick
 import com.google.gson.reflect.TypeToken
+import com.ssm.comm.event.MessageEvent
+import com.ssm.comm.ext.post
 import com.tencent.liteav.demo.superplayer.SuperPlayerModel
 import com.tencent.liteav.demo.superplayer.SuperPlayerView
 import com.tencent.liteav.demo.superplayer.model.ISuperPlayerListener
+import com.tencent.rtmp.TXLiveConstants
 import com.tencent.rtmp.TXVodPlayer
 import com.wanwuzhinan.mingchang.app.AppActivity
 import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.data.UploadProgressEvent
 import com.wanwuzhinan.mingchang.databinding.FragmentVideoBinding
 import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.entity.LessonInfo
+import com.wanwuzhinan.mingchang.ext.showCardImage
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
+import com.wanwuzhinan.mingchang.ui.phone.QuestionListAskActivity
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeCoursePop
 import com.wanwuzhinan.mingchang.vm.MediaViewModel
@@ -29,15 +38,55 @@ import com.wanwuzhinan.mingchang.vm.MediaViewModel
  * Des   :VideoHomeActivity
  */
 class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
+    val timer = countDown(6, onNext = {
+
+    }, onFinish = {
+        playNext()
+    })
+
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         if (savedInstanceState != null) parse(savedInstanceState)
         else parse(bundle)
         viewBinding.apply {
-            viewPlayer.setViewTreeLifecycleOwner(this@VideoPlayActivity)
-            viewPlayer.setSuperPlayerListener(superPlayerListener)
-            viewPlayer.setPlayerViewCallback(superPlayerViewCallback)
+            videoPlayer.setViewTreeLifecycleOwner(this@VideoPlayActivity)
+            videoPlayer.setSuperPlayerListener(superPlayerListener)
+            videoPlayer.setPlayerViewCallback(superPlayerViewCallback)
+            onClick(
+                tvPlay, tvQuestion, tvSure, tvReload, netErrorBack, tvVideoReload
+            ) {
+                when (it) {
+                    tvPlay -> {
+                        timer.cancel()
+                        checkMore()
+                    }
+
+                    tvSure -> {
+                        llTips.visibility = View.GONE
+                        videoPlayer.onResume()
+                    }
+
+                    tvReload -> {
+
+                    }
+
+                    tvVideoReload -> {
+                        clVideoNoNet.visibility = View.GONE
+                        videoPlayer.resetPlayer()
+                        play(viewModel.getLessonInfoValue())
+                    }
+
+                    netErrorBack -> {
+                        finish()
+                    }
+
+                    tvQuestion -> {
+                        timer.cancel()
+                        checkMore(toAsk = true)
+                    }
+                }
+            }
         }
     }
 
@@ -45,38 +94,66 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
         viewModel.apply {
             positionData.observe {
                 Log.d("position:$it")
-                play(it, viewModel.getLessons())
+                play(viewModel.getLessonsValue(), it)
+            }
+            lessonsData.observe {
+                Log.d("lessonsData:$it")
+                play(it, viewModel.getPositionValue())
             }
             lessonInfo.observe {
                 Log.d("lessonInfo:$it")
                 play(it)
             }
+            studyLog.observe {
+                Log.d("studyLog:$it")
+                post(MessageEvent.UPDATE_NIGHT, UploadProgressEvent("0", 0, 0))
+                if (it.medalCardList.isNotEmpty()) {
+                    showCardImage(it.medalCardList[0].image_selected)
+                } else if (it.medalList.isNotEmpty()) {
+                    showCardImage(it.medalList[0].image)
+                } else checkMore()
+            }
         }
     }
 
-    private fun play(position: Int, lessons: List<Lesson?>? = viewModel.getLessons()) {
-        Log.d("position:$position lessons:${lessons}")
-        if (lessons == null || lessons.isEmpty()) {
-            finish()
+    private fun showCardImage(image: String) {
+        showCardImage(image, complete = {
+            checkMore()
+        })
+    }
+
+    private fun playNext(
+        lessons: List<Lesson>? = viewModel.getLessonsValue(),
+        position: Int = viewModel.getPositionValue()
+    ) {
+        play(lessons, position + 1)
+    }
+
+    private fun play(
+        lessons: List<Lesson>? = viewModel.getLessonsValue(),
+        position: Int = viewModel.getPositionValue()
+    ) {
+        Log.d("position:$position  lessons:${lessons} ")
+        if (lessons.isNullOrEmpty()) {
             return
         }
-        var selected = lessons.indexOfFirst { (it?.id ?: 0) == position }
+        var selected = position
         if (selected < 0) selected = 0
-        play(lessons[selected]!!)
+        else if (position >= lessons.size) selected = lessons.size - 1
+        play(lessons[selected])
     }
 
+
     private fun play(lesson: Lesson) {
-        if (lesson.has_power == "0") {
-            showTips()
+        if (lesson.has_power == 0) {
+            showPowerTips()
         } else {
-            viewModel.getLessonInfo(lesson.id.toInt())
+            viewModel.getLessonInfo(lesson.id)
         }
     }
 
-    private fun showTipsView() {
-    }
 
-    private fun play(lesson: LessonInfo?) {
+    private fun play(lesson: LessonInfo? = viewModel.getLessonInfoValue()) {
         if (lesson == null || lesson.info.videoAes.isEmpty()) {
             showTipsView()
             return
@@ -93,13 +170,13 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
         val model = SuperPlayerModel().apply {
             this.url = url
         }
-        viewBinding.viewPlayer.apply {
+        viewBinding.videoPlayer.apply {
             playWithModelNeedLicence(model)
             setStartTime(seek.toDouble())
         }
     }
 
-    private fun showTips() {
+    private fun showPowerTips() {
         ExchangeCoursePop(this).showPop(onSure = {
             ExchangeActivity.start(this)
             finish()
@@ -108,18 +185,35 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
         })
     }
 
+    private fun showTipsView() {
+    }
+
     private fun parse(bundle: Bundle?) {
         bundle?.let {
-            val position = it.getInt(ConfigApp.INTENT_ID, 0)
+            val id = it.getInt(ConfigApp.INTENT_ID, 0)
             val listType = object : TypeToken<List<Lesson>>() {}.type
             val list = NetworkConfig.gson.fromJson<List<Lesson>>(
                 it.getString(ConfigApp.INTENT_DATA, null), listType
-            )
+            ).filter { lesson -> lesson.is_video != 0 }
+            val position = list.indexOfFirst { it.id == id }
             viewModel.updatePosition(position)
             viewModel.updateLessons(list)
         }
     }
 
+    private fun checkMore(
+        lessions: List<Lesson>? = viewModel.getLessonsValue(),
+        postion: Int = viewModel.getPositionValue(),
+        toAsk: Boolean = false
+    ) {
+        val size = lessions?.size ?: 0
+        if (size > postion) {
+            playNext()
+        } else if (toAsk) {
+            QuestionListAskActivity.start(this, ConfigApp.TYPE_ASK)
+            finish()
+        } else finish()
+    }
 
     override fun onResume() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_SECURE)
@@ -140,12 +234,29 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
             player: TXVodPlayer?, event: Int, param: Bundle?
         ) {
             Log.e("onVodPlayEvent event:$event\t param:$param")
+            when (event) {
+                2005 -> {
+                    val progress = param?.getInt(TXLiveConstants.EVT_PLAY_PROGRESS_MS) ?: 0
+
+                }
+
+                2006 -> {
+                    val info = viewModel.getLessonInfoValue()?.info
+                    if (info != null) {
+                        viewModel.study(info.id, info.video_duration)
+                    } else {
+                        checkMore()
+                    }
+                }
+            }
         }
 
         override fun onVodNetStatus(
             player: TXVodPlayer?, status: Bundle?
         ) {
-            Log.e("onVodNetStatus status:$status")
+            // 获取实时速率, 单位：kbps
+            val speed: Int = status?.getInt(TXLiveConstants.NET_STATUS_NET_SPEED) ?: 0
+            Log.e("onVodNetStatus status:$status network speed:$speed")
         }
 
         override fun onLivePlayEvent(event: Int, param: Bundle?) {
@@ -153,6 +264,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
         }
 
         override fun onLiveNetStatus(status: Bundle?) {
+            val speed: Int = status?.getInt(TXLiveConstants.NET_STATUS_NET_SPEED) ?: 0
             Log.e("onLiveNetStatus status:$status")
         }
     }
@@ -190,6 +302,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
 
         override fun onError(code: Int) {
             Log.e("onError code:$code")
+//            viewModel.postError(code,)
         }
 
         override fun onShowCacheListClick() {
@@ -198,3 +311,5 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
 
     }
 }
+
+
