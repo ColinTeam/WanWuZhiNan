@@ -74,7 +74,6 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
     }
 
     private fun showTipsView() {
-        TODO("Not yet implemented")
     }
 
     private fun play(lesson: LessonInfo?) {

@@ -19,7 +19,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <View
             android:id="@+id/viewBg"
             android:layout_width="@dimen/dp_0"
@@ -36,20 +35,11 @@
         <View
             android:id="@+id/viewUserBg"
             style="@style/Style.Item.Bg"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_0"
-            android:layout_marginHorizontal="@dimen/margin_default"
-            app:layout_constrainedHeight="true"
-            app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toTopOf="@+id/viewPrivacyBg"
             app:layout_constraintEnd_toEndOf="@+id/viewBg"
-            app:layout_constraintHeight_max="@dimen/dp_50"
-            app:layout_constraintHeight_min="@dimen/dp_25"
             app:layout_constraintStart_toStartOf="@+id/viewBg"
             app:layout_constraintTop_toTopOf="@+id/viewBg"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintVertical_weight="1"
-            app:layout_constraintWidth_max="@dimen/dp_600" />
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <View
             android:id="@+id/viewPrivacyBg"
@@ -58,12 +48,9 @@
             android:layout_marginTop="@dimen/dp_16"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@+id/viewChildBg"
-            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
-            app:layout_constraintHeight_max="@dimen/dp_50"
-            app:layout_constraintHeight_min="@dimen/dp_25"
-            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
-            app:layout_constraintTop_toBottomOf="@+id/viewUserBg"
-            app:layout_constraintVertical_weight="1" />
+            app:layout_constraintEnd_toEndOf="@+id/viewBg"
+            app:layout_constraintStart_toStartOf="@+id/viewBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewUserBg" />
 
         <View
             android:id="@+id/viewChildBg"
@@ -72,12 +59,9 @@
             android:layout_marginTop="@dimen/dp_16"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@+id/viewPwdBg"
-            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
-            app:layout_constraintHeight_max="@dimen/dp_50"
-            app:layout_constraintHeight_min="@dimen/dp_25"
-            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
-            app:layout_constraintTop_toBottomOf="@+id/viewPrivacyBg"
-            app:layout_constraintVertical_weight="1" />
+            app:layout_constraintEnd_toEndOf="@+id/viewBg"
+            app:layout_constraintStart_toStartOf="@+id/viewBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewPrivacyBg" />
 
         <View
             android:id="@+id/viewPwdBg"
@@ -85,51 +69,42 @@
             android:layout_height="@dimen/dp_0"
             android:layout_marginTop="@dimen/dp_16"
             app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toTopOf="@+id/viewVersionBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewBg"
+            app:layout_constraintStart_toStartOf="@+id/viewBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewChildBg" />
+
+        <View
+            android:id="@+id/viewVersionBg"
+            style="@style/Style.Item.Bg"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/dp_16"
+            app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@+id/btLogout"
-            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
-            app:layout_constraintHeight_max="@dimen/dp_50"
-            app:layout_constraintHeight_min="@dimen/dp_25"
-            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
-            app:layout_constraintTop_toBottomOf="@+id/viewChildBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewBg"
+            app:layout_constraintStart_toStartOf="@+id/viewBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewPwdBg"
             app:layout_constraintVertical_weight="1" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btLogout"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_0"
+            style="@style/Style.Item.Button"
             android:layout_marginTop="@dimen/margin_default"
-            android:background="@drawable/bg_fff9f2_s_1_ff9424"
             android:text="@string/setting_logout"
-            android:textAppearance="@style/Text.Button"
-            android:textColor="@color/color_active"
-            android:textSize="@dimen/sp_14"
-            app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@id/btLogoff"
-            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
-            app:layout_constraintHeight_max="@dimen/dp_60"
-            app:layout_constraintHeight_min="@dimen/dp_30"
-            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
-            app:layout_constraintTop_toBottomOf="@+id/viewPwdBg"
-            app:layout_constraintVertical_weight="1.1" />
+            app:layout_constraintEnd_toEndOf="@+id/viewBg"
+            app:layout_constraintStart_toStartOf="@+id/viewBg"
+            app:layout_constraintTop_toBottomOf="@+id/viewVersionBg" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btLogoff"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_0"
+            style="@style/Style.Item.Button"
             android:layout_marginTop="@dimen/margin_default_half"
-            android:background="@drawable/bg_fff9f2_s_1_ff9424"
             android:text="@string/setting_logoff"
-            android:textAppearance="@style/Text.Button"
-            android:textColor="@color/color_active"
-            android:textSize="@dimen/sp_14"
-            app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toBottomOf="@id/viewBg"
-            app:layout_constraintEnd_toEndOf="@+id/viewUserBg"
-            app:layout_constraintHeight_max="@dimen/dp_60"
-            app:layout_constraintHeight_min="@dimen/dp_30"
-            app:layout_constraintStart_toStartOf="@+id/viewUserBg"
-            app:layout_constraintTop_toBottomOf="@+id/btLogout"
-            app:layout_constraintVertical_weight="1.1" />
+            app:layout_constraintEnd_toEndOf="@+id/viewBg"
+            app:layout_constraintStart_toStartOf="@+id/viewBg"
+            app:layout_constraintTop_toBottomOf="@+id/btLogout" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvUserLabel"
@@ -238,6 +213,31 @@
             app:layout_constraintEnd_toEndOf="@+id/viewPwdBg"
             app:layout_constraintTop_toTopOf="@+id/viewPwdBg" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvVersionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:text="@string/setting_protocol_version"
+            android:textAppearance="@style/Text"
+            app:layout_constraintBottom_toBottomOf="@+id/viewVersionBg"
+            app:layout_constraintStart_toStartOf="@+id/viewVersionBg"
+            app:layout_constraintTop_toTopOf="@+id/viewVersionBg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvVersion"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:drawablePadding="@dimen/margin_default_half"
+            android:gravity="center_vertical|end"
+            android:text="@string/setting_look"
+            android:textAppearance="@style/Text"
+            app:drawableEndCompat="@drawable/ic_arrow_right_home"
+            app:drawableTint="@color/color_active"
+            app:layout_constraintBottom_toBottomOf="@+id/viewVersionBg"
+            app:layout_constraintEnd_toEndOf="@+id/viewVersionBg"
+            app:layout_constraintTop_toTopOf="@+id/viewVersionBg" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

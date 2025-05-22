@@ -48,6 +48,7 @@
     <string name="setting_protocol_user">用户协议</string>
     <string name="setting_protocol_privacy">隐私协议</string>
     <string name="setting_protocol_child">儿童隐私政策</string>
+    <string name="setting_protocol_version">当前版本</string>
     <string name="setting_login_pwd">登录密码</string>
     <string name="setting_look">查看</string>
     <string name="setting_logout">退出登录</string>

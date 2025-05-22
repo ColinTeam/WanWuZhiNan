@@ -9,6 +9,8 @@ import com.colin.library.android.utils.Log
 import com.colin.library.android.utils.ext.onClick
 import com.colin.library.android.widget.motion.MotionTouchLister
 import com.ssm.comm.config.Constant
+import com.ssm.comm.ext.getCurrentVersionCode
+import com.ssm.comm.ext.getCurrentVersionName
 import com.ssm.comm.ext.toastSuccess
 import com.ssm.comm.global.AppActivityManager
 import com.wanwuzhinan.mingchang.R
@@ -38,9 +40,13 @@ class ProtocolActivity : AppActivity<ActivityProtocolBinding, HomeViewModel>() {
             viewUserBg.setOnTouchListener(MotionTouchLister())
             viewPrivacyBg.setOnTouchListener(MotionTouchLister())
             viewPwdBg.setOnTouchListener(MotionTouchLister())
+            tvVersion.setOnTouchListener(MotionTouchLister())
             viewChildBg.setOnTouchListener(MotionTouchLister())
             btLogout.setOnTouchListener(MotionTouchLister())
-            onClick(viewUserBg, viewPrivacyBg, viewChildBg, viewPwdBg, btLogout, btLogoff) {
+            tvVersion.text = getCurrentVersionName()
+            onClick(
+                viewUserBg, viewPrivacyBg, viewChildBg, viewPwdBg, tvVersion, btLogout, btLogoff
+            ) {
                 when (it) {
                     viewUserBg -> {
                         WebViewActivity.start(
@@ -70,6 +76,14 @@ class ProtocolActivity : AppActivity<ActivityProtocolBinding, HomeViewModel>() {
                         val phone = MMKVUtils.getString(Constant.USER_MOBILE)
                         if (!phone.isNullOrEmpty()) {
                             PasswordActivity.start(this@ProtocolActivity, phone)
+                        }
+                    }
+
+                    viewVersionBg -> {
+                        val code = viewModel.getConfigValue()?.info?.android_code ?: 0
+                        if (code > getCurrentVersionCode()) {
+                            ImageTipsDialog.newInstance(ImageTipsDialog.TYPE_UPGRADE)
+                                .show(this@ProtocolActivity)
                         }
                     }
 
