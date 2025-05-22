@@ -57,6 +57,12 @@
     <string name="password_tips">设置密码|密码为6–20个数字、英文字母组合</string>
     <string name="password_new_hint">输入新密码</string>
     <string name="password_confirm_hint">确认新密码</string>
+
+    <string name="video_empty_title">返回首页</string>
+    <string name="video_empty_question">挑战%s</string>
+    <string name="video_empty_action">自动进入%s</string>
+
+
     <string name="dialog_tips_title">温馨提醒</string>
     <string name="dialog_unregister">确定要注销账号吗？注销后您将无法使用该账号，并且个人信息将无法找回。</string>
     <string name="dialog_logout_title">退出登录</string>

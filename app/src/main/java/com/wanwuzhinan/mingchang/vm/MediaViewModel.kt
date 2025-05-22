@@ -81,7 +81,7 @@ class MediaViewModel : AppViewModel() {
     fun getLessonInfo(lessonID: Int) {
         request(request = { service.newLessonInfo(lessonID) }, success = { it ->
             it?.let {
-                _lessonInfo.postValue(it)
+                if (_lessonInfo != it) _lessonInfo.postValue(it)
             }
         })
     }
@@ -114,5 +114,10 @@ class MediaViewModel : AppViewModel() {
     fun getMediaLessonTabValue() = mediaLessonTab.value
     fun getMediaLessonTabChildValue(id: Int) = mediaLessonTabChildArray.get(id, null)
 
+    fun hasPlayMore(): Boolean {
+        val position = positionData.value ?: 0
+        val size = lessonsData.value?.size ?: 0
+        return size > position
+    }
 
 }

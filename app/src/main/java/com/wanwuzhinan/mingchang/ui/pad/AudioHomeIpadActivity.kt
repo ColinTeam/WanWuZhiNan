@@ -127,7 +127,7 @@ class AudioHomeIpadActivity :
         mListAdapter.setOnDebouncedItemClick { adapter, view, position ->
             if (mAudioList == null) return@setOnDebouncedItemClick
             if (mPosition >= mAudioList!!.size) return@setOnDebouncedItemClick
-            if (mAudioList?.get(mPosition)?.lessons!!.get(position).has_power != "1") {
+            if (mAudioList?.get(mPosition)?.lessons!!.get(position).has_power != 1) {
                 ExchangeCoursePop(AppActivityManager.getInstance().topActivity).showPop(onSure = {
                     launchExchangeActivity()
                 }, onContact = {

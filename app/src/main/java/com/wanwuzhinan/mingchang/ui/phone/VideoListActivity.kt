@@ -133,7 +133,7 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
                 return@setOnDebouncedItemClick
             }
 
-            if (mRightAdapter.getItem(position)!!.has_power != "1") {
+            if (mRightAdapter.getItem(position)!!.has_power != 1) {
                 showCourse()
                 return@setOnDebouncedItemClick
             }
@@ -143,7 +143,7 @@ class VideoListActivity : BaseActivity<ActivityVideoListBinding, UserViewModel>(
         }
 
         mRightAdapter.addOnDebouncedChildClick(R.id.ll_answer) { adapter, view, position ->
-            if (mRightAdapter.getItem(position)!!.has_power != "1") {
+            if (mRightAdapter.getItem(position)!!.has_power != 1) {
                 showCourse()
                 return@addOnDebouncedChildClick
             }
