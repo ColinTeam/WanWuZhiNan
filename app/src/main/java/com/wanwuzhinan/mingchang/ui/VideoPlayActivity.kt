@@ -14,7 +14,6 @@ import com.colin.library.android.utils.ext.onClick
 import com.google.gson.reflect.TypeToken
 import com.ssm.comm.event.MessageEvent
 import com.ssm.comm.ext.post
-import com.tencent.liteav.demo.superplayer.SuperPlayerCode
 import com.tencent.liteav.demo.superplayer.SuperPlayerModel
 import com.tencent.liteav.demo.superplayer.SuperPlayerView
 import com.tencent.liteav.demo.superplayer.model.ISuperPlayerListener
@@ -28,6 +27,7 @@ import com.wanwuzhinan.mingchang.databinding.FragmentVideoBinding
 import com.wanwuzhinan.mingchang.entity.ConfigData
 import com.wanwuzhinan.mingchang.entity.Lesson
 import com.wanwuzhinan.mingchang.entity.MediaInfo
+import com.wanwuzhinan.mingchang.ext.getConfigData
 import com.wanwuzhinan.mingchang.ext.showCardImage
 import com.wanwuzhinan.mingchang.ext.visible
 import com.wanwuzhinan.mingchang.ui.phone.ExchangeActivity
@@ -48,8 +48,8 @@ import kotlinx.coroutines.Job
  */
 class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
     var timer: Job? = null
-    private var errorSeek = -0.0F
-    private var position = -1
+    private var errorSeek = 0
+    private var position = 0
     private var lessons: List<Lesson>? = null
     override fun onResume() {
         super.onResume()
@@ -65,10 +65,12 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
     }
 
     override fun onDestroy() {
+        viewBinding.videoPlayer.setSuperPlayerListener(null)
+        viewBinding.videoPlayer.setPlayerViewCallback(null)
         viewBinding.videoPlayer.release()
         timer?.cancel()
-        errorSeek = -0.0F
-        position = -1
+        errorSeek = 0
+        position = 0
         lessons = null
         super.onDestroy()
     }
@@ -82,6 +84,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
 
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_SECURE)
+        showLoading(true)
         if (savedInstanceState != null) parse(savedInstanceState)
         else parse(bundle)
         viewBinding.apply {
@@ -147,8 +150,12 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
     }
 
     override fun loadData(refresh: Boolean) {
-        viewModel.getConfig()
-        checkLessonPlayComplete()
+        val lesson = getCurrentLesson()
+        if (lesson != null) {
+            play(lesson)
+        } else {
+            showEmptyView()
+        }
     }
 
     private fun play(lesson: Lesson) {
@@ -169,7 +176,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
     }
 
     private fun play(
-        info: MediaInfo? = viewModel.getMediaInfoValue(), progress: Float = 0F
+        info: MediaInfo? = viewModel.getMediaInfoValue(), progress: Int = 0
     ) {
         val aes = info?.videoAes
         val url = if (!aes.isNullOrEmpty()) DecryptUtil.aes(aes, ConfigApp.VIDEO_AES_KEY) else null
@@ -177,13 +184,13 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
             showEmptyView()
             return
         }
-        val seekProgress = if (progress > 0F) progress
-        else if (info!!.study_end_second < info.video_duration) info.study_end_second * 1000F
-        else 0F
+        val seekProgress = if (progress > 0) progress
+        else if (info!!.study_end_second < info.video_duration) info.study_end_second
+        else 0
         play(url, info!!.image, seekProgress)
     }
 
-    private fun play(url: String, image: String?, progress: Float = 0f) {
+    private fun play(url: String, image: String?, progress: Int = 0) {
         Log.d("play url:$url  image:${image} progress:${progress}")
         val model = SuperPlayerModel().apply {
             this.url = url
@@ -191,11 +198,13 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
         viewBinding.videoPlayer.apply {
             //默认自动播放
             playWithModelNeedLicence(model)
-            seek(progress)
+            seek(progress.toFloat())
         }
     }
 
-    private fun showEmptyView(config: ConfigData? = viewModel.getConfigValue()?.info) {
+    private fun showEmptyView(config: ConfigData? = getConfigData()) {
+        showLoading(false)
+        viewBinding.videoPlayer.onPause()
         val size = lessons?.size ?: 0
         if (position >= size - 1 || position < 0) {
             val text = config?.home_title3 ?: ""
@@ -249,7 +258,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
             lessons = NetworkConfig.gson.fromJson<List<Lesson>>(
                 it.getString(ConfigApp.INTENT_DATA, null), listType
             ).filter { lesson -> lesson.is_video != 0 }
-            position = lessons?.indexOfFirst { it.id == id } ?: -1
+            position = lessons?.indexOfFirst { it.id == id } ?: 0
         }
     }
 
@@ -299,25 +308,32 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
             player: TXVodPlayer?, event: Int, param: Bundle?
         ) {
             Log.i("onVodPlayEvent event:$event\t param:$param")
-            when (event) {
-                2005 -> {
-                    showDisplayPhoto(
-                        viewModel.getMediaInfoValue(),
-                        param?.getInt(TXLiveConstants.EVT_PLAY_PROGRESS_MS) ?: 0
-                    )
-                }
-
-                2006 -> {
-                    val info = viewModel.getMediaInfoValue()
-                    if (info != null) {
-                        viewModel.study(info.id, info.video_duration)
-                    } else {
-                        showEmptyView()
-                    }
-                }
+            if (event == TXLiveConstants.PLAY_EVT_RCV_FIRST_I_FRAME || event == TXLiveConstants.PLAY_EVT_PLAY_BEGIN) {
+                showLoading(false)
+                return
             }
-        }
+            if (event == TXLiveConstants.PLAY_WARNING_RECONNECT) {
+                viewBinding.apply {
+                    clVideoNoNet.visible(true)
+                    errorSeek = videoPlayer.progress.toInt()
+                }
+                return
+            }
+            if (event == TXLiveConstants.PLAY_EVT_PLAY_END) {
+                val info = viewModel.getMediaInfoValue()
+                if (info != null) viewModel.study(info.id, info.video_duration)
+                showEmptyView()
+                return
+            }
+            if (event == TXLiveConstants.PLAY_EVT_PLAY_PROGRESS) {
+                showDisplayPhoto(
+                    viewModel.getMediaInfoValue(),
+                    param?.getInt(TXLiveConstants.EVT_PLAY_PROGRESS_MS) ?: 0
+                )
+                return
+            }
 
+        }
 
         override fun onVodNetStatus(
             player: TXVodPlayer?, status: Bundle?
@@ -362,7 +378,6 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
 
         override fun onPlaying() {
             Log.i("onPlaying")
-            showLoading(false)
         }
 
         override fun onPlayEnd() {
@@ -371,13 +386,6 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
 
         override fun onError(code: Int) {
             Log.i("onError code:$code")
-            if (code == SuperPlayerCode.NET_ERROR) {
-                viewBinding.apply {
-                    clVideoNoNet.visible(true)
-                    errorSeek = videoPlayer.progress / (videoPlayer.duration * 0.1F)
-                }
-            }
-            showLoading(false)
         }
 
         override fun onShowCacheListClick() {

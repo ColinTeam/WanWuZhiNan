@@ -375,7 +375,7 @@ public class SuperPlayerImpl implements SuperPlayer, ITXVodPlayListener, ITXLive
         mVodPlayer = new TXVodPlayer(context);
         SuperPlayerGlobalConfig config = SuperPlayerGlobalConfig.getInstance();
         mVodPlayConfig = new TXVodPlayConfig();
-        mVodPlayConfig.setMaxBufferSize(500 * 1024 * 1024);
+        mVodPlayConfig.setMaxBufferSize(500);
         if (TXPlayerGlobalSetting.getCacheFolderPath() == null || TXPlayerGlobalSetting.getCacheFolderPath().equals("")) {
             File sdcardDir = context.getExternalFilesDir(null);
             TXPlayerGlobalSetting.setCacheFolderPath(sdcardDir.getPath() + "/txcache");
