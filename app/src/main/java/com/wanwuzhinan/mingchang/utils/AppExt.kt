@@ -15,6 +15,7 @@ import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.getCurrentVersionCode
 import com.wanwuzhinan.mingchang.R
 import com.wanwuzhinan.mingchang.entity.ConfigData
+import java.util.Locale
 import java.util.regex.Pattern
 
 /**
@@ -74,4 +75,31 @@ fun isHuawei() = ("huawei".equals(Build.BRAND, true) || "huawei".equals(
     Build.MANUFACTURER, true
 ) || "honor".equals(Build.BRAND, true) || "honor".equals(Build.MANUFACTURER, true))
 
+
+fun getUserAgent(): String {
+    val webUserAgent =
+        "Mozilla/5.0 (Linux; U; Android %s) AppleWebKit/533.1 (KHTML, like Gecko) Version/5.0 %sSafari/533.1"
+    val sb = StringBuilder()
+    // Add version
+    val version = Build.VERSION.RELEASE
+    if (version.isNotEmpty()) sb.append(version)
+    else sb.append("1.0") // default to "1.0"
+    sb.append("; ")
+    val locale = Locale.getDefault()
+    val language = locale.language
+    if (language.isNotEmpty()) {
+        sb.append(language.lowercase(locale))
+        val country = locale.country
+        if (country.isNotEmpty()) sb.append("-").append(country.lowercase(locale))
+    } else sb.append("en") // default to "en"
+
+    // add the model for the release build
+    if ("REL" == Build.VERSION.CODENAME) {
+        val model = Build.MODEL
+        if (model.isNotEmpty()) sb.append("; ").append(model)
+    }
+    val id = Build.ID
+    if (id.isNotEmpty()) sb.append(" Build/").append(id)
+    return String.format(webUserAgent, sb, "Mobile ")
+}
 

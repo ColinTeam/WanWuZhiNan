@@ -35,7 +35,6 @@ import com.tencent.rtmp.TXVodPlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 import com.tencent.rtmp.ui.TXSubtitleView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -376,14 +375,21 @@ public class SuperPlayerImpl implements SuperPlayer, ITXVodPlayListener, ITXLive
         SuperPlayerGlobalConfig config = SuperPlayerGlobalConfig.getInstance();
         mVodPlayConfig = new TXVodPlayConfig();
         mVodPlayConfig.setMaxBufferSize(500);
-        if (TXPlayerGlobalSetting.getCacheFolderPath() == null || TXPlayerGlobalSetting.getCacheFolderPath().equals("")) {
-            File sdcardDir = context.getExternalFilesDir(null);
-            TXPlayerGlobalSetting.setCacheFolderPath(sdcardDir.getPath() + "/txcache");
-        }
+        mVodPlayConfig.setMaxPreloadSize(500);
+        mVodPlayConfig.setProgressInterval(1000);
+//        mVodPlayConfig.setPlayerType(TXVodConstants.PLAYER_SYSTEM_MEDIA_PLAYER);
+//        if (TXPlayerGlobalSetting.getCacheFolderPath() == null || TXPlayerGlobalSetting.getCacheFolderPath().isEmpty()) {
+//            File sdcardDir = context.getExternalFilesDir(null);
+//            assert sdcardDir != null;
+//            Log.e("TAG", "setCacheFolderPath:" + sdcardDir.getPath() + "/txcache");
+//        }
+        TXPlayerGlobalSetting.setCacheFolderPath(null);
+        TXPlayerGlobalSetting.setMaxCacheSize(0);
         mVodPlayConfig.setPreferredResolution(720 * 1280);
         TXPlayerGlobalSetting.setMaxCacheSize(config.maxCacheSizeMB);
         Map<String, String> headers = config.headers;
         headers.put("Referer", "https://app.wanwuzhinan.top");
+//        headers.put("Hls-Type", "www");
         mVodPlayConfig.setHeaders(config.headers);
         mVodPlayConfig.setEncryptedMp4Level(TXVodConstants.MP4_ENCRYPTION_LEVEL_L2);// 设置使用mp4本地加密播放和存储
         mVodPlayer.setConfig(mVodPlayConfig);
@@ -546,7 +552,6 @@ public class SuperPlayerImpl implements SuperPlayer, ITXVodPlayListener, ITXLive
      * 播放点播url
      */
     private void playVodURL(String url) {
-        Log.e(TAG, "playVodURL url:" + url);
         if (url == null || "".equals(url)) {
             return;
         }

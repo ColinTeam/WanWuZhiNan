@@ -30,26 +30,27 @@ import com.wanwuzhinan.mingchang.vm.UserViewModel
 //答题 视频题库
 class VideoAnswerActivity :
     BaseActivity<ActivityAnswerPracticeBinding, UserViewModel>(UserViewModel()) {
-    companion object{
+    companion object {
         @JvmStatic
-        fun start(context: Context,id: Int) {
-            val starter = Intent(context, VideoAnswerActivity::class.java)
-                .putExtra(ConfigApp.INTENT_ID,id)
+        fun start(context: Context, id: Int) {
+            val starter =
+                Intent(context, VideoAnswerActivity::class.java).putExtra(ConfigApp.INTENT_ID, id)
             context.startActivity(starter)
         }
     }
+
     var mId = 0
     var mPosition = 0
     var mSelectPosition = 0
     var mType = 1//1选择状态 2显示状态
-    lateinit var mQuestionList: MutableList<QuestionListData.QuestionBean>
+    var mQuestionList: List<QuestionListData.QuestionBean>? = null
     lateinit var mAdapter: AnswerPracticeOptionAdapter
     lateinit var mMediaPlayer: MediaPlayer
 
     lateinit var logModel: QuestionLogData
 
     override fun initView() {
-        mId = intent.getIntExtra(ConfigApp.INTENT_ID,0)
+        mId = intent.getIntExtra(ConfigApp.INTENT_ID, 0)
         mMediaPlayer = MediaPlayer()
 
         initQuestionList()
@@ -59,29 +60,17 @@ class VideoAnswerActivity :
     }
 
     private fun initQuestionList() {
-        mQuestionList = mutableListOf()
+        mQuestionList = listOf()
         mAdapter = AnswerPracticeOptionAdapter()
 
         mDataBinding.reOption.adapter = mAdapter
         mAdapter.setOnDebouncedItemClick { adapter, view, position ->
-
-            if (mType == 2) return@setOnDebouncedItemClick
-
-//            //1单选 2多选
-//            if(mQuestionList.get(mPosition).typeid==1){
-//                for(i in mAdapter.items.indices){
-//                    mAdapter.getItem(i)!!.select=false
-//                }
-//                mAdapter.getItem(position)!!.select=true
-//            }else{
-//                mAdapter.getItem(position)!!.select=!mAdapter.getItem(position)!!.select
-//            }
-//
+            if (mType == 2 || mQuestionList == null) return@setOnDebouncedItemClick
             showBaseLoading("答题中···")
             mSelectPosition = position
             mViewModel.questionAdd(
-                mQuestionList.get(mPosition).id,
-                mQuestionList.get(mPosition).answersArr.get(position).key
+                mQuestionList!![mPosition].id,
+                mQuestionList!![mPosition].answersArr.get(position).key
             )
         }
     }
@@ -96,9 +85,9 @@ class VideoAnswerActivity :
         ) {
             when (it) {
                 mDataBinding.linExplain -> {//
+                    mQuestionList ?: return@onClick
                     AnswerExplainPop(this).showPop(
-                        mDataBinding.linExplain,
-                        mQuestionList!!.get(mPosition).answer_desc
+                        mDataBinding.linExplain, mQuestionList!![mPosition].answer_desc
                     )
                 }
 
@@ -112,8 +101,8 @@ class VideoAnswerActivity :
                 }
 
                 mDataBinding.tvNext -> {//
-
-                    if (mPosition + 1 > mQuestionList.size - 1) {
+                    mQuestionList ?: return@onClick
+                    if (mPosition + 1 > mQuestionList!!.size - 1) {
 
                         CompassNumPop(mActivity, onSure = {
                             finish()
@@ -132,7 +121,7 @@ class VideoAnswerActivity :
                 }
 
                 mDataBinding.tvReport -> {
-                    SettingTabActivity.start(this@VideoAnswerActivity,3)
+                    SettingTabActivity.start(this@VideoAnswerActivity, 3)
                 }
             }
         }
@@ -141,7 +130,7 @@ class VideoAnswerActivity :
     override fun initRequest() {
         mViewModel.getLessonInfoLiveData.observeState(this) {
             onSuccess = { data, msg ->
-                if (data!!.info.questionsList.isNotEmpty()) {
+                if (data?.info?.questionsList?.isNotEmpty()==true) {
                     mPosition = 0
                     mQuestionList = data.info.questionsList
                     initQuestionArray()
@@ -163,17 +152,17 @@ class VideoAnswerActivity :
 
         mViewModel.questionAddLiveData.observeState(this) {
             onSuccess = { data, msg ->
-                for (obj in mQuestionList.get(mPosition).answersArr) {
+                for (obj in mQuestionList!![mPosition].answersArr) {
                     if (obj.is_true == 1) {
                         obj.answerType = 1
                     }
                 }
-                var model = mQuestionList.get(mPosition).answersArr.get(mSelectPosition)
+                var model = mQuestionList!![mPosition].answersArr[mSelectPosition]
                 if (model.is_true != 1) {
                     model.answerType = 2
                 }
                 if (model.is_true == 1) {
-                    playAudio(mQuestionList.get(mPosition).answer_mp3_true)
+                    playAudio(mQuestionList!![mPosition].answer_mp3_true)
                     var mediaPlayer = MediaPlayer.create(mActivity, R.raw.answer_true)
                     mediaPlayer.start()
                     mediaPlayer.setOnCompletionListener {
@@ -188,7 +177,7 @@ class VideoAnswerActivity :
                         mediaPlayer.release()
                         mediaPlayer = null
                     }
-                    playAudio(mQuestionList.get(mPosition).answer_mp3_false)
+                    playAudio(mQuestionList!![mPosition].answer_mp3_false)
                 }
                 if (data != null) {
                     mDataBinding.tvAdd.visibility = View.VISIBLE
@@ -198,17 +187,19 @@ class VideoAnswerActivity :
                 }
                 mType = 2
                 logModel = data!!
-                playAudio(mQuestionList.get(mPosition).answer_mp3)
+                playAudio(mQuestionList!![mPosition].answer_mp3)
                 changeButtonState()
                 mAdapter.notifyDataSetChanged()
 
                 if (data.medalCardList.isNotEmpty()) {
-                    AudioCardPop(mActivity, onSure = {
-                    }).showPop(data.medalCardList.get(0).name, data.medalCardList.get(0).image, 1)
+                    AudioCardPop(mActivity, onSure = {}).showPop(
+                        data.medalCardList.get(0).name, data.medalCardList.get(0).image, 1
+                    )
                 } else {
                     if (data.medalList.isNotEmpty()) {
-                        AudioCardPop(mActivity, onSure = {
-                        }).showPop(data.medalList.get(0).name, data.medalList.get(0).image, 2)
+                        AudioCardPop(mActivity, onSure = {}).showPop(
+                            data.medalList.get(0).name, data.medalList.get(0).image, 2
+                        )
                     }
                 }
             }
@@ -262,15 +253,15 @@ class VideoAnswerActivity :
     private fun changeQuestion(position: Int) {
         mDataBinding.tvAdd.visibility = View.INVISIBLE
         changeButtonState()
-        if (mQuestionList.size - 1 < position) return
+        if (mQuestionList!!.size - 1 < position) return
 
-        mQuestionList[mPosition].apply {
+        mQuestionList!![mPosition].apply {
             //${mPosition+1}、 ${getUserInfo().truename}
             mDataBinding.tvTitle.text = title
             mAdapter.submitList(answersArr)
-            playAudio(mQuestionList[mPosition].title_mp3)
+            playAudio(mQuestionList!![mPosition].title_mp3)
         }
-        mDataBinding.tvNum.text = "共${mQuestionList.size}题 已完成${mPosition + 1}题"
+        mDataBinding.tvNum.text = "共${mQuestionList!!.size}题 已完成${mPosition + 1}题"
     }
 
 
@@ -308,11 +299,12 @@ class VideoAnswerActivity :
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        mQuestionList = null
         if (mMediaPlayer.isPlaying) {
             mMediaPlayer.stop()
         }
         mMediaPlayer.release()
+        super.onDestroy()
     }
 
     override fun onPause() {

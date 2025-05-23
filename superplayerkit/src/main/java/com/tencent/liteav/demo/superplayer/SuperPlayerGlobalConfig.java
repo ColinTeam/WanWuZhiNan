@@ -53,7 +53,7 @@ public class SuperPlayerGlobalConfig {
      * 设置播放引擎的最大缓存大小，单位：MB，默认 500MB。
      * 设置后会根据设定值自动清理 Cache 目录的文件。
      */
-    public int maxCacheSizeMB = 5000;
+    public int maxCacheSizeMB = 500;
 
     /**
      * Whether to enable the floating window (default enabled true )

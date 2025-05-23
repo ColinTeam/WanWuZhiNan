@@ -4,6 +4,7 @@ import com.colin.library.android.utils.encrypt.EncryptUtil
 import com.ssm.comm.config.Constant
 import com.ssm.comm.ext.getCurrentVersionName
 import com.wanwuzhinan.mingchang.config.ConfigApp
+import com.wanwuzhinan.mingchang.utils.getUserAgent
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -15,6 +16,7 @@ import okhttp3.Response
  * Des   :HeaderInterceptor
  */
 class HeaderInterceptor : Interceptor {
+    val user: String by lazy { getUserAgent() }
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val builder = request.newBuilder()
@@ -26,6 +28,7 @@ class HeaderInterceptor : Interceptor {
             builder.header("token_time", "$time")
             builder.header("token_verify", EncryptUtil.md5("$token${time}wwzn"))
         }
+        builder.header(Constant.USER_AGENT, user)
         builder.header(Constant.VERSION, getCurrentVersionName())
         return chain.proceed(builder.build())
     }

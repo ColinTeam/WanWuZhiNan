@@ -105,11 +105,15 @@ data class MediaInfo(
     val study_success_percentage: Int,
     val update_time: Int,
     val videoAes: String,
-    val content: String,
+    val content: String="",
     val video_duration: Int,
-    var questionsList: MutableList<QuestionListData.QuestionBean>,
-    var photos_tipsArr: MutableList<PhotosInfo>,
-) : BaseModel()
+    var questionsList: List<QuestionListData.QuestionBean>,
+    var photos_tipsArr: List<PhotosInfo>,
+) : BaseModel() {
+    fun logString(): String {
+        return "MediaInfo(id=$id, image='$image', is_open=$is_open, name='$name', sort=$sort, videoAes='$videoAes', content='$content', video_duration=$video_duration, photos_tipsArr=$photos_tipsArr)"
+    }
+}
 
 data class PowerSubjectInfo(
     val activity_name: String,
