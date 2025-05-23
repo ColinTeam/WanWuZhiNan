@@ -45,7 +45,7 @@ class UserInfoDialog private constructor(
         ViewModelProvider.create(requireActivity())[UserInfoViewModel::class.java]
     }
 
-    var success: ((Boolean) -> Unit) = { false }
+    var success: ((Boolean) -> Unit) = { }
     override fun initView(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewBinding.apply {
             etNick.doAfterTextChanged { updateButton() }

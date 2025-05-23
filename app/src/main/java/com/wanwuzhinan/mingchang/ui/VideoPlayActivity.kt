@@ -1,6 +1,5 @@
 package com.wanwuzhinan.mingchang.ui
 
-import android.annotation.SuppressLint
 import android.app.ComponentCaller
 import android.content.Intent
 import android.os.Bundle
@@ -38,6 +37,7 @@ import com.wanwuzhinan.mingchang.ui.pop.ExchangeContactPop
 import com.wanwuzhinan.mingchang.ui.pop.ExchangeCoursePop
 import com.wanwuzhinan.mingchang.utils.load
 import com.wanwuzhinan.mingchang.vm.MediaViewModel
+import kotlinx.coroutines.Job
 
 /**
  * Author:ColinLu
@@ -47,30 +47,26 @@ import com.wanwuzhinan.mingchang.vm.MediaViewModel
  * Des   :VideoHomeActivity
  */
 class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
-    @SuppressLint("SetTextI18n")
-    val timer = countDown(6, onNext = {
-        viewBinding.tvDown.text = "${it + 1}S"
-    }, onFinish = {
-        checkLessonPlayComplete(toAsk = true)
-    })
+    var timer: Job? = null
     private var errorSeek = -0.0F
     private var position = -1
     private var lessons: List<Lesson>? = null
     override fun onResume() {
         super.onResume()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_SECURE)
-        viewBinding.videoPlayer.onPause()
+        viewBinding.videoPlayer.setNeedToPause(false)
     }
 
     override fun onPause() {
         viewBinding.videoPlayer.onPause()
+        viewBinding.videoPlayer.setNeedToPause(true)
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_SECURE)
         super.onPause()
     }
 
     override fun onDestroy() {
         viewBinding.videoPlayer.release()
-        timer.cancel()
+        timer?.cancel()
         errorSeek = -0.0F
         position = -1
         lessons = null
@@ -79,6 +75,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
 
     override fun onNewIntent(intent: Intent, caller: ComponentCaller) {
         super.onNewIntent(intent, caller)
+        showLoading(true)
         parse(intent.extras)
         loadData(true)
     }
@@ -116,7 +113,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
                     tvVideoReload -> {
                         clVideoNoNet.visible(false)
                         videoPlayer.resetPlayer()
-                        play(viewModel.getLessonInfoValue()!!.info, errorSeek)
+                        play(viewModel.getMediaInfoValue(), errorSeek)
                     }
 
                     netErrorBack -> {
@@ -133,9 +130,9 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
 
     override fun initData(bundle: Bundle?, savedInstanceState: Bundle?) {
         viewModel.apply {
-            lessonInfo.observe {
-                Log.d("lessonInfo:$it")
-                play(it.info)
+            mediaInfoData.observe {
+                Log.d("mediaInfoData:$it")
+                play(it)
             }
             studyLog.observe {
                 Log.d("studyLog:$it")
@@ -163,7 +160,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
     }
 
     override fun interceptorHttpAction(action: HttpResult.Action): Boolean {
-        Log.e("interceptorHttpAction:$action")
+        Log.i("interceptorHttpAction:$action")
         if (action.code < 0) {
             viewBinding.clNoNet.visibility = View.VISIBLE
             return true
@@ -172,7 +169,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
     }
 
     private fun play(
-        info: MediaInfo? = viewModel.getLessonInfoValue()?.info, progress: Float = 0F
+        info: MediaInfo? = viewModel.getMediaInfoValue(), progress: Float = 0F
     ) {
         val aes = info?.videoAes
         val url = if (!aes.isNullOrEmpty()) DecryptUtil.aes(aes, ConfigApp.VIDEO_AES_KEY) else null
@@ -186,6 +183,18 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
         play(url, info!!.image, seekProgress)
     }
 
+    private fun play(url: String, image: String?, progress: Float = 0f) {
+        Log.d("play url:$url  image:${image} progress:${progress}")
+        val model = SuperPlayerModel().apply {
+            this.url = url
+        }
+        viewBinding.videoPlayer.apply {
+            //默认自动播放
+            playWithModelNeedLicence(model)
+            seek(progress)
+        }
+    }
+
     private fun showEmptyView(config: ConfigData? = viewModel.getConfigValue()?.info) {
         val size = lessons?.size ?: 0
         if (position >= size - 1 || position < 0) {
@@ -196,27 +205,24 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
             viewBinding.tvQuestion.text = getString(R.string.video_empty_question, text)
             viewBinding.tvDown2.text = getString(R.string.video_empty_action, text)
             viewBinding.ivCover.setImageResource(R.mipmap.ic_video_finish);
-            timer.start()
+            startCountDown()
         } else {
             val lesson = lessons!![position]
             viewBinding.llMenu.visibility = View.VISIBLE
             viewBinding.tvTitle.text = lesson.name
             viewBinding.ivCover.load(lesson.image, R.drawable.img_default_icon)
-            timer.start()
+            startCountDown()
         }
     }
 
-    private fun play(url: String, image: String?, progress: Float = 0f) {
-        Log.d("play url:$url  image:${image} progress:${progress}")
-        val model = SuperPlayerModel().apply {
-            this.url = url
-            this.coverPictureUrl = image
-        }
-        viewBinding.videoPlayer.apply {
-            //默认自动播放
-            playWithModelNeedLicence(model)
-            seek(progress)
-        }
+    private fun startCountDown() {
+        timer?.cancel()
+        timer = countDown(6, onNext = {
+            viewBinding.tvDown.text = getString(R.string.video_empty_countdown, (it + 1))
+        }, onFinish = {
+            viewBinding.llMenu.visible(false)
+            checkLessonPlayComplete(toAsk = true)
+        })
     }
 
 
@@ -248,7 +254,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
     }
 
     private fun showDisplayPhoto(
-        info: MediaInfo? = viewModel.getLessonInfoValue()?.info, progress: Int
+        info: MediaInfo? = viewModel.getMediaInfoValue(), progress: Int
     ) {
         if (info == null) return
         val sort = progress / 1000
@@ -272,7 +278,7 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
     private fun checkLessonPlayComplete(
         offset: Int = 1, toAnswer: Boolean = false, toAsk: Boolean = false
     ) {
-        timer.cancel()
+        timer?.cancel()
         position += offset
         val lesson = getCurrentLesson()
         Log.d("position:$position lesson:$lesson")
@@ -292,17 +298,17 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
         override fun onVodPlayEvent(
             player: TXVodPlayer?, event: Int, param: Bundle?
         ) {
-            Log.e("onVodPlayEvent event:$event\t param:$param")
+            Log.i("onVodPlayEvent event:$event\t param:$param")
             when (event) {
                 2005 -> {
                     showDisplayPhoto(
-                        viewModel.getLessonInfoValue()?.info,
+                        viewModel.getMediaInfoValue(),
                         param?.getInt(TXLiveConstants.EVT_PLAY_PROGRESS_MS) ?: 0
                     )
                 }
 
                 2006 -> {
-                    val info = viewModel.getLessonInfoValue()?.info
+                    val info = viewModel.getMediaInfoValue()
                     if (info != null) {
                         viewModel.study(info.id, info.video_duration)
                     } else {
@@ -318,62 +324,64 @@ class VideoPlayActivity : AppActivity<FragmentVideoBinding, MediaViewModel>() {
         ) {
             // 获取实时速率, 单位：kbps
             val speed: Int = status?.getInt(TXLiveConstants.NET_STATUS_NET_SPEED) ?: 0
-            Log.e("onVodNetStatus status:$status network speed:$speed")
+            Log.i("onVodNetStatus status:$status network speed:$speed")
         }
 
         override fun onLivePlayEvent(event: Int, param: Bundle?) {
-            Log.e("onLivePlayEvent event:$event\t param:$param")
+            Log.i("onLivePlayEvent event:$event\t param:$param")
         }
 
         override fun onLiveNetStatus(status: Bundle?) {
             val speed: Int = status?.getInt(TXLiveConstants.NET_STATUS_NET_SPEED) ?: 0
-            Log.e("onLiveNetStatus status:$status")
+            Log.i("onLiveNetStatus speed:$speed")
         }
     }
 
     private val superPlayerViewCallback = object : SuperPlayerView.OnSuperPlayerViewCallback {
         override fun onStartFullScreenPlay() {
-            Log.e("onStartFullScreenPlay")
+            Log.i("onStartFullScreenPlay")
         }
 
         override fun onStopFullScreenPlay() {
-            Log.e("onStopFullScreenPlay")
+            Log.i("onStopFullScreenPlay")
         }
 
         override fun onClickFloatCloseBtn() {
-            Log.e("onClickFloatCloseBtn")
+            Log.i("onClickFloatCloseBtn")
             finish()
         }
 
         override fun onClickSmallReturnBtn() {
-            Log.e("onClickSmallReturnBtn")
+            Log.i("onClickSmallReturnBtn")
             finish()
         }
 
         override fun onStartFloatWindowPlay() {
-            Log.e("onStartFloatWindowPlay")
+            Log.i("onStartFloatWindowPlay")
         }
 
         override fun onPlaying() {
-            Log.e("onPlaying")
+            Log.i("onPlaying")
+            showLoading(false)
         }
 
         override fun onPlayEnd() {
-            Log.e("onPlayEnd")
+            Log.i("onPlayEnd")
         }
 
         override fun onError(code: Int) {
-            Log.e("onError code:$code")
+            Log.i("onError code:$code")
             if (code == SuperPlayerCode.NET_ERROR) {
                 viewBinding.apply {
                     clVideoNoNet.visible(true)
                     errorSeek = videoPlayer.progress / (videoPlayer.duration * 0.1F)
                 }
             }
+            showLoading(false)
         }
 
         override fun onShowCacheListClick() {
-            Log.e("onShowCacheListClick")
+            Log.i("onShowCacheListClick")
         }
 
     }

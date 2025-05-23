@@ -255,6 +255,7 @@
             android:name=".ui.VideoPlayActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false"
+            android:launchMode="singleTop"
             android:screenOrientation="sensorLandscape" />
 
         <meta-data

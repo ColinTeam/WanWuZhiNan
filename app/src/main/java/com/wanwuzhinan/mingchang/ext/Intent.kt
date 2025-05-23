@@ -24,7 +24,7 @@ import com.wanwuzhinan.mingchang.ui.phone.QuestionVideoActivity
 import com.wanwuzhinan.mingchang.ui.phone.RankActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoAnswerActivity
 import com.wanwuzhinan.mingchang.ui.phone.VideoListActivity
-import com.wanwuzhinan.mingchang.ui.phone.VideoPlayActivity
+import com.wanwuzhinan.mingchang.ui.VideoPlayActivity
 import com.wanwuzhinan.mingchang.utils.MMKVUtils
 
 //判断当前设备是手机还是平板

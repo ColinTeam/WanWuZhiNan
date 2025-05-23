@@ -10,6 +10,7 @@ import com.wanwuzhinan.mingchang.entity.LessonInfo
 import com.wanwuzhinan.mingchang.entity.LessonStudyLog
 import com.wanwuzhinan.mingchang.entity.LessonSubjectChild
 import com.wanwuzhinan.mingchang.entity.LessonSubjectGroup
+import com.wanwuzhinan.mingchang.entity.MediaInfo
 
 /**
  * Author:ColinLu
@@ -28,6 +29,8 @@ class MediaViewModel : AppViewModel() {
 
     private val _lessonInfo: MutableLiveData<LessonInfo> = MutableLiveData()
     val lessonInfo: LiveData<LessonInfo> = _lessonInfo
+    private val _mediaInfoData: MutableLiveData<MediaInfo> = MutableLiveData()
+    val mediaInfoData: LiveData<MediaInfo> = _mediaInfoData
     private val _studyLog: MutableLiveData<LessonStudyLog> = MutableLiveData()
     val studyLog: LiveData<LessonStudyLog> = _studyLog
     private val _positionData: MutableLiveData<Int> = MutableLiveData(0)
@@ -80,8 +83,8 @@ class MediaViewModel : AppViewModel() {
 
     fun getLessonInfo(lessonID: Int) {
         request(request = { service.newLessonInfo(lessonID) }, success = { it ->
-            it?.let {
-                if (_lessonInfo != it) _lessonInfo.postValue(it)
+            it?.info?.let {
+                if (mediaInfoData.value != it) _mediaInfoData.postValue(it)
             }
         })
     }
@@ -111,6 +114,7 @@ class MediaViewModel : AppViewModel() {
     fun getPositionValue() = positionData.value ?: 0
     fun getLessonsValue() = lessonsData.value
     fun getLessonInfoValue() = lessonInfo.value
+    fun getMediaInfoValue() = mediaInfoData.value
     fun getMediaLessonTabValue() = mediaLessonTab.value
     fun getMediaLessonTabChildValue(id: Int) = mediaLessonTabChildArray.get(id, null)
 

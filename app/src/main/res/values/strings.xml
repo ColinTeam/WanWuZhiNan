@@ -61,6 +61,7 @@
     <string name="video_empty_title">返回首页</string>
     <string name="video_empty_question">挑战%s</string>
     <string name="video_empty_action">自动进入%s</string>
+    <string name="video_empty_countdown">%dS</string>
 
 
     <string name="dialog_tips_title">温馨提醒</string>
