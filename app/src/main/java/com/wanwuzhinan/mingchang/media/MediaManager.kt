@@ -1,19 +1,28 @@
 package com.wanwuzhinan.mingchang.media
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.net.Uri
+import android.os.IBinder
 import androidx.annotation.OptIn
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.datasource.cache.Cache
 import androidx.media3.datasource.cache.CacheDataSource
+import androidx.media3.datasource.cache.CacheEvictor
 import androidx.media3.datasource.cache.CacheSpan
 import androidx.media3.datasource.cache.SimpleCache
+import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.LoadControl
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.exoplayer.trackselection.TrackSelector
 import com.colin.library.android.utils.helper.UtilHelper
+import com.wanwuzhinan.mingchang.media.service.MediaService
 import java.io.File
 
 /**
@@ -24,8 +33,37 @@ import java.io.File
  * Des   :AppMediaManager
  */
 @OptIn(UnstableApi::class)
-object AppMediaManager {
-    var _player: ExoPlayer = createExoPlayer(UtilHelper.getApplication())
+object MediaManager {
+    lateinit var player: ExoPlayer
+    private var serviceConnection: ServiceConnection? = null
+
+    // 初始化时绑定服务
+    fun initialize(context: Context) {
+        player = createExoPlayer(context)
+        context.startService(Intent(context, MediaService::class.java))
+    }
+
+    fun bind(player: IPlayer) {
+
+    }
+
+    fun play(uri: Uri) {
+
+    }
+
+    private fun bindMediaService(context: Context) {
+        val intent = Intent(context, MediaService::class.java)
+        serviceConnection = object : ServiceConnection {
+            override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
+                // 服务连接后的处理
+            }
+
+            override fun onServiceDisconnected(name: ComponentName?) {
+                // 异常断开处理
+            }
+        }
+        context.bindService(intent, serviceConnection!!, Context.BIND_AUTO_CREATE)
+    }
 
     // 缓存配置
     private val cacheDir by lazy { File(UtilHelper.getApplication().cacheDir, "media_cache") }
@@ -38,9 +76,16 @@ object AppMediaManager {
 
     private fun createExoPlayer(context: Context): ExoPlayer {
         return ExoPlayer.Builder(context).setTrackSelector(createTrack(context))
+            .setLoadControl(optimizedLoadControl())
             .setMediaSourceFactory(createSourceFactory(context)).build()
     }
 
+    private fun optimizedLoadControl(): LoadControl {
+        return DefaultLoadControl.Builder()
+            .setBufferDurationsMs(15000, 30000, 5000, 5000)
+            .setPrioritizeTimeOverSizeThresholds(true)
+            .build()
+    }
 
     private fun createTrack(context: Context): TrackSelector {
         return DefaultTrackSelector(context)
@@ -57,15 +102,30 @@ object AppMediaManager {
         return DefaultDataSource(context, "wwzn", true)
     }
 
-    val player get() = _player
+    fun prepare() {
+        player.prepare()
+    }
 
+    fun play() {
+        player.play()
+    }
+
+    fun isPlaying() {
+        player.isPlaying == true
+    }
+
+    fun pause() {
+        player.pause()
+    }
 
     fun onDestroy() {
-        _player.release()
+        if (::player.isInitialized) {
+            player.release()
+        }
     }
 
 
-    private val exoPlayerListener = object : IExoPlayListener {
+    private val exoPlayerListener = object : CacheEvictor {
         override fun requiresCacheSpanTouches(): Boolean {
             TODO("Not yet implemented")
         }

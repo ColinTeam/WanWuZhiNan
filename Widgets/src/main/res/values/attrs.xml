@@ -9,10 +9,12 @@
         <attr name="shimmer_gradient_width" format="fraction|reference" />
         <attr name="shimmer_reverse_animation" format="boolean|reference" />
     </declare-styleable>
+
     <declare-styleable name="SquareImageView">
         <attr name="byWidth" format="boolean|reference" />
         <attr name="ratio" format="fraction|reference" />
     </declare-styleable>
+
     <declare-styleable name="RoundImageView">
         <attr name="android:scaleType" />
         <attr name="round_radius" format="dimension" />
@@ -48,7 +50,6 @@
             <enum name="scale" value="1" />
         </attr>
     </declare-styleable>
-
 
     <declare-styleable name="WheelView">
         <!--文字大小-->
@@ -142,5 +143,75 @@
         <attr name="wheel_curtainColor" format="color" />
         <!--选中区域/分割线上下偏移，通过移动分割线上下限制的位置来实现扩大/缩小显示区域-->
         <attr name="wheel_dividerOffsetY" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="IndicatorView">
+        <attr name="banner_indicator_slider_checked_color" format="color" />
+        <attr name="banner_indicator_slider_normal_color" format="color" />
+        <attr name="banner_indicator_slider_radius" format="dimension" />
+        <attr name="banner_indicator_rtl" format="boolean" />
+        <attr name="banner_indicator_orientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+            <enum name="rtl" value="3" />
+        </attr>
+
+        <attr name="banner_indicator_slide_mode" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="smooth" value="2" />
+            <enum name="worm" value="3" />
+            <enum name="scale" value="4" />
+            <enum name="color" value="5" />
+        </attr>
+
+        <attr name="banner_indicator_style" format="enum">
+            <enum name="circle" value="0" />
+            <enum name="dash" value="2" />
+            <enum name="round_rect" value="4" />
+        </attr>
+
+    </declare-styleable>
+    <declare-styleable name="BannerViewPager">
+        <!--页面切换时间间隔-->
+        <attr name="bvp_interval" format="integer" />
+        <attr name="bvp_scroll_duration" format="integer" />
+        <attr name="bvp_can_loop" format="boolean" />
+        <attr name="bvp_auto_play" format="boolean" />
+        <attr name="bvp_indicator_checked_color" format="color" />
+        <attr name="bvp_indicator_normal_color" format="color" />
+        <attr name="bvp_indicator_radius" format="dimension" />
+        <attr name="bvp_round_corner" format="dimension" />
+        <attr name="bvp_page_margin" format="dimension" />
+        <attr name="bvp_reveal_width" format="dimension" />
+        <attr name="bvp_indicator_style" format="enum">
+            <enum name="circle" value="0" />
+            <enum name="dash" value="2" />
+            <enum name="round_rect" value="4" />
+        </attr>
+        <attr name="bvp_indicator_slide_mode" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="smooth" value="2" />
+            <enum name="worm" value="3" />
+            <enum name="scale" value="4" />
+            <enum name="color" value="5" />
+        </attr>
+        <attr name="bvp_indicator_gravity" format="enum">
+            <enum name="center" value="0" />
+            <enum name="start" value="2" />
+            <enum name="end" value="4" />
+        </attr>
+        <attr name="bvp_page_style" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="multi_page" value="2" />
+            <enum name="multi_page_overlap" value="4" />
+            <enum name="multi_page_scale" value="8" />
+        </attr>
+        <attr name="bvp_indicator_visibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="4" />
+            <enum name="gone" value="8" />/>
+        </attr>
+
     </declare-styleable>
 </resources>
